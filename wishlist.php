@@ -24,6 +24,7 @@ $page = 4;
     </p>
     <p>
       <a class="btn btn-lg btn-primary" href="page/contact" role="button">Let us know &raquo;</a>
+      <a class="btn btn-lg btn-primary" href="https://github.com/paulhoekman/mfa-tools">View this project on github</a>
     </p>
   </div>
 
