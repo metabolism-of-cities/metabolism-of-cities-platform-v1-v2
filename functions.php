@@ -1,12 +1,16 @@
 <?php
-define ("ENCODING", "UTF-8");
-define ("SITENAME", "MFA Tools");
-
+if (!file_exists('config.php')) {
+  die("Config file not found! Read the readme file to create your configuratino file first");
+}
 require_once 'config.php';
 require_once 'class.db.php';
 
 $db = new db("mysql:host=" . SERVER . ";dbname=" . DATABASE, USER, PASSWORD);
-$db->setErrorCallbackFunction("kill");
+if ($db) {
+  $db->setErrorCallbackFunction("kill");
+} else {
+  die("Could not connect to the database");
+}
 
 $css = filesize("css/styles.css");
 
