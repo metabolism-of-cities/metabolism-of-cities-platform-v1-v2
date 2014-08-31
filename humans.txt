@@ -1,0 +1,4 @@
+Awesome icons come from: http://fontawesome.io/icons/
+The site is set up using the design template provided by: Twitter Bootstrap
+Drifting icons by Harwen Zhang: https://www.iconfinder.com/iconsets/drifting
+Stats icon by Gregor Cresnar: https://www.iconfinder.com/iconsets/essentials-3
