@@ -9,7 +9,9 @@
 
 ## Getting started
 
-First, clone this repo as per github instructions. Once you have the repo on your machine, put this in the webroot of your Apache server, and you should be able to navigate there using http://localhost/mfa-tools, or something similar. You will see an error about not having a config file - you're ready for the next step!
+First, clone this repo as per Github instructions. Are you new to Git and/or Github? Fear not! Github has a friendly [help section](https://help.github.com/) where you can go to for more information. 
+
+Once you have the repo on your machine, put this in the webroot of your Apache server, and you should be able to navigate there using http://localhost/mfa-tools, or something similar. You will see an error about not having a config file - you're ready for the next step!
 
 It's time to set up the database. Create a new MySQL database, and load the database structure. You can find this structure in load.sql. Please note that this structure does not contain any data. If you want to load the publications and other data from the website, request a copy of the most current database from one of the current maintainers. 
 
@@ -28,6 +30,10 @@ In principle you can work on anything you like! However, we have a [Wish List](h
 ## Coding Standards
 
 We follow the [Pear Coding Standards](http://pear.php.net/manual/en/standards.php) with one main exception: we use 2 space indentation instead of 4 space indentation! Other than that, try to stick to the Pear Coding Standards. If you deviate too much, you may be requested to reformat your code before it is accepted. 
+
+## Git workflow
+
+Read through the Github article on the [Git workflow](https://help.github.com/articles/what-is-a-good-git-workflow) if you are not too familiar with how Git works. Normally, you do *not* need to make a branch unless you are working on a large change or big featureset. Smaller changes can be committed directly onto the Master branch. Just ensure that you work off the most recent version as the codebase can be rapidly changing. If your changes will take several days of coding to complete, then do create a branch to avoid merging conflicts - especially if it concerns code others may also be working on. 
 
 ## File and URL naming conventions
 
