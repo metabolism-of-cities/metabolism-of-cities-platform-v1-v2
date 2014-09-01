@@ -385,3 +385,13 @@ CREATE TABLE `tags_parents` (
 
 
 -- 2014-08-31 13:41:28
+
+ALTER TABLE `mfa_activities_log`
+DROP FOREIGN KEY `mfa_activities_log_ibfk_2`; -- 0.001 s
+
+ALTER TABLE `mfa_activities_log`
+CHANGE `source` `source` int unsigned NULL AFTER `time`,
+COMMENT=''; -- 0.531 s
+
+ALTER TABLE `mfa_activities_log`
+ADD FOREIGN KEY (`source`) REFERENCES `mfa_sources` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT; -- 0.497 s

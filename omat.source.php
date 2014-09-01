@@ -24,7 +24,7 @@ if ($_POST) {
     'type' => $_POST['type'] ? (int)$_POST['type'] : 'NULL',
     'details' => html($_POST['details']),
     'dataset' => $project,
-    'url' => mysql_clean($_POST['url']),
+    'url' => html($_POST['url']),
   );
   if ($id) {
     $db->update("mfa_sources",$post,"id = $id");

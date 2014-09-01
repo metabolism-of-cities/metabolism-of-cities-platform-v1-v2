@@ -323,7 +323,7 @@ function mysql_clean($string, $type=false) {
 	}
 	else
 	{
-		return "'{$string}'";
+		return "{$string}";
 	}
 }
 

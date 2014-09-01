@@ -42,7 +42,7 @@ if ($_POST) {
 <html lang="en">
   <head>
     <?php echo $header ?>
-    <title>Contacts | <?php echo SITENAME ?></title>
+    <title><?php if ($id) { echo $info->name . " | "; } ?> Contacts | <?php echo SITENAME ?></title>
     <script type="text/javascript">
     $(function(){
       $("input[name='organization']").change(function(){
