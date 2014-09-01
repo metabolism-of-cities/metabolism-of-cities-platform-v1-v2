@@ -62,7 +62,7 @@ if ($_POST['action'] == 'addactivity') {
   if ($_POST['timer']) {
     $post = array(
       'activity' => (int)$_POST['type'],
-      'start' => 'NOW()',
+      'start' => date("Y-m-d H:i:s"),
     );
     $icon = '<i class="fa fa-clock-o"></i>';
     $min = "<em>ongoing</em>";
@@ -70,7 +70,7 @@ if ($_POST['action'] == 'addactivity') {
     $post = array(
       'activity' => (int)$_POST['type'],
       'time' => $time,
-      'end' => 'NOW()',
+      'end' => date("Y-m-d H:i:s"),
     );
     $min = "$time min";
   }
@@ -80,7 +80,7 @@ if ($_POST['action'] == 'addactivity') {
     $post['source'] = $source;
   }
   $type = (int)$_POST['type'];
-  $getname = $db->query("SELECT * FROM mfa_activities WHERE dataset = $project AND id = $type");
+  $getname = $db->record("SELECT * FROM mfa_activities WHERE dataset = $project AND id = $type");
   $db->insert("mfa_activities_log",$post);
   $id = $db->lastInsertId();
   $data['response'] = 'OK';

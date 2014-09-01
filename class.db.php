@@ -1,4 +1,18 @@
 <?php
+/*
+This code is based on the PHP PDO Wrapper Class available 
+at http://www.imavex.com/php-pdo-wrapper-class/
+
+Licensed under:
+
+GNU GENERAL PUBLIC LICENSE
+Version 3, 29 June 2007
+
+Slight modifications made to place query results directly in 
+an object and to add the query function. 
+*/
+
+
 class db extends PDO {
 	private $error;
 	private $sql;
