@@ -48,7 +48,7 @@ $tagsused = $db->record("SELECT SQL_CACHE COUNT(*) AS total FROM tags_papers");
         <li>Allowing researchers to easily (co-) create online Material Flow Analysis projects and share the underlying datasets.</li>
       </ul>
 
-      <p>All code for this website will be hosted on <a href="https://github.com/paulhoekman/mfa-tools">github</a> and we invite programmers to help us improve the
+      <p>All code for this website is hosted on <a href="https://github.com/paulhoekman/mfa-tools">github</a> and we invite programmers to help us improve the
       website and the online MFA software. But you don't need to be a programmer to help improve this website (see below!).
       Sign up for <a href="page/mailinglist">our mailing list</a> if you wish to receive updates about changes and additions.
       </p>

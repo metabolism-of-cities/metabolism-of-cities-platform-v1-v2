@@ -104,7 +104,7 @@ ORDER BY mfa_data.date DESC LIMIT 5");
       </tr>
       <?php } ?>
     </table>
-    <p><a href="log" class="btn btn-primary"><i class="fa fa-align-justify"></i> View full log</a></p>
+    <p><a href="omat/<?php echo $project ?>/log" class="btn btn-primary"><i class="fa fa-align-justify"></i> View full log</a></p>
     <?php } ?>
 
     <h2>Maintenance</h2>
