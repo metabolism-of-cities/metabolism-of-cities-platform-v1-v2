@@ -403,3 +403,13 @@ COMMENT=''; -- 0.752 s
 ALTER TABLE `mfa_contacts`
 CHANGE `part_of_referral_organization` `works_for_referral_organization` tinyint(1) unsigned NOT NULL COMMENT 'Whether or not this contact (person) works for the referral organization (rather than just a contact of the organization)' AFTER `organization`,
 COMMENT=''; -- 0.491 s
+
+ALTER TABLE `mfa_files`
+DROP FOREIGN KEY `mfa_files_ibfk_2`; -- 0.111 s
+
+ALTER TABLE `mfa_files`
+CHANGE `source` `source` int unsigned NOT NULL AFTER `uploaded`,
+COMMENT=''; -- 0.671 s
+
+ALTER TABLE `mfa_files`
+ADD FOREIGN KEY (`source`) REFERENCES `mfa_sources` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.509 s
