@@ -22,8 +22,8 @@ if ($_POST) {
     'name' => html($_POST['name']),
     'organization' => (int)$_POST['organization'],
     'pending' => (int)$_POST['pending'],
-    'employer' => $_POST['employer'] ? html($_POST['employer']) : 'NULL',
-    'type' => $_POST['type'] ? (int)$_POST['type'] : 'NULL',
+    'employer' => $_POST['employer'] ? html($_POST['employer']) : NULL,
+    'type' => $_POST['type'] ? (int)$_POST['type'] : NULL,
     'details' => html($_POST['details']),
     'dataset' => $project,
   );

@@ -21,7 +21,7 @@ if ($_POST) {
   $post = array(
     'name' => html($_POST['name']),
     'pending' => (int)$_POST['pending'],
-    'type' => $_POST['type'] ? (int)$_POST['type'] : 'NULL',
+    'type' => $_POST['type'] ? (int)$_POST['type'] : NULL,
     'details' => html($_POST['details']),
     'dataset' => $project,
     'url' => html($_POST['url']),

@@ -43,10 +43,10 @@ if ($_POST) {
     'year' => (int)$_POST['year'],
     'data' => (float)$_POST['data'],
     'comments' => html($_POST['comments']),
-    'source' => $_POST['source'] ? html($_POST['source']) : 'NULL',
-    'source_link' => $_POST['source_link'] ? html($_POST['source_link']) : 'NULL',
-    'source_id' => $_POST['source_id'] ? (int)$_POST['source_id'] : 'NULL',
-    'scale' => $_POST['scale'] ? (int)$_POST['scale'] : 'NULL',
+    'source' => $_POST['source'] ? html($_POST['source']) : NULL,
+    'source_link' => $_POST['source_link'] ? html($_POST['source_link']) : NULL,
+    'source_id' => $_POST['source_id'] ? (int)$_POST['source_id'] : NULL,
+    'scale' => $_POST['scale'] ? (int)$_POST['scale'] : NULL,
   );
   if ($id) {
     $db->update("mfa_data",$post,"id = $id");
