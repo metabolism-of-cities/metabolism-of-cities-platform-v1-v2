@@ -395,3 +395,11 @@ COMMENT=''; -- 0.531 s
 
 ALTER TABLE `mfa_activities_log`
 ADD FOREIGN KEY (`source`) REFERENCES `mfa_sources` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT; -- 0.497 s
+
+ALTER TABLE `mfa_contacts`
+ADD `part_of_referral_organization` tinyint(1) unsigned NOT NULL COMMENT 'Whether or not this contact (person) is part of the referral organization (rather than just a contact of the organization)' AFTER `organization`,
+COMMENT=''; -- 0.752 s
+
+ALTER TABLE `mfa_contacts`
+CHANGE `part_of_referral_organization` `works_for_referral_organization` tinyint(1) unsigned NOT NULL COMMENT 'Whether or not this contact (person) works for the referral organization (rather than just a contact of the organization)' AFTER `organization`,
+COMMENT=''; -- 0.491 s

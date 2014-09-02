@@ -11,6 +11,7 @@ if ($_POST['action'] == 'addcontact') {
   $post = array(
     'name' => html($_POST['name']),
     'organization' => (int)$_POST['organization'],
+    'works_for_referral_organization' => (int)$_POST['works_for_referral_organization'],
     'dataset' => $project,
     'pending' => 1,
   );

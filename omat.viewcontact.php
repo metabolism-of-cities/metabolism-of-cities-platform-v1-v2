@@ -123,11 +123,17 @@ FROM mfa_special_flags ORDER BY name");
         } else {
           organization = 0;
         }
+        if ($("#works_for_referral_organization").is(":checked")) {
+          works_for_referral_organization = 1;
+        } else {
+          works_for_referral_organization = 0;
+        }
         $.post("ajax.contact.php",{
           contact: <?php echo $id ?>,
           action: 'addcontact',
           name: $("#contact_name").val(),
           organization: organization,
+          works_for_referral_organization: works_for_referral_organization,
           project: <?php echo $project ?>,
           dataType: "json"
         }, function(data) {
@@ -273,7 +279,7 @@ FROM mfa_special_flags ORDER BY name");
     <dd><?php echo format_date("M d, Y", $info->created) ?></dd>
 
     <?php if ($referred_contact->id || $referred_source->id) { ?>
-      <dt>Referred to by</dt>
+      <dt><?php if ($info->works_for_referral_organization) { echo 'Works for'; } else { echo 'Referred to by'; } ?></dt>
       <dd>
       <?php if ($referred_source->id) { ?>
         <a href="omat/<?php echo $project ?>/viewsource/<?php echo $referred_source->id ?>"><?php echo $referred_source->name ?></a>
@@ -320,6 +326,14 @@ FROM mfa_special_flags ORDER BY name");
               <input type="checkbox" id="organization" value="1" /> This is an organization
             </label>
           </div>
+          <?php if ($info->organization) { ?>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" id="works_for_referral_organization" value="1" /> 
+                  This contact works for <em><?php echo $info->name ?></em>
+              </label>
+            </div>
+          <?php } ?>
 
         </form>
 
