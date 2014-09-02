@@ -244,6 +244,7 @@ AddDefaultCharset utf-8
     RewriteRule ^omat/([0-9]+)/reports-(.+)/?$ reports.$2.php?id=$1
 
     RewriteRule ^omat/([0-9]+)/(.+)/([0-9]+)/(.+)/([0-9]+)?$ omat.$2.php?project=$1&id=$3&$4=$5
+    RewriteRule ^omat/([0-9]+)/(.+)/(.+)/([0-9]+)/?$ omat.$2.php?project=$1&$3=$4
     RewriteRule ^omat/([0-9]+)/(.+)/([0-9]+)/(.+)/?$ omat.$2.php?project=$1&id=$3&$4=true
     RewriteRule ^omat/([0-9]+)/(.+)/([0-9]+)/?$ omat.$2.php?project=$1&id=$3
     RewriteRule ^omat/([0-9]+)/(.+)/(.+)/?$ omat.$2.php?id=$1&$3=true

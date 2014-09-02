@@ -5,14 +5,26 @@ $section = 6;
 $load_menu = 1;
 $sub_page = 2;
 
-$id = (int)$_GET['id'];
+$id = $project;
 
-$list = $db->query("SELECT c.*, t.name AS type
+$type = (int)$_GET['type'];
+
+$sql = $type ? " AND c.type = $type" : false;
+
+$list = $db->query("SELECT c.*, t.name AS type,
+  (SELECT name FROM mfa_leads
+    JOIN mfa_contacts ON mfa_leads.from_contact = mfa_contacts.id
+    WHERE mfa_leads.to_contact = c.id) AS referral
 FROM mfa_contacts c
-LEFT JOIN mfa_contacts_types t ON c.type = t.id
-WHERE c.dataset = $id");
+  LEFT JOIN mfa_contacts_types t ON c.type = t.id
+WHERE c.dataset = $id $sql");
 
-$types = $db->query("SELECT * FROM mfa_sources_types WHERE dataset = $id ORDER BY name");
+$types = $db->query("SELECT *,
+  (SELECT COUNT(*) FROM mfa_contacts WHERE type = mfa_contacts_types.id) as total
+FROM mfa_contacts_types WHERE dataset = $id ORDER BY name");
+
+$total = $db->record("SELECT COUNT(*) AS total FROM mfa_contacts WHERE dataset = $id");
+$unclassified = $db->record("SELECT COUNT(*) AS total FROM mfa_contacts WHERE dataset = $id AND type IS NULL");
 
 if ($_GET['deleted']) {
   $print = "The contact has been deleted";
@@ -25,9 +37,13 @@ if ($_GET['deleted']) {
     <?php echo $header ?>
     <title>Contacts | <?php echo SITENAME ?></title>
     <style type="text/css">
+    table {width:100%;table-layout: fixed;}
+    th,td{ white-space:nowrap; overflow:hidden; text-overflow: ellipsis; }
     a.right{float:right}
-    th{width:120px;}
-    th.long{width:auto}
+    .table > tbody > tr > th{border-top:0}
+    .row-name{width:auto}
+    .row-employer{width:200px}
+    .row-status,.row-added{width:130px}
     </style>
   </head>
 
@@ -46,27 +62,34 @@ if ($_GET['deleted']) {
 
   <?php if ($print) { echo "<div class=\"alert alert-success\">$print</div>"; } ?>
 
-  <div class="alert alert-info">
-    <strong><?php echo count($list) ?></strong> contacts found.
-  </div>
+  <?php if (count($types)) { ?>
+    <ul class="nav nav-tabs" role="tablist">
+      <li class="<?php echo !$_GET['type'] ? 'active' : 'regular'; ?>"><a href="omat/<?php echo $project ?>/contacts">All (<?php echo $total->total ?>)</a></li>
+    <?php foreach ($types as $row) { ?>
+      <li class="<?php echo $_GET['type'] == $row['id'] ? 'active' : 'regular'; ?>">
+        <a href="omat/<?php echo $project ?>/contacts/type/<?php echo $row['id'] ?>">
+          <?php echo $row['name'] ?> (<?php echo $row['total'] ?>)
+        </a>
+      </li>
+    <?php } ?>
+    </ul>
+  <?php } else { ?>
+    <div class="alert alert-info">A total of <?php echo count($list) ?> contacts where found.</div>
+  <?php } ?>
 
   <?php if (count($list)) { ?>
 
     <table class="table table-striped">
       <tr>
-        <th class="long">Name</th>
-        <?php if (count($types)) { ?>
-          <th>Type</th>
-        <?php } ?>
-        <th>Added</th>
-        <th>Status</th>
+        <th class="row-name">Name</th>
+        <th class="row-employer">Employer</th>
+        <th class="row-added">Added</th>
+        <th class="row-status">Status</th>
       </tr>
     <?php foreach ($list as $row) { ?>
       <tr>
-        <td><a href="omat/<?php echo $project ?>/viewcontact/<?php echo $row['id'] ?>"><?php echo $row['name'] ?></a></td>
-        <?php if (count($types)) { ?>
-          <td><?php echo $row['type'] ?></td>
-        <?php } ?>
+        <td class="long"><a href="omat/<?php echo $project ?>/viewcontact/<?php echo $row['id'] ?>"><?php echo $row['name'] ?></a></td>
+        <td class="medium"><?php echo $row['works_for_referral_organization'] ? $row['referral'] : $row['employer']; ?></td>
         <td><?php echo format_date("M d, Y", $row['created']) ?></td>
         <td>
         <?php if ($row['pending']) { ?>Pending<?php } else { ?>
