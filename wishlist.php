@@ -62,12 +62,20 @@ $page = 4;
     others, etc.</li>
     <li>For each of the <a href="publications/collections">collections</a>, provide a more detailed overview of what kind of content
     can be found and what the collection means.</li>
-    <li>
-      There is a list of papers related to STAN available on the <a
-      href="http://stan2web.net/infos/publications">STAN website</a>. It would
-      be very useful to create a STAN tag and add all of these publications to
-      the database. 
-    </li>
+    <li>There are some specific lists and websites that can provide many useful references. They are ready to be entered into the system!
+    Two useful sources are:
+    <ul>
+      <li>
+        List of papers related to STAN available on the <a
+        href="http://stan2web.net/infos/publications">STAN website</a>. It would
+        be very useful to create a STAN tag and add all of these publications to
+        the database. 
+      </li>
+        <li>The list of <a href="https://sites.google.com/site/ensap758/tanikawa/paper">
+        publications by Hiroki Tanikawa</a> contain many MFA-related resources! It would be an added bonus if someone who speaks Japanese could
+        enter the Japanese publications (both in Japanese and English would be great!).</li>
+    </ul>
+  </li>
   </ul>
 
   <h2>Quality Control</h2>
