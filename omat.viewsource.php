@@ -8,9 +8,10 @@ $sub_page = 3;
 $id = (int)$_GET['id'];
 $project = (int)$_GET['project'];
 
-$info = $db->record("SELECT s.*, t.name AS type
+$info = $db->record("SELECT s.*, t.name AS type, o.status AS status_name
 FROM mfa_sources s
-LEFT JOIN mfa_sources_types t ON s.type = t.id
+  LEFT JOIN mfa_sources_types t ON s.type = t.id
+  JOIN mfa_status_options o ON s.status = o.id
 WHERE s.id = $id AND s.dataset = $project");
 
 if (!count($info)) {
@@ -61,12 +62,12 @@ if ($_GET['deletefile']) {
   exit();
 }
 
-if ($_GET['processed']) {
-  $db->query("UPDATE mfa_sources SET pending = 0 WHERE id = $id");
-  header("Location: " . URL . "omat/$project/viewsource/$id");
-  exit();
-} elseif ($_GET['unprocessed']) {
-  $db->query("UPDATE mfa_sources SET pending = 1 WHERE id = $id");
+if ($_GET['status']) {
+  $status = (int)$_GET['status'];
+  $post = array(
+    'status' => $status,
+  );
+  $db->update("mfa_sources",$post,"id = $id");
   header("Location: " . URL . "omat/$project/viewsource/$id");
   exit();
 }
@@ -138,6 +139,8 @@ if ($_GET['file-deleted']) {
 } elseif ($_GET['file-saved']) { 
   $print = "File has been saved";
 }
+
+$status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -260,18 +263,26 @@ if ($_GET['file-deleted']) {
   <body>
 
 <?php require_once 'include.header.php'; ?>
-  
-  <?php if ($info->pending) { ?>
-    <a href="omat/<?php echo $project ?>/viewsource/<?php echo $info->id ?>/processed" class="btn btn-default right">
-      Source processed
-    </a>
-  <?php } else { ?>
-    <a href="omat/<?php echo $project ?>/viewsource/<?php echo $info->id ?>/unprocessed" class="btn btn-success right">
-      <i class="fa fa-check"></i>
-      Source processed
-    </a>
-  <?php } ?>
 
+  <div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+      Status: <?php echo $info->status_name; ?>
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+    <?php foreach ($status_options as $row) { ?>
+      <li role="presentation"<?php if ($info->status == $row['id']) { echo ' class="active"'; } ?>>
+        <a role="menuitem" tabindex="-1" href="omat/<?php echo $project ?>/viewsource/<?php echo $id ?>/status/<?php echo $row['id'] ?>">
+          <?php if ($row['id'] == $info->status) { ?>
+            <i class="fa fa-check"></i>
+          <?php } ?>
+          <?php echo $row['status'] ?>
+        </a>
+      </li>
+    <?php } ?>
+    </ul>
+  </div>
+    
   <?php foreach ($flags as $row) { ?>
     <a href="omat/<?php echo $project ?>/viewsource/<?php echo $info->id ?>/<?php echo $row['active'] ? "unflag" : "flag" ?>/<?php echo $row['id'] ?>" class="btn right <?php echo $row['active'] ? 'btn-success' : 'btn-default' ?>">
     <?php if ($row['active']) { ?><i class="fa fa-check"></i> <?php } ?>

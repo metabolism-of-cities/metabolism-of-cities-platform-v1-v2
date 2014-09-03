@@ -7,10 +7,12 @@ $sub_page = 3;
 
 $id = (int)$_GET['id'];
 
-$list = $db->query("SELECT s.*, t.name AS type
+$list = $db->query("SELECT s.*, t.name AS type, o.status
 FROM mfa_sources s
-LEFT JOIN mfa_sources_types t ON s.type = t.id
-WHERE s.dataset = $id");
+  LEFT JOIN mfa_sources_types t ON s.type = t.id
+  JOIN mfa_status_options o ON s.status = o.id
+WHERE s.dataset = $id
+ORDER BY s.name");
 
 $types = $db->query("SELECT * FROM mfa_sources_types WHERE dataset = $id ORDER BY name");
 

@@ -11,13 +11,16 @@ $type = (int)$_GET['type'];
 
 $sql = $type ? " AND c.type = $type" : false;
 
-$list = $db->query("SELECT c.*, t.name AS type,
+$list = $db->query("SELECT c.*, t.name AS type, o.status,
   (SELECT name FROM mfa_leads
     JOIN mfa_contacts ON mfa_leads.from_contact = mfa_contacts.id
     WHERE mfa_leads.to_contact = c.id) AS referral
 FROM mfa_contacts c
   LEFT JOIN mfa_contacts_types t ON c.type = t.id
-WHERE c.dataset = $id $sql");
+  JOIN mfa_status_options o ON c.status = o.id
+WHERE c.dataset = $id $sql
+  ORDER BY name
+");
 
 $types = $db->query("SELECT *,
   (SELECT COUNT(*) FROM mfa_contacts WHERE type = mfa_contacts_types.id) as total
@@ -92,9 +95,7 @@ if ($_GET['deleted']) {
         <td class="medium"><?php echo $row['works_for_referral_organization'] ? $row['referral'] : $row['employer']; ?></td>
         <td><?php echo format_date("M d, Y", $row['created']) ?></td>
         <td>
-        <?php if ($row['pending']) { ?>Pending<?php } else { ?>
-        <i class="fa fa-check"></i> Processed
-        <?php } ?>
+          <?php echo $row['status'] ?>
         </td>
       </tr>
     <?php } ?>

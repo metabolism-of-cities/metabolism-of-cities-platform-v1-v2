@@ -8,21 +8,22 @@ $sub_page = 2;
 $id = (int)$_GET['id'];
 $project = (int)$_GET['project'];
 
-$info = $db->record("SELECT c.*, t.name AS type
+$info = $db->record("SELECT c.*, t.name AS type, o.status AS status_name
 FROM mfa_contacts c 
-LEFT JOIN mfa_contacts_types t ON c.type = t.id
+  LEFT JOIN mfa_contacts_types t ON c.type = t.id
+  JOIN mfa_status_options o ON c.status = o.id
 WHERE c.id = $id AND c.dataset = $project");
 
 if (!count($info)) {
   die("This contact was not found");
 }
 
-if ($_GET['processed']) {
-  $db->query("UPDATE mfa_contacts SET pending = 0 WHERE id = $id");
-  header("Location: " . URL . "omat/$project/viewcontact/$id");
-  exit();
-} elseif ($_GET['unprocessed']) {
-  $db->query("UPDATE mfa_contacts SET pending = 1 WHERE id = $id");
+if ($_GET['status']) {
+  $status = (int)$_GET['status'];
+  $post = array(
+    'status' => $status,
+  );
+  $db->update("mfa_contacts",$post,"id = $id");
   header("Location: " . URL . "omat/$project/viewcontact/$id");
   exit();
 }
@@ -85,6 +86,8 @@ WHERE l.contact = $id ORDER BY end DESC");
 $flags = $db->query("SELECT *,
   (SELECT COUNT(*) FROM mfa_contacts_flags WHERE contact = $id AND flag = mfa_special_flags.id) AS active
 FROM mfa_special_flags ORDER BY name");
+
+$status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -215,16 +218,24 @@ FROM mfa_special_flags ORDER BY name");
 
 <?php require_once 'include.header.php'; ?>
   
-  <?php if ($info->pending) { ?>
-    <a href="omat/<?php echo $project ?>/viewcontact/<?php echo $info->id ?>/processed" class="btn btn-default right">
-      Contact processed
-    </a>
-  <?php } else { ?>
-    <a href="omat/<?php echo $project ?>/viewcontact/<?php echo $info->id ?>/unprocessed" class="btn btn-success right">
-      <i class="fa fa-check"></i>
-      Contact processed
-    </a>
-  <?php } ?>
+  <div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+      Status: <?php echo $info->status_name; ?>
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+    <?php foreach ($status_options as $row) { ?>
+      <li role="presentation"<?php if ($info->status == $row['id']) { echo ' class="active"'; } ?>>
+        <a role="menuitem" tabindex="-1" href="omat/<?php echo $project ?>/viewcontact/<?php echo $id ?>/status/<?php echo $row['id'] ?>">
+          <?php if ($row['id'] == $info->status) { ?>
+            <i class="fa fa-check"></i>
+          <?php } ?>
+          <?php echo $row['status'] ?>
+        </a>
+      </li>
+    <?php } ?>
+    </ul>
+  </div>
 
   <?php foreach ($flags as $row) { ?>
     <a href="omat/<?php echo $project ?>/viewcontact/<?php echo $info->id ?>/<?php echo $row['active'] ? "unflag" : "flag" ?>/<?php echo $row['id'] ?>" class="btn right <?php echo $row['active'] ? 'btn-success' : 'btn-default' ?>">

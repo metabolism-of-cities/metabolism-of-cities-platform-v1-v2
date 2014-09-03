@@ -413,3 +413,76 @@ COMMENT=''; -- 0.671 s
 
 ALTER TABLE `mfa_files`
 ADD FOREIGN KEY (`source`) REFERENCES `mfa_sources` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.509 s
+
+ALTER TABLE `mfa_contacts`
+ADD `status` enum('pending','processed','awaiting_response','discarded') NOT NULL DEFAULT 'pending',
+COMMENT=''; -- 0.924 s
+
+ALTER TABLE `mfa_sources`
+ADD `status` enum('pending','processed','awaiting_response','discarded') NOT NULL DEFAULT 'pending',
+COMMENT=''; -- 0.924 s
+
+UPDATE mfa_contacts SET status = 'processed' WHERE pending = 0;
+UPDATE mfa_sources SET status = 'processed' WHERE pending = 0;
+
+ALTER TABLE `mfa_contacts`
+DROP `pending`,
+COMMENT=''; -- 0.390 s
+
+ALTER TABLE `mfa_sources`
+DROP `pending`,
+COMMENT=''; -- 0.390 s
+
+CREATE TABLE `mfa_status_options` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `status` varchar(255) NOT NULL
+) COMMENT='' ENGINE='InnoDB'; -- 0.342 s
+
+INSERT INTO `mfa_status_options` (`status`)
+VALUES ('Pending'); -- 0.247 s
+
+INSERT INTO `mfa_status_options` (`status`)
+VALUES ('Processed'); -- 0.109 s
+
+INSERT INTO `mfa_status_options` (`status`)
+VALUES ('Awaiting response'); -- 0.128 s
+
+INSERT INTO `mfa_status_options` (`status`)
+VALUES ('Meeting scheduled'); -- 0.111 s
+
+INSERT INTO `mfa_status_options` (`status`)
+VALUES ('Discarded'); -- 0.122 s
+
+ALTER TABLE `mfa_contacts`
+CHANGE `status` `status` varchar(255) COLLATE 'utf8_unicode_ci' NOT NULL DEFAULT 'pending' AFTER `created`,
+COMMENT=''; -- 0.928 s
+
+ALTER TABLE `mfa_sources`
+CHANGE `status` `status` varchar(255) COLLATE 'utf8_unicode_ci' NOT NULL DEFAULT 'pending' AFTER `created`,
+COMMENT=''; -- 0.928 s
+
+UPDATE mfa_contacts SET status = 1 WHERE status = 'pending';
+UPDATE mfa_sources SET status = 1 WHERE status = 'pending';
+
+UPDATE mfa_contacts SET status = 2 WHERE status = 'processed';
+UPDATE mfa_sources SET status = 2 WHERE status = 'processed';
+
+ALTER TABLE `mfa_contacts`
+CHANGE `status` `status` int unsigned NOT NULL DEFAULT '1' AFTER `created`,
+COMMENT=''; -- 0.426 s
+
+ALTER TABLE `mfa_sources`
+CHANGE `status` `status` int unsigned NOT NULL DEFAULT '1' AFTER `created`,
+COMMENT=''; -- 0.426 s
+
+ALTER TABLE `mfa_sources`
+ADD INDEX `status` (`status`); -- 0.279 s
+
+ALTER TABLE `mfa_contacts`
+ADD INDEX `status` (`status`); -- 0.279 s
+
+ALTER TABLE `mfa_sources`
+ADD FOREIGN KEY (`status`) REFERENCES `mfa_status_options` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE; -- 0.427 s
+
+ALTER TABLE `mfa_contacts`
+ADD FOREIGN KEY (`status`) REFERENCES `mfa_status_options` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE; -- 0.427 s
