@@ -38,7 +38,7 @@ if ($_POST) {
     'abstract' => html($_POST['abstract']),
     'link' => html($_POST['link']),
     'source' => (int)$_POST['source'],
-    'open_access' => is_numeric($_POST['open_access']) ? (int)$_POST['open_access'] : "NULL",
+    'open_access' => is_numeric($_POST['open_access']) ? (int)$_POST['open_access'] : NULL,
     'editor_comments' => html($_POST['editor_comments']),
   );
   $db->update("papers",$post,"id = $id");
