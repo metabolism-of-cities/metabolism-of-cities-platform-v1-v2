@@ -63,7 +63,7 @@ $page = 4;
     <li>For each of the <a href="publications/collections">collections</a>, provide a more detailed overview of what kind of content
     can be found and what the collection means.</li>
     <li>There are some specific lists and websites that can provide many useful references. They are ready to be entered into the system!
-    Two useful sources are:
+    Some especially useful sources are:
     <ul>
       <li>
         List of papers related to STAN available on the <a
@@ -71,9 +71,20 @@ $page = 4;
         be very useful to create a STAN tag and add all of these publications to
         the database. 
       </li>
-        <li>The list of <a href="https://sites.google.com/site/ensap758/tanikawa/paper">
-        publications by Hiroki Tanikawa</a> contain many MFA-related resources! It would be an added bonus if someone who speaks Japanese could
-        enter the Japanese publications (both in Japanese and English would be great!).</li>
+      <li>
+        The list of <a
+        href="https://sites.google.com/site/ensap758/tanikawa/paper">
+        publications by Hiroki Tanikawa</a> contains many MFA-related resources!
+        It would be an added bonus if someone who speaks Japanese could enter
+        the Japanese publications (both in Japanese and English would be
+        great!).
+      </li>
+      <li>
+        The in-depth <a href="http://mfa-tools.net/publication/174">review of
+        urban metabolism assessment tools</a> prepared by UNEP is full of
+        references and contains a long list of urban and urban-region MFA
+        studies that have been undertaken. 
+      </li>
     </ul>
   </li>
   </ul>
