@@ -488,6 +488,9 @@ if ($_GET['file-deleted']) {
           <a href="omat/<?php echo $project ?>/download/<?php echo $row['id'] ?>">
             <?php echo $row['name'] ?>
           </a>
+          <?php if ($row['url']) { ?>
+            <a href="<?php echo $row['url'] ?>" title="Link to website"><i class="fa fa-link"></i></a>
+          <?php } ?>
         <?php } elseif ($row['url']) { ?>
           <a href="<?php echo $row['url'] ?>"><?php echo $row['name'] ?></a>
         <?php } else { ?>
