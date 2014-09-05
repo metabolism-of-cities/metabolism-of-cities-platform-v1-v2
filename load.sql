@@ -486,3 +486,17 @@ ADD FOREIGN KEY (`status`) REFERENCES `mfa_status_options` (`id`) ON DELETE REST
 
 ALTER TABLE `mfa_contacts`
 ADD FOREIGN KEY (`status`) REFERENCES `mfa_status_options` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE; -- 0.427 s
+
+ALTER TABLE `mfa_sources_flags`
+DROP FOREIGN KEY `mfa_sources_flags_ibfk_1`; -- 0.271 s
+
+ALTER TABLE `mfa_sources_flags`
+CHANGE `source` `source` int unsigned NOT NULL AFTER `id`,
+COMMENT=''; -- 0.629 s
+
+ALTER TABLE `mfa_sources_flags`
+ADD FOREIGN KEY (`source`) REFERENCES `mfa_sources` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.467 s
+
+ALTER TABLE `mfa_contacts_flags`
+DROP FOREIGN KEY `mfa_contacts_flags_ibfk_1`,
+ADD FOREIGN KEY (`contact`) REFERENCES `mfa_contacts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.405 s

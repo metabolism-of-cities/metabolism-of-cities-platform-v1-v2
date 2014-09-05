@@ -14,22 +14,22 @@ if ($_POST['flag']) {
 }
 
 if ($_GET['random-contact']) {
-  $contact = $db->query("SELECT * FROM mfa_contacts WHERE dataset = $project AND pending = 1 ORDER BY RAND() LIMIT 1");
+  $contact = $db->query("SELECT * FROM mfa_contacts WHERE dataset = $project AND status = 1 ORDER BY RAND() LIMIT 1");
   if ($contact->id) {
     header("Location: " . URL . "omat/$project/viewcontact/{$contact->id}");
     exit();
   }
 }
 if ($_GET['random-source']) {
-  $source = $db->query("SELECT * FROM mfa_sources WHERE dataset = $project AND pending = 1 ORDER BY RAND() LIMIT 1");
+  $source = $db->query("SELECT * FROM mfa_sources WHERE dataset = $project AND status = 1 ORDER BY RAND() LIMIT 1");
   if ($source->id) {
     header("Location: " . URL . "omat/$project/viewsource/{$source->id}");
     exit();
   }
 }
 
-$contacts = $db->query("SELECT * FROM mfa_contacts WHERE dataset = $project AND pending = 1 $sql_contacts ORDER BY created");
-$sources = $db->query("SELECT * FROM mfa_sources WHERE dataset = $project AND pending = 1 $sql_sources ORDER BY created");
+$contacts = $db->query("SELECT * FROM mfa_contacts WHERE dataset = $project AND status = 1 $sql_contacts ORDER BY created");
+$sources = $db->query("SELECT * FROM mfa_sources WHERE dataset = $project AND status = 1 $sql_sources ORDER BY created");
 
 $flags = $db->query("SELECT * FROM mfa_special_flags ORDER BY name");
 
@@ -75,14 +75,12 @@ $flags = $db->query("SELECT * FROM mfa_special_flags ORDER BY name");
         <th class="long">Name</th>
         <th>Created</th>
         <th>Edit</th>
-        <th>Status</th>
       </tr>
     <?php foreach ($sources as $row) { ?>
       <tr>
         <td><a href="omat/<?php echo $project ?>/viewsource/<?php echo $row['id'] ?>"><?php echo $row['name'] ?></a></td>
         <td><?php echo format_date("M d, Y", $row['created']) ?></td>
         <td><a href="omat/<?php echo $project ?>/source/<?php echo $row['id'] ?>">Edit</a></td>
-        <td><?php echo $row['pending'] ? 'Pending' : 'Processed'; ?></td>
       </tr>
     <?php } ?>
     </table>
@@ -98,14 +96,12 @@ $flags = $db->query("SELECT * FROM mfa_special_flags ORDER BY name");
         <th class="long">Name</th>
         <th>Created</th>
         <th>Edit</th>
-        <th>Status</th>
       </tr>
     <?php foreach ($contacts as $row) { ?>
       <tr>
         <td><a href="omat/<?php echo $project ?>/viewcontact/<?php echo $row['id'] ?>"><?php echo $row['name'] ?></a></td>
         <td><?php echo format_date("M d, Y", $row['created']) ?></td>
         <td><a href="omat/<?php echo $project ?>/contact/<?php echo $row['id'] ?>">Edit</a></td>
-        <td><?php echo $row['pending'] ? 'Pending' : 'Processed'; ?></td>
       </tr>
     <?php } ?>
     </table>

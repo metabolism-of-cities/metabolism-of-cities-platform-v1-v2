@@ -13,7 +13,7 @@ if ($_POST['action'] == 'addcontact') {
     'organization' => (int)$_POST['organization'],
     'works_for_referral_organization' => (int)$_POST['works_for_referral_organization'],
     'dataset' => $project,
-    'pending' => 1,
+    'status' => 1,
   );
   $db->insert("mfa_contacts",$post);
   $id = $db->lastInsertId();
@@ -36,7 +36,7 @@ if ($_POST['action'] == 'addsource') {
   $post = array(
     'name' => html($_POST['name']),
     'dataset' => $project,
-    'pending' => 1,
+    'status' => 1,
   );
   $db->insert("mfa_sources",$post);
   $id = $db->lastInsertId();
