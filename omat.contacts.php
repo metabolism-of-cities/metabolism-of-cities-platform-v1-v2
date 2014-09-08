@@ -8,8 +8,14 @@ $sub_page = 2;
 $id = $project;
 
 $type = (int)$_GET['type'];
+$status = (int)$_GET['status'];
 
 $sql = $type ? " AND c.type = $type" : false;
+if ($status) {
+  $sql .= " AND c.status = $status";
+  $status_name = $db->record("SELECT * FROM mfa_status_options WHERE id = $status");
+  $type_sql = "AND mfa_contacts.status = $status";
+}
 
 $list = $db->query("SELECT c.*, t.name AS type, o.status,
   (SELECT name FROM mfa_leads
@@ -23,16 +29,20 @@ WHERE c.dataset = $id $sql
 ");
 
 $types = $db->query("SELECT *,
-  (SELECT COUNT(*) FROM mfa_contacts WHERE type = mfa_contacts_types.id) as total
+  (SELECT COUNT(*) FROM mfa_contacts WHERE type = mfa_contacts_types.id $type_sql) as total
 FROM mfa_contacts_types WHERE dataset = $id ORDER BY name");
 
-$total = $db->record("SELECT COUNT(*) AS total FROM mfa_contacts WHERE dataset = $id");
-$unclassified = $db->record("SELECT COUNT(*) AS total FROM mfa_contacts WHERE dataset = $id AND type IS NULL");
+foreach ($types as $row) {
+  $overall_total += $row['total'];
+}
+
+$unclassified = $db->record("SELECT COUNT(*) AS total FROM mfa_contacts WHERE dataset = $id AND type IS NULL $type_sql");
 
 if ($_GET['deleted']) {
   $print = "The contact has been deleted";
 }
 
+$status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,7 +52,7 @@ if ($_GET['deleted']) {
     <style type="text/css">
     table {width:100%;table-layout: fixed;}
     th,td{ white-space:nowrap; overflow:hidden; text-overflow: ellipsis; }
-    a.right{float:right}
+    .right{float:right;margin-left:6px;}
     .table > tbody > tr > th{border-top:0}
     .row-name{width:auto}
     .row-employer{width:200px}
@@ -56,6 +66,34 @@ if ($_GET['deleted']) {
 
   <a href="omat/<?php echo $id ?>/contact/0" class="btn btn-success right">Add Contact</a>
 
+  <div class="dropdown right">
+    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+      <?php echo $_GET['status'] ? "Status: <strong>" . $status_name->status . "</strong>" : 'Filter by Status'; ?>
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+      <li role="presentation"<?php if (!$_GET['status']) { echo ' class="active"'; } ?>>
+        <a role="menuitem" tabindex="-1" href="omat.contacts.php?project=<?php echo $id ?>&amp;type=<?php echo $type ?>">
+          <?php if (!$_GET['status']) { ?>
+            <i class="fa fa-check"></i>
+          <?php } ?>
+          All
+        </a>
+      </li>
+    <?php foreach ($status_options as $row) { ?>
+      <li role="presentation"<?php if ($_GET['status'] == $row['id']) { echo ' class="active"'; } ?>>
+        <a role="menuitem" tabindex="-1" href="omat.contacts.php?project=<?php echo $id ?>&amp;type=<?php echo $type ?>&amp;status=<?php echo $row['id'] ?>">
+          <?php if ($row['id'] == $_GET['status']) { ?>
+            <i class="fa fa-check"></i>
+          <?php } ?>
+          <?php echo $row['status'] ?>
+        </a>
+      </li>
+    <?php } ?>
+    </ul>
+  </div>
+
+
   <h1>Contacts</h1>
 
   <ol class="breadcrumb">
@@ -67,10 +105,10 @@ if ($_GET['deleted']) {
 
   <?php if (count($types)) { ?>
     <ul class="nav nav-tabs" role="tablist">
-      <li class="<?php echo !$_GET['type'] ? 'active' : 'regular'; ?>"><a href="omat/<?php echo $project ?>/contacts">All (<?php echo $total->total ?>)</a></li>
+      <li class="<?php echo !$_GET['type'] ? 'active' : 'regular'; ?>"><a href="omat.contacts.php?project=<?php echo $id ?>&amp;status=<?php echo $status ?>">All (<?php echo $overall_total+$unclassified->total ?>)</a></li>
     <?php foreach ($types as $row) { ?>
-      <li class="<?php echo $_GET['type'] == $row['id'] ? 'active' : 'regular'; ?>">
-        <a href="omat/<?php echo $project ?>/contacts/type/<?php echo $row['id'] ?>">
+      <li class="<?php if ($_GET['type'] == $row['id']) { echo 'active'; } elseif (!$row['total']) { echo 'disabled'; } else { echo 'regular'; } ?>">
+        <a href="omat.contacts.php?project=<?php echo $id ?>&amp;status=<?php echo $status ?>&amp;type=<?php echo $row['id'] ?>">
           <?php echo $row['name'] ?> (<?php echo $row['total'] ?>)
         </a>
       </li>

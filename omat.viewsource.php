@@ -150,7 +150,7 @@ $status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
     <style type="text/css">
     dd { margin-bottom:10px; }
     .form-inline select.small{width:140px}
-    a.right{float:right;margin-left:5px}
+    div.right,a.right{float:right;margin-left:5px}
     h2{font-size:1.3em;}
     #help{display:none;}
     .leads{margin-top:30px}
@@ -264,7 +264,7 @@ $status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
 
 <?php require_once 'include.header.php'; ?>
 
-  <div class="dropdown">
+  <div class="dropdown right">
     <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
       Status: <?php echo $info->status_name; ?>
       <span class="caret"></span>
@@ -327,9 +327,6 @@ $status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
       <dd><?php echo $info->details ?></dd>
     <?php } ?>
 
-    <dt>Status</dt>
-    <dd><?php echo $info->pending ? "Pending" : "Processed" ?></dd>
-
     <dt>Added</dt>
     <dd><?php echo format_date("M d, Y", $info->created) ?></dd>
 
@@ -387,7 +384,7 @@ $status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
         <div class="leads list-group" id="contactleads">
           <?php foreach ($contact_leads as $row) { ?>
             <a 
-              class="list-group-item<?php if (!$row['pending']) { echo ' list-group-item-success'; } ?>" 
+              class="list-group-item<?php if ($row['status'] == 2) { echo ' list-group-item-success'; } elseif ($row['status'] == 5) { echo ' list-group-item-danger'; } ?>" 
               href="omat/<?php echo $project ?>/viewcontact/<?php echo $row['id'] ?>">
               <i class="fa fa-<?php echo $row['organization'] ? 'building' : 'user' ?>"></i>
               <?php echo $row['name'] ?>
@@ -413,7 +410,7 @@ $status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
         <div class="leads list-group" id="sourceleads">
           <?php foreach ($sources_leads as $row) { ?>
             <a 
-              class="list-group-item<?php if (!$row['pending']) { echo ' list-group-item-success'; } ?>" 
+              class="list-group-item<?php if ($row['status'] == 2) { echo ' list-group-item-success'; } elseif ($row['status'] == 5) { echo ' list-group-item-danger'; } ?>" 
               href="omat/<?php echo $project ?>/viewsource/<?php echo $row['id'] ?>">
               <?php echo $row['name'] ?>
             </a>
