@@ -88,3 +88,19 @@ body {
 [data-toggle="buttons"] > .btn > input[type="checkbox"] {
     clip: rect(1px 1px 1px 1px);
 }
+table.ellipsis {
+  border:1px solid #ccc; 
+  width:100%;
+  table-layout: fixed;
+}
+.ellipsis th, .ellipsis td { 
+  max-width:100px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow: ellipsis; 
+  width:100px;
+}
+.ellipsis th.large, .ellipsis td.large { 
+  max-width:300px;
+  width:300px;
+}

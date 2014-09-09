@@ -92,7 +92,7 @@ $remove_dashes = array("-" => "");
     ul#tags ul{margin-bottom:20px}
     ul#tags ul li{display:inline-block}
     ul#tags>li{font-weight:700}
-    .right{float:right}
+    .right{float:right;margin-left:5px}
     .alert-warning{margin-top:40px}
     .status-deleted{opacity:0.5}
     <?php if (!$admin_mode) { ?>
@@ -133,10 +133,9 @@ $remove_dashes = array("-" => "");
 
 <?php require_once 'include.header.php'; ?>
 
-<h1><?php echo $info->title ?></h1>
-
 <?php if ($admin_mode) { ?>
   <a href="publication.view.php?id=<?php echo $id ?>&amp;test_mode=1" class="btn btn-primary right">View as user</a>
+  <a href="regional.edit.php?new=<?php echo $id ?>" class="btn btn-primary right">Add to regional database</a>
   <a href="publication.edit.php?id=<?php echo $id ?>&amp;hash=<?php echo $hash ?>" class="btn btn-primary right">Edit</a>
   <?php if ($info->status == 'active') { ?>
     <a href="publication.view.php?id=<?php echo $id ?>&amp;hash=<?php echo $hash ?>&amp;status=deleted" class="btn btn-danger right">Delete</a>
@@ -161,6 +160,8 @@ $remove_dashes = array("-" => "");
   </div>
 
 <?php } else { ?>
+
+<h1><?php echo $info->title ?></h1>
 
   <?php if ($print) { echo "<div class=\"alert alert-success\">$print</div>"; } ?>
 

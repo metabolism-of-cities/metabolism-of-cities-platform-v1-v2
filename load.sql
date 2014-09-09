@@ -500,3 +500,10 @@ ADD FOREIGN KEY (`source`) REFERENCES `mfa_sources` (`id`) ON DELETE CASCADE ON 
 ALTER TABLE `mfa_contacts_flags`
 DROP FOREIGN KEY `mfa_contacts_flags_ibfk_1`,
 ADD FOREIGN KEY (`contact`) REFERENCES `mfa_contacts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.405 s
+
+CREATE TABLE `regional` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `name` varchar(255) NOT NULL,
+  `paper` int(11) NOT NULL,
+  FOREIGN KEY (`paper`) REFERENCES `papers` (`id`)
+) COMMENT='' ENGINE='InnoDB'; -- 0.435 s
