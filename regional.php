@@ -49,7 +49,7 @@ if ($_GET['message'] == 'saved') {
     </tr>
   <?php foreach ($list as $row) { ?>
     <tr>
-      <td><a href="regionalstudy/<?php echo $row['id'] ?>"><?php echo $row['name'] ?></a></td>
+      <td><a href="regional.edit.php?id=<?php echo $row['id'] ?>"><?php echo $row['name'] ?></a></td>
       <td><?php echo $row['year'] ?></td>
       <td><a href="publication/<?php echo $row['paper'] ?>"><?php echo $row['title'] ?></a></td>
       <td><?php echo $row['author'] ?></td>

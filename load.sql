@@ -507,3 +507,7 @@ CREATE TABLE `regional` (
   `paper` int(11) NOT NULL,
   FOREIGN KEY (`paper`) REFERENCES `papers` (`id`)
 ) COMMENT='' ENGINE='InnoDB'; -- 0.435 s
+
+ALTER TABLE `mfa_contacts`
+CHANGE `created` `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `employer`,
+COMMENT=''; -- 0.693 s
