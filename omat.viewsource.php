@@ -41,9 +41,15 @@ if ($_POST['fileform']) {
   if ($_FILES['file']['name']) {
     if (!$_FILES['file']['error']) {
       $location = UPLOAD_PATH . "$project.$id.$file_id";
+      if (!is_writable(UPLOAD_PATH)) {
+        $error = "Directory is not writeable.";
+        echo $error;
+        die();
+      }
       move_uploaded_file($_FILES['file']['tmp_name'], $location);
     } else {
       $error = "File could not be uploaded.";
+      echo $error;
       die();
     }
   }
@@ -462,7 +468,7 @@ $status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
         <div class="leads list-group" id="activitylist">
           <?php $totaltime = 0; foreach ($interaction as $row) { $totaltime += $row['time']; ?>
             <a 
-              class="list-group-item info-warning"
+              class="list-group-item<?php if (!$row['end']) { echo ' list-group-item-warning'; } ?>"
               href="omat/<?php echo $project ?>/viewactivity/<?php echo $row['id'] ?>">
               <?php if (!$row['end']) { ?>
                 <i class="fa fa-clock-o"></i> 
@@ -505,7 +511,7 @@ $status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
         <th>File</th>
         <th>Type</th>
         <th>Uploaded</th>
-        <th>Delete</th>
+        <th>Actions</th>
       </tr>
     <?php foreach ($files as $row) { ?>
       <tr>
@@ -525,7 +531,9 @@ $status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
         </td>
         <td><?php echo $row['type'] ?></td>
         <td><?php echo format_date("M d, Y", $row['uploaded']) ?></td>
-        <td><a class="btn btn-danger" href="omat/<?php echo $project ?>/viewsource/<?php echo $id ?>/deletefile/<?php echo $row['id'] ?>" onclick="javascript:return confirm('Are you sure?')">Delete</a></td>
+        <td>
+        <a class="btn btn-primary" href="omat/<?php echo $project ?>/file/<?php echo $row['id'] ?>">Edit</a>
+        <a class="btn btn-danger" href="omat/<?php echo $project ?>/viewsource/<?php echo $id ?>/deletefile/<?php echo $row['id'] ?>" onclick="javascript:return confirm('Are you sure?')">Delete</a></td>
       </tr>
     <?php } ?>
     </table>

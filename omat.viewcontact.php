@@ -428,7 +428,7 @@ $status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
         <div class="leads list-group" id="activitylist">
           <?php $totaltime = 0; foreach ($interaction as $row) { $totaltime += $row['time']; ?>
             <a 
-              class="list-group-item info-warning"
+              class="list-group-item<?php if (!$row['end']) { echo ' list-group-item-warning'; } ?>"
               href="omat/<?php echo $project ?>/viewactivity/<?php echo $row['id'] ?>">
               <?php if (!$row['end']) { ?>
                 <i class="fa fa-clock-o"></i> 
