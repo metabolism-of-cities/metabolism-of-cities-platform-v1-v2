@@ -48,7 +48,7 @@ if ($admin_mode) {
   }
   if ($_GET['status']) {
     $status = mysql_clean($_GET['status']);
-    $db->query("UPDATE papers SET status = $status WHERE id = $id");
+    $db->query("UPDATE papers SET status = '$status' WHERE id = $id");
     header("Location: " . URL . "publication.view.php?id=$id&hash=$hash&statuschange=true");
     exit();
   }
