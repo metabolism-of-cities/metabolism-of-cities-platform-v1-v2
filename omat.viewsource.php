@@ -140,6 +140,10 @@ if ($_GET['file-deleted']) {
   $print = "File has been saved";
 }
 
+if ($_GET['activity-deleted']) {
+  $print = "Activity has been deleted";
+}
+
 $status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
 ?>
 <!DOCTYPE html>
@@ -157,6 +161,8 @@ $status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
     #sourceleads{margin-top:53px}
     #error{display:none}
     #delete{margin-top:30px;float:right}
+    #activitylist .makesmall{font-size:11px;opacity:0.7}
+    .badge{margin-left:8px}
     </style>
     <script type="text/javascript">
     $(function(){
@@ -454,18 +460,30 @@ $status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
         </form>
 
         <div class="leads list-group" id="activitylist">
-          <?php foreach ($interaction as $row) { ?>
+          <?php $totaltime = 0; foreach ($interaction as $row) { $totaltime += $row['time']; ?>
             <a 
               class="list-group-item info-warning"
               href="omat/<?php echo $project ?>/viewactivity/<?php echo $row['id'] ?>">
               <?php if (!$row['end']) { ?>
                 <i class="fa fa-clock-o"></i> 
+              <?php } else { ?>
+                <span class="badge"><?php echo format_date("M d", $row['end']) ?></span>
               <?php } ?>
               <?php echo $row['name'] ?>
               <?php if ($row['end']) { ?>
-              (<?php echo $row['time'] ?> min)
-              <?php } else { ?>(<em>ongoing</em>)<?php } ?>
+              <span class="makesmall"><?php echo $row['time'] ?> min</span>
+              <?php } else { ?><em class="makesmall">ongoing</em><?php } ?>
             </a>
+          <?php } ?>
+          <?php if (count($interaction)) { ?>
+          <a
+            class="list-group-item list-group-item-info"
+            href="omat/<?php echo $project ?>/activityreport/<?php echo $id ?>/source"
+          >
+            <strong>Total time: 
+            <?php echo formatTime($totaltime) ?>
+            </strong>
+          </a>
           <?php } ?>
         </div>
 

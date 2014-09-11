@@ -30,6 +30,20 @@ if (!count($info)) {
   die("Activity not found");
 }
 
+if ($_GET['delete']) {
+  $db->query("DELETE FROM mfa_activities_log WHERE id = $id");
+  if ($info->contact) {
+    header("Location: " . URL . "omat/$project/viewcontact/{$info->contact}/activity-deleted");
+    exit();
+  } else {
+    header("Location: " . URL . "omat/$project/viewsource/{$info->source}/activity-deleted");
+    exit();
+  }
+}
+
+if ($_GET['saved']) {
+  $print = "Changes have been saved";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,13 +51,16 @@ if (!count($info)) {
     <?php echo $header ?>
     <title>Activity # <?php echo $id ?> | <?php echo $info->source ? $sourceinfo-> name : $contactinfo->name ?> | <?php echo SITENAME ?></title>
     <style type="text/css">
-    a.right{float:right}
+    a.right{float:right;margin-left:5px}
     </style>
   </head>
 
   <body>
 
 <?php require_once 'include.header.php'; ?>
+
+  <a href="omat/<?php echo $project ?>/activity/<?php echo $info->id ?>" class="btn btn-primary right">Edit</a>
+  <a href="omat/<?php echo $project ?>/viewactivity/<?php echo $info->id ?>/delete" class="btn btn-danger right" onclick="javascript:return confirm('Are you sure?')">Delete</a>
 
   <h1>Activity Details</h1>
 
@@ -52,17 +69,20 @@ if (!count($info)) {
     <?php if ($info->source) { ?>
       <li><a href="omat/<?php echo $project ?>/sources">Sources</a></li>
       <li><a href="omat/<?php echo $project ?>/viewsource/<?php echo $info->source ?>"><?php echo $sourceinfo->name ?></a></li>
-      <li class="active">Activity Details</li>
     <?php } else { ?>
       <li><a href="omat/<?php echo $project ?>/contacts">Sources</a></li>
       <li><a href="omat/<?php echo $project ?>/viewcontact/<?php echo $info->contact ?>"><?php echo $contactinfo->name ?></a></li>
-      <li class="active">Activity Details</li>
     <?php } ?>
+    <li class="active">Activity #<?php echo $id ?></li>
   </ol>
 
   <?php if ($print) { echo "<div class=\"alert alert-success\">$print</div>"; } ?>
 
   <dl class="dl-horizontal">
+
+    <dt>Activity ID</dt>
+    <dd>#<?php echo $id ?></dd>
+
     <?php if ($info->contact) { ?>
       <dt>Contact</dt>
       <dd><a href="omat/<?php echo $project ?>/viewcontact/<?php echo $info->contact ?>"><?php echo $contactinfo->name ?></a></dd>
@@ -70,9 +90,9 @@ if (!count($info)) {
       <dt>Source</dt>
       <dd><a href="omat/<?php echo $project ?>/viewsource/<?php echo $info->source ?>"><?php echo $sourceinfo->name ?></a></dd>
     <?php } ?>
-      
-      <dt>Type</dt>
-      <dd><?php echo $info->type ?></dd>
+
+    <dt>Type</dt>
+    <dd><?php echo $info->type ?></dd>
 
     <?php if ($info->end) { ?>
       <dt>Start</dt>
@@ -87,8 +107,10 @@ if (!count($info)) {
       $seconds = $now-$start;
       $minutes = round($seconds/60);
     ?>
-      <dt>Start</dt>
-      <dd><?php echo $minutes ?> minutes ago</dd>
+
+    <dt>Start</dt>
+    <dd><?php echo $minutes ?> minutes ago</dd>
+
     <?php } ?>
     
   </dl>
