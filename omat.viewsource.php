@@ -169,6 +169,8 @@ $status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
     #delete{margin-top:30px;float:right}
     #activitylist .makesmall{font-size:11px;opacity:0.7}
     .badge{margin-left:8px}
+    .ellipsis th.short{width:90px;max-width:90px}
+    .ellipsis td,.ellipsis th{width:200px;max-width:200px}
     </style>
     <script type="text/javascript">
     $(function(){
@@ -506,12 +508,12 @@ $status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
 
     <?php if (count($files)) { ?>
 
-    <table class="table table-striped">
+    <table class="table table-striped ellipsis">
       <tr>
-        <th>File</th>
+        <th class="long">File</th>
         <th>Type</th>
-        <th>Uploaded</th>
-        <th>Actions</th>
+        <th class="short">Uploaded</th>
+        <th class="short">Actions</th>
       </tr>
     <?php foreach ($files as $row) { ?>
       <tr>
