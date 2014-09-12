@@ -43,6 +43,8 @@ $status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
 
   <a href="omat/<?php echo $id ?>/source/0" class="btn btn-success right">Add Source</a>
 
+  <a href="omat/<?php echo $id ?>/files" class="btn btn-default right">View files</a>
+
   <div class="dropdown right">
     <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
       <?php echo $_GET['status'] ? "Status: <strong>" . $status_name->status . "</strong>" : 'Filter by Status'; ?>
