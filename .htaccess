@@ -223,6 +223,7 @@ AddDefaultCharset utf-8
     RewriteRule ^publication/([0-9]+)/?$ publication.view.php?id=$1
     RewriteRule ^publication/([0-9]+)/?$ publication.php?id=$1
     RewriteRule ^info/([0-9]+)/(.+)/?$ content.php?id=$1
+    RewriteRule ^analysis/([0-9]+)/([0-9]+)/?$ analysis.case.php?id=$1&type=$2
     RewriteRule ^page/(.+)/(.+)?$ $1.php?message=$2
     RewriteRule ^page/(.+)/?$ $1.php
     RewriteRule ^omat/data-edit/([0-9]+)?$ omat.data-point.php?id=$1

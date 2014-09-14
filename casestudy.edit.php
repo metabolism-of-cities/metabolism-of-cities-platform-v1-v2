@@ -16,10 +16,10 @@ if ($new) {
     'paper' => $new,
     'name' => $info->title,
   );
-  $db->insert("regional",$post);
+  $db->insert("case_studies",$post);
   $id = $db->lastInsertId();
   
-  header("Location: " . URL . "regional.edit.php?id=$id");
+  header("Location: " . URL . "casestudy.edit.php?id=$id");
   exit();
 }
 
@@ -27,12 +27,12 @@ if ($_POST) {
   $post = array(
     'name' => html($_POST['name']),
   );
-  $db->update("regional",$post,"id = $id");
-  header("Location: " . URL . "page/regional/saved");
+  $db->update("case_studies",$post,"id = $id");
+  header("Location: " . URL . "page/casestudy/saved");
   exit();
 }
 
-$info = $db->record("SELECT * FROM regional WHERE id = $id");
+$info = $db->record("SELECT * FROM case_studies WHERE id = $id");
 
 ?>
 <!DOCTYPE html>

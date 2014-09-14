@@ -90,7 +90,7 @@ foreach ($tag_parents as $row) {
 
 if (LOCAL) {
   $menu[6]['menu'][4] = array('label' => 'Dashboard', 'url' => 'omat/dashboard/1');
-  $menu[5]['menu'][99] = array('label' => 'Regional MFAs', 'url' => 'page/regional');
+  $menu[5]['menu'][99] = array('label' => 'Regional MFAs', 'url' => 'page/casestudy');
 }
 
 function mailadmins($message, $subject, $from = false) {

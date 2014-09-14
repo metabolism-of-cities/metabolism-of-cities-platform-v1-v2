@@ -511,3 +511,57 @@ CREATE TABLE `regional` (
 ALTER TABLE `mfa_contacts`
 CHANGE `created` `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `employer`,
 COMMENT=''; -- 0.693 s
+
+CREATE TABLE `analysis_options_types` (
+  `id` smallint unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `name` varchar(255) NOT NULL
+) COMMENT='' ENGINE='InnoDB'; -- 0.464 s
+
+CREATE TABLE `analysis_options` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `type` smallint(5) unsigned NOT NULL,
+  `name` varchar(255) NOT NULL,
+  FOREIGN KEY (`type`) REFERENCES `analysis_options_types` (`id`) ON DELETE RESTRICT
+) COMMENT='' ENGINE='InnoDB'; -- 0.378 s
+
+CREATE TABLE `analysis` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `result` decimal(10,2) NOT NULL,
+  `option` int(10) unsigned NOT NULL,
+  `paper` int(11) NOT NULL,
+  `year` year NULL,
+  `notes` text NOT NULL,
+  FOREIGN KEY (`option`) REFERENCES `analysis_options` (`id`),
+  FOREIGN KEY (`paper`) REFERENCES `papers` (`id`)
+) COMMENT='' ENGINE='InnoDB'; -- 0.283 s
+
+INSERT INTO `analysis_options_types` (`name`)
+VALUES ('Indicators'); -- 0.147 s
+
+INSERT INTO `analysis_options_types` (`name`)
+VALUES ('Data source comments'); -- 0.140 s
+
+INSERT INTO `analysis_options` (`id`, `type`, `name`) VALUES
+(1,	1,	'DMI per capita'),
+(2,	1,	'TMI per capita'),
+(3,	1,	'TMR per capita'),
+(4,	1,	'DPO per capita'),
+(5,	1,	'TMO per capita'),
+(6,	1,	'DMC per capita'),
+(7,	1,	'TMC per capita'),
+(8,	1,	'PTB per capita'),
+(9,	1,	'NAS per capita'),
+(10,	2,	'Domestic extraction of fossil fuels'),
+(11,	2,	'Domestic extraction of metal ores'),
+(12,	2,	'Domestic extraction of non-metallic minerals'),
+(13,	2,	'Domestic extraction of biomass from agriculture'),
+(14,	2,	'Domestic extraction of biomass from forestry'),
+(15,	2,	'Domestic extraction of biomass from grazing'),
+(16,	2,	'Domestic extraction of biomass – hunting'),
+(17,	2,	'Domestic extraction of biomass – fisheries'),
+(18,	2,	'Imports'),
+(19,	2,	'Exports');
+
+ALTER TABLE `regional`
+RENAME TO `case_studies`,
+COMMENT=''; -- 0.643 s
