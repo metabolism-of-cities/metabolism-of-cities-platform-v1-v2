@@ -74,10 +74,9 @@ if ($admin_mode) {
 }
 
 if ($info->doi) {
-  $type_of_link = strpos("http", $info->doi) > -1 ? "web" : "doi";
+  $type_of_link = strpos($info->doi, "http") > -1 ? "web" : "doi";
   if ($type_of_link == "doi") {
-    $type_of_link = strpos("/", $info->doi) > -1 ? "doi" : "isbn";
-    $type_of_link = strpos(".", $info->doi) > -1 ? "doi" : "isbn";
+    $type_of_link = strpos($info->doi, "/") > -1 ? "doi" : "isbn";
   }
 }
 $remove_dashes = array("-" => "");
