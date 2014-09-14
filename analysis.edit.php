@@ -61,18 +61,18 @@ if ($_POST) {
   <?php if ($type == 1) { ?>
 
     <div class="form-group">
+      <label class="col-sm-2 control-label">Year</label>
+      <div class="col-sm-10">
+        <input class="form-control" type="number" name="year" value="<?php echo $info->year ?>" />
+      </div>
+    </div>
+
+    <div class="form-group">
       <label class="col-sm-2 control-label">Result</label>
       <div class="col-sm-10">
         <input class="form-control" type="text" name="result" value="<?php echo $info->result ?>" />
       </div>
     </div>
-
-      <div class="form-group">
-        <label class="col-sm-2 control-label">Year</label>
-        <div class="col-sm-10">
-          <input class="form-control" type="number" name="year" value="<?php echo $info->year ?>" />
-        </div>
-      </div>
 
     <?php } else { ?>
 

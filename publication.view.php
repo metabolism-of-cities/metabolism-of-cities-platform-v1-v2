@@ -135,7 +135,7 @@ $remove_dashes = array("-" => "");
 
 <?php if ($admin_mode) { ?>
   <a href="publication.view.php?id=<?php echo $id ?>&amp;test_mode=1" class="btn btn-primary right">View as user</a>
-  <a href="regional.edit.php?new=<?php echo $id ?>" class="btn btn-primary right">Add to regional database</a>
+  <a href="casestudy.edit.php?new=<?php echo $id ?>" class="btn btn-primary right">Add to case study database</a>
   <a href="publication.edit.php?id=<?php echo $id ?>&amp;hash=<?php echo $hash ?>" class="btn btn-primary right">Edit</a>
   <?php if ($info->status == 'active') { ?>
     <a href="publication.view.php?id=<?php echo $id ?>&amp;hash=<?php echo $hash ?>&amp;status=deleted" class="btn btn-danger right">Delete</a>

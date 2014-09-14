@@ -16,7 +16,7 @@ $info = $db->record("SELECT * FROM case_studies WHERE id = $id");
 
 $list = $db->query("SELECT *, analysis.id AS analysis_id, analysis_options.id AS id
 FROM analysis_options 
-  LEFT JOIN analysis ON analysis_options.id = analysis.option
+  LEFT JOIN analysis ON analysis_options.id = analysis.option AND analysis.case_study = $id
 WHERE type = $type");
 
 

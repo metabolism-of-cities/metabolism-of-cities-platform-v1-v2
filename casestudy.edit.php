@@ -46,7 +46,7 @@ $info = $db->record("SELECT * FROM case_studies WHERE id = $id");
 
 <?php require_once 'include.header.php'; ?>
 
-  <h1>Edit Regional MFA Study Deails</h1>
+  <h1>Edit Case Study MFA Deails</h1>
 
   <form method="post" class="form form-horizontal">
 
