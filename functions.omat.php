@@ -18,8 +18,8 @@
  */
 
 // checking for minimum PHP version
-if (version_compare(PHP_VERSION, '5.3.7', '<')) {
-    exit("Sorry, Simple PHP Login does not run on a PHP version smaller than 5.3.7 !");
+if (version_compare(PHP_VERSION, '5.3.5', '<')) {
+    exit("Sorry, Simple PHP Login does not run on a PHP version smaller than 5.3.5 !");
 } else if (version_compare(PHP_VERSION, '5.5.0', '<')) {
     // if you are using PHP 5.3 or PHP 5.4 you have to include the password_api_compatibility_library.php
     // (this library adds the PHP 5.5 password hashing functions to older versions of PHP)
@@ -67,8 +67,6 @@ if (!$skip_login && !$no_project_selected) {
 if ($omat_sidebar) {
   $header .= '<link rel="stylesheet" href="css/sidebar.css" />';
 }
-
-// Do an access check here to make sure this user has access. If not, redirect.
 
 $omat_menu = array(
   1 => array(
