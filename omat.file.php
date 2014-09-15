@@ -85,20 +85,30 @@ if ($_POST['fileform']) {
 
     <h2>File information</h2>
 
-    <dl class="dl-horizontal">
-      <dt>Original name</dt>
-      <dd><?php echo $info->original_name ?></dd>
+    <?php if ($info->original_name) { ?>
+      <dl class="dl-horizontal">
 
-      <dt>Filesize</dt>
-      <dd><?php echo number_format($info->size/1024,1) ?> Mb</dd>
+        <dt>Original name</dt>
+        <dd><?php echo $info->original_name ?></dd>
 
-      <dt>Uploaded</dt>
-      <dd><?php echo format_date("r", $info->uploaded) ?></dd>
+        <dt>Filesize</dt>
+        <dd><?php echo number_format($info->size/1024,1) ?> Mb</dd>
 
-      <dt>Type</dt>
-      <dd><?php echo $info->type ?></dd>
+        <dt>Uploaded</dt>
+        <dd><?php echo format_date("r", $info->uploaded) ?></dd>
 
-    </dl>
+        <dt>Type</dt>
+        <dd><?php echo $info->type ?></dd>
+
+      </dl>
+    <?php } else { ?>
+      <dl class="dl-horizontal">
+
+        <dt>Added</dt>
+        <dd><?php echo format_date("r", $info->uploaded) ?></dd>
+
+      </dl>
+    <?php } ?>
 
     <form method="post" class="form form-horizontal" enctype="multipart/form-data">
 

@@ -70,7 +70,7 @@ if ($_GET['saved']) {
       <li><a href="omat/<?php echo $project ?>/sources">Sources</a></li>
       <li><a href="omat/<?php echo $project ?>/viewsource/<?php echo $info->source ?>"><?php echo $sourceinfo->name ?></a></li>
     <?php } else { ?>
-      <li><a href="omat/<?php echo $project ?>/contacts">Sources</a></li>
+      <li><a href="omat/<?php echo $project ?>/contacts">Contacts</a></li>
       <li><a href="omat/<?php echo $project ?>/viewcontact/<?php echo $info->contact ?>"><?php echo $contactinfo->name ?></a></li>
     <?php } ?>
     <li class="active">Activity #<?php echo $id ?></li>

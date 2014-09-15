@@ -37,6 +37,12 @@ if ($_POST) {
   exit();
 }
 
+$referred_contact = $db->record("SELECT 
+  mfa_contacts.*
+FROM mfa_leads
+  JOIN mfa_contacts ON mfa_leads.from_contact = mfa_contacts.id
+WHERE to_contact = $id");
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -92,10 +98,15 @@ if ($_POST) {
       </div>
     </div>
 
+
     <div class="form-group" id="employer">
       <label class="col-sm-2 control-label">Employer</label>
       <div class="col-sm-10">
+      <?php if ($info->works_for_referral_organization) { ?>
+        <span style="position:relative;top:6px"><?php echo $referred_contact->name ?></span>
+      <?php } else { ?>
         <input class="form-control" type="text" name="employer" value="<?php echo $info->employer ?>" />
+      <?php } ?>
       </div>
     </div>
 
