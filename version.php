@@ -1,5 +1,7 @@
 <?php
 require_once 'functions.php';
+$section = 2;
+$page = 7;
 ?>
 <!DOCTYPE html>
 <html lang="en">

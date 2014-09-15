@@ -1,6 +1,6 @@
 <?php
 if (!file_exists('config.php')) {
-  die("Config file not found! Read the readme file to create your configuratino file first");
+  die("Config file not found! Read the readme file to create your configuration file first");
 }
 require_once 'config.php';
 require_once 'class.db.php';
@@ -50,6 +50,7 @@ $menu = array(
       3 => array('label' => 'Team', 'url' => 'page/team'),
       5 => array('label' => 'Contact Us', 'url' => 'page/contact'),
       6 => array('label' => 'Mailing List', 'url' => 'page/mailinglist'),
+      7 => array('label' => 'Version History', 'url' => 'page/version'),
     ),
   ),
   3 => array(
@@ -66,8 +67,8 @@ $menu = array(
     'menu' => array(
       1 => array('label' => 'How it Works', 'url' => 'omat/about'),
       2 => array('label' => 'Create a Project', 'url' => 'omat/add'),
- //     4 => array('label' => 'Dashboard', 'url' => 'omat/dashboard'),
-      3 => array('label' => 'List', 'url' => 'omat/list'),
+      4 => array('label' => 'Dashboard', 'url' => 'page/login'),
+ //     3 => array('label' => 'List', 'url' => 'omat/list'),
     ),
   ),
   5 => array(
@@ -89,7 +90,6 @@ foreach ($tag_parents as $row) {
 }
 
 if (LOCAL) {
-  $menu[6]['menu'][4] = array('label' => 'Dashboard', 'url' => 'omat/dashboard/1');
   $menu[5]['menu'][99] = array('label' => 'Regional MFAs', 'url' => 'page/casestudy');
 }
 

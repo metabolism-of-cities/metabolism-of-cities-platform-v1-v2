@@ -6,19 +6,63 @@
 // If that is not the case, we should define $project BEFORE including
 // this file. 
 
-if (!$project) {
-  $project = $_GET['project'] ? (int)$_GET['project'] : (int)$_GET['id'];
-}
-if (!$project) {
-  die("No project defined");
+/**
+ * A simple, clean and secure PHP Login Script / MINIMAL VERSION
+ * For more versions (one-file, advanced, framework-like) visit http://www.php-login.net
+ *
+ * Uses PHP SESSIONS, modern password-hashing and salting and gives the basic functions a proper login system needs.
+ *
+ * @author Panique
+ * @link https://github.com/panique/php-login-minimal/
+ * @license http://opensource.org/licenses/MIT MIT License
+ */
+
+// checking for minimum PHP version
+if (version_compare(PHP_VERSION, '5.3.7', '<')) {
+    exit("Sorry, Simple PHP Login does not run on a PHP version smaller than 5.3.7 !");
+} else if (version_compare(PHP_VERSION, '5.5.0', '<')) {
+    // if you are using PHP 5.3 or PHP 5.4 you have to include the password_api_compatibility_library.php
+    // (this library adds the PHP 5.5 password hashing functions to older versions of PHP)
+    require_once("login/libraries/password_compatibility_library.php");
 }
 
-$check = $db->record("SELECT id FROM mfa_dataset WHERE id = $project");
-if (!$check->id) {
-  kill("Invalid dataset opened");
+// include the configs / constants for the database connection
+require_once("login/config/db.php");
+
+// load the login class
+require_once("login/classes/Login.php");
+
+// create a login object. when this object is created, it will do all login/logout stuff automatically
+// so this single line handles the entire login process. in consequence, you can simply ...
+$login = new Login();
+
+if ($login->isUserLoggedIn() == true) {
+  $user_id = (int)$_SESSION['user_id'];
+  $permissions = $db->query("SELECT * FROM users_permissions WHERE user = $user_id");
+  foreach ($permissions as $permissionrow) {
+    $authorized = $permissionrow['dataset'] . ",";
+  }
+  $authorized = substr($authorized, 0, -1);
+} elseif (!$skip_login) {
+  header("Location: " . URL . "page/login");
+  exit();
 }
 
-$omat_sidebar = !$disable_sidebar ? true : false;
+if (!$skip_login && !$no_project_selected) {
+  if (!$project) {
+    $project = $_GET['project'] ? (int)$_GET['project'] : (int)$_GET['id'];
+  }
+  if (!$project) {
+    die("No project defined");
+  }
+
+  $check = $db->record("SELECT id FROM mfa_dataset WHERE id = $project AND id IN ($authorized)");
+  if (!$check->id) {
+    kill("Invalid dataset opened");
+  }
+  $omat_sidebar = !$disable_sidebar ? true : false;
+}
+
 
 if ($omat_sidebar) {
   $header .= '<link rel="stylesheet" href="css/sidebar.css" />';

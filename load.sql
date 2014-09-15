@@ -554,9 +554,9 @@ INSERT INTO `analysis_options` (`id`, `type`, `name`) VALUES
 (10,	2,	'Domestic extraction of fossil fuels'),
 (11,	2,	'Domestic extraction of metal ores'),
 (12,	2,	'Domestic extraction of non-metallic minerals'),
-(13,	2,	'Domestic extraction of biomass from agriculture'),
-(14,	2,	'Domestic extraction of biomass from forestry'),
-(15,	2,	'Domestic extraction of biomass from grazing'),
+(13,	2,	'Domestic extraction of biomass – agriculture'),
+(14,	2,	'Domestic extraction of biomass – forestry'),
+(15,	2,	'Domestic extraction of biomass – grazing'),
 (16,	2,	'Domestic extraction of biomass – hunting'),
 (17,	2,	'Domestic extraction of biomass – fisheries'),
 (18,	2,	'Imports'),
@@ -565,3 +565,44 @@ INSERT INTO `analysis_options` (`id`, `type`, `name`) VALUES
 ALTER TABLE `regional`
 RENAME TO `case_studies`,
 COMMENT=''; -- 0.643 s
+
+
+CREATE TABLE IF NOT EXISTS `users` (
+  `user_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'auto incrementing user_id of each user, unique index',
+  `user_name` varchar(64) COLLATE utf8_unicode_ci NOT NULL COMMENT 'user''s name, unique',
+  `user_password_hash` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'user''s password in salted and hashed format',
+  `user_email` varchar(64) COLLATE utf8_unicode_ci NOT NULL COMMENT 'user''s email, unique',
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `user_name` (`user_name`),
+  UNIQUE KEY `user_email` (`user_email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='user data';
+
+CREATE TABLE `users_permissions` (
+  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `user` int(11) NOT NULL,
+  `dataset` int(10) unsigned NOT NULL,
+  FOREIGN KEY (`user`) REFERENCES `users` (`user_id`),
+  FOREIGN KEY (`dataset`) REFERENCES `mfa_dataset` (`id`)
+) COMMENT='' ENGINE='InnoDB'; -- 1.010 s
+
+ALTER TABLE `users_permissions`
+DROP FOREIGN KEY `users_permissions_ibfk_1`,
+ADD FOREIGN KEY (`user`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.507 s
+
+ALTER TABLE `users_permissions`
+DROP FOREIGN KEY `users_permissions_ibfk_2`,
+ADD FOREIGN KEY (`dataset`) REFERENCES `mfa_dataset` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 1.354 s
+
+ALTER TABLE `mfa_dataset`
+CHANGE `research_project` `research_project` int(10) unsigned NULL AFTER `id`,
+COMMENT=''; -- 0.385 s
+
+ALTER TABLE `mfa_data`
+DROP FOREIGN KEY `mfa_data_ibfk_4`; -- 0.045 s
+
+ALTER TABLE `mfa_data`
+CHANGE `source_id` `source_id` int unsigned NULL AFTER `source_link`,
+COMMENT=''; -- 0.445 s
+
+ALTER TABLE `mfa_data`
+ADD FOREIGN KEY (`source_id`) REFERENCES `mfa_sources` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE; -- 1.656 s

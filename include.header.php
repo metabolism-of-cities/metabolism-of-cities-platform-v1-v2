@@ -39,7 +39,11 @@
           <?php } ?>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="page/version">Version <?php echo $version ?></a></li>
+            <?php if (!$_SESSION['user_id']) { ?>
+              <li><a href="page/login">Login</a></li>
+            <?php } else { ?>
+              <li><a href="login.php?logout">Logout</a></li>
+            <?php } ?>
           </ul>
         </div><!--/.nav-collapse -->
       </div>

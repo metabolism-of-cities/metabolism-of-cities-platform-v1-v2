@@ -1,5 +1,7 @@
 <?php
 require_once 'functions.php';
+$no_project_selected = true;
+require_once 'functions.omat.php';
 $section = 6;
 $id = (int)$_GET['id'];
 $edit = (int)$_GET['edit'];
@@ -38,6 +40,11 @@ if ($_POST) {
     } else {
       $db->insert("mfa_dataset",$post);
       $id = $db->lastInsertId();
+      $post = array(
+        'user' => (int)$_SESSION['user_id'],
+        'dataset' => $id,
+      );
+      $db->insert("users_permissions",$post);
     }
     header("Location: " . URL . "omat/dashboard/$id");
     exit();
@@ -130,7 +137,7 @@ $types = $db->query("SELECT * FROM mfa_dataset_types ORDER BY name");
 
   </fieldset>
 
-    <fieldset>
+    <fieldset class="hide">
       <legend>Dataset Access</legend>
       
       <div class="btn-group" data-toggle="buttons">

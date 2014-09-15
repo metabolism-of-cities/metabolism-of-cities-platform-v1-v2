@@ -78,7 +78,7 @@ if ($projectinfo->multiscale) {
   $scales = $db->query("SELECT * FROM mfa_scales WHERE dataset = {$materialinfo->dataset}");
   if (!count($scales)) {
     $warning = "Your project is set to include multiple scales, but you have not yet defined them. Please change 
-    these settings <a href='omat/$project/dashboard'>in your dashboard</a>";
+    these settings <a href='omat/$project/maintenance-scales'>in your dashboard</a>";
   }
 } 
 

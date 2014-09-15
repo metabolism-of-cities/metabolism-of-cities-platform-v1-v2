@@ -132,8 +132,10 @@ ORDER BY mfa_data.date DESC LIMIT 5");
       <dt>Access</dt>
       <dd><?php echo $info->access ?></dd>
 
-      <dt>Project</dt>
-      <dd><a href="research/<?php echo $info->research_project ?>"><?php echo $info->research_name ?></a></dd>
+      <?php if ($info->research_project) { ?>
+        <dt>Project</dt>
+        <dd><a href="research/<?php echo $info->research_project ?>"><?php echo $info->research_name ?></a></dd>
+      <?php } ?>
 
       <dt>Period</dt>
       <dd><?php echo $info->year_start ?> <?php echo $info->year_end > $info->year_start ? " - " . $info->year_end : ''; ?></dd>
