@@ -89,7 +89,7 @@ WHERE l.contact = $id ORDER BY end DESC");
 
 $flags = $db->query("SELECT *,
   (SELECT COUNT(*) FROM mfa_contacts_flags WHERE contact = $id AND flag = mfa_special_flags.id) AS active
-FROM mfa_special_flags ORDER BY name");
+FROM mfa_special_flags WHERE dataset IS NULL OR dataset = $project ORDER BY name");
 
 $status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
 ?>
