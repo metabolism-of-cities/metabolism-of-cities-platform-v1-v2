@@ -606,3 +606,12 @@ COMMENT=''; -- 0.445 s
 
 ALTER TABLE `mfa_data`
 ADD FOREIGN KEY (`source_id`) REFERENCES `mfa_sources` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE; -- 1.656 s
+
+ALTER TABLE `mfa_special_flags`
+ADD `dataset` int(10) unsigned NULL,
+ADD FOREIGN KEY (`dataset`) REFERENCES `mfa_dataset` (`id`),
+COMMENT=''; -- 0.645 s
+
+ALTER TABLE `mfa_special_flags`
+DROP FOREIGN KEY `mfa_special_flags_ibfk_1`,
+ADD FOREIGN KEY (`dataset`) REFERENCES `mfa_dataset` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 1.159 s
