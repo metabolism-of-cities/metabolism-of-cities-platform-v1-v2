@@ -85,7 +85,7 @@ $interaction = $db->query("SELECT
 FROM 
 mfa_activities_log l
   JOIN mfa_activities a ON l.activity = a.id
-WHERE l.contact = $id ORDER BY end DESC");
+WHERE l.contact = $id ORDER BY start DESC");
 
 $flags = $db->query("SELECT *,
   (SELECT COUNT(*) FROM mfa_contacts_flags WHERE contact = $id AND flag = mfa_special_flags.id) AS active

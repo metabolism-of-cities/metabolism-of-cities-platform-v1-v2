@@ -132,7 +132,7 @@ $interaction = $db->query("SELECT
 FROM 
 mfa_activities_log l
   JOIN mfa_activities a ON l.activity = a.id
-WHERE l.source = $id ORDER BY end DESC");
+WHERE l.source = $id ORDER BY start DESC");
 
 $flags = $db->query("SELECT *,
   (SELECT COUNT(*) FROM mfa_sources_flags WHERE source = $id AND flag = mfa_special_flags.id) AS active
@@ -170,7 +170,8 @@ $status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
     #activitylist .makesmall{font-size:11px;opacity:0.7}
     .badge{margin-left:8px}
     .ellipsis th.short{width:90px;max-width:90px}
-    .ellipsis td,.ellipsis th{width:200px;max-width:200px}
+    .ellipsis th.shorter{width:70px;max-width:90px}
+    .ellipsis td,.ellipsis th{width:230px;max-width:230px}
     </style>
     <script type="text/javascript">
     $(function(){
@@ -511,8 +512,8 @@ $status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
     <table class="table table-striped ellipsis">
       <tr>
         <th class="long">File</th>
-        <th>Type</th>
-        <th class="short">Uploaded</th>
+        <th class="short">Type</th>
+        <th class="shorter">Uploaded</th>
         <th class="short">Actions</th>
       </tr>
     <?php foreach ($files as $row) { ?>

@@ -21,6 +21,11 @@ if ($login->isUserLoggedIn() == true) {
   <head>
     <?php echo $header ?>
     <title>Login | <?php echo SITENAME ?></title>
+  <script type="text/javascript">
+  $(function(){
+    $("#login_input_username").focus();
+  });
+  </script>
   </head>
 
   <body>
