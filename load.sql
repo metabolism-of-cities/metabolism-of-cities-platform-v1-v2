@@ -615,3 +615,14 @@ COMMENT=''; -- 0.645 s
 ALTER TABLE `mfa_special_flags`
 DROP FOREIGN KEY `mfa_special_flags_ibfk_1`,
 ADD FOREIGN KEY (`dataset`) REFERENCES `mfa_dataset` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 1.159 s
+
+CREATE TABLE `mfa_notes` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `dataset` int(10) unsigned NOT NULL,
+  `user` int(11) NOT NULL,
+  `date` timestamp NOT NULL,
+  `subject` varchar(255) NOT NULL,
+  `details` text NOT NULL,
+  FOREIGN KEY (`dataset`) REFERENCES `mfa_dataset` (`id`),
+  FOREIGN KEY (`user`) REFERENCES `users` (`user_id`)
+) COMMENT=''; -- 0.370 s
