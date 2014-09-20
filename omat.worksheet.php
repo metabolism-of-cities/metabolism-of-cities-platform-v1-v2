@@ -7,8 +7,8 @@ $sub_page = 4;
 
 $id = (int)$_GET['id'];
 
-if ($_POST['flag']) {
-  $flag = (int)$_POST['flag'];
+if ($_GET['flag']) {
+  $flag = (int)$_GET['flag'];
   $sql_sources .= " AND EXISTS (SELECT * FROM mfa_sources_flags WHERE source = mfa_sources.id AND flag = $flag)";
   $sql_contacts .= " AND EXISTS (SELECT * FROM mfa_contacts_flags WHERE contact = mfa_contacts.id AND flag = $flag)";
 }
@@ -28,8 +28,16 @@ if ($_GET['random-source']) {
   }
 }
 
-$contacts = $db->query("SELECT * FROM mfa_contacts WHERE dataset = $project AND status = 1 $sql_contacts ORDER BY created");
-$sources = $db->query("SELECT * FROM mfa_sources WHERE dataset = $project AND status = 1 $sql_sources ORDER BY created");
+$status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
+
+if ($_GET['status']) {
+  $status = (int)$_GET['status'];
+  $sql_status = $_GET['status'] ? " AND status = $status" : '';
+  $status_name = $db->record("SELECT * FROM mfa_status_options WHERE id = $status");
+}
+
+$contacts = $db->query("SELECT * FROM mfa_contacts WHERE dataset = $project $sql_status $sql_contacts ORDER BY created");
+$sources = $db->query("SELECT * FROM mfa_sources WHERE dataset = $project $sql_status $sql_sources ORDER BY created");
 
 $flags = $db->query("SELECT * FROM mfa_special_flags ORDER BY name");
 
@@ -40,7 +48,7 @@ $flags = $db->query("SELECT * FROM mfa_special_flags ORDER BY name");
     <?php echo $header ?>
     <title>Worksheet | <?php echo SITENAME ?></title>
     <style type="text/css">
-    button.right{float:right;margin-left:5px}
+    .right{float:right;margin-left:5px}
     th{width:120px;}
     th.long{width:auto}
     h2.alert{font-size:1.5em}
@@ -52,12 +60,41 @@ $flags = $db->query("SELECT * FROM mfa_special_flags ORDER BY name");
 <?php require_once 'include.header.php'; ?>
 
   <?php foreach ($flags as $row) { ?>
-    <form method="post">
+    <form method="get" action="omat.worksheet.php">
       <button 
-      type="submit" class="btn btn-<?php echo $_POST['flag'] == $row['id'] ? 'success' : 'default' ?> right" 
-      name="flag" value="<?php echo $_POST['flag'] == $row['id'] ? 0 : $row['id'] ?>"><?php echo $row['name'] ?></button>
+      type="submit" class="btn btn-<?php echo $_GET['flag'] == $row['id'] ? 'success' : 'default' ?> right" 
+      name="flag" value="<?php echo $_GET['flag'] == $row['id'] ? 0 : $row['id'] ?>"><?php echo $row['name'] ?></button>
+      <input type="hidden" name="project" value="<?php echo $project ?>" />
+      <input type="hidden" name="status" value="<?php echo $status ?>" />
     </form>
   <?php } ?>
+
+  <div class="dropdown right">
+    <button class="btn btn-<?php echo $_GET['status'] ? 'success' : 'default'; ?> dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+      <?php echo $_GET['status'] ? "Status: <strong>" . $status_name->status . "</strong>" : 'Filter by Status'; ?>
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+      <li role="presentation"<?php if (!$_GET['status']) { echo ' class="active"'; } ?>>
+        <a role="menuitem" tabindex="-1" href="omat.worksheet.php?flag=<?php echo $flag ?>&amp;project=<?php echo $project ?>&amp;type=<?php echo $type ?>">
+          <?php if (!$_GET['status']) { ?>
+            <i class="fa fa-check"></i>
+          <?php } ?>
+          All
+        </a>
+      </li>
+    <?php foreach ($status_options as $row) { ?>
+      <li role="presentation"<?php if ($_GET['status'] == $row['id']) { echo ' class="active"'; } ?>>
+        <a role="menuitem" tabindex="-1" href="omat.worksheet.php?flag=<?php echo $flag ?>&amp;project=<?php echo $project ?>&amp;type=<?php echo $type ?>&amp;status=<?php echo $row['id'] ?>">
+          <?php if ($row['id'] == $_GET['status']) { ?>
+            <i class="fa fa-check"></i>
+          <?php } ?>
+          <?php echo $row['status'] ?>
+        </a>
+      </li>
+    <?php } ?>
+    </ul>
+  </div>
 
   <h1>Worksheet</h1>
 
