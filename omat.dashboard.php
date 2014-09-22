@@ -118,7 +118,10 @@ ORDER BY mfa_data.date DESC LIMIT 5");
 
   <div class="col-sm-6">
     <h2>Reports</h2>
-    <p><a href="omat/<?php echo $id ?>/reports-dataoverview" class="btn btn-success"><i class="fa fa-user"></i> Data Overview</a></p>
+    <p>
+      <a href="omat/<?php echo $id ?>/reports-dataoverview" class="btn btn-success"><i class="fa fa-list"></i> Data Overview</a>
+      <a href="omat/<?php echo $id ?>/reports-indicators" class="btn btn-success"><i class="fa fa-bar-chart"></i> Indicators</a>
+    </p>
 
 
     <h2>Your Settings</h2>

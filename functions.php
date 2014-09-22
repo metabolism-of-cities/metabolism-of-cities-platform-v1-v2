@@ -23,8 +23,8 @@ $header = '
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet" />
-    <link href="css/font-awesome.css" rel="stylesheet" />
-    <link href="css/styles.' . $css . '.css" rel="stylesheet" />
+    <link href="css/font-awesome.4.2.0.css" rel="stylesheet" />
+    <link href="css/styles.'.$css.'.css" rel="stylesheet" />
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -436,6 +436,17 @@ function formatTime($time)
 	return $return;
 }
 
+function truncate($string,$length=100,$append="&hellip;") {
+  $string = trim($string);
+
+  if(strlen($string) > $length) {
+    $string = wordwrap($string, $length);
+    $string = explode("\n", $string, 2);
+    $string = $string[0] . $append;
+  }
+
+  return $string;
+}
 
 $version = 0.9;
 

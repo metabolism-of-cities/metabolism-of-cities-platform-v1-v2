@@ -626,3 +626,140 @@ CREATE TABLE `mfa_notes` (
   FOREIGN KEY (`dataset`) REFERENCES `mfa_dataset` (`id`),
   FOREIGN KEY (`user`) REFERENCES `users` (`user_id`)
 ) COMMENT=''; -- 0.370 s
+
+
+CREATE TABLE `mfa_indicators` (
+  `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
+  `type` tinyint(3) unsigned NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `abbreviation` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
+  `description` text COLLATE utf8_unicode_ci NOT NULL,
+  `more_information` int(11) DEFAULT NULL,
+  `dataset` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `type` (`type`),
+  KEY `more_information` (`more_information`),
+  KEY `dataset` (`dataset`),
+  CONSTRAINT `mfa_indicators_ibfk_4` FOREIGN KEY (`dataset`) REFERENCES `mfa_dataset` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `mfa_indicators_ibfk_1` FOREIGN KEY (`type`) REFERENCES `mfa_indicators_types` (`id`),
+  CONSTRAINT `mfa_indicators_ibfk_2` FOREIGN KEY (`more_information`) REFERENCES `papers` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE `mfa_indicators_types` (
+  `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `mfa_indicators_types` (`id`, `name`) VALUES
+(1,	'Input indicators'),
+(2,	'Consumption indicators'),
+(3,	'Output indicators');
+
+INSERT INTO `mfa_indicators` (`id`, `type`, `name`, `abbreviation`, `description`, `more_information`, `dataset`) VALUES
+(1,	1,	'Direct Material Input',	'DMI',	'Measures the direct input of materials for use into the economy, i.e. all materials which are of economic value and are used in production and consumption activities; DMI equals domestic (used) extraction plus imports. DMI is not additive across countries. For example, for EU totals of DMI the intra-EU foreign trade flows must be netted out from the DMIs of Member States.',	147,	NULL),
+(2,	1,	'Total Material Input',	'TMI',	'includes, in addition to DMI, also unused domestic extraction, i.e. materials that are moved by economic activities but that do not serve as input for production or consumption activities (mining overburden, etc.). Unused domestic extraction is sometimes termed ‘domestic hidden flows’. TMI is not additive across countries.',	147,	NULL),
+(3,	1,	'Total Material Requirement',	'TMR',	'Includes, in addition to TMI, the (indirect) material flows that are associated to imports but that take place in other countries. It measures the total ‘material base’ of an economy. Adding indirect flows converts imports into their ‘primary resource extraction equivalent’.\r\n\r\nTMR is not additive across countries. For example, for EU totals of TMR the intra-EU trade and the indirect flows associated to intra-EU trade must be netted out from the TMRs of Member States.',	147,	NULL),
+(4,	1,	'Domestic Total Material Requirement',	'',	'Includes domestic used and unused extraction, i.e. the total of material flows originating from the national territory. Domestic TMR equals TMI less imports. Domestic TMR is additive across countries.',	147,	NULL),
+(5,	2,	'Domestic material consumption',	'DMC',	'Measures the total amount of material directly used in an economy (i.e. excluding indirect flows). DMC is defined in the same way as other key physical indictors such as gross inland energy consumption. DMC equals DMI minus exports.',	147,	NULL),
+(6,	2,	'Total material consumption',	'TMC',	'Measures the total material use associated with domestic production and consumption activities, including indirect flows imported (see TMR) but less exports and associated indirect flows of exports. TMC equals TMR minus exports and their indirect flows.',	147,	NULL),
+(7,	2,	'Net Additions to Stock',	'NAS',	'Measures the ‘physical growth of the economy’, i.e. the quantity (weight) of new construction materials used in buildings and other infrastructure, and materials incorporated into new durable goods such as cars, industrial machinery, and household appliances. Materials are added to the economy’s stock each year (gross additions), and old materials are removed from stock as buildings are demolished, and durable goods disposed of (removals). These decommissioned materials, if not recycled, are accounted for in DPO (see below).',	147,	NULL),
+(8,	2,	'Physical Trade Balance',	'PTB',	'Measures the physical trade surplus or deficit of an economy. PTB equals imports minus exports. Physical trade balances may also be defined for indirect flows associated to Imports and Exports.',	147,	NULL),
+(9,	3,	'Domestic Processed Output',	'DPO',	'the total weight of materials, extracted from the domestic environment or imported, which have been used in the domestic economy, before flowing to the environment. These flows occur at the processing, manufacturing, use, and final disposal stages of the production-consumption chain. Included in DPO are emissions to air, industrial and household wastes deposited in landfills, material loads in wastewater and materials dispersed into the environment as a result of product use (dissipative flows). Recycled material flows in the economy (e.g. of metals, paper, glass) are not included in DPO. An uncertain fraction of some dissipative flows (manure, fertiliser) is ‘recycled’ by plant growth, but no attempt is made to estimate this fraction and subtract it from DPO.',	147,	NULL),
+(10,	3,	'Total Domestic Output',	'TDO',	'The sum of DPO, and disposal of unused extraction. This indicator represents the total quantity of material outputs to the  environment caused by economic activity.',	147,	NULL),
+(11,	3,	'Direct Material Output',	'DMO',	'The sum of DPO, and exports. This indicator represents the total quantity of material leaving the economy after use either towards the environment or towards the rest of the world. DMO is not additive across countries.',	147,	NULL),
+(12,	3,	'Total material output',	'TMO',	'Measures the total of material that leaves the economy. TMO equals\r\nTDO plus exports. TMO is not additive across countries.',	147,	NULL);
+
+CREATE TABLE `mfa_indicators_formula` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `indicator` tinyint(3) unsigned NOT NULL,
+  `type` enum('add','subtract') COLLATE utf8_unicode_ci NOT NULL,
+  `mfa_group` mediumint(8) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `mfa_group` (`mfa_group`),
+  KEY `indicator` (`indicator`),
+  CONSTRAINT `mfa_indicators_formula_ibfk_4` FOREIGN KEY (`indicator`) REFERENCES `mfa_indicators` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `mfa_indicators_formula_ibfk_3` FOREIGN KEY (`mfa_group`) REFERENCES `mfa_groups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `mfa_indicators_formula` (`id`, `indicator`, `type`, `mfa_group`) VALUES
+(1,	1,	'add',	1),
+(2,	1,	'add',	2),
+(3,	5,	'add',	1),
+(4,	5,	'add',	2),
+(5,	5,	'subtract',	3),
+(6,	8,	'add',	2),
+(7,	8,	'subtract',	3),
+(8,	9,	'add',	4),
+(9,	11,	'add',	4),
+(10,	11,	'add',	3);
+
+// Cascading... could be consider to be implemented
+
+ALTER TABLE `dqi_sections`
+DROP FOREIGN KEY `dqi_sections_ibfk_1`,
+ADD FOREIGN KEY (`dataset`) REFERENCES `mfa_dataset` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.533 s
+
+ALTER TABLE `mfa_activities`
+DROP FOREIGN KEY `mfa_activities_ibfk_1`,
+ADD FOREIGN KEY (`dataset`) REFERENCES `mfa_dataset` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.458 s
+
+ALTER TABLE `mfa_activities_log`
+DROP FOREIGN KEY `mfa_activities_log_ibfk_3`,
+ADD FOREIGN KEY (`contact`) REFERENCES `mfa_contacts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.553 s
+
+ALTER TABLE `mfa_activities_log`
+DROP FOREIGN KEY `mfa_activities_log_ibfk_1`,
+ADD FOREIGN KEY (`activity`) REFERENCES `mfa_activities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.601 s
+
+ALTER TABLE `mfa_activities_log`
+DROP FOREIGN KEY `mfa_activities_log_ibfk_4`,
+ADD FOREIGN KEY (`source`) REFERENCES `mfa_sources` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.444 s
+
+ALTER TABLE `mfa_leads`
+DROP FOREIGN KEY `mfa_leads_ibfk_2`,
+ADD FOREIGN KEY (`from_source`) REFERENCES `mfa_sources` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.423 s
+
+ALTER TABLE `mfa_contacts_types`
+DROP FOREIGN KEY `mfa_contacts_types_ibfk_1`,
+ADD FOREIGN KEY (`dataset`) REFERENCES `mfa_dataset` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.413 s
+
+ALTER TABLE `mfa_files`
+DROP FOREIGN KEY `mfa_files_ibfk_1`,
+ADD FOREIGN KEY (`dataset`) REFERENCES `mfa_dataset` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.550 s
+
+ALTER TABLE `mfa_materials_notes`
+DROP FOREIGN KEY `mfa_materials_notes_ibfk_1`,
+ADD FOREIGN KEY (`material`) REFERENCES `mfa_materials` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 1.210 s
+
+ALTER TABLE `mfa_notes`
+DROP FOREIGN KEY `mfa_notes_ibfk_1`,
+ADD FOREIGN KEY (`dataset`) REFERENCES `mfa_dataset` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.471 s
+
+ALTER TABLE `mfa_notes`
+DROP FOREIGN KEY `mfa_notes_ibfk_2`,
+ADD FOREIGN KEY (`user`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.502 s
+
+ALTER TABLE `mfa_scales`
+DROP FOREIGN KEY `mfa_scales_ibfk_1`,
+ADD FOREIGN KEY (`dataset`) REFERENCES `mfa_dataset` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.386 s
+
+ALTER TABLE `mfa_sources`
+DROP FOREIGN KEY `mfa_sources_ibfk_1`,
+ADD FOREIGN KEY (`type`) REFERENCES `mfa_sources_types` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.606 s
+
+ALTER TABLE `mfa_sources`
+DROP FOREIGN KEY `mfa_sources_ibfk_2`,
+ADD FOREIGN KEY (`dataset`) REFERENCES `mfa_dataset` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.583 s
+
+ALTER TABLE `mfa_sources`
+DROP FOREIGN KEY `mfa_sources_ibfk_3`,
+ADD FOREIGN KEY (`status`) REFERENCES `mfa_status_options` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.765 s
+
+ALTER TABLE `mfa_sources_types`
+DROP FOREIGN KEY `mfa_sources_types_ibfk_1`,
+ADD FOREIGN KEY (`dataset`) REFERENCES `mfa_dataset` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.323 s
+
+ALTER TABLE `mfa_sources_flags`
+DROP FOREIGN KEY `mfa_sources_flags_ibfk_2`,
+ADD FOREIGN KEY (`flag`) REFERENCES `mfa_special_flags` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 1.264 s

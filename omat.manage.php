@@ -11,7 +11,18 @@ $list = $db->query("SELECT * FROM mfa_groups WHERE dataset = $id ORDER BY sectio
 
 if ($_GET['delete']) {
   $delete = (int)$_GET['delete'];
+
+  $indicators = $db->query("SELECT DISTINCT indicator FROM mfa_indicators_formula WHERE mfa_group = $delete");
+
   $db->query("DELETE FROM mfa_groups WHERE dataset = $id AND id = {$delete} LIMIT 1");
+  foreach ($indicators as $row) {
+    // If there were indicators that were set up based on this group, and these indicators now have no 
+    // formula left whatsoever, then we remove this indicator
+    $check = $db->query("SELECT * FROM mfa_indicators_formula WHERE indicator = {$row['indicator']}");
+    if (!count($check)) {
+      $db->query("DELETE FROM mfa_indicators WHERE id = {$row['indicator']} AND dataset = $project");
+    }
+  }
   header("Location: " . URL . "omat/manage/$id/deleted");
   exit();
 }
