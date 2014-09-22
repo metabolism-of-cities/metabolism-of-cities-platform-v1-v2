@@ -2,7 +2,7 @@
 
 ## Requirements
 
-* PHP 5.3+
+* PHP 5.5 +
 * Recent version of MySQL
 * Recent version of Apache
 * Linux is fully supported; Windows support may be lacking but is likely no problem
