@@ -6,7 +6,10 @@ $load_menu = 3;
 $sub_page = 2;
 
 $id = (int)$_GET['id'];
-$list = $db->query("SELECT i.*, t.name AS type_name
+$list = $db->query("SELECT i.*, t.name AS type_name,
+  (SELECT COUNT(*) FROM mfa_indicators_formula
+    JOIN mfa_groups ON mfa_indicators_formula.mfa_group = mfa_groups.id
+  WHERE mfa_groups.dataset = $project AND indicator = i.id) AS formula
 FROM mfa_indicators i
   JOIN mfa_indicators_types t ON i.type = t.id
 WHERE i.dataset = $project OR i.dataset IS NULL
@@ -20,6 +23,7 @@ ORDER BY i.id");
     <title>Indicators | <?php echo SITENAME ?></title>
     <style type="text/css">
     h2{font-size:23px}
+    .badge{z-index:100}
     </style>
   </head>
 
@@ -47,7 +51,11 @@ ORDER BY i.id");
 
       <a href="omat/<?php echo $project ?>/reports-indicator/<?php echo $row['id'] ?>" class="list-group-item">
         <h4 class="list-group-item-heading"><?php echo $row['name'] ?></h4>
-        <p class="list-group-item-text"><?php echo truncate($row['description'],150) ?></p>
+        <p class="list-group-item-text"><?php echo truncate($row['description'],140) ?>
+        <?php if ($row['formula']) { ?>
+          <span class="badge pull-right"><i class="fa fa-bar-chart"></i></span>
+        <?php } ?>
+        </p>
       </a>
 
   <?php } ?>
@@ -57,6 +65,9 @@ ORDER BY i.id");
   </div>
 
   </div>
+
+  <p class="clear"><span class="badge"><i class="fa fa-bar-chart"></i></span> These indicators are automatically calculated for your dataset.</p>
+
 
 <?php require_once 'include.footer.php'; ?>
 

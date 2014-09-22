@@ -56,32 +56,53 @@ $page = 1;
   OMAT is similar to <a href="http://www.stan2web.net/">STAN</a> in that it is free software and it is available for
   flow analysis. However, OMAT is based on an online platform which means that it is not necessary to install 
   any program on the computer, and it can be used on any type of operating system. OMAT is furthermore focused on 
-  EW-MFA rather than Sustance Flow Analysis.
+  EW-MFA rather than Substance Flow Analysis.
 </p>
 
-<h2>A work in progress</h2>
+<h2>Beta version launched!</h2>
 
-OMAT is currently a work in progress. It is used by the <a href="page/team">team</a> behind this website, and 
-in the coming months (August-October 2014) development of a fully functional version is expected to finalize. 
-We invite programmers to join the development of this free service, and we invite researchers to <a href="page/contact">get in touch</a>
-so that we can tailor the program to the need of people in the industry and get feedback from those who 
-help us test the software.
+<p>
+  In September 2014 we launched OMAT in its beta version to the public. It is
+  currently being used by the <a href="page/team">team</a> behind this website
+  for gathering data for a MFA on Cape Town, but there are also other interested
+  parties who will soon start experimenting with the system for their own
+  purposes. The system is sufficiently developed to already be useful,
+  time-saving, and a practical tool for performing an MFA! See below the list
+  of features. 
+</p>
+
+
+<p>
+We invite programmers to join the development of this free service, and we
+invite researchers to either <a href="omat/add">start a project now</a> or
+<a href="page/contact">get in touch</a> with specific requests so that we can
+tailor the program to the need of people in the industry and get feedback from
+those who help us test the software.
+</p>
+
+<p>
+  <a href="omat/add" class="btn btn-primary btn-lg"><i class="fa fa-check"></i> Start your project</a>
+  <a href="omat/documentation" class="btn btn-primary btn-lg"><i class="fa fa-book"></i> View the documentation</a>
+</p>
 
 <h2>Development roadmap</h2>
 
 <ul>
-  <li>Online creation of projects</li>
+  <li class="done">Online creation of projects</li>
   <li class="done">Easy loading of all materials defined in the EUROSTAT method</li>
   <li class="done">Option to load other material groups</li>
   <li>Option to differentiate between urban and national scales</li>
-  <li>Data management
+  <li class="done">Data management
     <ul>
       <li class="done">Multiple years</li>
-      <li>Comments/discussion options for each data point</li>
-      <li>Option to track time it took to get the particular data point</li>
+      <li class="done">Comments/discussion options for each data point</li>
+      <li class="done">Option to track time it took to get the particular data point</li>
     </ul>
   </li>
+  <li class="done">Inclusion of Data Quality Indicators</li>
   <li>Inclusion of uncertainty</li>
+  <li class="done">Automatic calculation of indicators</li>
+  <li class="done">Automatic generation of graphs for the indicator trends</li>
   <li>Multiple users per project</li>
   <li>Option to share dataset with third parties</li>
   <li><a href="page/contact">Propose other features!</a></li>
@@ -95,6 +116,7 @@ help us test the software.
   <li><a href="#screenshot3" role="tab" data-toggle="tab">List of Materials</a></li>
   <li><a href="#screenshot4" role="tab" data-toggle="tab">Specific Material</a></li>
   <li><a href="#screenshot5" role="tab" data-toggle="tab">Add Data Point</a></li>
+  <li><a href="#screenshot6" role="tab" data-toggle="tab">Automatically generated indicators</a></li>
 </ul>
 
 <div class="tab-content">
@@ -103,6 +125,7 @@ help us test the software.
   <div class="tab-pane" id="screenshot3"><img src="img/screenshots/screenshot3.png" alt="" /></div>
   <div class="tab-pane" id="screenshot4"><img src="img/screenshots/screenshot4.png" alt="" /></div>
   <div class="tab-pane" id="screenshot5"><img src="img/screenshots/screenshot5.png" alt="" /></div>
+  <div class="tab-pane" id="screenshot6"><img src="img/screenshots/screenshot6.png" alt="" /></div>
 </div>
 
 <?php require_once 'include.footer.php'; ?>

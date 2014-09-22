@@ -68,6 +68,7 @@ $menu = array(
       1 => array('label' => 'How it Works', 'url' => 'omat/about'),
       2 => array('label' => 'Create a Project', 'url' => 'omat/add'),
       4 => array('label' => 'Dashboard', 'url' => 'page/login'),
+      5 => array('label' => 'Documentation', 'url' => 'page/documentation'),
  //     3 => array('label' => 'List', 'url' => 'omat/list'),
     ),
   ),
