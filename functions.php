@@ -448,6 +448,6 @@ function truncate($string,$length=100,$append="&hellip;") {
   return $string;
 }
 
-$version = 0.9;
+$version = '1.0';
 
 ?>

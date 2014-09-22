@@ -20,6 +20,32 @@ $page = 7;
   </div>
 
   <hgroup>
+    <h2>Version 1.0</h2>
+    <h3>September 22, 2014</h3>
+  </hgroup>
+  <p>Important updates made to the website, including the following:</p>
+  <ul>
+    <li>OMAT is now available for public use! Projects can be created online and users can get to work instantly.</li>
+    <li>The following options are available in OMAT:
+      <ul>
+        <li>Option to load the EUROSTAT framework with a single click</li>
+        <li>Option to define an own dataset</li>
+        <li>Easy entering of datapoints including the related year, source, and comments</li>
+        <li>Option to manage Data Quality Indicators</li>
+        <li>Back-end options include management of contacts, data sources, documents, and time logging</li>
+        <li>Instant generation of various indicators and their graphs</li>
+      </ul>
+    </li>
+    <li>The website was fully uploaded to github and can be modified by anyone</li>
+  </ul>
+  <p>Quick statistics:</p>
+  <ul>
+    <li>174 publications</li>
+    <li>2 public research projects</li>
+    <li>1 private dataset | 0 public datasets</li>
+  </ul>
+
+  <hgroup>
     <h2>Version 0.9</h2>
     <h3>August 12, 2014</h3>
   </hgroup>
