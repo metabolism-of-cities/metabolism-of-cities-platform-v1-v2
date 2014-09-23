@@ -2,7 +2,7 @@
 
 ## Requirements
 
-* PHP 5.5 +
+* PHP 5.3.5 +
 * Recent version of MySQL
 * Recent version of Apache
 * Linux is fully supported; Windows support may be lacking but is likely no problem
@@ -41,4 +41,4 @@ Look at current files and URLs to get an idea. If in doubt, check in beforehand.
 
 ## Versioning of the website
 
-We provide a "Version" number for the website. Every month we'll increment the version with 0.1 if changes were made. In order to have a good overview of the changes, please add the changes you made to the CHANGELOG file. These changes will be accumulated on a monthly basis and placed online when the new version is 'launched' (do note that in reality new versions are introduced on a rolling basis, at any time, but for easy public perception the site is 'versiones' and changes are grouped this way). 
+We provide a "Version" number for the website. Every month we'll increment the version with 0.1 if changes were made. In order to have a good overview of the changes, please add the changes you made to the CHANGELOG file. These changes will be accumulated on a monthly basis and placed online when the new version is 'launched' (do note that in reality new versions are introduced on a rolling basis, at any time, but for easy public perception the site is 'versioned' and changes are grouped this way). 

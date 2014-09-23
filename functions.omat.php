@@ -76,7 +76,7 @@ $omat_menu = array(
       1 => array('label' => 'Manage Data', 'url' => "omat/$project/manage", 'icon' => 'pencil'),
       2 => array('label' => 'Manage Contacts', 'url' => "omat/$project/contacts", 'icon' => 'user'),
       3 => array('label' => 'Manage Sources', 'url' => "omat/$project/sources", 'icon' => 'link'),
-      4 => array('label' => 'Work Sheet', 'url' => "omat/$project/worksheet", 'icon' => 'list'),
+      4 => array('label' => 'Files', 'url' => "omat/$project/files", 'icon' => 'file-pdf-o'),
     ),
   ),
   2 => array(

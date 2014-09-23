@@ -3,7 +3,7 @@ require_once 'functions.php';
 require_once 'functions.omat.php';
 $section = 6;
 $load_menu = 1;
-$sub_page = 3;
+$sub_page = 4;
 
 $id = (int)$project;
 
@@ -32,15 +32,10 @@ ORDER BY f.name");
 
 <?php require_once 'include.header.php'; ?>
 
-  <a href="omat/<?php echo $id ?>/source/0" class="btn btn-success right">Add Source</a>
-
-  <a href="omat/<?php echo $id ?>/sources" class="btn btn-primary right">View files</a>
-
   <h1>Files</h1>
 
   <ol class="breadcrumb">
     <li><a href="omat/<?php echo $project ?>/dashboard">Dashboard</a></li>
-    <li><a href="omat/<?php echo $project ?>/sources">Sources</a></li>
     <li class="active">Files</li>
   </ol>
 

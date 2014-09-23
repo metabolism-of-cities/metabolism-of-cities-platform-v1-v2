@@ -767,3 +767,6 @@ ADD FOREIGN KEY (`flag`) REFERENCES `mfa_special_flags` (`id`) ON DELETE CASCADE
 ALTER TABLE `papers`
 CHANGE `abstract_status` `abstract_status` enum('pending','author_approved','journal_approved','open_access','not_approved','toc_only') COLLATE 'utf8_unicode_ci' NOT NULL DEFAULT 'pending' AFTER `abstract`,
 COMMENT=''; -- 1.530 s
+
+INSERT INTO `mfa_status_options` (`status`)
+VALUES ('On hold'); -- 0.058 s

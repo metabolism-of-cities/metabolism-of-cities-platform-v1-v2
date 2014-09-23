@@ -17,6 +17,20 @@ if ($status) {
   $type_sql = "AND mfa_contacts.status = $status";
 }
 
+if ($_GET['flag']) {
+  $flag = (int)$_GET['flag'];
+  $sql .= " AND EXISTS (SELECT * FROM mfa_contacts_flags WHERE contact = c.id AND flag = $flag)";
+  $type_sql .= " AND EXISTS (SELECT * FROM mfa_contacts_flags WHERE contact = mfa_contacts.id AND flag = $flag)";
+}
+
+if ($_GET['random-contact']) {
+  $contact = $db->record("SELECT * FROM mfa_contacts WHERE dataset = $project AND status = 1 ORDER BY RAND() LIMIT 1");
+  if ($contact->id) {
+    header("Location: " . URL . "omat/$project/viewcontact/{$contact->id}");
+    exit();
+  }
+}
+
 $list = $db->query("SELECT c.*, t.name AS type, o.status,
   (SELECT name FROM mfa_leads
     JOIN mfa_contacts ON mfa_leads.from_contact = mfa_contacts.id
@@ -43,6 +57,7 @@ if ($_GET['deleted']) {
 }
 
 $status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
+$flags = $db->query("SELECT * FROM mfa_special_flags ORDER BY name");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -66,14 +81,25 @@ $status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
 
   <a href="omat/<?php echo $id ?>/contact/0" class="btn btn-success right">Add Contact</a>
 
+  <?php foreach ($flags as $row) { ?>
+    <form method="get" action="omat.contacts.php">
+      <button 
+      type="submit" class="btn btn-<?php echo $_GET['flag'] == $row['id'] ? 'primary' : 'default' ?> right" 
+      name="flag" value="<?php echo $_GET['flag'] == $row['id'] ? 0 : $row['id'] ?>"><?php echo $row['name'] ?></button>
+      <input type="hidden" name="project" value="<?php echo $project ?>" />
+      <input type="hidden" name="status" value="<?php echo $status ?>" />
+      <input type="hidden" name="type" value="<?php echo $type ?>" />
+    </form>
+  <?php } ?>
+
   <div class="dropdown right">
-    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+    <button class="btn btn-<?php echo $status ? 'primary' : 'default'; ?> dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
       <?php echo $_GET['status'] ? "Status: <strong>" . $status_name->status . "</strong>" : 'Filter by Status'; ?>
       <span class="caret"></span>
     </button>
     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
       <li role="presentation"<?php if (!$_GET['status']) { echo ' class="active"'; } ?>>
-        <a role="menuitem" tabindex="-1" href="omat.contacts.php?project=<?php echo $id ?>&amp;type=<?php echo $type ?>">
+        <a role="menuitem" tabindex="-1" href="omat.contacts.php?project=<?php echo $id ?>&amp;type=<?php echo $type ?>&amp;flag=<?php echo $flag ?>">
           <?php if (!$_GET['status']) { ?>
             <i class="fa fa-check"></i>
           <?php } ?>
@@ -82,7 +108,7 @@ $status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
       </li>
     <?php foreach ($status_options as $row) { ?>
       <li role="presentation"<?php if ($_GET['status'] == $row['id']) { echo ' class="active"'; } ?>>
-        <a role="menuitem" tabindex="-1" href="omat.contacts.php?project=<?php echo $id ?>&amp;type=<?php echo $type ?>&amp;status=<?php echo $row['id'] ?>">
+        <a role="menuitem" tabindex="-1" href="omat.contacts.php?project=<?php echo $id ?>&amp;type=<?php echo $type ?>&amp;status=<?php echo $row['id'] ?>&amp;flag=<?php echo $flag ?>">
           <?php if ($row['id'] == $_GET['status']) { ?>
             <i class="fa fa-check"></i>
           <?php } ?>
@@ -105,10 +131,10 @@ $status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
 
   <?php if (count($types)) { ?>
     <ul class="nav nav-tabs" role="tablist">
-      <li class="<?php echo !$_GET['type'] ? 'active' : 'regular'; ?>"><a href="omat.contacts.php?project=<?php echo $id ?>&amp;status=<?php echo $status ?>">All (<?php echo $overall_total+$unclassified->total ?>)</a></li>
+      <li class="<?php echo !$_GET['type'] ? 'active' : 'regular'; ?>"><a href="omat.contacts.php?project=<?php echo $id ?>&amp;status=<?php echo $status ?>&amp;flag=<?php echo $flag ?>">All (<?php echo $overall_total+$unclassified->total ?>)</a></li>
     <?php foreach ($types as $row) { ?>
       <li class="<?php if ($_GET['type'] == $row['id']) { echo 'active'; } elseif (!$row['total']) { echo 'disabled'; } else { echo 'regular'; } ?>">
-        <a href="omat.contacts.php?project=<?php echo $id ?>&amp;status=<?php echo $status ?>&amp;type=<?php echo $row['id'] ?>">
+        <a href="omat.contacts.php?project=<?php echo $id ?>&amp;status=<?php echo $status ?>&amp;type=<?php echo $row['id'] ?>&amp;flag=<?php echo $flag ?>">
           <?php echo $row['name'] ?> (<?php echo $row['total'] ?>)
         </a>
       </li>
@@ -142,6 +168,7 @@ $status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
   <?php } ?>
 
   <a href="omat/<?php echo $id ?>/contact/0" class="btn btn-success">Add Contact</a>
+  <a href="omat/<?php echo $project ?>/contacts/random-contact" class="btn btn-success"><i class="fa fa-random"></i> Open random pending contact</a>
 
 <?php require_once 'include.footer.php'; ?>
 

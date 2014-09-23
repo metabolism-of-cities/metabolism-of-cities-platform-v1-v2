@@ -332,7 +332,7 @@ $status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
     <div class="row">
     
       <div class="col-md-<?php echo $check->time_log ? 4 : 6 ?>">
-        <h2>Other Contacts</h2>
+        <h2>Leads: Contacts</h2>
 
         <form method="post" class="form-inline" id="addcontact">
 
@@ -371,7 +371,7 @@ $status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
       </div>
 
       <div class="col-md-<?php echo $check->time_log ? 4 : 6 ?>">
-        <h2>Sources</h2>
+        <h2>Leads: Sources</h2>
 
         <form method="post" class="form-inline" id="addsource">
 
@@ -396,7 +396,7 @@ $status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
       </div>
 
       <div class="col-md-4<?php echo !$check->time_log ? ' hide' : ''; ?>">
-        <h2>Activity</h2>
+        <h2>Log Activity</h2>
 
         <?php if (!count($interactionlist)) { ?>
 
