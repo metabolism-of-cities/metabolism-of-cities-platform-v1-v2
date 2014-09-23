@@ -10,7 +10,7 @@ $info = $db->record("SELECT * FROM mfa_materials WHERE id = $id");
 
 $group = $_GET['group'] ? (int)$_GET['group'] : $info->mfa_group;
 
-$groupinfo = $db->query("SELECT * FROM mfa_groups WHERE id = $group");
+$groupinfo = $db->record("SELECT * FROM mfa_groups WHERE id = $group");
 $project = $groupinfo->dataset;
 
 require_once 'functions.omat.php';

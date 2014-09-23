@@ -29,7 +29,27 @@ $remove_enter = array("\n" => "");
     .sidebar img {position:absolute;bottom:60px;left:70px}
     .right{float:right}
     section h1{font-size:1.4em}
+    #documentation img{background:#ccc;padding:4px;border:3px solid #999}
+    h2{font-size:24px;color:#333}
+    .limitwidth{width:95%}
     </style>
+    <script type="text/javascript">
+    $(function(){
+      $("a.scroll").click(function(event){
+         event.preventDefault();
+         //calculate destination place
+         var dest=0;
+         if($(this.hash).offset().top > $(document).height()-$(window).height()){
+              dest=$(document).height()-$(window).height();
+         }else{
+              dest=$(this.hash).offset().top;
+         }
+         dest = dest-60;
+         //go to destination
+         $('html,body').animate({scrollTop:dest}, 1000,'swing');
+       });     
+    });
+    </script>
   </head>
 
   <body>
@@ -54,7 +74,9 @@ $remove_enter = array("\n" => "");
       <h1><i class="fa fa-book"></i> <?php echo $id ? $sections[$id] : 'Documentation OMAT'; ?></h1>
 
       <?php if ($id) { ?>
+      <div id="documentation">
         <?php echo $content[$id] ?>
+      </div>
       <?php } else { ?>
       <div class="row">
 
@@ -83,4 +105,4 @@ $remove_enter = array("\n" => "");
 <?php require_once 'include.footer.php'; ?>
 
   </body>
-</html>
+</html> 

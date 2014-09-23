@@ -56,7 +56,7 @@ if (!$skip_login && !$no_project_selected) {
     die("No project defined");
   }
 
-  $check = $db->record("SELECT id FROM mfa_dataset WHERE id = $project AND id IN ($authorized)");
+  $check = $db->record("SELECT * FROM mfa_dataset WHERE id = $project AND id IN ($authorized)");
   if (!$check->id) {
     kill("Invalid dataset opened");
   }
@@ -79,8 +79,6 @@ $omat_menu = array(
       4 => array('label' => 'Work Sheet', 'url' => "omat/$project/worksheet", 'icon' => 'list'),
     ),
   ),
-  // To do:
-  // Must set/unset these depending on settings
   2 => array(
     'label' => 'Maintenance', 
     'url' => "omat/$project/dashboard", 
@@ -102,4 +100,26 @@ $omat_menu = array(
     ),
   ),
 );
+
+if (!$check->multiscale) {
+  unset($omat_menu[2]['menu'][5]);
+}
+
+if (!$check->contact_management) {
+  unset($omat_menu[2]['menu'][2]);
+  unset($omat_menu[2]['menu'][3]);
+  unset($omat_menu[2]['menu'][6]);
+  unset($omat_menu[1]['menu'][2]);
+  unset($omat_menu[1]['menu'][3]);
+  unset($omat_menu[1]['menu'][4]);
+}
+
+if (!$check->time_log) {
+  unset($omat_menu[2]['menu'][4]);
+}
+
+if (!$check->dqi) {
+  unset($omat_menu[2]['menu'][1]);
+}
+
 ?>

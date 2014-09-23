@@ -38,6 +38,8 @@ ORDER BY mfa_data.date DESC LIMIT 5");
     <style type="text/css">
       dd { max-width:200px;white-space:nowrap; overflow:hidden; text-overflow: ellipsis; }
       dd,dt{padding-bottom:5px}
+      ul.flatlist{list-style:none;padding-left:0}
+      ul.flatlist li{margin-bottom:3px;padding-left:0}
     </style>
   </head>
 
@@ -53,7 +55,7 @@ ORDER BY mfa_data.date DESC LIMIT 5");
     </div>
   </div>
 
-  <h1>OMAT Dataset: <?php echo $info->name ?></h1>
+  <h1><i class="fa fa-database"></i> OMAT Dataset: <?php echo $info->name ?></h1>
 
   <div class="alert alert-info">
     From this dashboard you can manage your dataset. 
@@ -71,13 +73,13 @@ ORDER BY mfa_data.date DESC LIMIT 5");
       <p>
         <?php if ($info->contact_management) { ?>
           <a href="omat/<?php echo $id ?>/contacts" class="btn btn-success"><i class="fa fa-user"></i> Manage Contacts</a>
+          <a href="omat/<?php echo $id ?>/sources" class="btn btn-success"><i class="fa fa-link"></i> Manage Sources</a>
+          <a href="omat/<?php echo $id ?>/worksheet" class="btn btn-success"><i class="fa fa-list"></i> Work Sheet</a>
         <?php } ?>
-        <a href="omat/<?php echo $id ?>/sources" class="btn btn-success"><i class="fa fa-link"></i> Manage Sources</a>
-        <a href="omat/<?php echo $id ?>/worksheet" class="btn btn-success"><i class="fa fa-list"></i> Work Sheet</a>
       </p>
     <?php } else { ?>
       <p>You do not yet have any data in your dataset.</p>
-      <ul>
+      <ul class="flatlist">
         <li><a href="omat/<?php echo $id ?>/load-eurostat" class="btn btn-primary">Load EUROSTAT data groups</a></li>
         <li><a href="omat/datagroup-entry/dataset-<?php echo $id ?>" class="btn btn-primary">Load an empty skeleton</a></li>
       </ul>
@@ -107,12 +109,14 @@ ORDER BY mfa_data.date DESC LIMIT 5");
     <p><a href="omat/<?php echo $project ?>/log" class="btn btn-primary"><i class="fa fa-align-justify"></i> View full log</a></p>
     <?php } ?>
 
+    <?php if (count($omat_menu[2]['menu'])) { ?>
     <h2>Maintenance</h2>
     <ul class="nav nav-pills nav-stacked">
       <?php foreach ($omat_menu[2]['menu'] as $value) { ?> 
         <li><a href="<?php echo $value['url'] ?>"><i class="fa fa-<?php echo $value['icon'] ?>"></i> <?php echo $value['label'] ?></a></li>
       <?php } ?>
     </ul>
+    <?php } ?>
 
   </div>
 

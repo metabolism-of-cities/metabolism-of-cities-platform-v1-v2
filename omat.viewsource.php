@@ -370,6 +370,10 @@ $status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
     By logging interaction with <?php echo $info->name ?>, OMAT can provide more details on 
     how much time you invested in obtaining your data and provide insight into efficiency and
     effectiveness.
+    <?php if (!$check->time_log) { ?><br />
+    <strong>Note</strong>: before you can start logging time, you need to active this option
+    in your Project Settings.
+    <?php } ?>
   </div>
 
   <div class="alert alert-danger" id="error"></div>
@@ -378,7 +382,7 @@ $status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
 
     <div class="row">
     
-      <div class="col-md-4">
+      <div class="col-md-<?php echo $check->time_log ? 4 : 6 ?>">
         <h2>Contacts</h2>
 
         <form method="post" class="form-inline" id="addcontact">
@@ -409,7 +413,7 @@ $status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
 
       </div>
 
-      <div class="col-md-4">
+      <div class="col-md-<?php echo $check->time_log ? 4 : 6 ?>">
         <h2>Sources</h2>
 
         <form method="post" class="form-inline" id="addsource">
@@ -434,7 +438,8 @@ $status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
 
       </div>
 
-      <div class="col-md-4">
+      <div class="col-md-4<?php echo !$check->time_log ? ' hide' : ''; ?>">
+
         <h2>Activity</h2>
 
         <?php if (!count($interactionlist)) { ?>
