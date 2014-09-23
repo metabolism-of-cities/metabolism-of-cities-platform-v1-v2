@@ -39,6 +39,7 @@ if ($_POST) {
     'link' => html($_POST['link']),
     'source' => (int)$_POST['source'],
     'open_access' => is_numeric($_POST['open_access']) ? (int)$_POST['open_access'] : NULL,
+    'abstract_status' => mysql_clean($_POST['abstract_status']),
     'editor_comments' => html($_POST['editor_comments']),
   );
   $db->update("papers",$post,"id = $id");
@@ -46,6 +47,7 @@ if ($_POST) {
 
 }
 
+$abstract_status = array('pending','author_approved','journal_approved','open_access','not_approved','toc_only');
 
 ?>
 <!DOCTYPE html>
@@ -169,6 +171,18 @@ if ($_POST) {
   </div>
 
   <div class="form-group">
+    <label class="col-sm-2 control-label">Abstract status</label>
+    <div class="col-sm-10">
+      <select name="abstract_status" class="form-control">
+      <option value=""></option>
+        <?php foreach ($abstract_status as $key => $value) { ?>
+          <option value="<?php echo $value ?>"<?php if ($info->abstract_status == $value) { echo ' selected'; } ?>><?php echo $value ?></option>
+        <?php } ?>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group">
     <label class="col-sm-2 control-label">Open Access</label>
     <div class="col-sm-10">
       <select name="open_access" class="form-control">
@@ -178,7 +192,6 @@ if ($_POST) {
       </select>
     </div>
   </div>
-
 
   <fieldset>
     <legend>Optional Information</legend>

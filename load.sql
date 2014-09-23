@@ -763,3 +763,7 @@ ADD FOREIGN KEY (`dataset`) REFERENCES `mfa_dataset` (`id`) ON DELETE CASCADE ON
 ALTER TABLE `mfa_sources_flags`
 DROP FOREIGN KEY `mfa_sources_flags_ibfk_2`,
 ADD FOREIGN KEY (`flag`) REFERENCES `mfa_special_flags` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 1.264 s
+
+ALTER TABLE `papers`
+CHANGE `abstract_status` `abstract_status` enum('pending','author_approved','journal_approved','open_access','not_approved','toc_only') COLLATE 'utf8_unicode_ci' NOT NULL DEFAULT 'pending' AFTER `abstract`,
+COMMENT=''; -- 1.530 s
