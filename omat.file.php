@@ -20,7 +20,7 @@ if (!count($info)) {
 }
 
 if ($_POST['fileform']) {
-  if ($_FILES) {
+  if ($_FILES['file']['name']) {
     $original_name = $_FILES['file']['name'];
     $type = $_FILES['file']['type'];
     $size = $_FILES['file']['size']/1024;

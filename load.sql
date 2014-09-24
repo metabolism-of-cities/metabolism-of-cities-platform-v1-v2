@@ -770,3 +770,7 @@ COMMENT=''; -- 1.530 s
 
 INSERT INTO `mfa_status_options` (`status`)
 VALUES ('On hold'); -- 0.058 s
+
+ALTER TABLE `mfa_dataset`
+ADD `banner_text` varchar(255) NOT NULL,
+COMMENT=''; -- 1.509 s
