@@ -23,10 +23,19 @@ $projectinfo = $db->record("SELECT * FROM mfa_dataset WHERE id = $project");
 
 require_once 'functions.omat.php';
 
+if ($_GET['message'] ==  "delete-all") {
+  $db->query("DELETE FROM mfa_data WHERE material = $id");
+  header("Location: " . URL . "omat/data/$id/all-gone");
+  exit();
+}
+
+
 if ($_GET['message'] == 'deleted') {
   $print = "Data point was deleted";
 } elseif ($_GET['message'] == 'saved') {
   $print = "Information was saved";
+} elseif ($_GET['message'] == "all-gone") {
+  $print = "All data points have been deleted";
 }
 
 $notes = $db->record("SELECT COUNT(*) AS total FROM mfa_materials_notes WHERE material = $id");
@@ -110,7 +119,11 @@ $notes = $db->record("SELECT COUNT(*) AS total FROM mfa_materials_notes WHERE ma
 
   <?php } ?>
 
-  <p><a href="omat/data-entry/<?php echo $id ?>" class="btn btn-success">Add data point</a></p>
+  <p>
+    <a href="omat/data-entry/<?php echo $id ?>" class="btn btn-success">Add single data point</a>
+    <a href="omat/multiple-data-entry/<?php echo $id ?>" class="btn btn-success">Add multiple points</a>
+    <a href="omat/data/<?php echo $id ?>/delete-all" class="btn pull-right btn-danger" onclick="javascript:return confirm('You are about to delete all these data points (<?php echo count($list) ?> in total). Are you sure?')">Delete all data points</a>
+  </p>
 
   <p><a href="omat/datagroup/<?php echo $info->mfa_group ?>" class="btn btn-primary">&laquo; Back to data group</a></p>
 

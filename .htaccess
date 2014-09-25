@@ -228,6 +228,7 @@ AddDefaultCharset utf-8
     RewriteRule ^page/(.+)/?$ $1.php
     RewriteRule ^omat/data-edit/([0-9]+)?$ omat.data-point.php?id=$1
     RewriteRule ^omat/data-entry/([0-9]+)?$ omat.data-point.php?material=$1
+    RewriteRule ^omat/multiple-data-entry/([0-9]+)?$ omat.data-point.php?material=$1&multiple-entry=true
     RewriteRule ^omat/material-entry/([0-9]+)/?$ omat.material-entry.php?id=$1
     RewriteRule ^omat/material-entry/group-([0-9]+)/?$ omat.material-entry.php?group=$1
     RewriteRule ^omat/datagroup-entry/([0-9]+)?$ omat.datagroup-entry.php?id=$1

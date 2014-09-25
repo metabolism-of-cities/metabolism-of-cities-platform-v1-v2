@@ -4,6 +4,8 @@ if ($_GET['material']) {
   $material = (int)$_GET['material'];
   $getproject = $db->record("SELECT g.dataset, g.name, g.id AS groupid FROM mfa_materials m JOIN mfa_groups g ON m.mfa_group = g.id WHERE m.id = $material");
   $project = $getproject->dataset;
+  $projectinfo = $db->record("SELECT * FROM mfa_dataset WHERE id = $project");
+  $years = range($projectinfo->year_start, $projectinfo->year_end);
 } elseif ($_GET['id']) {
   $id = (int)$_GET['id'];
   $getproject = $db->record("SELECT g.dataset, g.name, g.id AS groupid 
@@ -36,36 +38,71 @@ FROM mfa_materials
 WHERE mfa_materials.id = $material");
 
 if ($_POST) {
-  $remove_commas = array(',' => '');
-  $_POST['data'] = strtr($_POST['data'], $remove_commas);
-  $post = array(
-    'material' => $material,
-    'year' => (int)$_POST['year'],
-    'data' => (float)$_POST['data'],
-    'comments' => html($_POST['comments']),
-    'source' => $_POST['source'] ? html($_POST['source']) : NULL,
-    'source_link' => $_POST['source_link'] ? html($_POST['source_link']) : NULL,
-    'source_id' => $_POST['source_id'] ? (int)$_POST['source_id'] : NULL,
-    'scale' => $_POST['scale'] ? (int)$_POST['scale'] : NULL,
-  );
-  if ($id) {
-    $db->update("mfa_data",$post,"id = $id");
-  } else {
-    $db->insert("mfa_data",$post);
-    $id = $db->lastInsertId();
-  }
-  $db->query("DELETE FROM mfa_dqi WHERE data = $id");
-  if (is_array($_POST['quality'])) {
-    foreach ($_POST['quality'] as $key => $value) {
-      $quality = (int)$value;
-      if ($quality) {
+  if (is_array($_POST['data'])) {
+    $remove_commas = array(',' => '');
+    foreach ($_POST['data'] as $year => $data) {
+      if (strlen($data) > 0) { 
+        $data = strtr($data, $remove_commas);
         $post = array(
-          'classification' => $quality,
-          'data' => $id,
+          'material' => $material,
+          'year' => (int)$year,
+          'data' => (float)$data,
+          'comments' => html($_POST['comments']),
+          'source' => $_POST['source'] ? html($_POST['source']) : NULL,
+          'source_link' => $_POST['source_link'] ? html($_POST['source_link']) : NULL,
+          'source_id' => $_POST['source_id'] ? (int)$_POST['source_id'] : NULL,
+          'scale' => $_POST['scale'] ? (int)$_POST['scale'] : NULL,
         );
-        $db->insert("mfa_dqi",$post);
+        $db->insert("mfa_data",$post);
+        $id = $db->lastInsertId();
+
+        $db->query("DELETE FROM mfa_dqi WHERE data = $id");
+        if (is_array($_POST['quality'])) {
+          foreach ($_POST['quality'] as $key => $value) {
+            $quality = (int)$value;
+            if ($quality) {
+              $post = array(
+                'classification' => $quality,
+                'data' => $id,
+              );
+              $db->insert("mfa_dqi",$post);
+            }
+          } 
+        }
       }
-    } 
+    }
+  } else {
+    $remove_commas = array(',' => '');
+    $_POST['data'] = strtr($_POST['data'], $remove_commas);
+    $post = array(
+      'material' => $material,
+      'year' => (int)$_POST['year'],
+      'data' => (float)$_POST['data'],
+      'comments' => html($_POST['comments']),
+      'source' => $_POST['source'] ? html($_POST['source']) : NULL,
+      'source_link' => $_POST['source_link'] ? html($_POST['source_link']) : NULL,
+      'source_id' => $_POST['source_id'] ? (int)$_POST['source_id'] : NULL,
+      'scale' => $_POST['scale'] ? (int)$_POST['scale'] : NULL,
+    );
+    if ($id) {
+      $db->update("mfa_data",$post,"id = $id");
+    } else {
+      $db->insert("mfa_data",$post);
+      $id = $db->lastInsertId();
+    }
+    $db->query("DELETE FROM mfa_dqi WHERE data = $id");
+    if (is_array($_POST['quality'])) {
+      foreach ($_POST['quality'] as $key => $value) {
+        $quality = (int)$value;
+        if ($quality) {
+          $post = array(
+            'classification' => $quality,
+            'data' => $id,
+          );
+          $db->insert("mfa_dqi",$post);
+        }
+      } 
+    }
   }
   header("Location: " . URL . "omat/data/$material/saved");
   exit();
@@ -117,6 +154,13 @@ if ($projectinfo->dqi) {
     #dqi .btn{opacity:0.6}
     #dqi .active{opacity:1}
     a.reset{position:relative;left:10px;top:5px}
+    input.small{width:100px}
+     .multicolumn {
+        -webkit-column-count: 3; /* Chrome, Safari, Opera */
+        -moz-column-count: 3; /* Firefox */
+        column-count: 3;
+    } 
+    .well h2{margin-top:0;margin-bottom:10px;font-size:1.5em}
     </style>
     <script type="text/javascript">
     $(function(){
@@ -154,6 +198,31 @@ if ($projectinfo->dqi) {
 
   <form method="post" class="form form-horizontal">
 
+  <?php if ($_GET['multiple-entry']) { ?>
+
+  <div class="well">
+
+    <h2>Enter multiple values</h2>
+
+    <div class="multicolumn">
+
+    <?php foreach ($years as $year) { ?>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label"><?php echo $year ?></label>
+        <div class="col-sm-10">
+          <input class="form-control small" type="text" name="data[<?php echo $year ?>]"  />
+        </div>
+      </div>
+
+    <?php } ?>
+
+    </div>
+
+    </div>
+
+  <?php } else { ?>
+
     <div class="form-group">
       <label class="col-sm-2 control-label">Year</label>
       <div class="col-sm-3">
@@ -170,6 +239,8 @@ if ($projectinfo->dqi) {
         </div>
       </div>
     </div>
+
+    <?php } ?>
 
     <?php if ($projectinfo->multiscale) { ?>
 
