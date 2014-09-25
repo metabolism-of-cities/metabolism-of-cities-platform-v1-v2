@@ -9,12 +9,13 @@ $id = (int)$_GET['id'];
 $project = (int)$_GET['project'];
 
 $info = $db->record("SELECT * FROM mfa_scales WHERE id = $id");
+
 if ($id) {
   if ($info->dataset != $project) {
     die("No access");
   }
 }
-$projectinfo = $db->record("SELECT * FROM mfa_dataset WHERE id = {$info->dataset}");
+$projectinfo = $db->record("SELECT * FROM mfa_dataset WHERE id = $project");
 
 if ($_POST) {
   $post = array(
