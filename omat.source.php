@@ -20,7 +20,6 @@ if ($id) {
 if ($_POST) {
   $post = array(
     'name' => html($_POST['name']),
-    'pending' => (int)$_POST['pending'],
     'type' => $_POST['type'] ? (int)$_POST['type'] : NULL,
     'details' => html($_POST['details']),
     'dataset' => $project,
@@ -95,17 +94,6 @@ if ($_POST) {
       </div>
 
     <?php } ?>
-
-    <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10">
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" name="pending" value="1" <?php echo $info->pending || !$id ? 'checked' : ''; ?> /> 
-              Mark this source as Pending
-          </label>
-        </div>
-      </div>
-    </div>
 
     <div class="form-group">
       <label class="col-sm-2 control-label">URL</label>

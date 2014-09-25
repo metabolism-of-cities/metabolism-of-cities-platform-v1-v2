@@ -77,7 +77,7 @@ $projectinfo = $db->record("SELECT * FROM mfa_dataset WHERE id = {$materialinfo-
 if ($projectinfo->multiscale) {
   $scales = $db->query("SELECT * FROM mfa_scales WHERE dataset = {$materialinfo->dataset}");
   if (!count($scales)) {
-    $warning = "Your project is set to include multiple scales, but you have not yet defined them. Please change 
+    $error = "Your project is set to include multiple scales, but you have not yet defined them. Please change 
     these settings <a href='omat/$project/maintenance-scales'>in your dashboard</a>";
   }
 } 
@@ -86,7 +86,7 @@ if ($projectinfo->contact_management) {
   $source_management = true;
   $sources = $db->query("SELECT * FROM mfa_sources WHERE dataset = $project ORDER BY name");
   if (!count($sources)) {
-    $warning = "Your project is set to track contacts and sources, but you have not yet entered any sources. 
+    $error = "Your project is set to track contacts and sources, but you have not yet entered any sources. 
     In order to properly link this data point to a source, be sure to add a
     <a href='omat/$project/sources'>source</a> first.";
   }
@@ -147,6 +147,8 @@ if ($projectinfo->dqi) {
     <li><a href="omat/data/<?php echo $materialinfo->id ?>"><?php echo $materialinfo->name ?></a></li>
     <li class="active"><?php echo $id ? "Edit" : "Add" ?> Data Point</li>
   </ol>
+
+  <?php if ($error) { echo "<div class=\"alert alert-danger\">$error</div>"; } else { ?>
 
   <?php if ($warning) { echo "<div class=\"alert alert-warning\">$warning</div>"; } ?>
 
@@ -265,6 +267,8 @@ if ($projectinfo->dqi) {
     <?php } ?>
 
   </form>
+
+  <?php } ?>
 
 <?php require_once 'include.footer.php'; ?>
 

@@ -774,3 +774,18 @@ VALUES ('On hold'); -- 0.058 s
 ALTER TABLE `mfa_dataset`
 ADD `banner_text` varchar(255) NOT NULL,
 COMMENT=''; -- 1.509 s
+
+-- Import from here onward
+
+ALTER TABLE `mfa_scales`
+ADD `standard_multiplier` decimal(3,2) unsigned NOT NULL DEFAULT '1',
+COMMENT=''; -- 0.599 s
+
+ALTER TABLE `mfa_dataset`
+CHANGE `multiscale` `multiscale` tinyint(1) unsigned NOT NULL COMMENT 'Indicates whether or not to include several scales' AFTER `time_log`,
+ADD `multiscale_multiplier` tinyint(1) unsigned NOT NULL COMMENT 'If several scales are used, this indicates if a multiplier system should be used (otherwise this is a comparison between scales instead)' AFTER `multiscale`,
+COMMENT=''; -- 0.586 s
+
+ALTER TABLE `mfa_dataset`
+CHANGE `multiscale_multiplier` `multiscale_as_proxy` tinyint(1) unsigned NOT NULL COMMENT 'If several scales are used, this indicates if a multiplier system should be used (otherwise this is a comparison between scales instead)' AFTER `multiscale`,
+COMMENT=''; -- 0.511 s
