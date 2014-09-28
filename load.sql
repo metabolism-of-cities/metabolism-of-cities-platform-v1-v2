@@ -789,3 +789,23 @@ COMMENT=''; -- 0.586 s
 ALTER TABLE `mfa_dataset`
 CHANGE `multiscale_multiplier` `multiscale_as_proxy` tinyint(1) unsigned NOT NULL COMMENT 'If several scales are used, this indicates if a multiplier system should be used (otherwise this is a comparison between scales instead)' AFTER `multiscale`,
 COMMENT=''; -- 0.511 s
+
+ALTER TABLE `mfa_data`
+ADD `multiplier` decimal(5,4) unsigned NOT NULL DEFAULT '1',
+COMMENT=''; -- 0.530 s
+
+ALTER TABLE `mfa_scales`
+CHANGE `standard_multiplier` `standard_multiplier` decimal(5,2) unsigned NOT NULL DEFAULT '1.00' AFTER `name`,
+COMMENT=''; -- 0.479 s
+
+ALTER TABLE `mfa_scales`
+CHANGE `standard_multiplier` `standard_multiplier` decimal(5,4) unsigned NOT NULL DEFAULT '1.00' AFTER `name`,
+COMMENT=''; -- 0.810 s
+
+ALTER TABLE `mfa_dataset`
+ADD `multiple_values` enum('calculate_average','do_not_allow','select_best') COLLATE 'utf8_unicode_ci' NOT NULL DEFAULT 'calculate_average',
+COMMENT=''; -- 1.399 s
+
+ALTER TABLE `mfa_data`
+ADD `include_in_totals` tinyint(1) unsigned NOT NULL DEFAULT '1',
+COMMENT=''; -- 0.525 s
