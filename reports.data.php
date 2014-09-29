@@ -9,6 +9,46 @@ $project = (int)$_GET['project'];
 $id = (int)$_GET['id'];
 $year = (int)$_GET['year'];
 
+function traceOrigin($id, $type) {
+  global $db;
+  $to = $type == "source" ? "to_source" : "to_contact";
+  $info = $db->record("SELECT * FROM mfa_leads WHERE $to = $id");
+  if ($info->from_contact) {
+    $return = array('type' => 'contact', 'id' => $info->from_contact);
+  } elseif ($info->from_source) {
+    $return = array('type' => 'source', 'id' => $info->from_source);
+  }
+  return $return;
+}
+
+function traceOrigins($id, $type) {
+  $array[] = array('id' => $id, 'type' => $type);
+  do {
+    $return = traceOrigin($id, $type);
+    if ($return) {
+      $array[] = $return;
+      $id = $return['id'];
+      $type = $return['type'];
+    }
+  } while ($return);
+  return $array;
+}
+
+function trackTime($id, $type) {
+  global $db;
+  $list = $db->query("SELECT SUM(time) AS time, a.name
+  FROM 
+  mfa_activities_log l
+    JOIN mfa_activities a ON l.activity = a.id
+  WHERE l.$type = $id 
+  GROUP BY a.name
+  ORDER BY a.name");
+  foreach ($list as $row) {
+    $return[$row['name']] = $row['time'];
+  }
+  return $return;
+}
+
 $info = $db->record("SELECT mfa_materials.*, mfa_groups.name AS group_name
 FROM mfa_materials 
   JOIN mfa_groups ON mfa_materials.mfa_group = mfa_groups.id
@@ -210,40 +250,38 @@ ORDER BY dqi_sections.name, dqi_classifications.score");
       </fieldset>
     <?php } ?>
 
+    <?php if ($row['source_id']) { ?>
 
     <h2>Route to success</h2>
 
-    <div class="arrow contact">
-      <a href="X">
-      <i class="fa fa-user"></i>
-      3:20
+    <?php
+      $origins = traceOrigins($row['source_id'], 'source');
+      $origins = array_reverse($origins);
+    ?>
+
+    <?php 
+    foreach ($origins as $value) { 
+      $gettime = trackTime($value['id'], $value['type']);
+      if (is_array($gettime)) {
+        foreach ($gettime as $subkey => $subvalue) {
+          $totaltime[$subkey] += $subvalue;
+          $this_time += $subvalue;
+          $overall_time += $subvalue;
+        }
+      }
+    ?>
+
+    <div class="arrow <?php echo $value['type']; ?>">
+      <a href="omat/<?php echo $project ?>/view<?php echo $value['type'] ?>/<?php echo $value['id'] ?>">
+      <i class="fa fa-<?php echo $value['type'] == 'contact' ? 'user' : 'file'; ?>"></i>
+      <?php echo formatTime($this_time); $this_time = 0; ?>
       </a>
     </div>
 
-    <div class="arrow source">
-      <i class="fa fa-file"></i>
-      0:21
-    </div>
-
-    <div class="arrow source">
-      <i class="fa fa-file"></i>
-      0:10
-    </div>
-
-    <div class="arrow contact">
-      <a href="X">
-      <i class="fa fa-user"></i>
-      1:20
-      </a>
-    </div>
-
-    <div class="arrow source">
-      <i class="fa fa-file"></i>
-      0:44
-    </div>
+    <?php } ?>
 
     <div class="summary">
-      6:43
+      <?php echo formatTime($overall_time); ?>
     </div>
 
     <h2>Time breakdown</h2>
@@ -253,27 +291,19 @@ ORDER BY dqi_sections.name, dqi_classifications.score");
         <th>Activity</th>
         <th>Time</th>
       </tr>
+      <?php $overall_time = 0; foreach ($totaltime as $key => $value) { ?>
       <tr>
-        <td>Meetings</td>
-        <td>2:44</td>
+        <td><?php echo $key ?></td>
+        <td><?php echo formatTime($value); $overall_time += $value; ?></td>
       </tr>
-      <tr>
-        <td>Transportation</td>
-        <td>0:54</td>
-      </tr>
-      <tr>
-        <td>Reading, browsing</td>
-        <td>1:51</td>
-      </tr>
-      <tr>
-        <td>Calculating, extrapolating</td>
-        <td>0:22</td>
-      </tr>
+      <?php } ?>
       <tr>
         <th>Total</th>
-        <th>6:43</th>
+        <th><?php echo formatTime($overall_time) ?></th>
       </tr>
     </table>
+
+    <?php } ?>
 
     <?php } ?>
 

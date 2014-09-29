@@ -126,3 +126,6 @@ table.ellipsis {
     top:auto;
   }
 }
+.navbar-fixed-top {
+  z-index:1080;
+}
