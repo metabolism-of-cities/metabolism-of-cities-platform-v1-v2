@@ -14,7 +14,7 @@ $projectinfo = $db->record("SELECT * FROM mfa_dataset WHERE id = $project");
 function traceOrigin($id, $type) {
   global $db;
   $to = $type == "source" ? "to_source" : "to_contact";
-  $info = $db->record("SELECT * FROM mfa_leads WHERE $to = $id");
+  $info = $db->record("SELECT * FROM mfa_leads WHERE $to = $id ORDER BY id LIMIT 1");
   if ($info->from_contact) {
     $return = array('type' => 'contact', 'id' => $info->from_contact);
   } elseif ($info->from_source) {

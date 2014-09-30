@@ -105,6 +105,11 @@ table.ellipsis {
   width:300px;
 }
 
+.ellipsis th.smal, .ellipsis td.small { 
+  max-width:50px;
+  width:50px;
+}
+
 
 @media (min-width:768px){
 	a.navbar-brand{

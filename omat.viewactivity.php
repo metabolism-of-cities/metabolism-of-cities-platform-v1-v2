@@ -44,6 +44,11 @@ if ($_GET['delete']) {
 if ($_GET['saved']) {
   $print = "Changes have been saved";
 }
+
+$transport = $db->record("SELECT t.*, m.name AS mode 
+FROM mfa_transportation t
+  JOIN mfa_transportation_modes m ON t.transportation_mode = m.id
+WHERE activity = $id");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -120,6 +125,46 @@ if ($_GET['saved']) {
     <i class="fa fa-check"></i> 
     Activity was finished</a></p>
   <?php } ?>
+
+  <p>
+    <a href="omat/<?php echo $project ?>/transport/<?php echo $id ?>" class="btn btn-default pull-right">
+      <i class="fa fa-bicycle"></i>
+      Transportation details
+    </a>
+  </p>
+
+  <?php if ($transport->id) { ?>
+    <h1>Transportation details</h1>
+
+    <dl class="dl-horizontal">
+      <dt>Mode</dt>
+      <dd><?php echo $transport->mode ?></dd>
+
+      <?php if ($transport->from_destination && $transport->to_destination) { ?>
+        <dt>Route</dt>
+        <dd><?php echo $transport->from_destination ?> <em>to</em> <?php echo $transport->to_destination ?></dd>
+      <?php } ?>
+
+      <?php if ($transport->cost > 0) { ?>
+        <dt>Cost</dt>
+        <dd>R<?php echo number_format($transport->cost,2) ?></dd>
+      <?php } ?>
+
+      <?php if ($transport->distance > 0) { ?>
+        <dt>Distance</dt>
+        <dd><?php echo number_format($transport->distance,2) ?> km</dd>
+      <?php } ?>
+
+    </dl>
+
+    <?php if ($transport->from_destination && $transport->to_destination) { ?>
+    
+      <iframe width="900" height="600" frameborder="0" scrolling="no" marginheight="0"
+      marginwidth="0" src="http://maps.google.com/maps?saddr=<?php echo urlencode($transport->from_destination) ?>&amp;daddr=<?php echo urlencode($transport->to_destination); ?>&amp;hl=en&amp;ie=UTF8&amp;output=embed"></iframe>
+
+   <?php } ?>
+
+   <?php } ?>
 
 <?php require_once 'include.footer.php'; ?>
 

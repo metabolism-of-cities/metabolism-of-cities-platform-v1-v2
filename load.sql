@@ -809,3 +809,52 @@ COMMENT=''; -- 1.399 s
 ALTER TABLE `mfa_data`
 ADD `include_in_totals` tinyint(1) unsigned NOT NULL DEFAULT '1',
 COMMENT=''; -- 0.525 s
+
+
+CREATE TABLE `mfa_transportation_modes` (
+  `id` smallint unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `name` varchar(50) NOT NULL
+) COMMENT='' ENGINE='InnoDB'; -- 0.365 s
+
+
+INSERT INTO `mfa_transportation_modes` (`id`, `name`) VALUES
+(1,	'Bicycle'),
+(2,	'Car'),
+(3,	'Bus'),
+(4,	'Train'),
+(5,	'Taxi'),
+(6,	'Walking'),
+(7,	'Other');
+
+CREATE TABLE `mfa_transportation` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `activity` int(10) unsigned NOT NULL,
+  `transportation_mode` smallint(5) unsigned NOT NULL,
+  `route_url` varchar(1200) COLLATE utf8_unicode_ci NOT NULL,
+  `distance` int(11) NOT NULL COMMENT 'in km',
+  `notes` varchar(1000) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `activity` (`activity`),
+  KEY `transportation_mode` (`transportation_mode`),
+  CONSTRAINT `mfa_transportation_ibfk_1` FOREIGN KEY (`activity`) REFERENCES `mfa_activities_log` (`id`),
+  CONSTRAINT `mfa_transportation_ibfk_2` FOREIGN KEY (`transportation_mode`) REFERENCES `mfa_transportation_modes` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+ALTER TABLE `mfa_transportation`
+ADD `cost` decimal(7,2) unsigned NOT NULL,
+ADD `from` varchar(255) COLLATE 'utf8_unicode_ci' NOT NULL AFTER `cost`,
+ADD `to` varchar(255) COLLATE 'utf8_unicode_ci' NOT NULL AFTER `from`,
+COMMENT=''; -- 0.736 s
+
+ALTER TABLE `mfa_transportation`
+CHANGE `from` `from_destination` varchar(255) COLLATE 'utf8_unicode_ci' NOT NULL AFTER `cost`,
+CHANGE `to` `to_destination` varchar(255) COLLATE 'utf8_unicode_ci' NOT NULL AFTER `from_destination`,
+COMMENT=''; -- 0.697 s
+
+ALTER TABLE `mfa_transportation`
+CHANGE `distance` `distance` decimal(7,2) NOT NULL COMMENT 'in km' AFTER `route_url`,
+COMMENT=''; -- 0.821 s
+
+ALTER TABLE `mfa_transportation`
+DROP `route_url`,
+COMMENT=''; -- 0.876 s
