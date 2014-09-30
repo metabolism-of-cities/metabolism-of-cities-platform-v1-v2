@@ -112,13 +112,13 @@ FROM mfa_leads
   JOIN mfa_sources ON mfa_leads.to_source = mfa_sources.id
 WHERE from_source = $id ORDER BY mfa_sources.name");
 
-$referred_source = $db->record("SELECT 
+$referred_source = $db->query("SELECT 
   mfa_sources.*
 FROM mfa_leads
   JOIN mfa_sources ON mfa_leads.from_source = mfa_sources.id
 WHERE to_source = $id");
 
-$referred_contact = $db->record("SELECT 
+$referred_contact = $db->query("SELECT 
   mfa_contacts.*
 FROM mfa_leads
   JOIN mfa_contacts ON mfa_leads.from_contact = mfa_contacts.id
@@ -345,15 +345,18 @@ $status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
     <dt>Added</dt>
     <dd><?php echo format_date("M d, Y", $info->created) ?></dd>
 
-    <?php if ($referred_contact->id || $referred_source->id) { ?>
+    <?php if (count($referred_contact) || count($referred_source)) { ?>
       <dt>Referred to by</dt>
+      <?php if (is_array($referred_source)) { foreach ($referred_source as $row) { ?>
       <dd>
-      <?php if ($referred_source->id) { ?>
-        <a href="omat/<?php echo $project ?>/viewsource/<?php echo $referred_source->id ?>"><?php echo $referred_source->name ?></a>
-      <?php } else { ?>
-        <a href="omat/<?php echo $project ?>/viewcontact/<?php echo $referred_contact->id ?>"><?php echo $referred_contact->name ?></a>
-      <?php } ?>
+        <a href="omat/<?php echo $project ?>/viewsource/<?php echo $row['id'] ?>"><?php echo $row['name'] ?></a>
       </dd>
+      <?php } } ?>
+      <?php if (is_array($referred_contact)) { foreach ($referred_contact as $row) { ?>
+      <dd>
+        <a href="omat/<?php echo $project ?>/viewcontact/<?php echo $row['id'] ?>"><?php echo $row['name'] ?></a>
+      </dd>
+      <?php } } ?>
     <?php } ?>
 
   </dl>

@@ -9,6 +9,8 @@ $project = (int)$_GET['project'];
 $id = (int)$_GET['id'];
 $year = (int)$_GET['year'];
 
+$projectinfo = $db->record("SELECT * FROM mfa_dataset WHERE id = $project");
+
 function traceOrigin($id, $type) {
   global $db;
   $to = $type == "source" ? "to_source" : "to_contact";
@@ -195,7 +197,7 @@ ORDER BY dqi_sections.name, dqi_classifications.score");
       <dd><?php echo $row['year'] ?></dd>
 
       <dt>Value</dt>
-      <dd><?php echo number_format($row['data'],2) ?></dd>
+      <dd><?php echo number_format($row['data'],2) ?> <?php echo $projectinfo->measurement ?></dd>
 
       <?php if ($row['source_id'] || $row['source']) { ?>
 

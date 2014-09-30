@@ -34,7 +34,7 @@ if ($_GET['random-contact']) {
 $list = $db->query("SELECT c.*, t.name AS type, o.status,
   (SELECT name FROM mfa_leads
     JOIN mfa_contacts ON mfa_leads.from_contact = mfa_contacts.id
-    WHERE mfa_leads.to_contact = c.id) AS referral
+    WHERE mfa_leads.to_contact = c.id ORDER BY mfa_leads.id DESC LIMIT 1) AS referral
 FROM mfa_contacts c
   LEFT JOIN mfa_contacts_types t ON c.type = t.id
   JOIN mfa_status_options o ON c.status = o.id

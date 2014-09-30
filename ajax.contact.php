@@ -8,15 +8,23 @@ $contact = (int)$_POST['contact'];
 $source = (int)$_POST['source'];
 
 if ($_POST['action'] == 'addcontact') {
-  $post = array(
-    'name' => html(trim($_POST['name'])),
-    'organization' => (int)$_POST['organization'],
-    'works_for_referral_organization' => (int)$_POST['works_for_referral_organization'],
-    'dataset' => $project,
-    'status' => 1,
-  );
-  $db->insert("mfa_contacts",$post);
-  $id = $db->lastInsertId();
+  // If this contact already exists, then we just add a lead, but we 
+  // don't repeat adding the same contact again
+  $name = html(trim($_POST['name']));  
+  $check = $db->record("SELECT * FROM mfa_contacts WHERE dataset = $project AND name = '$name' LIMIT 1");
+  if (!$check->id) {
+    $post = array(
+      'name' => html(trim($_POST['name'])),
+      'organization' => (int)$_POST['organization'],
+      'works_for_referral_organization' => (int)$_POST['works_for_referral_organization'],
+      'dataset' => $project,
+      'status' => 1,
+    );
+    $db->insert("mfa_contacts",$post);
+    $id = $db->lastInsertId();
+  } else {
+    $id = $check->id;
+  }
   $post = array(
     'to_contact' => $id,
   );
@@ -33,13 +41,19 @@ if ($_POST['action'] == 'addcontact') {
       <i class='fa fa-{$icon}'></i> {$_POST['name']}</a>";
 }
 if ($_POST['action'] == 'addsource') {
-  $post = array(
-    'name' => html(trim($_POST['name'])),
-    'dataset' => $project,
-    'status' => 1,
-  );
-  $db->insert("mfa_sources",$post);
-  $id = $db->lastInsertId();
+  $name = html(trim($_POST['name']));  
+  $check = $db->record("SELECT * FROM mfa_sources WHERE dataset = $project AND name = '$name' LIMIT 1");
+  if (!$check->id) {
+    $post = array(
+      'name' => html(trim($_POST['name'])),
+      'dataset' => $project,
+      'status' => 1,
+    );
+    $db->insert("mfa_sources",$post);
+    $id = $db->lastInsertId();
+  } else {
+    $id = $check->id;
+  }
   $post = array(
     'to_source' => $id,
   );
