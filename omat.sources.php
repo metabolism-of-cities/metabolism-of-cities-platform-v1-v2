@@ -34,7 +34,7 @@ if ($_GET['random-source']) {
 $list = $db->query("SELECT c.*, t.name AS type, o.status,
   (SELECT name FROM mfa_leads
     JOIN mfa_sources ON mfa_leads.from_source = mfa_sources.id
-    WHERE mfa_leads.to_source = c.id) AS referral
+    WHERE mfa_leads.to_source = c.id LIMIT 1) AS referral
 FROM mfa_sources c
   LEFT JOIN mfa_sources_types t ON c.type = t.id
   JOIN mfa_status_options o ON c.status = o.id

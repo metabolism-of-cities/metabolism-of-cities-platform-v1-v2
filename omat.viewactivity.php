@@ -153,6 +153,14 @@ WHERE activity = $id");
       <?php if ($transport->distance > 0) { ?>
         <dt>Distance</dt>
         <dd><?php echo number_format($transport->distance,2) ?> km</dd>
+
+        <?php if ($info->time) { ?>
+
+          <dt>Average speed</dt>
+          <dd><?php echo number_format($transport->distance/$info->time*60,1) ?> km/h</dd>
+
+        <?php } ?>
+
       <?php } ?>
 
     </dl>

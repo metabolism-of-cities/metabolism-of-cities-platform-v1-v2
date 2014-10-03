@@ -111,6 +111,7 @@ $status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
     #delete{margin-top:30px}
     #activitylist .makesmall{font-size:11px;opacity:0.7}
     .badge{margin-left:8px}
+    h1{clear:both;padding-top:10px}
     </style>
     <script type="text/javascript">
     $(function(){
@@ -251,7 +252,7 @@ $status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
 
   <a href="omat/<?php echo $project ?>/contact/<?php echo $info->id ?>" class="btn btn-primary right">Edit</a>
 
-  <h1>Contact Details</h1>
+  <h1><?php echo $info->name ?></h1>
 
   <ol class="breadcrumb">
     <li><a href="omat/<?php echo $project ?>/dashboard">Dashboard</a></li>
