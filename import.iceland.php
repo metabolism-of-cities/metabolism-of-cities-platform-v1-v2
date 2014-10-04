@@ -42,6 +42,7 @@ if (($handle = fopen("iceland.csv", "r")) !== FALSE) {
         $id = $db->lastInsertId();
       } else {
         if ($year >= 1960) {
+          $information = strtr($information, $remove);
           $value = (float)$information;
           $post = array(
             'material' => $id,

@@ -45,6 +45,13 @@ if (count($dataresults)) {
     .moreinfo{opacity:0.7}
     .moreinfo:hover{opacity:1}
     #chart{height:400px}
+    .cut{
+      max-width: 200px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display:inline-block;
+    }
     </style>
   </head>
 
@@ -72,7 +79,9 @@ if (count($dataresults)) {
     </tr>
     <tr>
     <?php foreach ($list as $row) { ?>
-      <td style="padding-left:<?php echo strlen($row['code'])*10; ?>px"><?php echo $row['code'] ?>. <?php echo $row['name'] ?></td>
+      <td style="padding-left:<?php echo strlen($row['code'])*10; ?>px">
+        <span class="cut"><?php echo $row['code'] ?>. <?php echo $row['name'] ?></span>
+      </td>
       <?php foreach ($years as $year) { ?>
       <?php 
         $datapoint = $data[$year][$row['id']];

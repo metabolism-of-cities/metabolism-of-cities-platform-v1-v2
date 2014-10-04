@@ -97,8 +97,11 @@ if (count($dataresults)) {
 
   <?php if (!count($formula)) { ?>
     <div class="alert alert-warning">
-      We do not have a formula saved for automatically calculating this indicator. You can define the 
-      formula yourself and the system will proceed to calculate the values for this indicator.
+      <p>We do not have a formula saved for automatically calculating this indicator. You can define the 
+      formula yourself and the system will proceed to calculate the values for this indicator.</p>
+      <p>
+        <a href="omat/<?php echo $project ?>/reports-indicator-formula/<?php echo $id ?>" class="btn btn-success">Set up formula</a>
+      </p>
     </div>
   <?php } elseif ($error) { ?>
     <div class="alert alert-danger"><?php echo $error ?></div>
@@ -139,6 +142,9 @@ if (count($dataresults)) {
   <div id="chart"></div>
 
   <div class="well">
+
+    <a href="omat/<?php echo $project ?>/reports-indicator-formula/<?php echo $id ?>" class="btn btn-success pull-right">Edit formula</a>
+
     <h2>Formula</h2>
 
     <table class="table table-striped">
@@ -155,6 +161,7 @@ if (count($dataresults)) {
       <th><?php echo $info->name ?></th>
     </tr>
     </table>
+
   </div>
 
   <?php } ?>
