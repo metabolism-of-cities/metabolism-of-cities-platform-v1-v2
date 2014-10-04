@@ -3,29 +3,39 @@ require_once 'functions.php';
 require_once 'functions.omat.php';
 $section = 6;
 $load_menu = 3;
-$sub_page = 4;
+$sub_page = 5;
 
-if ($_GET['type']) {
-  $type = (int)$_GET['type'];
-  $sql .= " AND l.activity = $type";
+$type = (int)$_GET['type'];
+$join = "JOIN";
+if ($type) {
+  $sql = " AND mfa_transportation.transportation_mode = $type";
+} elseif ($_GET['show-all']) {
+  $join = "LEFT JOIN";
+  $sql = " AND a.name LIKE '%transport%'";
+  $print = "This feature shows all the activities that have the word 'transport' in them";
 }
 
 $list = $db->query("SELECT l.*, a.name AS activity_name,
   mfa_sources.name AS source_name,
-  mfa_contacts.name AS contact_name
-FROM mfa_activities_log l 
-  JOIN mfa_activities a ON l.activity = a.id
+  mfa_contacts.name AS contact_name,
+  modes.name AS mode,
+  mfa_transportation.*,
+  l.id
+FROM mfa_activities_log l
+  $join mfa_transportation ON mfa_transportation.activity = l.id
+  $join mfa_transportation_modes modes ON mfa_transportation.transportation_mode = modes.id
+  $join mfa_activities a ON l.activity = a.id
   LEFT JOIN mfa_sources ON l.source = mfa_sources.id
   LEFT JOIN mfa_contacts ON l.contact = mfa_contacts.id
 WHERE a.dataset = $project $sql ORDER BY l.end");
 
-$types = $db->query("SELECT * FROM mfa_activities WHERE dataset = $project ORDER BY name");
+$types = $db->query("SELECT * FROM mfa_transportation_modes ORDER BY name");
 ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <?php echo $header ?>
-    <title>Activity Log | <?php echo SITENAME ?></title>
+    <title>Travel Log | <?php echo SITENAME ?></title>
     <style type="text/css">
     select.form-control{width:120px;display:inline}
     </style>
@@ -35,14 +45,19 @@ $types = $db->query("SELECT * FROM mfa_activities WHERE dataset = $project ORDER
 
 <?php require_once 'include.header.php'; ?>
 
-  <h1>Activity Log</h1>
+  <a href="omat/<?php echo $project ?>/reports-travel<?php if (!$_GET['show-all']) { echo '/show-all'; } ?>" class="btn pull-right btn-<?php echo $_GET['show-all'] ? 'primary' : 'default'; ?>">
+    Show all transport-related activities
+  </a>
+  <h1>Travel Log</h1>
 
   <ol class="breadcrumb">
     <li><a href="omat/<?php echo $project ?>/dashboard">Dashboard</a></li>
-    <li class="active">Activity Log</li>
+    <li class="active">Travel Log</li>
   </ol>
 
-  <form class="form form-horizontal" action="reports.activities.php">
+  <?php if ($print) { echo "<div class=\"alert alert-success\">$print</div>"; } ?>
+
+  <form class="form form-horizontal" action="reports.travel.php">
 
   <p>
     <select name="type" class="form-control">
@@ -69,10 +84,11 @@ $types = $db->query("SELECT * FROM mfa_activities WHERE dataset = $project ORDER
     <tr>
       <th>ID</th>
       <th>Related To</th>
-      <th>Type</th>
-      <th>Start</th>
-      <th>End</th>
+      <th>Mode</th>
       <th>Time</th>
+      <th>Distance</th>
+      <th>Speed</th>
+      <th>Cost</th>
     </tr>
     <?php foreach ($list as $row) { ?>
     <tr>
@@ -84,15 +100,19 @@ $types = $db->query("SELECT * FROM mfa_activities WHERE dataset = $project ORDER
           <a href="omat/<?php echo $project ?>/viewsource/<?php echo $row['source'] ?>"><?php echo $row['source_name'] ?></a>
         <?php } ?>
       </td>
-      <td><?php echo $row['activity_name'] ?></td>
-      <td><?php echo format_date("M d, Y H:i:s", $row['start']); ?></td>
-      <td><?php echo format_date("M d, Y H:i:s", $row['end']); ?></td>
+      <td><?php echo $row['mode'] ?></td>
       <td><?php echo formatTime($row['time']); $time += $row['time']; ?></td>
+      <td><?php echo $row['distance']; $distance += $row['distance']; ?> km</td>
+      <td><?php echo number_format($row['distance']/$row['time']*60,1) ?> km/h</td>
+      <td><?php echo number_format($row['cost'],2); $cost += $row['cost']; ?></td>
     </tr>
   <?php } ?>
   <tr>
-    <th colspan="5">Total</th>
+    <th colspan="3">Total</th>
     <th><?php echo formatTime($time) ?></th>
+    <th><?php echo $distance ?> km</th>
+    <th><?php echo number_format($distance/$time*60,1) ?> km/h</th>
+    <th><?php echo number_format($cost,2) ?></th>
   </tr>
   </table>
 

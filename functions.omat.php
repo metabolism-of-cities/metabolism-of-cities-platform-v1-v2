@@ -99,6 +99,7 @@ $omat_menu = array(
       2 => array('label' => 'Indicators', 'url' => "omat/$project/reports-indicators"),
       3 => array('label' => 'Data Tables', 'url' => "omat/$project/reports-tables"),
       4 => array('label' => 'Activity Log', 'url' => "omat/$project/reports-activities"),
+      5 => array('label' => 'Travel Log', 'url' => "omat/$project/reports-travel"),
     ),
   ),
 );

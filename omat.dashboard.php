@@ -40,6 +40,7 @@ ORDER BY mfa_data.date DESC LIMIT 5");
       dd,dt{padding-bottom:5px}
       ul.flatlist{list-style:none;padding-left:0}
       ul.flatlist li{margin-bottom:3px;padding-left:0}
+      a.btn-success{margin-bottom:5px}
     </style>
   </head>
 
@@ -128,6 +129,7 @@ ORDER BY mfa_data.date DESC LIMIT 5");
       <a href="omat/<?php echo $id ?>/reports-tables" class="btn btn-success"><i class="fa fa-table"></i> Data Tables</a>
       <?php if ($info->time_log) { ?>
         <a href="omat/<?php echo $id ?>/reports-activities" class="btn btn-success"><i class="fa fa-table"></i> Activity Log</a>
+        <a href="omat/<?php echo $id ?>/reports-travel" class="btn btn-success"><i class="fa fa-bicycle"></i> Travel Log</a>
       <?php } ?>
     </p>
 
