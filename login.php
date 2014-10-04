@@ -8,7 +8,10 @@ if ($login->isUserLoggedIn() == true) {
     foreach ($permissions as $row) {
       $project = $row['dataset'];
     }
-    header("Location: " . URL . "omat/dashboard/$project");
+    header("Location: " . URL . "omat/$project/dashboard");
+    exit();
+  } elseif (count($permissions) > 1) { 
+    header("Location: " . URL . "omat/projects");
     exit();
   } else {
     header("Location: " . URL . "omat/create");

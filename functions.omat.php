@@ -40,7 +40,7 @@ if ($login->isUserLoggedIn() == true) {
   $user_id = (int)$_SESSION['user_id'];
   $permissions = $db->query("SELECT * FROM users_permissions WHERE user = $user_id");
   foreach ($permissions as $permissionrow) {
-    $authorized = $permissionrow['dataset'] . ",";
+    $authorized .= $permissionrow['dataset'] . ",";
   }
   $authorized = substr($authorized, 0, -1);
 } elseif (!$skip_login) {

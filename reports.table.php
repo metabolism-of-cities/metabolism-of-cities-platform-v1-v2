@@ -14,7 +14,7 @@ if (!$dataset->year_start || !$dataset->year_end) {
 
 $list = $db->query("SELECT *,
   (SELECT COUNT(*) FROM mfa_materials m WHERE m.mfa_group = $id AND m.code LIKE CONCAT(mfa_materials.code, '.%')) AS subcategories 
-FROM mfa_materials WHERE mfa_group = $id");
+FROM mfa_materials WHERE mfa_group = $id ORDER BY mfa_materials.code");
 
 $years = range($dataset->year_start, $dataset->year_end);
 
@@ -26,7 +26,7 @@ $dataresults = $db->query("SELECT AVG(data*multiplier) AS total, mfa_data.year, 
   FROM mfa_data
   JOIN mfa_materials ON mfa_data.material = mfa_materials.id
 WHERE mfa_materials.mfa_group = $id AND mfa_data.include_in_totals = 1
-GROUP BY mfa_materials.id, mfa_data.year");
+GROUP BY mfa_materials.code, mfa_data.year");
 
 if (count($dataresults)) {
   foreach ($dataresults as $row) {

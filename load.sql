@@ -858,3 +858,15 @@ COMMENT=''; -- 0.821 s
 ALTER TABLE `mfa_transportation`
 DROP `route_url`,
 COMMENT=''; -- 0.876 s
+
+INSERT INTO `mfa_dataset` (`research_project`, `name`, `year_start`, `year_end`, `access`, `decimal_precision`, `measurement`, `contact_management`, `dqi`, `time_log`, `multiscale`, `multiscale_as_proxy`, `type`, `banner_text`, `multiple_values`)
+VALUES (NULL, 'Iceland', '1962', '2008', 2, '0', 'metric tons', '0', '0', '0', '0', '0', '1', '', 2); -- 0.328 s
+
+INSERT INTO `mfa_groups` (`section`, `name`, `dataset`)
+VALUES ('A', 'Domestic Extraction', '12'); -- 0.166 s
+
+INSERT INTO `mfa_groups` (`section`, `name`, `dataset`)
+VALUES ('B', 'Imports', '12'); -- 0.151 s
+
+INSERT INTO `mfa_groups` (`section`, `name`, `dataset`)
+VALUES ('D', 'Exports', '12'); -- 0.171 s
