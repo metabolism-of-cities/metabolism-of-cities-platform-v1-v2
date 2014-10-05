@@ -3,18 +3,14 @@ $project = 12;
 require_once 'functions.php';
 require_once 'functions.omat.php';
 
-if (PRODUCTION) {
-  die("Run this locally and then import the data");
-}
-
 $remove = array("," => "");
 $data = file_get_contents('iceland.csv');
 $row = 1;
 
 $match = array(
-  'A' => 92,
-  'B' => 93,
-  'D' => 94,
+  'A' => 13,
+  'B' => 14,
+  'D' => 15,
 );
 
 if (($handle = fopen("iceland.csv", "r")) !== FALSE) {
