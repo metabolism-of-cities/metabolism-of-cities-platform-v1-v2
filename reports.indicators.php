@@ -1,4 +1,7 @@
 <?php
+if ($_GET['public_login']) {
+  $public_login = true;
+}
 require_once 'functions.php';
 require_once 'functions.omat.php';
 $section = 6;
@@ -34,7 +37,11 @@ ORDER BY i.id");
   <h1>Indicators</h1>
 
   <ol class="breadcrumb">
-    <li><a href="omat/<?php echo $project ?>/dashboard">Dashboard</a></li>
+      <?php if ($public_login) { ?>
+        <li><a href="omat/<?php echo $project ?>/projectinfo"><?php echo $check->name ?></a></li>
+      <?php } else { ?>
+        <li><a href="omat/<?php echo $project ?>/dashboard">Dashboard</a></li>
+      <?php } ?>
     <li class="active">Indicators</li>
   </ol>
 
@@ -42,14 +49,14 @@ ORDER BY i.id");
 
   <?php $type = false; foreach ($list as $row) { ?>
 
-    <?php if ($row['type_name'] != $type) { ?>
+    <?php if ($row['formula'] || !$public_login) { if ($row['type_name'] != $type) { ?>
     <?php if ($type) { ?></div></div><?php } ?>
     <div class="col-md-4">
       <h2><?php echo $row['type_name'] ?></h2>
     <div class="list-group">
     <?php } $type = $row['type_name']; ?>
 
-      <a href="omat/<?php echo $project ?>/reports-indicator/<?php echo $row['id'] ?>" class="list-group-item">
+      <a href="<?php echo $public_login ? 'omat-public' : 'omat'; ?>/<?php echo $project ?>/reports-indicator/<?php echo $row['id'] ?>" class="list-group-item">
         <h4 class="list-group-item-heading"><?php echo $row['name'] ?></h4>
         <p class="list-group-item-text"><?php echo truncate($row['description'],140) ?>
         <?php if ($row['formula']) { ?>
@@ -58,7 +65,7 @@ ORDER BY i.id");
         </p>
       </a>
 
-  <?php } ?>
+  <?php } } ?>
 
   </div>
 

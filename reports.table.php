@@ -1,4 +1,7 @@
 <?php
+if ($_GET['public_login']) {
+  $public_login = true;
+}
 require_once 'functions.php';
 require_once 'functions.omat.php';
 $section = 6;
@@ -65,8 +68,12 @@ if (count($dataresults)) {
   </h1>
 
   <ol class="breadcrumb">
-    <li><a href="omat/<?php echo $project ?>/dashboard">Dashboard</a></li>
-    <li><a href="omat/<?php echo $project ?>/reports-tables">Data Tables</a></li>
+      <?php if ($public_login) { ?>
+        <li><a href="omat/<?php echo $project ?>/projectinfo"><?php echo $check->name ?></a></li>
+      <?php } else { ?>
+        <li><a href="omat/<?php echo $project ?>/dashboard">Dashboard</a></li>
+      <?php } ?>
+    <li><a href="<?php echo $omat_link ?>/<?php echo $project ?>/reports-tables">Data Tables</a></li>
     <li class="active"><?php echo $info->section ?>. <?php echo $info->name ?></li>
   </ol>
 
@@ -89,7 +96,7 @@ if (count($dataresults)) {
       ?>
         <td>
         <?php if (!$row['subcategories'] || $datapoint) { ?>
-          <a href="omat/<?php echo $project ?>/reports-data/<?php echo $year ?>/<?php echo $row['id'] ?>"><?php echo number_format($datapoint,$dataset->decimal_precision) ?></a>
+          <a href="<?php echo $omat_link ?>/<?php echo $project ?>/reports-data/<?php echo $year ?>/<?php echo $row['id'] ?>"><?php echo number_format($datapoint,$dataset->decimal_precision) ?></a>
         <?php } ?>
         </td>
       <?php } ?>
@@ -112,7 +119,7 @@ if (count($dataresults)) {
       <ul class="nav nav-pills">
         <?php foreach ($tables as $row) { ?>
           <li class="<?php echo $row['id'] == $id ? 'active' : 'regular'; ?>">
-            <a href="omat/<?php echo $project ?>/reports-table/<?php echo $row['id'] ?>">
+            <a href="<?php echo $omat_link ?>/<?php echo $project ?>/reports-table/<?php echo $row['id'] ?>">
               <?php echo $row['section'] ?>. <?php echo $row['name'] ?>
             </a>
           </li>

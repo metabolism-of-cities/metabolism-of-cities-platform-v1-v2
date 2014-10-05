@@ -1,4 +1,7 @@
 <?php
+if ($_GET['public_login']) {
+  $public_login = true;
+}
 require_once 'functions.php';
 require_once 'functions.omat.php';
 $section = 6;
@@ -26,7 +29,11 @@ $list = $db->query("SELECT * FROM mfa_groups WHERE dataset = $project ORDER BY s
   <h1>Tables</h1>
 
   <ol class="breadcrumb">
-    <li><a href="omat/<?php echo $project ?>/dashboard">Dashboard</a></li>
+      <?php if ($public_login) { ?>
+        <li><a href="omat/<?php echo $project ?>/projectinfo"><?php echo $check->name ?></a></li>
+      <?php } else { ?>
+        <li><a href="omat/<?php echo $project ?>/dashboard">Dashboard</a></li>
+      <?php } ?>
     <li class="active">Data Tables</li>
   </ol>
 
@@ -34,7 +41,7 @@ $list = $db->query("SELECT * FROM mfa_groups WHERE dataset = $project ORDER BY s
 
   <ul class="nav nav-list nav-stacked">
   <?php foreach ($list as $row) { ?>
-    <li><a href="omat/<?php echo $project ?>/reports-table/<?php echo $row['id'] ?>"><?php echo $row['section'] ?>. <?php echo $row['name'] ?></a></li>
+    <li><a href="<?php echo $public_login ? 'omat-public' : 'omat'; ?>/<?php echo $project ?>/reports-table/<?php echo $row['id'] ?>"><?php echo $row['section'] ?>. <?php echo $row['name'] ?></a></li>
   <?php } ?>
   </ul>
 

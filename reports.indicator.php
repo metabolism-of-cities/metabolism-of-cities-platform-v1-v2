@@ -1,4 +1,7 @@
 <?php
+if ($_GET['public_login']) {
+  $public_login = true;
+}
 require_once 'functions.php';
 require_once 'functions.omat.php';
 $section = 6;
@@ -73,8 +76,12 @@ if (count($dataresults)) {
   </h1>
 
   <ol class="breadcrumb">
-    <li><a href="omat/<?php echo $project ?>/dashboard">Dashboard</a></li>
-    <li><a href="omat/<?php echo $project ?>/reports-indicators">Indicators</a></li>
+      <?php if ($public_login) { ?>
+        <li><a href="omat/<?php echo $project ?>/projectinfo"><?php echo $check->name ?></a></li>
+      <?php } else { ?>
+        <li><a href="omat/<?php echo $project ?>/dashboard">Dashboard</a></li>
+      <?php } ?>
+    <li><a href="<?php echo $public_login ? 'omat-public' : 'omat'; ?>/<?php echo $project ?>/reports-indicators">Indicators</a></li>
     <li class="active"><?php echo $info->name ?></li>
   </ol>
 
@@ -124,7 +131,7 @@ if (count($dataresults)) {
         $datapoint = $data[$year][$row['mfa_group']];
         $final[$year] += $row['type'] == "add" ? $datapoint : $datapoint*-1;
       ?>
-        <td><a href=""><?php echo number_format($datapoint,$dataset->decimal_precision) ?></a></td>
+        <td><?php echo number_format($datapoint,$dataset->decimal_precision) ?></td>
       <?php } ?>
       </tr>
     <?php } ?>
@@ -141,30 +148,35 @@ if (count($dataresults)) {
 
   <div id="chart"></div>
 
-  <div class="well">
+  <?php if (!$public_login) { ?>
 
-    <a href="omat/<?php echo $project ?>/reports-indicator-formula/<?php echo $id ?>" class="btn btn-success pull-right">Edit formula</a>
+    <div class="well">
 
-    <h2>Formula</h2>
+      <a href="omat/<?php echo $project ?>/reports-indicator-formula/<?php echo $id ?>" class="btn btn-success pull-right">Edit formula</a>
 
-    <table class="table table-striped">
-    <?php foreach ($formula as $row) { ?>
+      <h2>Formula</h2>
+
+      <table class="table table-striped">
+      <?php foreach ($formula as $row) { ?>
+        <tr>
+          <td><?php echo $row['type'] == "add" ? $plus : "-" ?></td>
+          <td><a href="omat/<?php echo $project ?>/datagroup/<?php echo $row['mfa_group'] ?>"><?php echo $row['name'] ?></a></td>
+        </tr>
+      <?php 
+      // We don't define the plus sign earlier so that it does not show up for the first element, which looks weird
+      $plus = "+"; } ?>
       <tr>
-        <td><?php echo $row['type'] == "add" ? $plus : "-" ?></td>
-        <td><a href="omat/<?php echo $project ?>/datagroup/<?php echo $row['mfa_group'] ?>"><?php echo $row['name'] ?></a></td>
+        <th>=</th>
+        <th><?php echo $info->name ?></th>
       </tr>
-    <?php 
-    // We don't define the plus sign earlier so that it does not show up for the first element, which looks weird
-    $plus = "+"; } ?>
-    <tr>
-      <th>=</th>
-      <th><?php echo $info->name ?></th>
-    </tr>
-    </table>
+      </table>
 
-  </div>
+    </div>
 
+    <?php } ?>
   <?php } ?>
+
+  <?php if (!$public_login) { ?>
 
   <div class="panel panel-info">
     <div class="panel-heading">
@@ -178,6 +190,8 @@ if (count($dataresults)) {
       </ul>
     </div>
   </div>
+
+  <?php } ?>
 
 <?php require_once 'include.footer.php'; ?>
 

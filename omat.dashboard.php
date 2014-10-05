@@ -126,6 +126,7 @@ ORDER BY mfa_data.date DESC LIMIT 5");
     <p>
       <a href="omat/<?php echo $id ?>/reports-dataoverview" class="btn btn-success"><i class="fa fa-list"></i> Data Overview</a>
       <a href="omat/<?php echo $id ?>/reports-indicators" class="btn btn-success"><i class="fa fa-bar-chart"></i> Indicators</a>
+      <a href="omat/<?php echo $id ?>/reports-graphs" class="btn btn-success"><i class="fa fa-line-chart"></i> Graphs</a>
       <a href="omat/<?php echo $id ?>/reports-tables" class="btn btn-success"><i class="fa fa-table"></i> Data Tables</a>
       <?php if ($info->time_log) { ?>
         <a href="omat/<?php echo $id ?>/reports-activities" class="btn btn-success"><i class="fa fa-table"></i> Activity Log</a>

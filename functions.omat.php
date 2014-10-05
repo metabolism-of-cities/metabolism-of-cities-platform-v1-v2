@@ -36,6 +36,11 @@ require_once("login/classes/Login.php");
 // so this single line handles the entire login process. in consequence, you can simply ...
 $login = new Login();
 
+$omat_link = "omat";
+if ($public_login) {
+  $omat_link = "omat-public";
+}
+
 if ($login->isUserLoggedIn() == true) {
   $user_id = (int)$_SESSION['user_id'];
   $permissions = $db->query("SELECT * FROM users_permissions WHERE user = $user_id");
@@ -43,7 +48,7 @@ if ($login->isUserLoggedIn() == true) {
     $authorized .= $permissionrow['dataset'] . ",";
   }
   $authorized = substr($authorized, 0, -1);
-} elseif (!$skip_login) {
+} elseif (!$skip_login && !$public_login) {
   header("Location: " . URL . "page/login");
   exit();
 }
@@ -56,7 +61,11 @@ if (!$skip_login && !$no_project_selected) {
     die("No project defined");
   }
 
-  $check = $db->record("SELECT * FROM mfa_dataset WHERE id = $project AND id IN ($authorized)");
+  if ($public_login) {
+    $check = $db->record("SELECT * FROM mfa_dataset WHERE id = $project AND access != 'private'");
+  } else {
+    $check = $db->record("SELECT * FROM mfa_dataset WHERE id = $project AND id IN ($authorized)");
+  }
   if (!$check->id) {
     kill("Invalid dataset opened");
   }
@@ -126,6 +135,10 @@ if (!$check->time_log) {
 
 if (!$check->dqi) {
   unset($omat_menu[2]['menu'][1]);
+}
+
+if ($public_login) {
+  unset($omat_menu[3]['menu'][1]);
 }
 
 ?>

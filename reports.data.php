@@ -1,4 +1,7 @@
 <?php
+if ($_GET['public_login']) {
+  $public_login = true;
+}
 require_once 'functions.php';
 require_once 'functions.omat.php';
 $section = 6;
@@ -172,9 +175,13 @@ ORDER BY dqi_sections.name, dqi_classifications.score");
   </h1>
 
   <ol class="breadcrumb">
-    <li><a href="omat/<?php echo $project ?>/dashboard">Dashboard</a></li>
-    <li><a href="omat/<?php echo $project ?>/reports-tables">Data Tables</a></li>
-    <li><a href="omat/<?php echo $project ?>/reports-table/<?php echo $info->mfa_group ?>"><?php echo $info->group_name ?></a></li>
+      <?php if ($public_login) { ?>
+          <li><a href="omat/<?php echo $project ?>/projectinfo"><?php echo $check->name ?></a></li>
+      <?php } else { ?>
+          <li><a href="omat/<?php echo $project ?>/dashboard">Dashboard</a></li>
+      <?php } ?>
+    <li><a href="<?php echo $omat_link ?>/<?php echo $project ?>/reports-tables">Data Tables</a></li>
+    <li><a href="<?php echo $omat_link ?>/<?php echo $project ?>/reports-table/<?php echo $info->mfa_group ?>"><?php echo $info->group_name ?></a></li>
     <li class="active"><?php echo $info->name ?></li>
   </ol>
 

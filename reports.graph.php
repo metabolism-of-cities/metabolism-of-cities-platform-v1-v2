@@ -1,4 +1,7 @@
 <?php
+if ($_GET['public_login']) {
+  $public_login = true;
+}
 require_once 'functions.php';
 require_once 'functions.omat.php';
 
@@ -38,11 +41,16 @@ $materials = $db->query("SELECT * FROM mfa_materials WHERE mfa_group = $id AND L
 
   <h1>Graphs: <?php echo $info->section ?>. <?php echo $info->name ?></h1>
 
-  <ol class="breadcrumb">
-    <li><a href="omat/<?php echo $project ?>/dashboard">Dashboard</a></li>
-    <li><a href="omat/<?php echo $project ?>/reports-graphs">Graphs</a></li>
-    <li class="active"><?php echo $info->section ?>. <?php echo $info->name ?></li>
-  </ol>
+    <ol class="breadcrumb">
+      <?php if ($public_login) { ?>
+          <li><a href="omat/<?php echo $project ?>/projectinfo"><?php echo $check->name ?></a></li>
+          <li><a href="omat-public/<?php echo $project ?>/reports-graphs">Graphs</a></li>
+      <?php } else { ?>
+          <li><a href="omat/<?php echo $project ?>/dashboard">Dashboard</a></li>
+          <li><a href="omat/<?php echo $project ?>/reports-graphs">Graphs</a></li>
+      <?php } ?>
+      <li class="active"><?php echo $info->section ?>. <?php echo $info->name ?></li>
+    </ol>
 
   <div>
     <svg id="graph"></svg>
