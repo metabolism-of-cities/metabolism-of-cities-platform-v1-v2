@@ -97,6 +97,7 @@ $omat_menu = array(
     'menu' => array(
       1 => array('label' => 'Data Overview', 'url' => "omat/$project/reports-dataoverview"),
       2 => array('label' => 'Indicators', 'url' => "omat/$project/reports-indicators"),
+      6 => array('label' => 'Graphs', 'url' => "omat/$project/reports-graphs"),
       3 => array('label' => 'Data Tables', 'url' => "omat/$project/reports-tables"),
       4 => array('label' => 'Activity Log', 'url' => "omat/$project/reports-activities"),
       5 => array('label' => 'Travel Log', 'url' => "omat/$project/reports-travel"),
@@ -119,6 +120,8 @@ if (!$check->contact_management) {
 
 if (!$check->time_log) {
   unset($omat_menu[2]['menu'][4]);
+  unset($omat_menu[3]['menu'][4]);
+  unset($omat_menu[3]['menu'][5]);
 }
 
 if (!$check->dqi) {
