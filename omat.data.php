@@ -98,7 +98,12 @@ $notes = $db->record("SELECT COUNT(*) AS total FROM mfa_materials_notes WHERE ma
           <td><?php echo $row['scalename'] ?></td>
         <?php } ?>
         <td class="small"><?php echo $row['year'] ?></td>
-        <td><?php echo number_format($row['data'],$projectinfo->decimal_precision) ?></td>
+        <td>
+          <?php echo number_format($row['data'],$projectinfo->decimal_precision) ?>
+          <?php if ($row['multiplier'] != 1) { ?>
+            <span class="badge">x <?php echo $row['multiplier'] ?></span>
+          <?php } ?>
+        </td>
         <td class="large">
         <?php if ($row['sourcename']) { ?>
           <a href="omat/<?php echo $project ?>/viewsource/<?php echo $row['source_id'] ?>"><?php echo $row['sourcename'] ?></a>

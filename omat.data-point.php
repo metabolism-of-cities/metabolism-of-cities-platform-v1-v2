@@ -1,5 +1,6 @@
 <?php
 require_once 'functions.php';
+
 if ($_GET['material']) {
   $material = (int)$_GET['material'];
   $getproject = $db->record("SELECT g.dataset, g.name, g.id AS groupid FROM mfa_materials m JOIN mfa_groups g ON m.mfa_group = g.id WHERE m.id = $material");
@@ -16,6 +17,7 @@ if ($_GET['material']) {
   $project = $getproject->dataset;
   $projectinfo = $db->record("SELECT * FROM mfa_dataset WHERE id = $project");
 }
+
 require_once 'functions.omat.php';
 
 $load_menu = 1;
@@ -38,6 +40,11 @@ FROM mfa_materials
 WHERE mfa_materials.id = $material");
 
 if ($_POST) {
+  // Only if this project uses multiple scales as proxies do we want
+  // a multiplier factor that is different from 1.
+  if (!$projectinfo->multiscale || !$projectinfo->multiscale_as_proxy) {
+    $_POST['multiplier'] = 1;
+  }
   if (is_array($_POST['data'])) {
     $remove_commas = array(',' => '');
     foreach ($_POST['data'] as $year => $data) {
@@ -52,6 +59,7 @@ if ($_POST) {
           'source_link' => $_POST['source_link'] ? html($_POST['source_link']) : NULL,
           'source_id' => $_POST['source_id'] ? (int)$_POST['source_id'] : NULL,
           'scale' => $_POST['scale'] ? (int)$_POST['scale'] : NULL,
+          'multiplier' => $_POST['multiplier'] == "own" ? (float)$_POST['own_multiplier'] : (float)$_POST['multiplier'],
         );
         $db->insert("mfa_data",$post);
         $id = $db->lastInsertId();
@@ -83,6 +91,7 @@ if ($_POST) {
       'source_link' => $_POST['source_link'] ? html($_POST['source_link']) : NULL,
       'source_id' => $_POST['source_id'] ? (int)$_POST['source_id'] : NULL,
       'scale' => $_POST['scale'] ? (int)$_POST['scale'] : NULL,
+      'multiplier' => $_POST['multiplier'] == "own" ? (float)$_POST['own_multiplier'] : (float)$_POST['multiplier'],
     );
     if ($id) {
       $db->update("mfa_data",$post,"id = $id");
@@ -174,6 +183,29 @@ if ($projectinfo->dqi) {
         $(".group-"+section+" input").attr('checked', false);
         $(".group-"+section+" label").removeClass("active");
       });
+      <?php if ($projectinfo->multiscale) { ?>
+        $("select[name='scale']").change(function(){
+          if ($(this).val() != "") {
+            var multiplier = $(this).find(':selected').data("multiplier");
+            $("#standard_multiplier").html("Use the standard multiplier of " + multiplier);
+            $("#standard_multiplier").attr("value", multiplier);
+          } else {
+            $("#standard_multiplier").html("");
+            $("#standard_multiplier").attr("value", "");
+          }
+        });
+        $("select[name='scale']").change();
+        <?php if ($projectinfo->multiscale_as_proxy) { ?>
+          $("select[name='multiplier']").change(function(){
+            if ($(this).val() == "own") {
+              $("#multiplier_box").show('fast');
+            } else {
+              $("#multiplier_box").hide('fast');
+            }
+          });
+          $("select[name='multiplier']").change();
+        <?php } ?>
+      <?php } ?>
     });
     </script>
   </head>
@@ -250,11 +282,33 @@ if ($projectinfo->dqi) {
           <select name="scale" class="form-control" required>
             <option value=""></option>
             <?php foreach ($scales as $row) { ?>
-              <option value="<?php echo $row['id'] ?>"<?php if ($row['id'] == $info->scale) { echo ' selected'; } ?>><?php echo $row['name'] ?></option>
+              <option data-multiplier="<?php echo $row['standard_multiplier'] ?>" value="<?php echo $row['id'] ?>"<?php if ($row['id'] == $info->scale) { echo ' selected'; $expected_multiplier = $row['standard_multiplier']; } ?>><?php echo $row['name'] ?></option>
             <?php } ?>
           </select>
         </div>
       </div>
+
+      <?php if ($projectinfo->multiscale_as_proxy) { ?>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Multiplier</label>
+          <div class="col-sm-10">
+            <select name="multiplier" class="form-control" required>
+              <option value="standard" id="standard_multiplier"></option>
+              <option value="own"<?php if ($info->multiplier && $info->multiplier != $expected_multiplier) { echo ' selected'; } ?>>
+                Set a different multiplier for this material
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group" id="multiplier_box">
+          <label class="col-sm-2 control-label">Define multiplier</label>
+          <div class="col-sm-10">
+            <input class="form-control" type="number" step="any" name="own_multiplier" value="<?php echo $info->multiplier ?>" />
+          </div>
+        </div>
+
+      <?php } ?>
 
     <?php } ?>
 
