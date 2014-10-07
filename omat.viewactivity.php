@@ -9,7 +9,7 @@ $id = (int)$_GET['id'];
 $project = (int)$_GET['project'];
 
 if ($_GET['finished']) {
-  $db->query("UPDATE mfa_activities_log SET end = NOW() WHERE id = $id LIMIT 1");
+  $db->query("UPDATE mfa_activities_log SET end = NOW() WHERE id = $id AND end IS NULL LIMIT 1");
   $print = "This activity was finished";
 }
 
