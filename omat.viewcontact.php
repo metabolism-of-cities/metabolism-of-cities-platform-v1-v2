@@ -92,6 +92,14 @@ $flags = $db->query("SELECT *,
 FROM mfa_special_flags WHERE dataset IS NULL OR dataset = $project ORDER BY name");
 
 $status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
+
+$associations = $db->query("SELECT mfa_groups.name AS groupname, mfa_materials.name AS material, l.id,
+  (SELECT mfa_groups.name FROM mfa_groups WHERE mfa_materials.mfa_group = mfa_groups.id) AS material_groupname
+FROM mfa_material_links l
+  LEFT JOIN mfa_groups ON l.mfa_group = mfa_groups.id
+  LEFT JOIN mfa_materials ON l.material = mfa_materials.id
+WHERE contact = $id");
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -287,6 +295,15 @@ $status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
 
     <?php } ?>
 
+    <dt>Associations</dt>
+    <?php foreach ($associations as $row) { ?>
+      <dd>
+        <?php echo $row['material'] ? $row['material_groupname'] : $row['groupname'] ?>
+        <?php if ($row['material']) { ?> &raquo; <?php echo $row['material'] ?><?php } ?>
+      </dd>
+    <?php } ?>
+    <dd><a href="omat/<?php echo $project ?>/materiallink/contact/<?php echo $id ?>">Manage associations</a></dd>
+    
     <?php if ($info->details) { ?>
       <dt>Notes</dt>
       <dd><?php echo $info->details ?></dd>
@@ -467,7 +484,11 @@ $status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
 
     </div>
   
-  <a id="delete" href="omat/<?php echo $project ?>/viewcontact/<?php echo $info->id ?>/delete" onclick="javascript:return confirm('Are you sure?')" class="btn btn-danger">Delete this contact</a>
+  <a id="delete" href="omat/<?php echo $project ?>/viewcontact/<?php echo $info->id ?>/delete" onclick="javascript:return confirm('Are you sure?')" 
+    class="btn btn-danger pull-right">
+    <i class="fa fa-trash"></i>
+    Delete this contact
+  </a>
 
   </div>
 

@@ -870,3 +870,19 @@ VALUES ('B', 'Imports', '12'); -- 0.151 s
 
 INSERT INTO `mfa_groups` (`section`, `name`, `dataset`)
 VALUES ('D', 'Exports', '12'); -- 0.171 s
+
+CREATE TABLE `mfa_material_links` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `source` int(10) unsigned NULL,
+  `contact` int(10) unsigned NULL,
+  `material` mediumint(8) unsigned NULL,
+  `group` mediumint(8) unsigned NULL,
+  FOREIGN KEY (`source`) REFERENCES `mfa_sources` (`id`),
+  FOREIGN KEY (`contact`) REFERENCES `mfa_contacts` (`id`),
+  FOREIGN KEY (`material`) REFERENCES `mfa_materials` (`id`),
+  FOREIGN KEY (`group`) REFERENCES `mfa_groups` (`id`)
+) COMMENT='' ENGINE='InnoDB'; -- 0.741 s
+
+ALTER TABLE `mfa_material_links`
+CHANGE `group` `mfa_group` mediumint(8) unsigned NULL AFTER `material`,
+COMMENT=''; -- 0.536 s
