@@ -36,8 +36,8 @@ if (!count($info)) {
 
 if ($_POST) {
   $post = array(
-    'start' => mysql_clean($_POST['start']),
-    'end' => mysql_clean($_POST['end']),
+    'start' => mysql_clean(format_date("Y-m-d H:i:s", $_POST['start'])),
+    'end' => mysql_clean(format_date("Y-m-d H:i:s", $_POST['end'])),
     'activity' => (int)$_POST['type'],
   );
   $db->update("mfa_activities_log",$post,"id = $id");
