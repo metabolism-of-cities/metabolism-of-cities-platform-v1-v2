@@ -31,6 +31,10 @@ if ($_GET['random-contact']) {
   }
 }
 
+if ($_GET['edit']) {
+  $edit = true;
+}
+
 $list = $db->query("SELECT c.*, t.name AS type, o.status,
   (SELECT name FROM mfa_leads
     JOIN mfa_contacts ON mfa_leads.from_contact = mfa_contacts.id
@@ -58,6 +62,22 @@ if ($_GET['deleted']) {
 
 $status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
 $flags = $db->query("SELECT * FROM mfa_special_flags ORDER BY name");
+
+$specialties = array(
+  1 => "Biomass extraction",
+  2 => "All biomass",
+  3 => "Imports and exports",
+  4 => "Metal imports and exports",
+  5 => "Non-mineral extraction",
+  6 => "Wood: all",
+  7 => "Wood: production",
+  8 => "Emissions to air",
+  9 => "Emissions to water",
+  10 => "Fossil fuels",
+  11 => "Plastics - other products",
+);
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -70,14 +90,41 @@ $flags = $db->query("SELECT * FROM mfa_special_flags ORDER BY name");
     .right{float:right;margin-left:6px;}
     .table > tbody > tr > th{border-top:0}
     .row-name{width:auto}
+    .row-edit{width:710px}
     .row-employer{width:200px}
     .row-status,.row-added{width:130px}
+    .message{display:none;position:fixed;bottom:10px;right:10px;font-size:15px;color:#fff;font-weight:bold;padding:5px}
+    .okay{background:green}
+    .error{background:red}
     </style>
+    <script type="text/javascript">
+    $(function(){
+      $(".specialty").change(function(e){
+        $.post("ajax.contact.php?project=<?php echo $project ?>",{
+          id: $(this).data("id"),
+          specialty: $(this).val(),
+          dataType: "json"
+        }, function(data) {
+          if (data.response == "OK") {
+            $(".message").html("Information was saved").show().addClass("okay").removeClass("error");
+          } else {
+            $(".message").html("There was an error. The information could be saved.").addClass("error").show().removeClass("okay");
+          }
+        },'json')
+        .error(function(){
+            $(".message").html("There was an error. Could not send data.").addClass("error").show().removeClass("okay");
+        });
+        e.preventDefault();
+      });
+    });
+    </script>
   </head>
 
   <body>
 
 <?php require_once 'include.header.php'; ?>
+
+  <div class="message"></div>
 
   <a href="omat/<?php echo $id ?>/contact/0" class="btn btn-success right">Add Contact</a>
 
@@ -149,26 +196,48 @@ $flags = $db->query("SELECT * FROM mfa_special_flags ORDER BY name");
     <table class="table table-striped">
       <tr>
         <th class="row-name">Name</th>
-        <th class="row-employer">Employer</th>
-        <th class="row-added">Added</th>
-        <th class="row-status">Status</th>
+        <?php if ($edit) { ?>
+          <th class="row-edit">Edit</th>
+        <?php } else { ?>
+          <th class="row-employer">Employer</th>
+          <th class="row-added">Added</th>
+          <th class="row-status">Status</th>
+        <?php } ?>
       </tr>
     <?php foreach ($list as $row) { ?>
       <tr>
-        <td class="long"><a href="omat/<?php echo $project ?>/viewcontact/<?php echo $row['id'] ?>"><?php echo $row['name'] ?></a></td>
-        <td class="medium"><?php echo $row['works_for_referral_organization'] ? $row['referral'] : $row['employer']; ?></td>
-        <td><?php echo format_date("M d, Y", $row['created']) ?></td>
-        <td>
-          <?php echo $row['status'] ?>
-        </td>
+        <td class="<?php echo $edit ? "medium" : "long"; ?>"><a href="omat/<?php echo $project ?>/viewcontact/<?php echo $row['id'] ?>"><?php echo $row['name'] ?></a></td>
+        <?php if ($edit) { ?>
+          <td>
+            
+            <select class="form-control specialty" data-id="<?php echo $row['id'] ?>">
+              <option></option>
+              <?php foreach ($specialties as $key => $value) { ?>
+                <option <?php echo $key == $row['specialty'] ? 'selected' : ''; ?> value="<?php echo $key ?>"><?php echo $value ?></option>
+              <?php } ?>
+            </select>
+
+            <?php foreach ($flags as $row) { ?>
+              <a class="btn btn-<?php echo $row['yes'] ? 'success' : 'default'; ?>"><?php echo $row['name'] ?></a>
+            <?php } ?>
+              
+          </td>
+        <?php } else { ?>
+          <td class="medium"><?php echo $row['works_for_referral_organization'] ? $row['referral'] : $row['employer']; ?></td>
+          <td><?php echo format_date("M d, Y", $row['created']) ?></td>
+          <td>
+            <?php echo $row['status'] ?>
+          </td>
+        <?php } ?>
       </tr>
     <?php } ?>
     </table>
 
   <?php } ?>
 
-  <a href="omat/<?php echo $id ?>/contact/0" class="btn btn-success">Add Contact</a>
+  <a href="omat/<?php echo $id ?>/contact/0" class="btn btn-success"><i class="fa fa-plus"></i> Add Contact</a>
   <a href="omat/<?php echo $project ?>/contacts/random-contact" class="btn btn-success"><i class="fa fa-random"></i> Open random pending contact</a>
+  <a href="omat/<?php echo $project ?>/contacts/edit" class="btn btn-success"><i class="fa fa-edit"></i> Mass edit contacts</a>
 
 <?php require_once 'include.footer.php'; ?>
 

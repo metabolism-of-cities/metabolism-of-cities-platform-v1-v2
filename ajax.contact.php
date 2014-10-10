@@ -103,6 +103,11 @@ if ($_POST['action'] == 'addactivity') {
     "<a class='list-group-item active' href='omat/{$project}/viewactivity/{$id}'>
     $icon
     {$getname->name} ($min)</a>";
+} elseif ($_POST['specialty']) {
+  $specialty = (int)$_POST['specialty'];
+  $id = (int)$_POST['id'];
+  $db->query("UPDATE mfa_contacts SET specialty = $specialty WHERE id = $id AND dataset = $project");
+  $data['response'] = 'OK';
 }
 if (!$data) {
   $data['reponse'] = 'Fail';

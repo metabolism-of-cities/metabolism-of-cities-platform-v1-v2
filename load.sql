@@ -886,3 +886,19 @@ CREATE TABLE `mfa_material_links` (
 ALTER TABLE `mfa_material_links`
 CHANGE `group` `mfa_group` mediumint(8) unsigned NULL AFTER `material`,
 COMMENT=''; -- 0.536 s
+
+ALTER TABLE `mfa_material_links`
+DROP FOREIGN KEY `mfa_material_links_ibfk_1`,
+ADD FOREIGN KEY (`source`) REFERENCES `mfa_sources` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.530 s
+
+ALTER TABLE `mfa_material_links`
+DROP FOREIGN KEY `mfa_material_links_ibfk_2`,
+ADD FOREIGN KEY (`contact`) REFERENCES `mfa_contacts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 1.489 s
+
+ALTER TABLE `mfa_material_links`
+DROP FOREIGN KEY `mfa_material_links_ibfk_3`,
+ADD FOREIGN KEY (`material`) REFERENCES `mfa_materials` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 1.228 s
+
+ALTER TABLE `mfa_material_links`
+DROP FOREIGN KEY `mfa_material_links_ibfk_4`,
+ADD FOREIGN KEY (`mfa_group`) REFERENCES `mfa_groups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.496 s
