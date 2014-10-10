@@ -108,6 +108,11 @@ if ($_POST['action'] == 'addactivity') {
   $id = (int)$_POST['id'];
   $db->query("UPDATE mfa_contacts SET specialty = $specialty WHERE id = $id AND dataset = $project");
   $data['response'] = 'OK';
+} elseif ($_POST['belongs_to']) {
+  $belongs_to = (int)$_POST['belongs_to'];
+  $id = (int)$_POST['id'];
+  $db->query("UPDATE mfa_contacts SET belongs_to = $belongs_to WHERE id = $id AND dataset = $project");
+  $data['response'] = 'OK';
 }
 if (!$data) {
   $data['reponse'] = 'Fail';

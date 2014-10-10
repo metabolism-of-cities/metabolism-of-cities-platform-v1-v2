@@ -902,3 +902,10 @@ ADD FOREIGN KEY (`material`) REFERENCES `mfa_materials` (`id`) ON DELETE CASCADE
 ALTER TABLE `mfa_material_links`
 DROP FOREIGN KEY `mfa_material_links_ibfk_4`,
 ADD FOREIGN KEY (`mfa_group`) REFERENCES `mfa_groups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.496 s
+
+ALTER TABLE `mfa_contacts`
+ADD `belongs_to` int unsigned NULL COMMENT 'This indicates if this contact is part of (e.g. employee of or sub division of) another contact' AFTER `employer`,
+COMMENT=''; -- 1.006 s
+
+ALTER TABLE `mfa_contacts`
+ADD FOREIGN KEY (`belongs_to`) REFERENCES `mfa_contacts` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE; -- 0.775 s
