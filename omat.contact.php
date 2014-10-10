@@ -24,6 +24,7 @@ if ($_POST) {
     'pending' => (int)$_POST['pending'],
     'employer' => $_POST['employer'] ? html($_POST['employer']) : NULL,
     'type' => $_POST['type'] ? (int)$_POST['type'] : NULL,
+    'belongs_to' => $_POST['belongs_to'] ? (int)$_POST['belongs_to'] : NULL,
     'details' => html($_POST['details']),
     'dataset' => $project,
   );
@@ -43,6 +44,7 @@ FROM mfa_leads
   JOIN mfa_contacts ON mfa_leads.from_contact = mfa_contacts.id
 WHERE to_contact = $id");
 
+$organizations = $db->query("SELECT id,name FROM mfa_contacts WHERE dataset = $project AND organization = 1 ORDER BY name");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -119,6 +121,22 @@ WHERE to_contact = $id");
               <option value=""></option>
             <?php foreach ($types as $row) { ?>
               <option value="<?php echo $row['id'] ?>"<?php if ($row['id'] == $info->type) { echo ' selected'; } ?>><?php echo $row['name'] ?></option>
+            <?php } ?>
+          </select>
+        </div>
+      </div>
+
+    <?php } ?>
+
+    <?php if (count($organizations)) { ?>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Belongs to</label>
+        <div class="col-sm-10">
+          <select name="belongs_to" class="form-control">
+              <option value=""></option>
+            <?php foreach ($organizations as $row) { ?>
+              <option value="<?php echo $row['id'] ?>"<?php if ($row['id'] == $info->belongs_to) { echo ' selected'; } ?>><?php echo $row['name'] ?></option>
             <?php } ?>
           </select>
         </div>
