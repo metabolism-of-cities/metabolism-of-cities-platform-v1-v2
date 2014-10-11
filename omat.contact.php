@@ -21,7 +21,6 @@ if ($_POST) {
   $post = array(
     'name' => html($_POST['name']),
     'organization' => (int)$_POST['organization'],
-    'pending' => (int)$_POST['pending'],
     'employer' => $_POST['employer'] ? html($_POST['employer']) : NULL,
     'type' => $_POST['type'] ? (int)$_POST['type'] : NULL,
     'belongs_to' => $_POST['belongs_to'] ? (int)$_POST['belongs_to'] : NULL,
@@ -51,18 +50,6 @@ $organizations = $db->query("SELECT id,name FROM mfa_contacts WHERE dataset = $p
   <head>
     <?php echo $header ?>
     <title><?php if ($id) { echo $info->name . " | "; } ?> Contacts | <?php echo SITENAME ?></title>
-    <script type="text/javascript">
-    $(function(){
-      $("input[name='organization']").change(function(){
-        if ($("input[name='organization']").is(":checked")) {
-          $("#employer").slideUp('fast');
-        } else {
-          $("#employer").slideDown('fast');
-        }
-      });
-      $("input[name='organization']").change();
-    });
-    </script>
   </head>
 
   <body>
@@ -100,21 +87,9 @@ $organizations = $db->query("SELECT id,name FROM mfa_contacts WHERE dataset = $p
       </div>
     </div>
 
-
-    <div class="form-group" id="employer">
-      <label class="col-sm-2 control-label">Employer</label>
-      <div class="col-sm-10">
-      <?php if ($info->works_for_referral_organization) { ?>
-        <span style="position:relative;top:6px"><?php echo $referred_contact->name ?></span>
-      <?php } else { ?>
-        <input class="form-control" type="text" name="employer" value="<?php echo $info->employer ?>" />
-      <?php } ?>
-      </div>
-    </div>
-
     <?php if (count($types)) { ?>
 
-      <div class="form-group">
+      <div class="form-group hide">
         <label class="col-sm-2 control-label">Classification</label>
         <div class="col-sm-10">
           <select name="type" class="form-control">
@@ -143,17 +118,6 @@ $organizations = $db->query("SELECT id,name FROM mfa_contacts WHERE dataset = $p
       </div>
 
     <?php } ?>
-
-    <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10">
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" name="pending" value="1" <?php echo $info->pending ? 'checked' : ''; ?> /> 
-              Mark this contact as Pending
-          </label>
-        </div>
-      </div>
-    </div>
 
     <div class="form-group">
       <label class="col-sm-2 control-label">Notes</label>

@@ -100,6 +100,7 @@ FROM mfa_material_links l
   LEFT JOIN mfa_materials ON l.material = mfa_materials.id
 WHERE contact = $id");
 
+$children = $db->query("SELECT * FROM mfa_contacts WHERE belongs_to = $id AND dataset = $project ORDER BY name");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -119,7 +120,9 @@ WHERE contact = $id");
     #delete{margin-top:30px}
     #activitylist .makesmall{font-size:11px;opacity:0.7}
     .badge{margin-left:8px}
+    .panel-title{font-weight:700}
     h1{clear:both;padding-top:10px}
+    .fa-ul i{opacity:0.7}
     </style>
     <script type="text/javascript">
     $(function(){
@@ -276,7 +279,14 @@ WHERE contact = $id");
     <dd><?php echo $id ?></dd>
 
     <dt>Name</dt>
-    <dd><?php echo $info->name ?></dd>
+    <dd>
+      <?php if ($info->belongs_to) { hierarchyTree($info->belongs_to); ?>
+        <?php krsort($ancestors); foreach ($ancestors as $key => $value) { ?>
+          <a href="omat/<?php echo $project ?>/viewcontact/<?php echo $value[0] ?>"><?php echo $value[1] ?></a> &raquo;
+        <?php } ?>
+      <?php } ?>
+      <?php echo $info->name ?>
+    </dd>
 
     <dt>Record Type</dt>
     <dd>
@@ -302,7 +312,9 @@ WHERE contact = $id");
         <?php if ($row['material']) { ?> &raquo; <?php echo $row['material'] ?><?php } ?>
       </dd>
     <?php } ?>
-    <dd><a href="omat/<?php echo $project ?>/materiallink/contact/<?php echo $id ?>">Manage associations</a></dd>
+    <dd><a href="omat/<?php echo $project ?>/materiallink/contact/<?php echo $id ?>">
+    <i class="fa fa-external-link-square"></i> 
+    Manage associations</a></dd>
     
     <?php if ($info->details) { ?>
       <dt>Notes</dt>
@@ -327,6 +339,23 @@ WHERE contact = $id");
     <?php } ?>
 
   </dl>
+
+  <?php if (count($children)) { ?>
+
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="panel-title">Contacts belonging to <?php echo $info->name ?></h3>
+      </div>
+      <div class="panel-body">
+        <ul class="fa-ul">
+        <?php foreach ($children as $row) { ?>
+          <li><i class="fa-li fa fa-<?php echo $row['organization'] ? 'building' : 'user'; ?>"></i><a href="omat/<?php echo $project ?>/viewcontact/<?php echo $row['id'] ?>"><?php echo $row['name'] ?></a></li>
+        <?php } ?>
+        </ul>
+      </div>
+    </div>
+
+  <?php } ?>
 
   <h1>
     Manage Leads and Activity Log

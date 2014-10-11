@@ -72,7 +72,6 @@ if (!$skip_login && !$no_project_selected) {
   $omat_sidebar = !$disable_sidebar ? true : false;
 }
 
-
 if ($omat_sidebar) {
   $header .= '<link rel="stylesheet" href="css/sidebar.css" />';
 }
@@ -83,7 +82,7 @@ $omat_menu = array(
     'url' => "omat/$project/manage", 
     'menu' => array(
       1 => array('label' => 'Manage Data', 'url' => "omat/$project/manage", 'icon' => 'pencil'),
-      2 => array('label' => 'Manage Contacts', 'url' => "omat/$project/contacts", 'icon' => 'user'),
+      2 => array('label' => 'Manage Contacts', 'url' => "omat/$project/contactlist", 'icon' => 'user'),
       3 => array('label' => 'Manage Sources', 'url' => "omat/$project/sources", 'icon' => 'link'),
       4 => array('label' => 'Files', 'url' => "omat/$project/files", 'icon' => 'file-pdf-o'),
     ),
@@ -140,5 +139,17 @@ if (!$check->dqi) {
 if ($public_login) {
   unset($omat_menu[3]['menu'][1]);
 }
+
+function hierarchyTree($id) {
+  global $db, $ancestors;
+  $info = $db->record("SELECT id, name, belongs_to FROM mfa_contacts WHERE id = $id");
+  $ancestors[] = array($info->id, $info->name);
+  if ($info->belongs_to) {
+    hierarchyTree($info->belongs_to);
+  } else {
+    return $ancestors;
+  }
+}
+
 
 ?>

@@ -22,6 +22,7 @@ asort($contactnames);
 function buildList($id) {
   global $contacts, $project;
   if (is_array($contacts[$id])) {
+    asort($contacts[$id]);
     echo '<ul>';
     foreach ($contacts[$id] as $key => $value) {
       echo '<li><a href="omat/'.$project.'/viewcontact/'.$key.'">' . $value . '</a>';
@@ -42,11 +43,38 @@ function buildList($id) {
   <head>
     <?php echo $header ?>
     <title>Contact List | <?php echo $info->name ?> | <?php echo SITENAME ?></title>
+    <script type="text/javascript">
+    $(function(){
+      $(".display a").click(function(e){
+        e.preventDefault();
+        var level = $(this).data("level");
+        if (level == 1) {
+          $("#contacts ul").hide();
+        } else if (level == 2) {
+          $("#contacts ul").show();
+          $("#contacts ul ul").hide();
+        } else if (level == 3) {
+          $("#contacts ul").show();
+          $("#contacts ul ul").show();
+          $("#contacts ul ul ul").hide();
+        } else if (level == 'all') {
+          $("#contacts ul").show();
+          $("#contacts ul ul").show();
+          $("#contacts ul ul ul").show();
+        }
+        $(".display a").removeClass('btn-primary').addClass('btn-default');
+        $(this).addClass('btn-primary').removeClass('btn-default');
+      });
+    });
+    </script>
   </head>
 
   <body>
 
 <?php require_once 'include.header.php'; ?>
+
+  <a href="omat/<?php echo $project ?>/contact/0" class="btn btn-default pull-right">Add contact</a>
+  <a href="omat/<?php echo $project ?>/contacts" class="btn btn-default pull-right">Apply filters</a>
 
   <h1>Contact List</h1>
 
@@ -55,10 +83,21 @@ function buildList($id) {
     <li class="active">Contacts</li>
   </ol>
 
-  <ul>
+  <p class="display">
+    <a href="#" class="btn btn-default" data-level="1"><strong>1</strong> First level contacts only</a>
+    <a href="#" class="btn btn-default" data-level="2"><strong>2</strong> Up to second level</a>
+    <a href="#" class="btn btn-default" data-level="3"><strong>3</strong> Up to third level</a>
+    <a href="#" class="btn btn-primary" data-level="all">Show all</a>
+  </p>
+
+  <ul id="contacts">
     <?php foreach ($contactnames as $key => $value) { ?>
       <li>
-        <?php echo $value ?>
+        <strong>
+          <a href="omat/<?php echo $project ?>/viewcontact/<?php echo $key ?>">
+            <?php echo $value ?>
+          </a>
+         </strong>
         <?php buildList($key) ?>
       </li>
     <?php } ?>
