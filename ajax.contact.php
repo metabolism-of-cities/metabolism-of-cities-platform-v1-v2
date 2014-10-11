@@ -111,7 +111,11 @@ if ($_POST['action'] == 'addactivity') {
 } elseif ($_POST['belongs_to']) {
   $belongs_to = (int)$_POST['belongs_to'];
   $id = (int)$_POST['id'];
-  $db->query("UPDATE mfa_contacts SET belongs_to = $belongs_to WHERE id = $id AND dataset = $project");
+  if ($_POST['contact']) {
+    $db->query("UPDATE mfa_contacts SET belongs_to = $belongs_to WHERE id = $id AND dataset = $project");
+  } elseif ($_POST['source']) {
+    $db->query("UPDATE mfa_sources SET belongs_to = $belongs_to WHERE id = $id AND dataset = $project");
+  }
   $data['response'] = 'OK';
 }
 if (!$data) {

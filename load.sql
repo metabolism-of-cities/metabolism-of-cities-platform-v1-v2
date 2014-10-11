@@ -909,3 +909,8 @@ COMMENT=''; -- 1.006 s
 
 ALTER TABLE `mfa_contacts`
 ADD FOREIGN KEY (`belongs_to`) REFERENCES `mfa_contacts` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE; -- 0.775 s
+
+ALTER TABLE `mfa_sources`
+ADD `belongs_to` int(10) unsigned NULL AFTER `created`,
+ADD FOREIGN KEY (`belongs_to`) REFERENCES `mfa_contacts` (`id`),
+COMMENT=''; -- 1.002 s

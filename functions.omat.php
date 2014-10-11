@@ -82,7 +82,7 @@ $omat_menu = array(
     'url' => "omat/$project/manage", 
     'menu' => array(
       1 => array('label' => 'Manage Data', 'url' => "omat/$project/manage", 'icon' => 'pencil'),
-      2 => array('label' => 'Manage Contacts', 'url' => "omat/$project/contactlist", 'icon' => 'user'),
+      2 => array('label' => 'Manage Contacts', 'url' => "omat/$project/contacts", 'icon' => 'user'),
       3 => array('label' => 'Manage Sources', 'url' => "omat/$project/sources", 'icon' => 'link'),
       4 => array('label' => 'Files', 'url' => "omat/$project/files", 'icon' => 'file-pdf-o'),
     ),

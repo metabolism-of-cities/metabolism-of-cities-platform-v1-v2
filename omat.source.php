@@ -21,6 +21,7 @@ if ($_POST) {
   $post = array(
     'name' => html($_POST['name']),
     'type' => $_POST['type'] ? (int)$_POST['type'] : NULL,
+    'belongs_to' => $_POST['belongs_to'] ? (int)$_POST['belongs_to'] : NULL,
     'details' => html($_POST['details']),
     'dataset' => $project,
     'url' => html($_POST['url']),
@@ -35,6 +36,7 @@ if ($_POST) {
   exit();
 }
 
+$organizations = $db->query("SELECT id,name FROM mfa_contacts WHERE dataset = $project ORDER BY name");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -78,6 +80,23 @@ if ($_POST) {
         <input class="form-control" type="text" name="name" value="<?php echo $info->name ?>" />
       </div>
     </div>
+
+    <?php if (count($organizations)) { ?>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Belongs to</label>
+        <div class="col-sm-10">
+          <select name="belongs_to" class="form-control">
+              <option value=""></option>
+            <?php foreach ($organizations as $row) { ?>
+              <option value="<?php echo $row['id'] ?>"<?php if ($row['id'] == $info->belongs_to) { echo ' selected'; } ?>><?php echo $row['name'] ?></option>
+            <?php } ?>
+          </select>
+        </div>
+      </div>
+
+    <?php } ?>
+
 
     <?php if (count($types)) { ?>
 
