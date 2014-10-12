@@ -101,6 +101,7 @@ FROM mfa_material_links l
 WHERE contact = $id");
 
 $children = $db->query("SELECT * FROM mfa_contacts WHERE belongs_to = $id AND dataset = $project ORDER BY name");
+$file_children = $db->query("SELECT * FROM mfa_sources WHERE belongs_to = $id AND dataset = $project ORDER BY name");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -342,7 +343,7 @@ $children = $db->query("SELECT * FROM mfa_contacts WHERE belongs_to = $id AND da
 
   <?php if (count($children)) { ?>
 
-    <div class="panel panel-info">
+    <div class="panel panel-primary">
       <div class="panel-heading">
         <h3 class="panel-title">Contacts belonging to <?php echo $info->name ?></h3>
       </div>
@@ -350,6 +351,23 @@ $children = $db->query("SELECT * FROM mfa_contacts WHERE belongs_to = $id AND da
         <ul class="fa-ul">
         <?php foreach ($children as $row) { ?>
           <li><i class="fa-li fa fa-<?php echo $row['organization'] ? 'building' : 'user'; ?>"></i><a href="omat/<?php echo $project ?>/viewcontact/<?php echo $row['id'] ?>"><?php echo $row['name'] ?></a></li>
+        <?php } ?>
+        </ul>
+      </div>
+    </div>
+
+  <?php } ?>
+
+  <?php if (count($file_children)) { ?>
+
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="panel-title">Files belonging to <?php echo $info->name ?></h3>
+      </div>
+      <div class="panel-body">
+        <ul class="fa-ul">
+        <?php foreach ($file_children as $row) { ?>
+          <li><i class="fa-li fa fa-file"></i><a href="omat/<?php echo $project ?>/viewsource/<?php echo $row['id'] ?>"><?php echo $row['name'] ?></a></li>
         <?php } ?>
         </ul>
       </div>

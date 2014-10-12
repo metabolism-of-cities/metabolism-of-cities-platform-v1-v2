@@ -10,7 +10,7 @@ $id = $project;
 
 $list = $db->query("SELECT * FROM mfa_contacts WHERE dataset = $id");
 
-$sources = $db->query("SELECT * FROM mfa_sources WHERE dataset = $id");
+$sourcelist = $db->query("SELECT * FROM mfa_sources WHERE dataset = $id");
 
 foreach ($list as $row) {
   if ($row['belongs_to']) {
@@ -20,38 +20,36 @@ foreach ($list as $row) {
   }
 }
 
-foreach ($sources as $row) {
+foreach ($sourcelist as $row) {
   if ($row['belongs_to']) {
-    $contacts[$row['belongs_to']]['source.'.$row['id']] = $row['name'];
+    $sources[$row['belongs_to']][$row['id']] = $row['name'];
   } else {
     $sourcenames[$row['id']] = $row['name'];
   }
 }
+
 asort($contactnames);
 asort($sourcenames);
 
 function buildList($id) {
-  global $contacts, $project;
-  if (is_array($contacts[$id])) {
-    asort($contacts[$id]);
+  global $contacts, $project, $sources;
+  if (is_array($contacts[$id]) || is_array($sources[$id])) {
     echo '<ul>';
-    foreach ($contacts[$id] as $key => $value) {
-      $explode = explode(".", $key);
-      if ($explode[1]) {
-        $printkey = (int)$explode[1];
-        $view = "viewsource";
-        $icon = '<i class="fa fa-file-pdf-o"></i>';
-      } else {
-        $printkey = $key;
-        $view = "viewcontact";
-        $icon = false;
+    if (is_array($contacts[$id])) {
+      asort($contacts[$id]);
+      foreach ($contacts[$id] as $key => $value) {
+        echo '<li class="viewcontact"><a href="omat/'.$project.'/viewcontact/'.$key.'">' . $value . '</a>';
+        if (is_array($contacts[$key]) || is_array($sources[$key])) {
+          buildList($key);
+        }
+        echo '</li>';
       }
-      echo '<li class="'.$view.'">'.$icon.' <a href="omat/'.$project.'/'.$view.'/'.$printkey.'">' . $value . '</a>';
-      if (is_array($contacts[$key])) {
-        asort($contacts[$key]);
-        buildList($key);
+    }
+    if (is_array($sources[$id])) {
+      asort($sources[$id]);
+      foreach ($sources[$id] as $key => $value) {
+        echo '<li><i class="fa fa-file-o"></i> <a href="omat/'.$project.'/viewsource/'.$key.'">' . $value . '</a></li>';
       }
-      echo '</li>';
     }
     echo '</ul>';
   }
@@ -63,10 +61,9 @@ function buildList($id) {
 <html lang="en">
   <head>
     <?php echo $header ?>
-    <title>Contact List | <?php echo $info->name ?> | <?php echo SITENAME ?></title>
+    <title>Contacts and Sources | <?php echo SITENAME ?></title>
     <style type="text/css">
-    li.viewsource{list-style:none;}
-    li i{color:#333}
+    #contacts li i{color:#333}
     </style>
     <script type="text/javascript">
     $(function(){
@@ -98,14 +95,14 @@ function buildList($id) {
 
 <?php require_once 'include.header.php'; ?>
 
-  <a href="omat/<?php echo $project ?>/contact/0" class="btn btn-default pull-right">Add contact</a>
-  <a href="omat/<?php echo $project ?>/filters/contacts" class="btn btn-default pull-right">Apply filters</a>
+  <a href="omat/<?php echo $project ?>/contact/0" class="btn btn-default pull-right"><i class="fa fa-user"></i> Add contact</a>
+  <a href="omat/<?php echo $project ?>/source/0" class="btn btn-default pull-right"><i class="fa fa-file"></i> Add source</a>
 
-  <h1>Contact List</h1>
+  <h1>Manage Resources</h1>
 
   <ol class="breadcrumb">
     <li><a href="omat/<?php echo $project ?>/dashboard">Dashboard</a></li>
-    <li class="active">Contacts</li>
+    <li class="active">Manage Resources</li>
   </ol>
 
   <p class="display">

@@ -3,7 +3,7 @@ require_once 'functions.php';
 require_once 'functions.omat.php';
 $section = 6;
 $load_menu = 1;
-$sub_page = 3;
+$sub_page = 2;
 
 $id = (int)$_GET['id'];
 $project = (int)$_GET['project'];
@@ -536,6 +536,7 @@ WHERE source = $id");
     <table class="table table-striped ellipsis">
       <tr>
         <th class="long">File</th>
+        <th class="shorter">Website</th>
         <th class="short">Type</th>
         <th class="shorter">Uploaded</th>
         <th class="short">Actions</th>
@@ -547,14 +548,16 @@ WHERE source = $id");
           <a href="omat/<?php echo $project ?>/download/<?php echo $row['id'] ?>">
             <?php echo $row['name'] ?>
           </a>
-          <?php if ($row['url']) { ?>
-            <a href="<?php echo $row['url'] ?>" title="Link to website"><i class="fa fa-link"></i></a>
-          <?php } ?>
         <?php } elseif ($row['url']) { ?>
           <a href="<?php echo $row['url'] ?>"><?php echo $row['name'] ?></a>
         <?php } else { ?>
           <?php echo $row['name'] ?>
         <?php } ?>
+        </td>
+        <td class="shorter">
+          <?php if ($row['url'] && $row['size']) { ?>
+            <a href="<?php echo $row['url'] ?>" title="Link to website"><i class="fa fa-link"></i></a>
+          <?php } ?>
         </td>
         <td><?php echo $row['type'] ?></td>
         <td><?php echo format_date("M d, Y", $row['uploaded']) ?></td>

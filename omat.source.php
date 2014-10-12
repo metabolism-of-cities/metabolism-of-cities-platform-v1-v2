@@ -3,7 +3,7 @@ require_once 'functions.php';
 require_once 'functions.omat.php';
 $section = 6;
 $load_menu = 1;
-$sub_page = 3;
+$sub_page = 2;
 
 $id = (int)$_GET['id'];
 $project = (int)$_GET['project'];

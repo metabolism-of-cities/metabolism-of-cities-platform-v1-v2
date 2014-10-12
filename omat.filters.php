@@ -3,7 +3,6 @@ require_once 'functions.php';
 require_once 'functions.omat.php';
 $section = 6;
 $load_menu = 1;
-$sub_page = 2;
 
 $id = $project;
 
@@ -11,6 +10,7 @@ $type = (int)$_GET['type'];
 $status = (int)$_GET['status'];
 
 $page = $_GET['sources'] || $_GET['page'] == "sources" ? "sources" : "contacts";
+$sub_page = $page == "sources" ? 3 : 5;
 if ($page == "contacts") {
   $page_title = "Contacts";
   $page_singular = "contact";

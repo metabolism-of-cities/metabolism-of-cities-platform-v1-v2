@@ -73,8 +73,9 @@ ORDER BY mfa_data.date DESC LIMIT 5");
       Manage your data</a></p>
       <p>
         <?php if ($info->contact_management) { ?>
-          <a href="omat/<?php echo $id ?>/contacts" class="btn btn-success"><i class="fa fa-user"></i> Manage Contacts</a>
-          <a href="omat/<?php echo $id ?>/sources" class="btn btn-success"><i class="fa fa-link"></i> Manage Sources</a>
+          <a href="omat/<?php echo $id ?>/contacts" class="btn btn-success"><i class="fa fa-list"></i> Manage Resources</a>
+          <a href="omat/<?php echo $id ?>/filters/contacts" class="btn btn-success"><i class="fa fa-user"></i> Contacts</a>
+          <a href="omat/<?php echo $id ?>/filters/sources" class="btn btn-success"><i class="fa fa-link"></i> Sources</a>
           <a href="omat/<?php echo $id ?>/files" class="btn btn-success"><i class="fa fa-file-pdf-o"></i> Files</a>
         <?php } ?>
       </p>
