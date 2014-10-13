@@ -76,11 +76,19 @@ body {
 
 @media print {
   .sidebar, .printhide, .footer, .breadcrumb {
-    display:none;
+    display:none !important;
   }
   body, html {
     margin:0;
     padding:0;
+  }
+  .col-md-offset-2.main {
+    margin-left:0 !important;
+    padding: 0 !important;
+  }
+  .col-md-10.main {
+    width: 100% !important;
+    padding: 0 !important;
   }
 }
 

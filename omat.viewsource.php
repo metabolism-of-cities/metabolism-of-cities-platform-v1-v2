@@ -328,7 +328,14 @@ WHERE source = $id");
     <dd><?php echo $id ?></dd>
 
     <dt>Name</dt>
-    <dd><?php echo $info->name ?></dd>
+    <dd>
+      <?php if ($info->belongs_to) { hierarchyTree($info->belongs_to); ?>
+        <?php krsort($ancestors); foreach ($ancestors as $key => $value) { ?>
+          <a href="omat/<?php echo $project ?>/viewcontact/<?php echo $value[0] ?>"><?php echo $value[1] ?></a> &raquo;
+        <?php } ?>
+      <?php } ?>
+      <?php echo $info->name ?>
+    </dd>
 
     <?php if ($info->type) { ?>
 
