@@ -351,14 +351,18 @@ WHERE source = $id");
 
     <?php } ?>
 
-    <dt>Associations</dt>
-    <?php foreach ($associations as $row) { ?>
-      <dd>
-        <?php echo $row['material'] ? $row['material_groupname'] : $row['groupname'] ?>
-        <?php if ($row['material']) { ?> &raquo; <?php echo $row['material'] ?><?php } ?>
-      </dd>
+    <?php if ($check->resource_management) { ?>
+      <dt>Associations</dt>
+      <?php foreach ($associations as $row) { ?>
+        <dd>
+          <?php echo $row['material'] ? $row['material_groupname'] : $row['groupname'] ?>
+          <?php if ($row['material']) { ?> &raquo; <?php echo $row['material'] ?><?php } ?>
+        </dd>
+      <?php } ?>
+      <dd><a href="omat/<?php echo $project ?>/materiallink/source/<?php echo $id ?>">
+      <i class="fa fa-external-link-square"></i> 
+      Manage associations</a></dd>
     <?php } ?>
-    <dd><a href="omat/<?php echo $project ?>/materiallink/source/<?php echo $id ?>">Manage associations</a></dd>
 
     <?php if ($info->details) { ?>
       <dt>Notes</dt>

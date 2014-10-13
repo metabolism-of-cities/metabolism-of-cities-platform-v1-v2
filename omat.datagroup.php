@@ -8,7 +8,8 @@ $section = 6;
 $id = (int)$_GET['id'];
 
 $list = $db->query("SELECT *,
-  (SELECT COUNT(*) FROM mfa_materials_notes WHERE material = mfa_materials.id) AS comments
+  (SELECT COUNT(*) FROM mfa_materials_notes WHERE material = mfa_materials.id) AS comments,
+  (SELECT COUNT(*) FROM mfa_material_links WHERE material = mfa_materials.id) AS links
 FROM mfa_materials WHERE mfa_group = $id ORDER BY code");
 $info = $db->record("SELECT * FROM mfa_groups WHERE id = $id");
 
@@ -34,6 +35,9 @@ if ($_GET['message'] == 'deleted') {
   <head>
     <?php echo $header ?>
     <title><?php echo $info->name ?> | <?php echo SITENAME ?></title>
+    <style type="text/css">
+    .align-right{text-align:right}
+    </style>
   </head>
 
   <body>
@@ -60,21 +64,24 @@ if ($_GET['message'] == 'deleted') {
     <table class="table table-striped">
       <tr>
         <th colspan="2">Data</th>
-        <th colspan="3">Options</th>
+        <th class="align-right">Options</th>
       </tr>
-    <?php foreach ($list as $row) { ?>
+    <?php foreach ($list as $row) { $row['comments'] = $row['comments']+$row['links']; ?>
       <tr>
         <td><?php echo $row['code'] ?></td>
         <td><a href="omat/data/<?php echo $row['id'] ?>"><?php echo $row['name'] ?></a></td>
-        <td>
-          <a href="omat/material-comments/<?php echo $row['id'] ?>" class="btn btn-warning">
+        <td class="align-right">
+          <a title="Comments and associated resources" href="omat/material-comments/<?php echo $row['id'] ?>" class="btn btn-warning">
           <i class="fa fa-comments"></i> 
-            Comments
             <?php if ($row['comments']) { ?>(<?php echo $row['comments'] ?>)<?php } ?>
           </a>
+          <a title="Edit" href="omat/material-entry/<?php echo $row['id'] ?>" class="btn btn-primary">
+            <i class="fa fa-edit"></i>
+          </a>
+          <a title="Delete" href="omat/datagroup/<?php echo $id ?>/delete-item/<?php echo $row['id'] ?>" class="btn btn-danger" onclick="javascript:return confirm('Are you sure? All data in this section will be removed as well!')">
+            <i class="fa fa-trash"></i>
+          </a>
         </td>
-        <td><a href="omat/material-entry/<?php echo $row['id'] ?>" class="btn btn-primary">Edit</a></td>
-        <td><a href="omat/datagroup/<?php echo $id ?>/delete-item/<?php echo $row['id'] ?>" class="btn btn-danger" onclick="javascript:return confirm('Are you sure? All data in this section will be removed as well!')">Delete</a></td>
       </tr>
     <?php } ?>
     </table>

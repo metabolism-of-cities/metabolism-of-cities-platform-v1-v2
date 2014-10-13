@@ -914,3 +914,7 @@ ALTER TABLE `mfa_sources`
 ADD `belongs_to` int(10) unsigned NULL AFTER `created`,
 ADD FOREIGN KEY (`belongs_to`) REFERENCES `mfa_contacts` (`id`),
 COMMENT=''; -- 1.002 s
+
+ALTER TABLE `mfa_dataset`
+ADD `resource_management` tinyint(1) unsigned NOT NULL COMMENT 'Elaborate options to track asociated resources and material flows' AFTER `contact_management`,
+COMMENT=''; -- 0.588 s

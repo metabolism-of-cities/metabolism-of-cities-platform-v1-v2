@@ -9,6 +9,8 @@ $id = (int)$_GET['id'];
 
 $list = $db->query("SELECT * FROM mfa_groups WHERE dataset = $id ORDER BY section");
 
+$projectinfo = $db->record("SELECT * FROM mfa_dataset WHERE id = $id");
+
 if ($_GET['delete']) {
   $delete = (int)$_GET['delete'];
 
@@ -44,6 +46,7 @@ if ($_GET['message'] == 'deleted') {
     <link rel="stylesheet" href="css/sidebar.css" />
     <style type="text/css">
     a.right{float:right}
+    .align-right{text-align:right}
     </style>
   </head>
 
@@ -64,15 +67,19 @@ if ($_GET['message'] == 'deleted') {
   <table class="table table-striped">
     <tr>
       <th colspan="2">Group</th>
-      <th>Edit</th>
-      <th>Delete</th>
+      <th class="align-right">Options</th>
     </tr>
   <?php foreach ($list as $row) { ?>
     <tr>
       <td><?php echo $row['section'] ?></td>
       <td><a href="omat/datagroup/<?php echo $row['id'] ?>"><?php echo $row['name'] ?></a></td>
-      <td><a href="omat/datagroup-entry/<?php echo $row['id'] ?>" class="btn btn-primary">Edit</a></td>
-      <td><a href="omat.manage.php?id=<?php echo $id ?>&amp;delete=<?php echo $row['id'] ?>" class="btn btn-danger" onclick="javascript:return confirm('Are you sure? ALL subgroups and any possible data will be deleted!')">Delete</a></td>
+      <td class="align-right">
+        <a href="" class="btn btn-warning" title="Comments and associated resources">
+          <i class="fa fa-comments"></i> 
+        </a>
+        <a title="Edit" href="omat/datagroup-entry/<?php echo $row['id'] ?>" class="btn btn-primary"><i class="fa fa-edit"></i></a>
+        <a title="Remove" href="omat.manage.php?id=<?php echo $id ?>&amp;delete=<?php echo $row['id'] ?>" class="btn btn-danger" onclick="javascript:return confirm('Are you sure? ALL subgroups and any possible data will be deleted!')"><i class="fa fa-trash"></i></a>
+      </td>
     </tr>
   <?php } ?>
   </table>

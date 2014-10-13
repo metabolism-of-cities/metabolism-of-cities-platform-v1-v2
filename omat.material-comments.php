@@ -41,6 +41,13 @@ if ($_GET['message'] == 'saved') {
 }
 
 $list = $db->query("SELECT * FROM mfa_materials_notes WHERE material = $id ORDER BY date");
+
+$associations = $db->query("SELECT s.name AS sourcename, c.name AS contactname, c.organization,
+  l.source, l.contact
+  FROM mfa_material_links l
+    LEFT JOIN mfa_sources s ON l.source = s.id
+    LEFT JOIN mfa_contacts c ON l.contact = c.id
+ WHERE l.material = $id ORDER BY organization DESC, contactname, sourcename");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -51,6 +58,10 @@ $list = $db->query("SELECT * FROM mfa_materials_notes WHERE material = $id ORDER
     .well a{float:right;opacity:0.4}
     .well a:hover{opacity:1}
     textarea.form-control{height:222px}
+    .striped li:nth-child(odd) { background: #f4f4f4; }
+    .striped li{border-bottom:1px dotted #aaa}
+    .striped{border-top: 1px dotted #aaa}
+    h2{font-size:20px}
     </style>
   </head>
 
@@ -58,7 +69,7 @@ $list = $db->query("SELECT * FROM mfa_materials_notes WHERE material = $id ORDER
 
 <?php require_once 'include.header.php'; ?>
 
-  <h1>Notes and Comments</h1>
+  <h1>Comments</h1>
 
   <ol class="breadcrumb">
     <li><a href="omat/<?php echo $project ?>/dashboard">Dashboard</a></li>
@@ -70,8 +81,41 @@ $list = $db->query("SELECT * FROM mfa_materials_notes WHERE material = $id ORDER
 
   <?php if ($print) { echo "<div class=\"alert alert-success\">$print</div>"; } ?>
 
+  <?php if (count($associations)) { ?>
+    <h2>Associated resources</h2>
+
+    <div class="alert alert-info">
+      <?php echo count($associations) ?> resource(s) found
+    </div>
+
+    <ul class="nav nav-stacked nav-pills striped">
+    <?php foreach ($associations as $row) { 
+      $id = $row['contact'];
+      if ($row['source']) {
+        $id = $row['source'];
+        $icon = 'file';
+      } elseif ($row['organization']) {
+        $icon = 'building';
+      } else {
+        $icon = 'user';
+      }
+    ?>
+      <li>
+        <a href="omat/<?php echo $project ?>/view<?php echo $row['source'] ? 'source' : 'contact'; ?>/<?php echo $id; ?>">
+          <i class="fa fa-<?php echo $icon; ?>"></i> 
+          <?php echo $row['sourcename'] ? $row['sourcename'] : $row['contactname'] ?>
+        </a>
+      </li>
+    <?php } ?>
+    </ul>
+
+
+  <?php } ?>
+
+  <h2>Comments</h2>
+
   <div class="alert alert-info">
-    <?php echo count($list) ?> notes found
+    <?php echo count($list) ?> comment(s) found
   </div>
 
   <?php if (count($list)) { ?>

@@ -115,8 +115,10 @@ $notes = $db->record("SELECT COUNT(*) AS total FROM mfa_materials_notes WHERE ma
         </td>
         <td class="large"><?php echo $row['comments'] ?></td>
         <td>
-          <a href="omat/data-edit/<?php echo $row['id'] ?>" class="btn btn-primary">Edit</a>
-          <a href="omat/data-delete/<?php echo $row['id'] ?>" class="btn btn-danger" onclick="javascript:return confirm('Are you sure?')">Delete</a>
+          <a title="Edit" href="omat/data-edit/<?php echo $row['id'] ?>" class="btn btn-primary"><i class="fa fa-edit"></i></a>
+          <a title="Delete" href="omat/data-delete/<?php echo $row['id'] ?>" class="btn btn-danger" onclick="javascript:return confirm('Are you sure?')">
+            <i class="fa fa-trash"></i>
+          </a>
         </td>
       </tr>
     <?php } ?>
