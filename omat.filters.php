@@ -92,25 +92,6 @@ if ($_GET['deleted']) {
 $status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
 $flags = $db->query("SELECT * FROM mfa_special_flags ORDER BY name");
 
-$specialties = array(
-  1 => "Biomass extraction",
-  2 => "All biomass",
-  3 => "Freight",
-  4 => "Metal imports and exports",
-  5 => "Non-mineral extraction",
-  6 => "Wood: all",
-  7 => "Wood: production",
-  8 => "Emissions to air",
-  9 => "Emissions to water",
-  10 => "Fossil fuels",
-  11 => "Plastics - other products",
-  12 => "Waste imports and exports",
-  13 => "Wild fish catch",
-  14 => "Retailer",
-  15 => "Fruits",
-  16 => "Imports and exports",
-);
-
 if ($page == "contacts") {
   // Contacs can only be related to an organization, but sources can be related to either an organization or a person.
   $organizations = $db->query("SELECT id,name FROM mfa_contacts WHERE dataset = $project AND organization = 1 ORDER BY name");
