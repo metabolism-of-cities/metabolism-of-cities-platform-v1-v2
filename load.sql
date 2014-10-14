@@ -918,3 +918,16 @@ COMMENT=''; -- 1.002 s
 ALTER TABLE `mfa_dataset`
 ADD `resource_management` tinyint(1) unsigned NOT NULL COMMENT 'Elaborate options to track asociated resources and material flows' AFTER `contact_management`,
 COMMENT=''; -- 0.588 s
+
+ALTER TABLE `mfa_materials_notes`
+ADD `user` int(11) NOT NULL,
+ADD `source` int(10) unsigned NULL AFTER `user`,
+ADD `contact` int(10) unsigned NULL AFTER `source`,
+ADD FOREIGN KEY (`user`) REFERENCES `users` (`user_id`),
+ADD FOREIGN KEY (`source`) REFERENCES `mfa_sources` (`id`) ON DELETE CASCADE,
+ADD FOREIGN KEY (`contact`) REFERENCES `mfa_contacts` (`id`) ON DELETE CASCADE,
+COMMENT=''; -- 0.908 s
+
+ALTER TABLE `mfa_materials_notes`
+DROP FOREIGN KEY `mfa_materials_notes_ibfk_1`,
+ADD FOREIGN KEY (`material`) REFERENCES `mfa_materials` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.602 s

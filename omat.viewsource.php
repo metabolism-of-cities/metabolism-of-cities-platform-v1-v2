@@ -14,7 +14,7 @@ FROM mfa_sources s
   JOIN mfa_status_options o ON s.status = o.id
 WHERE s.id = $id AND s.dataset = $project");
 
-if (!count($info)) {
+if (!$info->id) {
   die("This source was not found");
 }
 

@@ -17,6 +17,9 @@ if ($_POST) {
   $post = array(
     'notes' => html($_POST['notes']),
     'material' => $id,
+    'source' => $_POST['source'] ? (int)$_POST['source'] : NULL,
+    'contact' => $_POST['contact'] ? (int)$_POST['contact'] : NULL,
+    'user' => $user_id,
   );
   if ($update) {
     $db->update("mfa_materials_notes",$post,"id = $update");
@@ -40,7 +43,13 @@ if ($_GET['message'] == 'saved') {
   $print = "Comment was deleted";
 }
 
-$list = $db->query("SELECT * FROM mfa_materials_notes WHERE material = $id ORDER BY date");
+$list = $db->query("SELECT n.*, users.user_name,
+  s.name AS sourcename, c.name AS contactname
+FROM mfa_materials_notes n 
+  JOIN users ON n.user = users.user_id
+  LEFT JOIN mfa_sources s ON n.source = s.id
+  LEFT JOIN mfa_contacts c ON n.contact = c.id
+WHERE material = $id ORDER BY date");
 
 $associations = $db->query("SELECT s.name AS sourcename, c.name AS contactname, c.organization,
   l.source, l.contact, s.status AS sourcestatus, c.status AS contactstatus
@@ -48,6 +57,9 @@ $associations = $db->query("SELECT s.name AS sourcename, c.name AS contactname, 
     LEFT JOIN mfa_sources s ON l.source = s.id
     LEFT JOIN mfa_contacts c ON l.contact = c.id
  WHERE l.material = $id ORDER BY organization DESC, contactname, sourcename");
+
+$sources = $db->query("SELECT * FROM mfa_sources WHERE dataset = $project ORDER BY name");
+$contacts = $db->query("SELECT * FROM mfa_contacts WHERE dataset = $project ORDER BY name");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,7 +67,7 @@ $associations = $db->query("SELECT s.name AS sourcename, c.name AS contactname, 
     <?php echo $header ?>
     <title><?php echo $info->name ?> | Notes and Comments | <?php echo SITENAME ?></title>
     <style type="text/css">
-    .well a{float:right;opacity:0.4}
+    .well a.btn-danger{float:right;opacity:0.4}
     .well a:hover{opacity:1}
     textarea.form-control{height:222px}
     .striped li:nth-child(odd) { background: #f4f4f4; }
@@ -149,8 +161,15 @@ $associations = $db->query("SELECT s.name AS sourcename, c.name AS contactname, 
         >
           <i class="fa fa-ban"></i>
         </a>
-        <p><strong>Comment from user on <?php echo format_date("M d, Y", $row['date']) ?></strong></p>
+        <p><strong>Comment from <?php echo $row['user_name'] ?> on <?php echo format_date("M d, Y", $row['date']) ?></strong></p>
         <?php echo $row['notes'] ?>
+
+        <?php if ($row['source']) { ?>
+          <p><a href="omat/<?php echo $project ?>/viewsource/<?php echo $row['source'] ?>">Source: <?php echo $row['sourcename'] ?></a></p>
+        <?php } ?>
+        <?php if ($row['contact']) { ?>
+          <p><a href="omat/<?php echo $project ?>/viewcontact/<?php echo $row['contact'] ?>">Contact: <?php echo $row['contactname'] ?></a></p>
+        <?php } ?>
       </div>
     <?php } ?>
   <?php } ?>
@@ -161,6 +180,30 @@ $associations = $db->query("SELECT s.name AS sourcename, c.name AS contactname, 
       <label class="col-sm-2 control-label">Notes</label>
       <div class="col-sm-10">
         <textarea class="form-control" name="notes"><?php echo $info->notes ?></textarea>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Source</label>
+      <div class="col-sm-10">
+        <select name="source" class="form-control">
+            <option value="">Select source (optional)</option>
+          <?php foreach ($sources as $row) { ?>
+            <option value="<?php echo $row['id'] ?>"><?php echo $row['name'] ?></option>
+          <?php } ?>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Contact</label>
+      <div class="col-sm-10">
+        <select name="contact" class="form-control">
+            <option value="">Select contact (optional)</option>
+          <?php foreach ($contacts as $row) { ?>
+            <option value="<?php echo $row['id'] ?>"><?php echo $row['name'] ?></option>
+          <?php } ?>
+        </select>
       </div>
     </div>
 
