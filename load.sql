@@ -931,3 +931,41 @@ COMMENT=''; -- 0.908 s
 ALTER TABLE `mfa_materials_notes`
 DROP FOREIGN KEY `mfa_materials_notes_ibfk_1`,
 ADD FOREIGN KEY (`material`) REFERENCES `mfa_materials` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.602 s
+
+-- Industry sectors created
+
+CREATE TABLE `mfa_industries` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `dataset` int(10) unsigned NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `indicator_weight` tinyint(1) unsigned NULL,
+  `indicator_value` tinyint(1) unsigned NULL,
+  `indicator_environment` tinyint(1) unsigned NULL,
+  `indicator_companies` tinyint(1) unsigned NULL,
+  `indicator_illegality` tinyint(1) unsigned NULL,
+  `description_companies` text NULL,
+  `description_illegality` text NULL,
+  `description_associations` tinyint(1) unsigned NULL,
+  `description_general` text NULL,
+  FOREIGN KEY (`dataset`) REFERENCES `mfa_dataset` (`id`)
+) COMMENT='' ENGINE='InnoDB'; -- 0.381 s
+
+CREATE TABLE `mfa_industries_sectors` (
+  `id` tinyint unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `name` varchar(255) NOT NULL
+) COMMENT='' ENGINE='InnoDB'; -- 0.304 s
+
+INSERT INTO `mfa_industries_sectors` (`id`, `name`) VALUES
+(1,	'Few large companies dominate'),
+(2,	'Medium-sized companies dominate'),
+(3,	'Small-size companies dominate'),
+(4,	'Companies exist in all sizes; no particular company size dominates');
+
+ALTER TABLE `mfa_industries`
+ADD `sector` tinyint(3) unsigned NULL,
+ADD FOREIGN KEY (`sector`) REFERENCES `mfa_industries_sectors` (`id`),
+COMMENT=''; -- 0.638 s
+
+ALTER TABLE `mfa_industries`
+CHANGE `description_associations` `description_associations` text NULL AFTER `description_illegality`,
+COMMENT=''; -- 1.169 s

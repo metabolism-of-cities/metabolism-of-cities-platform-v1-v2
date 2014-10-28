@@ -86,6 +86,7 @@ $omat_menu = array(
       5 => array('label' => 'Filter Contacts', 'url' => "omat/$project/filters/contacts", 'icon' => 'user'),
       3 => array('label' => 'Filter Sources', 'url' => "omat/$project/filters/sources", 'icon' => 'link'),
       4 => array('label' => 'Files', 'url' => "omat/$project/files", 'icon' => 'file-pdf-o'),
+      6 => array('label' => 'Industries', 'url' => "omat/$project/industries", 'icon' => 'cogs'),
     ),
   ),
   2 => array(
@@ -113,6 +114,10 @@ $omat_menu = array(
     ),
   ),
 );
+
+if (!LOCAL) {
+  unset($omat_menu[1]['menu'][6]);
+}
 
 if (!$check->multiscale) {
   unset($omat_menu[2]['menu'][5]);

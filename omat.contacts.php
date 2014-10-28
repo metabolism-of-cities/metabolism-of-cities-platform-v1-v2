@@ -147,6 +147,7 @@ function buildList($id) {
       <?php } else { ?>
         .time{display:none}
       <?php } ?>
+      .btn-success{margin-left:5px}
     </style>
   </head>
 
@@ -154,8 +155,8 @@ function buildList($id) {
 
 <?php require_once 'include.header.php'; ?>
 
-  <a href="omat/<?php echo $project ?>/contact/0" class="btn btn-default pull-right"><i class="fa fa-user"></i> Add contact</a>
-  <a href="omat/<?php echo $project ?>/source/0" class="btn btn-default pull-right"><i class="fa fa-file"></i> Add source</a>
+  <a href="omat/<?php echo $project ?>/contact/0" class="btn btn-success pull-right"><i class="fa fa-user"></i> Add contact</a>
+  <a href="omat/<?php echo $project ?>/source/0" class="btn btn-success pull-right"><i class="fa fa-file"></i> Add source</a>
 
   <h1>Manage Resources</h1>
 
