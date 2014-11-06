@@ -27,7 +27,7 @@ if ($_POST) {
     'description_companies' => html($_POST['description_companies']),
     'description_illegality' => html($_POST['description_illegality']),
     'description_associations' => html($_POST['description_associations']),
-    'description_general' => html($_POST['description_general']),
+    'description_general' => mysql_clean($_POST['description_general']),
   );
   if ($id) {
     $db->update("mfa_industries",$post,"id = $id");
@@ -45,6 +45,7 @@ if ($_POST) {
   <head>
     <?php echo $header ?>
     <title><?php echo $info->name ? $info->name : "Add Industry"; ?> | <?php echo SITENAME ?></title>
+    <script type="text/javascript" src="js/ckeditor/ckeditor.js"></script>
   </head>
 
   <body>
@@ -74,7 +75,12 @@ if ($_POST) {
     <div class="form-group">
       <label class="col-sm-2 control-label">Description</label>
       <div class="col-sm-10">
-        <textarea class="form-control" name="description_general"><?php echo br2nl($info->description_general) ?></textarea>
+        <textarea id="description" rows="10" cols="80" class="form-control" name="description_general"><?php echo br2nl($info->description_general) ?></textarea>
+            <script>
+                // Replace the <textarea id="editor1"> with a CKEditor
+                // instance, using default configuration.
+                CKEDITOR.replace('description');
+            </script>
       </div>
     </div>
 
