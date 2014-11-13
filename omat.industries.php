@@ -50,7 +50,7 @@ if ($_GET['saved']) {
       </tr>
     <?php foreach ($list as $row) { ?>
       <tr>
-        <td><?php echo $row['name'] ?></td>
+        <td><a href="omat/<?php echo $project ?>/viewindustry/<?php echo $row['id'] ?>"><?php echo $row['name'] ?></a></td>
         <td><a href="omat/<?php echo $project ?>/industry/<?php echo $row['id'] ?>" class="btn btn-primary">Edit</a></td>
         <td><a href="omat/<?php echo $project ?>/industries/delete/<?php echo $row['id'] ?>" class="btn btn-danger" onclick="javascript:return confirm('Are you sure?')">Delete</a></td>
       </tr>

@@ -969,3 +969,8 @@ COMMENT=''; -- 0.638 s
 ALTER TABLE `mfa_industries`
 CHANGE `description_associations` `description_associations` text NULL AFTER `description_illegality`,
 COMMENT=''; -- 1.169 s
+
+ALTER TABLE `mfa_contacts`
+ADD `industry` int(10) unsigned NULL AFTER `belongs_to`,
+ADD FOREIGN KEY (`industry`) REFERENCES `mfa_industries` (`id`),
+COMMENT=''; -- 1.198 s

@@ -8,9 +8,9 @@ $sub_page = 2;
 $id = (int)$_GET['id'];
 $project = (int)$_GET['project'];
 
-$info = $db->record("SELECT c.*, t.name AS type, o.status AS status_name
+$info = $db->record("SELECT c.*, t.name AS industry, o.status AS status_name
 FROM mfa_contacts c 
-  LEFT JOIN mfa_contacts_types t ON c.type = t.id
+  LEFT JOIN mfa_industries t ON c.industry = t.id
   JOIN mfa_status_options o ON c.status = o.id
 WHERE c.id = $id AND c.dataset = $project");
 
@@ -294,9 +294,9 @@ $file_children = $db->query("SELECT * FROM mfa_sources WHERE belongs_to = $id AN
     <i class="fa fa-<?php echo $info->organization ? "building-o" : "user"; ?>"></i> 
     <?php echo $info->organization ? "Organization" : "Individual" ?></dd>
 
-    <?php if ($info->type) { ?>
-      <dt>Classification</dt>
-      <dd><?php echo $info->type ?></dd>
+    <?php if ($info->industry) { ?>
+      <dt>Industry</dt>
+      <dd><?php echo $info->industry ?></dd>
     <?php } ?>
 
     <?php if ($info->employer) { ?>

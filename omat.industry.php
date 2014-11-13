@@ -52,8 +52,6 @@ if ($_POST) {
 
 <?php require_once 'include.header.php'; ?>
 
-  <a href="omat/<?php echo $project ?>/industry/0" class="btn btn-success pull-right"><i class="fa fa-cogs"></i> Add industry</a>
-
   <h1>Industries</h1>
 
   <ol class="breadcrumb">

@@ -8,7 +8,7 @@ $sub_page = 2;
 $id = (int)$_GET['id'];
 $project = (int)$_GET['project'];
 
-$types = $db->query("SELECT * FROM mfa_contacts_types WHERE dataset = $project ORDER BY name");
+$industries = $db->query("SELECT * FROM mfa_industries WHERE dataset = $project ORDER BY name");
 
 if ($id) {
   $info = $db->record("SELECT * FROM mfa_contacts WHERE id = $id AND dataset = $project");
@@ -22,7 +22,7 @@ if ($_POST) {
     'name' => html($_POST['name']),
     'organization' => (int)$_POST['organization'],
     'employer' => $_POST['employer'] ? html($_POST['employer']) : NULL,
-    'type' => $_POST['type'] ? (int)$_POST['type'] : NULL,
+    'industry' => $_POST['industry'] ? (int)$_POST['industry'] : NULL,
     'belongs_to' => $_POST['belongs_to'] ? (int)$_POST['belongs_to'] : NULL,
     'details' => html($_POST['details']),
     'dataset' => $project,
@@ -87,15 +87,15 @@ $organizations = $db->query("SELECT id,name FROM mfa_contacts WHERE dataset = $p
       </div>
     </div>
 
-    <?php if (count($types)) { ?>
+    <?php if (count($industries)) { ?>
 
-      <div class="form-group hide">
-        <label class="col-sm-2 control-label">Classification</label>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Industry</label>
         <div class="col-sm-10">
-          <select name="type" class="form-control">
+          <select name="industry" class="form-control">
               <option value=""></option>
-            <?php foreach ($types as $row) { ?>
-              <option value="<?php echo $row['id'] ?>"<?php if ($row['id'] == $info->type) { echo ' selected'; } ?>><?php echo $row['name'] ?></option>
+            <?php foreach ($industries as $row) { ?>
+              <option value="<?php echo $row['id'] ?>"<?php if ($row['id'] == $info->industry) { echo ' selected'; } ?>><?php echo $row['name'] ?></option>
             <?php } ?>
           </select>
         </div>
