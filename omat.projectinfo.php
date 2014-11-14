@@ -8,9 +8,11 @@ $page = 4;
 
 $id = (int)$_GET['id'];
 
-$info = $db->record("SELECT mfa_dataset.*, research.title AS research_name, mfa_dataset_types.name AS type
+$info = $db->record("SELECT mfa_dataset.*, research.title AS research_name, mfa_dataset_types.name AS type, 
+  papers.title AS paper_title
 FROM mfa_dataset 
   LEFT JOIN research ON mfa_dataset.research_project = research.id
+  LEFT JOIN papers ON mfa_dataset.source_paper = papers.id
   JOIN mfa_dataset_types ON mfa_dataset.type = mfa_dataset_types.id
 WHERE mfa_dataset.id = $id");
 
@@ -30,6 +32,7 @@ if ($info->access == "private") {
       ul.flatlist{list-style:none;padding-left:0}
       ul.flatlist li{margin-bottom:3px;padding-left:0}
       a.btn-success{margin-bottom:5px}
+      div.well{width:auto;display:inline-block}
     </style>
   </head>
 
@@ -40,7 +43,8 @@ if ($info->access == "private") {
   <h1><i class="fa fa-database"></i> OMAT Dataset: <?php echo $info->name ?></h1>
 
   <?php if ($info->banner_text) { ?>
-    <div class="alert alert-info">
+    <div class="alert alert-info info-bar">
+      <i class="fa fa-info-circle"></i>
       <?php echo $info->banner_text ?>
     </div>
   <?php } ?>
@@ -79,6 +83,15 @@ if ($info->access == "private") {
       <li><a href="omat-public/<?php echo $id ?>/reports-graphs" class="btn btn-success"><i class="fa fa-line-chart"></i> Graphs</a></li>
       <li><a href="omat-public/<?php echo $id ?>/reports-tables" class="btn btn-success"><i class="fa fa-table"></i> Data Tables</a></li>
     </ul>
+    <?php if ($info->source_paper) { ?>
+      <div class="well">
+        <i class="fa fa-info-circle"></i>
+        Source publication: <br />
+        <a href="publication/<?php echo $info->source_paper ?>">
+          <?php echo $info->paper_title ?>
+        </a>
+      </div>
+    <?php } ?>
 
   </div>
 

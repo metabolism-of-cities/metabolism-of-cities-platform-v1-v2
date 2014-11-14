@@ -111,6 +111,13 @@ if (count($dataresults)) {
     </tr>
   </table>
 
+  <?php if ($dataset->banner_text) { ?>
+    <div class="alert alert-info info-bar">
+      <i class="fa fa-info-circle"></i>
+      <?php echo $dataset->banner_text ?>
+    </div>
+  <?php } ?>
+
   <div class="panel panel-info">
     <div class="panel-heading">
       <h3 class="panel-title">Data Tables</h3>

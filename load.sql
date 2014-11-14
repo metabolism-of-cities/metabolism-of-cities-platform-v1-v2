@@ -978,3 +978,8 @@ COMMENT=''; -- 1.198 s
 ALTER TABLE `mfa_contacts`
 ADD `url` varchar(255) NOT NULL AFTER `type`,
 COMMENT=''; -- 1.677 s
+
+ALTER TABLE `mfa_dataset`
+ADD `source_paper` int(11) NULL AFTER `research_project`,
+ADD FOREIGN KEY (`source_paper`) REFERENCES `papers` (`id`) ON DELETE RESTRICT,
+COMMENT=''; -- 1.685 s

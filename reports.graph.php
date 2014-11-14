@@ -56,6 +56,13 @@ $materials = $db->query("SELECT * FROM mfa_materials WHERE mfa_group = $id AND L
     <svg id="graph"></svg>
   </div>
 
+  <?php if ($dataset->banner_text) { ?>
+    <div class="alert alert-info info-bar">
+      <i class="fa fa-info-circle"></i>
+      <?php echo $dataset->banner_text ?>
+    </div>
+  <?php } ?>
+
   <script src="js/d3.v3.min.js"></script>
   <script src="js/nvd3/nv.d3.min.js"></script>
   <script src="js/nvd3/utils.js"></script>

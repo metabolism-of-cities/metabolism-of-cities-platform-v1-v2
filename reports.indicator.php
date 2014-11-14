@@ -176,6 +176,13 @@ if (count($dataresults)) {
     <?php } ?>
   <?php } ?>
 
+  <?php if ($dataset->banner_text) { ?>
+    <div class="alert alert-info info-bar">
+      <i class="fa fa-info-circle"></i>
+      <?php echo $dataset->banner_text ?>
+    </div>
+  <?php } ?>
+
   <?php if (!$public_login) { ?>
 
   <div class="panel panel-info">

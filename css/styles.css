@@ -142,3 +142,12 @@ table.ellipsis {
 .navbar-fixed-top {
   z-index:1080;
 }
+.info-bar i {
+  font-size:25px;
+  float:left;
+  margin-right:10px;
+}
+.info-bar a {
+  font-weight:bold;
+  color:#333;
+}
