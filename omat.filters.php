@@ -307,7 +307,12 @@ if ($page == "contacts") {
       </tr>
     <?php foreach ($list as $row) { ?>
       <tr>
-        <td class="<?php echo $edit ? "medium" : "long"; ?>"><a href="omat/<?php echo $project ?>/view<?php echo $page_singular ?>/<?php echo $row['id'] ?>"><?php echo $row['name'] ?></a></td>
+        <td class="<?php echo $edit ? "medium" : "long"; ?>">
+          <a href="omat/<?php echo $project ?>/<?php echo $page_singular ?>/<?php echo $row['id'] ?>">
+            <i class="fa fa-edit"></i>
+          </a>
+          <a href="omat/<?php echo $project ?>/view<?php echo $page_singular ?>/<?php echo $row['id'] ?>"><?php echo $row['name'] ?></a>
+        </td>
         <?php if ($edit) { ?>
           <td>
             

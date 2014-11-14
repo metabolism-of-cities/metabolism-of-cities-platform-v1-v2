@@ -13,10 +13,20 @@ if ($_GET['delete']) {
   $check = $db->query("SELECT * FROM mfa_sources_flags WHERE flag = $delete");
   $check_contacts = $db->query("SELECT * FROM mfa_contacts_flags WHERE flag = $delete");
   if (count($check) || count($check_contacts)) {
-    die("Sorry, we could not delete this tag because there are sources or contacts that have been tagged with this tag already! Untag them first.");
+    $error = "<p>Sorry, we could not delete this tag because there are sources or contacts that have been tagged with this tag already! Untag them first.</p>";
+    $error .= "<p><a href='omat/{$project}/maintenance-tags/{$delete}/delete-all' class='btn btn-danger'>Click here to untag all contacts and sources and remove this tag</a></p>";
+  } else {
+    $db->query("DELETE FROM mfa_special_flags WHERE id = $delete AND dataset = $id LIMIT 1");
+    $print = "Tag was deleted";
   }
+}
+
+if ($_GET['delete-all']) {
+  $delete = (int)$_GET['delete-all'];
+  $db->query("DELETE FROM mfa_sources_flags WHERE flag = $delete");
+  $db->query("DELETE FROM mfa_contacts_flags WHERE flag = $delete");
   $db->query("DELETE FROM mfa_special_flags WHERE id = $delete AND dataset = $id LIMIT 1");
-  $print = "Tag was deleted";
+  $print = "Contacts/sources were untagged and this tag was deleted.";
 }
 
 $list = $db->query("SELECT * FROM mfa_special_flags WHERE dataset = $id ORDER BY name");
@@ -42,6 +52,7 @@ $list = $db->query("SELECT * FROM mfa_special_flags WHERE dataset = $id ORDER BY
   </ol>
 
   <?php if ($print) { echo "<div class=\"alert alert-success\">$print</div>"; } ?>
+  <?php if ($error) { echo "<div class=\"alert alert-danger\">$error</div>"; } ?>
 
   <?php if (!count($list)) { ?>
 
