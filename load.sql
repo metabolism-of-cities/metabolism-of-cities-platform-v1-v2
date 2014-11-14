@@ -974,3 +974,7 @@ ALTER TABLE `mfa_contacts`
 ADD `industry` int(10) unsigned NULL AFTER `belongs_to`,
 ADD FOREIGN KEY (`industry`) REFERENCES `mfa_industries` (`id`),
 COMMENT=''; -- 1.198 s
+
+ALTER TABLE `mfa_contacts`
+ADD `url` varchar(255) NOT NULL AFTER `type`,
+COMMENT=''; -- 1.677 s

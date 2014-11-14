@@ -306,6 +306,11 @@ $file_children = $db->query("SELECT * FROM mfa_sources WHERE belongs_to = $id AN
 
     <?php } ?>
 
+    <?php if ($info->url) { ?>
+      <dt>URL</dt>
+      <dd><a href="<?php echo $info->url ?>"><?php echo $info->url ?></a></dd>
+    <?php } ?>
+
     <?php if ($check->resource_management) { ?>
       <dt>Associations</dt>
       <?php foreach ($associations as $row) { ?>

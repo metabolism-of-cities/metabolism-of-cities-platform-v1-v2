@@ -26,6 +26,7 @@ if ($_POST) {
     'belongs_to' => $_POST['belongs_to'] ? (int)$_POST['belongs_to'] : NULL,
     'details' => html($_POST['details']),
     'dataset' => $project,
+    'url' => mysql_clean($_POST['url']),
   );
   if ($id) {
     $db->update("mfa_contacts",$post,"id = $id");
@@ -118,6 +119,13 @@ $organizations = $db->query("SELECT id,name FROM mfa_contacts WHERE dataset = $p
       </div>
 
     <?php } ?>
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label">URL</label>
+      <div class="col-sm-10">
+        <input class="form-control" type="url" name="url" value="<?php echo $info->url ?>" placeholder="Be sure to include the full URL, including http://" />
+      </div>
+    </div>
 
     <div class="form-group">
       <label class="col-sm-2 control-label">Notes</label>
