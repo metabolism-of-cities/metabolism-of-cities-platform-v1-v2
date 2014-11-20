@@ -161,10 +161,10 @@ function timeContact($id) {
   // This function will figure out how much time was spent on the children of
   // this contact
   global $db;
-  $time = $db->record("SELECT SUM(time) AS time
-  FROM mfa_activities_log
-  WHERE contact = $id");
-  return $time->time;
+  $time = $db->record("SELECT SUM(time) AS time FROM mfa_activities_log WHERE contact = $id");
+  $time_sources = $db->record("SELECT SUM(time) AS time FROM mfa_activities_log 
+    WHERE source IN (SELECT id FROM mfa_sources WHERE belongs_to = $id)");
+  return $time->time + $time_sources->time;
 }
 
 ?>
