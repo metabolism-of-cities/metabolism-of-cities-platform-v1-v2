@@ -12,7 +12,29 @@ if (!count($info)) {
   kill("No record found");
 }
 
-$contacts = $db->query("SELECT * FROM mfa_contacts WHERE industry = $id ORDER BY name");
+$time = array();
+
+$contacts = $db->query("SELECT id,name,
+  (SELECT name FROM mfa_contacts c WHERE mfa_contacts.belongs_to = c.id) AS parent
+FROM mfa_contacts WHERE industry = $id ORDER BY name");
+
+foreach ($contacts as $row) {
+  $id = $row['id'];
+  $time[$id] += timeContact($id);
+  getChildrenContacts($id, $id);
+}
+
+function getChildrenContacts($id, $parent) {
+  global $db, $time;
+  $children = $db->query("SELECT * FROM mfa_contacts WHERE belongs_to = $id");
+  if (count($children)) {
+    foreach ($children as $row) {
+      $time[$parent] += timeContact($row['id']);
+      getChildrenContacts($row['id'], $parent);
+    }
+  }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -57,13 +79,19 @@ $contacts = $db->query("SELECT * FROM mfa_contacts WHERE industry = $id ORDER BY
       <tr>
         <th>Group</th>
         <th>Contact</th>
+        <th>Time spent</th>
       </tr>
     <?php foreach ($contacts as $row) { ?>
       <tr>
-        <td><?php echo $row['ind'] ?></td>
+        <td><?php echo $row['parent'] ?></td>
         <td><a href="omat/<?php echo $project ?>/viewcontact/<?php echo $row['id'] ?>"><?php echo $row['name'] ?></a></td>
+        <td><?php echo formatTime($time[$row['id']]); $totaltime += $time[$row['id']]; ?></td>
       </tr>
     <?php } ?>
+      <tr>
+        <th colspan="2">Total time spent</th>
+        <th><?php echo formatTime($totaltime); ?></th>
+      </tr>
     </table>
 
   <?php } ?>

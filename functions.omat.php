@@ -157,5 +157,14 @@ function hierarchyTree($id) {
   }
 }
 
+function timeContact($id) {
+  // This function will figure out how much time was spent on the children of
+  // this contact
+  global $db;
+  $time = $db->record("SELECT SUM(time) AS time
+  FROM mfa_activities_log
+  WHERE contact = $id");
+  return $time->time;
+}
 
 ?>
