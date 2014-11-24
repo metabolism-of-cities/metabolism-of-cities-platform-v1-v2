@@ -35,6 +35,7 @@ function getChildrenContacts($id, $parent) {
   }
 }
 
+$id = (int)$_GET['id'];
 ?>
 <!DOCTYPE html>
 <html lang="en">

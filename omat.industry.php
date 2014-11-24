@@ -35,10 +35,42 @@ if ($_POST) {
     $db->insert("mfa_industries",$post);
     $id = $db->insert_id;
   }
+  $db->query("DELETE FROM mfa_industries_scores WHERE industry = $id");
+  foreach ($_POST['score']['value'] as $key => $value) {
+    if ($value) {
+      $post = array(
+        'type' => mysql_clean('value'),
+        'flow' => mysql_clean($key),
+        'industry' => $id,
+        'score' => (int)$value,
+      );
+      $db->insert("mfa_industries_scores",$post);
+    }
+  }
+  foreach ($_POST['score']['mass'] as $key => $value) {
+    if ($value) {
+      $post = array(
+        'type' => mysql_clean('mass'),
+        'flow' => mysql_clean($key),
+        'industry' => $id,
+        'score' => (int)$value,
+      );
+      $db->insert("mfa_industries_scores",$post);
+    }
+  }
   header("Location: " . URL . "omat/$project/industries/saved");
   exit();
 }
 
+$list = $db->query("SELECT * FROM mfa_industries_labels WHERE dataset = $project ORDER BY score, type");
+foreach ($list as $row) {
+  $labels[$row['type']][$row['score']] = $row['label'];
+}
+
+$scores = $db->query("SELECT * FROM mfa_industries_scores WHERE industry = $id");
+foreach ($scores as $row) {
+  $score[$row['type']][$row['flow']] = $row['score'];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,6 +78,9 @@ if ($_POST) {
     <?php echo $header ?>
     <title><?php echo $info->name ? $info->name : "Add Industry"; ?> | <?php echo SITENAME ?></title>
     <script type="text/javascript" src="js/ckeditor/ckeditor.js"></script>
+    <style type="text/css">
+    .table{border-bottom:1px solid #ccc}
+    </style>
   </head>
 
   <body>
@@ -82,29 +117,49 @@ if ($_POST) {
       </div>
     </div>
 
-    <div class="form-group">
-      <label class="col-sm-2 control-label">Mass</label>
-      <div class="col-sm-10">
-        <select name="indicator_weight" class="form-control">
-            <option value=""></option>
-          <?php for ($i = 1; $i <= 5; $i++) { ?>
-            <option value="<?php echo $i ?>"<?php if ($i == $info->indicator_weight) { echo ' selected'; } ?>><?php echo $i ?></option>
-          <?php } ?>
-        </select>
-      </div>
-    </div>
+    <table class="table table-striped">
+      <tr>
+        <th>Flow</th>
+        <th>Mass</th>
+        <th>Value</th>
+      </tr>
+      <?php
+      $options = array(
+        'extraction' => 'Extraction',
+        'import' => 'Import',
+        'export' => 'Export',
+        'output' => 'Output to Nature',
+      );
+      foreach ($options as $key => $value) {
+      ?>
+      <tr>
+        <td><?php echo $value ?></td>
+        <td>
+          <select name="score[mass][<?php echo $value ?>]" class="form-control">
+              <option value=""></option>
+            <?php for ($i = 1; $i <= 5; $i++) { ?>
+              <option value="<?php echo $i ?>"<?php if ($i == $score['mass'][$key]) { echo ' selected'; } ?>>
+                <?php echo $i ?>
+                <?php if ($labels['mass'][$i]) { echo ": " . $labels['mass'][$i]; } ?>
+              </option>
+            <?php } ?>
+          </select>
+        </td>
+        <td>
+          <select name="score[value][<?php echo $value ?>]" class="form-control">
+              <option value=""></option>
+            <?php for ($i = 1; $i <= 5; $i++) { ?>
+              <option value="<?php echo $i ?>"<?php if ($i == $score['value'][$key]) { echo ' selected'; } ?>>
+                <?php echo $i ?>
+                <?php if ($labels['value'][$i]) { echo ": " . $labels['value'][$i]; } ?>
+              </option>
+            <?php } ?>
+          </select>
+        </td>
+      </tr>
+      <?php } ?>
+    </table>
 
-    <div class="form-group">
-      <label class="col-sm-2 control-label">Value</label>
-      <div class="col-sm-10">
-        <select name="indicator_value" class="form-control">
-            <option value=""></option>
-          <?php for ($i = 1; $i <= 3; $i++) { ?>
-            <option value="<?php echo $i ?>"<?php if ($i == $info->indicator_value) { echo ' selected'; } ?>><?php echo $i ?></option>
-          <?php } ?>
-        </select>
-      </div>
-    </div>
 
     <div class="form-group">
       <label class="col-sm-2 control-label">Environmental impact</label>

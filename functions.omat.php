@@ -99,6 +99,7 @@ $omat_menu = array(
       4 => array('label' => 'Types of Activities', 'url' => "omat/$project/maintenance-activities", 'icon' => 'comment'),
       5 => array('label' => 'Types of Scales', 'url' => "omat/$project/maintenance-scales", 'icon' => 'dot-circle-o'),
       6 => array('label' => 'Types of Tags', 'url' => "omat/$project/maintenance-tags", 'icon' => 'tag'),
+      7 => array('label' => 'Industry Sizes', 'url' => "omat/$project/maintenance-industrysizes", 'icon' => 'cogs'),
     ),
   ),
   3 => array(

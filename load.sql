@@ -983,3 +983,33 @@ ALTER TABLE `mfa_dataset`
 ADD `source_paper` int(11) NULL AFTER `research_project`,
 ADD FOREIGN KEY (`source_paper`) REFERENCES `papers` (`id`) ON DELETE RESTRICT,
 COMMENT=''; -- 1.685 s
+
+CREATE TABLE `mfa_industries_labels` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `type` enum('value','mass') NOT NULL,
+  `score` tinyint(1) unsigned NOT NULL,
+  `label` varchar(255) NOT NULL,
+  `dataset` int(10) unsigned NOT NULL,
+  FOREIGN KEY (`dataset`) REFERENCES `mfa_dataset` (`id`)
+) COMMENT=''; -- 0.980 s
+
+ALTER TABLE `mfa_industries_labels`
+DROP FOREIGN KEY `mfa_industries_labels_ibfk_1`,
+ADD FOREIGN KEY (`dataset`) REFERENCES `mfa_dataset` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.463 s
+
+CREATE TABLE `mfa_industries_scores` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `type` enum('mass','value') NOT NULL,
+  `flow` enum('extraction','import','export') NOT NULL,
+  `industry` int(10) unsigned NOT NULL,
+  `score` tinyint(1) unsigned NOT NULL,
+  FOREIGN KEY (`industry`) REFERENCES `mfa_industries` (`id`) ON DELETE CASCADE
+) COMMENT=''; -- 0.467 s
+
+ALTER TABLE `mfa_industries_scores`
+DROP FOREIGN KEY `mfa_industries_scores_ibfk_1`,
+ADD FOREIGN KEY (`industry`) REFERENCES `mfa_industries` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.417 s
+
+ALTER TABLE `mfa_industries_scores`
+CHANGE `flow` `flow` enum('extraction','import','export','output') COLLATE 'utf8_unicode_ci' NOT NULL AFTER `type`,
+COMMENT=''; -- 0.429 s
