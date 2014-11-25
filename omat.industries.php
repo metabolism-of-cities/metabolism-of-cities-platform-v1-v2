@@ -7,6 +7,12 @@ $sub_page = 6;
 
 $id = (int)$project;
 
+if ($_GET['delete']) {
+  $delete = (int)$_GET['delete'];
+  $db->query("DELETE FROM mfa_industries WHERE id = $delete AND dataset = $project LIMIT 1");
+  $print = "The industry was deleted";
+}
+
 $list = $db->query("SELECT * FROM mfa_industries WHERE dataset = $project ORDER BY name");
 
 if ($_GET['saved']) {
