@@ -1013,3 +1013,19 @@ ADD FOREIGN KEY (`industry`) REFERENCES `mfa_industries` (`id`) ON DELETE CASCAD
 ALTER TABLE `mfa_industries_scores`
 CHANGE `flow` `flow` enum('extraction','import','export','output') COLLATE 'utf8_unicode_ci' NOT NULL AFTER `type`,
 COMMENT=''; -- 0.429 s
+
+CREATE TABLE `mfa_sankey` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `dataset` int(10) unsigned NOT NULL,
+  `name` varchar(255) NOT NULL,
+  FOREIGN KEY (`dataset`) REFERENCES `mfa_dataset` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) COMMENT=''; -- 0.546 s
+
+CREATE TABLE `mfa_sankey_nodes` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `sankey` int(10) unsigned NOT NULL,
+  `from_name` varchar(255) NOT NULL,
+  `to_name` varchar(255) NOT NULL,
+  `weight` int unsigned NOT NULL,
+  FOREIGN KEY (`sankey`) REFERENCES `mfa_sankey` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) COMMENT=''; -- 0.412 s
