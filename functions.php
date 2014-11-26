@@ -421,15 +421,14 @@ $lasterror="============== PHP LAST ERROR ============ \n".print_r(error_get_las
 		return $info;
 } 
 
-function formatTime($time)
+function formatTime($time, $minhour = false)
 {
 	$hours = floor($time/60);
-	if ($hours > 0)
-	{
+	if ($hours > 0 || $minhour) {
 		$minutes = (int)$time-($hours*60);
 		if ($minutes < 10) { $minutes = "0$minutes"; }
 		$return = "$hours:$minutes";
-		$return .= " h";
+		$return .= !$minhour ? " h" : '';
 	}
 	elseif ($time == 0) { $return = "0:00"; } 
 	elseif ($time < 10) { $return = (int)$time . " min"; }

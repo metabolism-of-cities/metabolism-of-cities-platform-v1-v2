@@ -179,6 +179,7 @@ WHERE source = $id");
     .ellipsis th.short{width:90px;max-width:90px}
     .ellipsis th.shorter{width:70px;max-width:90px}
     .ellipsis td,.ellipsis th{width:230px;max-width:230px}
+    ol.breadcrumb{clear:both;margin-top:45px}
     </style>
     <script type="text/javascript">
     $(function(){
@@ -311,8 +312,6 @@ WHERE source = $id");
     <?php echo $row['name'] ?></a>
   <?php } ?>
   <a href="omat/<?php echo $project ?>/source/<?php echo $info->id ?>" class="btn btn-primary right">Edit</a>
-
-  <h1>Source Details</h1>
 
   <?php if ($print) { echo "<div class=\"alert alert-success\">$print</div>"; } ?>
 

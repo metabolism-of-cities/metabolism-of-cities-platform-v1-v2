@@ -33,7 +33,7 @@ if ($_POST) {
     $db->update("mfa_industries",$post,"id = $id");
   } else {
     $db->insert("mfa_industries",$post);
-    $id = $db->insert_id;
+    $id = $db->lastInsertId();
   }
   $db->query("DELETE FROM mfa_industries_scores WHERE industry = $id");
   foreach ($_POST['score']['value'] as $key => $value) {

@@ -124,6 +124,7 @@ $file_children = $db->query("SELECT * FROM mfa_sources WHERE belongs_to = $id AN
     .panel-title{font-weight:700}
     h1{clear:both;padding-top:10px}
     .fa-ul i{opacity:0.7}
+    ol.breadcrumb{clear:both;margin-top:45px}
     </style>
     <script type="text/javascript">
     $(function(){
@@ -263,8 +264,6 @@ $file_children = $db->query("SELECT * FROM mfa_sources WHERE belongs_to = $id AN
   <?php } ?>
 
   <a href="omat/<?php echo $project ?>/contact/<?php echo $info->id ?>" class="btn btn-primary right">Edit</a>
-
-  <h1><?php echo $info->name ?></h1>
 
   <ol class="breadcrumb">
     <li><a href="omat/<?php echo $project ?>/dashboard">Dashboard</a></li>
