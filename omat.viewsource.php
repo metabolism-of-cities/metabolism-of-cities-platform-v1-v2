@@ -313,13 +313,13 @@ WHERE source = $id");
   <?php } ?>
   <a href="omat/<?php echo $project ?>/source/<?php echo $info->id ?>" class="btn btn-primary right">Edit</a>
 
-  <?php if ($print) { echo "<div class=\"alert alert-success\">$print</div>"; } ?>
-
   <ol class="breadcrumb">
     <li><a href="omat/<?php echo $project ?>/dashboard">Dashboard</a></li>
     <li><a href="omat/<?php echo $project ?>/sources">Sources</a></li>
     <li><?php echo $info->name ?></li>
   </ol>
+
+  <?php if ($print) { echo "<div class=\"alert alert-success\">$print</div>"; } ?>
 
   <dl class="dl-horizontal">
 

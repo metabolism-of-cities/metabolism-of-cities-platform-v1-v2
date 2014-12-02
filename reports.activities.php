@@ -10,6 +10,12 @@ if ($_GET['type']) {
   $sql .= " AND l.activity = $type";
 }
 
+if ($_GET['show'] == 'calendar') {
+  $show = 'calendar';
+} elseif ($_GET['show'] == 'graph') {
+  $show = 'graph';
+}
+
 $list = $db->query("SELECT l.*, a.name AS activity_name,
   mfa_sources.name AS source_name,
   mfa_contacts.name AS contact_name
@@ -18,6 +24,21 @@ FROM mfa_activities_log l
   LEFT JOIN mfa_sources ON l.source = mfa_sources.id
   LEFT JOIN mfa_contacts ON l.contact = mfa_contacts.id
 WHERE a.dataset = $project $sql ORDER BY l.end");
+
+if ($show == 'graph') {
+  foreach ($list as $row) {
+    $total[$row['activity_name']] += $row['time'];
+  }
+  arsort($total);
+} elseif ($show == 'calendar') {
+  foreach ($list as $row) {
+    $row['date'] = $row['end'];
+    $weeknumber = format_date("W", $row['date']);
+    $year = format_date("Y", $row['date']);
+    $label = "W$weeknumber $year";
+    $total[$label] += $row['time'];
+  }
+}
 
 $types = $db->query("SELECT * FROM mfa_activities WHERE dataset = $project ORDER BY name");
 ?>
@@ -29,6 +50,52 @@ $types = $db->query("SELECT * FROM mfa_activities WHERE dataset = $project ORDER
     <style type="text/css">
     select.form-control{width:120px;display:inline}
     </style>
+    <?php if ($show) { ?>
+      <script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['corechart']}]}"></script>
+    <?php } ?>
+    <?php if ($show == 'graph') { ?>
+    <script type="text/javascript">
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Type', 'Minutes spent'],
+        <?php foreach ($total as $key => $value) { ?>
+          ['<?php echo $key ?>',  <?php echo $value ?>],
+        <?php } ?>
+        ]);
+
+        var options = {
+          title: 'Breakdown of time spent',
+          vAxis: {title: 'Type',  titleTextStyle: {color: 'red'}}
+        };
+
+        var chart = new google.visualization.BarChart(document.getElementById('chart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+    <?php } elseif ($show == 'calendar') { ?>
+    <script type="text/javascript">
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Week', 'Minutes spent'],
+        <?php foreach ($total as $key => $value) { ?>
+          ['<?php echo $key ?>',  <?php echo $value ?>],
+        <?php } ?>
+        ]);
+
+        var options = {
+          title: 'Breakdown of time spent',
+          vAxis: {title: 'Week',  titleTextStyle: {color: 'red'}}
+        };
+
+        var chart = new google.visualization.BarChart(document.getElementById('chart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+    <?php } ?>
   </head>
 
   <body>
@@ -65,6 +132,30 @@ $types = $db->query("SELECT * FROM mfa_activities WHERE dataset = $project ORDER
     <?php echo count($list) ?> records found.
   </div>
 
+  <ul class="nav nav-tabs">
+    <li class="<?php echo !$show ? 'active' : 'n'; ?>">
+      <a href="reports.activities.php?type=<?php echo $type ?>&amp;project=<?php echo $project ?>">
+        Table
+      </a>
+    </li>
+    <li class="<?php echo $show == 'calendar' ? 'active' : 'n'; ?>">
+      <a href="reports.activities.php?type=<?php echo $type ?>&amp;project=<?php echo $project ?>&amp;show=calendar">
+        Calendar Graph
+      </a>
+    </li>
+    <li class="<?php echo $show == 'graph' ? 'active' : 'n'; ?>">
+      <a href="reports.activities.php?type=<?php echo $type ?>&amp;project=<?php echo $project ?>&amp;show=graph">
+        Time Graph
+      </a>
+    </li>
+  </ul>
+
+  <?php if ($show) { ?>
+
+    <div id="chart" style="width: 900px; height: 500px;"></div>
+
+  <?php } else { ?>
+
   <table class="table table-striped ellipsis">
     <tr>
       <th>ID</th>
@@ -95,6 +186,8 @@ $types = $db->query("SELECT * FROM mfa_activities WHERE dataset = $project ORDER
     <th><?php echo formatTime($time) ?></th>
   </tr>
   </table>
+
+  <?php } ?>
 
   <?php } ?>
 

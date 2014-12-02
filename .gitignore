@@ -4,3 +4,4 @@ notes
 config.php
 config.online.php
 eurostat.php
+sankey/*
