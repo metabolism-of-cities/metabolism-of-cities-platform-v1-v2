@@ -36,7 +36,8 @@ if ($show == 'graph') {
     $weeknumber = format_date("W", $row['date']);
     $year = format_date("Y", $row['date']);
     $label = "W$weeknumber $year";
-    $total[$label] += $row['time'];
+    $total[$label][$row['activity_name']] += $row['time'];
+    $activitylist[$row['activity_name']] = true;
   }
 }
 
@@ -49,12 +50,14 @@ $types = $db->query("SELECT * FROM mfa_activities WHERE dataset = $project ORDER
     <title>Activity Log | <?php echo SITENAME ?></title>
     <style type="text/css">
     select.form-control{width:120px;display:inline}
+    #chart{margin-top:40px;}
     </style>
     <?php if ($show) { ?>
-      <script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['corechart']}]}"></script>
+      <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <?php } ?>
     <?php if ($show == 'graph') { ?>
     <script type="text/javascript">
+      google.load("visualization", "1.1", {packages:["bar"]});
       google.setOnLoadCallback(drawChart);
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
@@ -65,32 +68,40 @@ $types = $db->query("SELECT * FROM mfa_activities WHERE dataset = $project ORDER
         ]);
 
         var options = {
-          title: 'Breakdown of time spent',
-          vAxis: {title: 'Type',  titleTextStyle: {color: 'red'}}
+          chart: {
+            title: 'Time spent on different activities',
+            subtitle: 'Time shown in number of minutes',
+          },
+          bars: 'horizontal' // Required for Material Bar Charts.
         };
 
-        var chart = new google.visualization.BarChart(document.getElementById('chart'));
+        var chart = new google.charts.Bar(document.getElementById('chart'));
 
         chart.draw(data, options);
       }
     </script>
     <?php } elseif ($show == 'calendar') { ?>
     <script type="text/javascript">
+      google.load("visualization", "1.1", {packages:["bar"]});
       google.setOnLoadCallback(drawChart);
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
-          ['Week', 'Minutes spent'],
+          ['Type', <?php foreach ($activitylist as $subkey => $subvalue) { echo "'$subkey',"; } ?> { role: 'annotation'} ],
         <?php foreach ($total as $key => $value) { ?>
-          ['<?php echo $key ?>',  <?php echo $value ?>],
+          ['<?php echo $key ?>',  <?php foreach ($activitylist as $subkey => $subvalue) { ?><?php echo (float)$value[$subkey] ?>,<?php } ?> ''],
         <?php } ?>
         ]);
 
         var options = {
-          title: 'Breakdown of time spent',
-          vAxis: {title: 'Week',  titleTextStyle: {color: 'red'}}
+          chart: {
+            title: 'Breakdown of time spent',
+            subtitle: 'Shown by week',
+          },
+          stacked: true,
+          bars: 'horizontal' // Required for Material Bar Charts.
         };
 
-        var chart = new google.visualization.BarChart(document.getElementById('chart'));
+        var chart = new google.charts.Bar(document.getElementById('chart'));
 
         chart.draw(data, options);
       }
