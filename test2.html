@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+          <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+            <script type="text/javascript">
+      google.load("visualization", "1.1", {packages:["bar"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Type', 'Set 1','Set 2','Set 3','Set 4','Set 5','Set 6','Set 7', { role: 'annotation'} ],
+                  ['W35 2014',  84,333,147,0,0,0,0, ''],
+                  ['W36 2014',  69,47,120,254,23,0,0, ''],
+                  ['W37 2014',  252,605,0,0,23,6,0, ''],
+                  ['W38 2014',  191,710,363,271,72,10,0, ''],
+                  ['W39 2014',  176,366,302,187,7,6,0, ''],
+                  ['W40 2014',  372,270,444,556,68,8,9, ''],
+                  ['W41 2014',  179,71,322,291,73,0,0, ''],
+                  ['W42 2014',  357,66,180,20,39,0,116, ''],
+                  ['W43 2014',  137,173,193,154,43,5,0, ''],
+                  ['W44 2014',  75,108,109,20,20,27,0, ''],
+                  ['W45 2014',  191,289,125,68,15,0,450, ''],
+                  ['W46 2014',  147,224,0,0,1,27,387, ''],
+                  ['W47 2014',  130,254,133,164,23,0,357, ''],
+                  ['W48 2014',  271,122,35,40,9,0,150, ''],
+                  ['W49 2014',  173,14,107,72,41,3,38, ''],
+                ]);
+
+        var options = {
+          chart: {
+            title: 'Breakdown of time spent',
+            subtitle: 'Shown by week',
+          },
+          stacked: true,
+          bars: 'horizontal' // Required for Material Bar Charts.
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('chart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+      </head>
+
+  <body>
+  
+    <div id="chart" style="width: 900px; height: 500px;"></div>
+  </body>
+</html>
