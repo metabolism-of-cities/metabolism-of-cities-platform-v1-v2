@@ -39,6 +39,10 @@ WHERE mfa_groups.dataset = $id
     <li class="active">Data Overview</li>
   </ol>
 
+  <div class="alert alert-info">
+    <strong><?php echo count($list) ?></strong> data points found.
+  </div>
+
   <?php if ($print) { echo "<div class=\"alert alert-success\">$print</div>"; } ?>
 
   <table class="table table-striped">

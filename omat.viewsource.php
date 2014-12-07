@@ -556,10 +556,10 @@ WHERE source = $id");
         <td>
         <?php if ($row['size']) { ?>
           <a href="omat/<?php echo $project ?>/download/<?php echo $row['id'] ?>">
-            <?php echo $row['name'] ?>
+            <?php echo $row['name'] ? $row['name'] : 'Download'; ?>
           </a>
         <?php } elseif ($row['url']) { ?>
-          <a href="<?php echo $row['url'] ?>"><?php echo $row['name'] ?></a>
+          <a href="<?php echo $row['url'] ?>"><?php echo $row['name'] ? $row['name'] : 'Visit website' ?></a>
         <?php } else { ?>
           <?php echo $row['name'] ?>
         <?php } ?>

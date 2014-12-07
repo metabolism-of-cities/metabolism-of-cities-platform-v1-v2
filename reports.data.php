@@ -261,15 +261,15 @@ ORDER BY dqi_sections.name, dqi_classifications.score");
 
     <?php if ($row['source_id']) { ?>
 
-    <h2>Route to success</h2>
-
     <?php
       $origins = traceOrigins($row['source_id'], 'source');
       $origins = array_reverse($origins);
     ?>
 
+    <h2>Route to success</h2>
+
     <?php 
-    foreach ($origins as $value) { 
+    foreach ($origins as $value) {
       $gettime = trackTime($value['id'], $value['type']);
       if (is_array($gettime)) {
         foreach ($gettime as $subkey => $subvalue) {
@@ -293,24 +293,28 @@ ORDER BY dqi_sections.name, dqi_classifications.score");
       <?php echo formatTime($overall_time); ?>
     </div>
 
-    <h2>Time breakdown</h2>
+    <?php if ($overall_time) { ?>
 
-    <table class="table table-striped">
-      <tr>
-        <th>Activity</th>
-        <th>Time</th>
-      </tr>
-      <?php $overall_time = 0; foreach ($totaltime as $key => $value) { ?>
-      <tr>
-        <td><?php echo $key ?></td>
-        <td><?php echo formatTime($value); $overall_time += $value; ?></td>
-      </tr>
-      <?php } ?>
-      <tr>
-        <th>Total</th>
-        <th><?php echo formatTime($overall_time) ?></th>
-      </tr>
-    </table>
+      <h2>Time breakdown</h2>
+
+      <table class="table table-striped">
+        <tr>
+          <th>Activity</th>
+          <th>Time</th>
+        </tr>
+        <?php $overall_time = 0; foreach ($totaltime as $key => $value) { ?>
+        <tr>
+          <td><?php echo $key ?></td>
+          <td><?php echo formatTime($value); $overall_time += $value; ?></td>
+        </tr>
+        <?php } ?>
+        <tr>
+          <th>Total</th>
+          <th><?php echo formatTime($overall_time) ?></th>
+        </tr>
+      </table>
+
+    <?php } ?>
 
     <?php } ?>
 
