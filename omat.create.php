@@ -183,6 +183,20 @@ $types = $db->query("SELECT * FROM mfa_dataset_types ORDER BY name");
 
     </fieldset>
 
+    <fieldset style="margin-top:20px">
+      <legend>Terms and conditions</legend>
+      <ul>
+        <li>
+          You understand that OMAT is new, open source software. While already in use by several research projects, bugs may still be present. 
+          We encourage you to report any bugs or to help us improve the functionality.
+        </li>
+        <li>We will not share or use your information with anyone unless you make your project public. </li>
+        <li>If your project is private, we will only report that we have one more project in our database.</li>
+        <li>We may contact you with regards to practical issues around our tool (e.g. scheduled maintenance, request for feedback) on the
+        e-mail address you provided.</li>
+      </ul>
+    </fieldset>
+
      <button type="submit" class="btn btn-primary jumpdown"><?php echo $edit ? "Save settings" : "Create data set" ?></button>
 
     </div>

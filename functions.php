@@ -448,6 +448,8 @@ function truncate($string,$length=100,$append="&hellip;") {
   return $string;
 }
 
+// Run to get the total lines for the newsletter: git ls-files *php | xargs wc -l
+
 $version = '1.0';
 
 ?>
