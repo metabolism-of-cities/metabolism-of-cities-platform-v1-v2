@@ -25,7 +25,8 @@ $tables = $db->query("SELECT * FROM mfa_groups WHERE dataset = $project ORDER BY
 
 $info = $db->record("SELECT * FROM mfa_groups WHERE id = $id AND dataset = $project");
 
-$dataresults = $db->query("SELECT AVG(data*multiplier) AS total, mfa_data.year, mfa_data.material
+$dataresults = $db->query("SELECT AVG(data*multiplier) AS total, mfa_data.year, mfa_data.material,
+  mfa_materials.code
   FROM mfa_data
   JOIN mfa_materials ON mfa_data.material = mfa_materials.id
 WHERE mfa_materials.mfa_group = $id AND mfa_data.include_in_totals = 1
@@ -34,15 +35,50 @@ GROUP BY mfa_materials.code, mfa_data.year");
 if (count($dataresults)) {
   foreach ($dataresults as $row) {
     $data[$row['year']][$row['material']] = $row['total'];
+    $explode = explode(".", $row['code']);
+    if (is_array($explode)) {
+      unset($code);
+      foreach ($explode as $value) {
+        $code .= $code ? ".$value" : $value;
+        $total[$code][$row['year']] += $row['total'];
+      }
+    }
   }
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <?php echo $header ?>
     <title><?php echo $info->section ?>. <?php echo $info->name ?> | <?php echo SITENAME ?></title>
+    <script type="text/javascript">
+    $(function(){
+      $(".display a").click(function(e){
+        e.preventDefault();
+        var level = $(this).data("level");
+        if (level == 1) {
+          $("table tr.level1").show();
+          $("table tr.level2").hide();
+          $("table tr.level3").hide();
+          $("table tr.level4").hide();
+        } else if (level == 2) {
+          $("table tr.level1").show();
+          $("table tr.level2").show();
+          $("table tr.level3").hide();
+          $("table tr.level4").hide();
+        } else if (level == 3) {
+          $("table tr.level1").show();
+          $("table tr.level2").show();
+          $("table tr.level3").show();
+          $("table tr.level4").hide();
+        } else if (level == 'all') {
+          $("table tr").show();
+        }
+        $(".display a").removeClass('btn-primary').addClass('btn-default');
+        $(this).addClass('btn-primary').removeClass('btn-default');
+      });
+    });
+    </script>
     <style type="text/css">
     h2{font-size:23px}
     .moreinfo{opacity:0.7}
@@ -77,6 +113,13 @@ if (count($dataresults)) {
     <li class="active"><?php echo $info->section ?>. <?php echo $info->name ?></li>
   </ol>
 
+  <p class="display">
+    <a href="#" class="btn btn-default" data-level="1"><strong>1</strong> First level categories only</a>
+    <a href="#" class="btn btn-default" data-level="2"><strong>2</strong> Up to second level</a>
+    <a href="#" class="btn btn-default" data-level="3"><strong>3</strong> Up to third level</a>
+    <a href="#" class="btn btn-primary" data-level="all">Show all</a>
+  </p>
+
   <table class="table table-striped data">
     <tr>
       <th></th>
@@ -84,8 +127,8 @@ if (count($dataresults)) {
         <th><?php echo $year ?></th>
       <?php } ?>
     </tr>
-    <tr>
     <?php foreach ($list as $row) { ?>
+    <tr class="level<?php echo substr_count($row['code'], ".")+1 ?>">
       <td style="padding-left:<?php echo strlen($row['code'])*10; ?>px">
         <span class="cut"><?php echo $row['code'] ?>. <?php echo $row['name'] ?></span>
       </td>
@@ -97,6 +140,8 @@ if (count($dataresults)) {
         <td>
         <?php if (!$row['subcategories'] || $datapoint) { ?>
           <a href="<?php echo $omat_link ?>/<?php echo $project ?>/reports-data/<?php echo $year ?>/<?php echo $row['id'] ?>"><?php echo number_format($datapoint,$dataset->decimal_precision) ?></a>
+        <?php } else { ?>
+          <?php echo number_format($total[$row['code']][$year], $decimal_precision) ?>
         <?php } ?>
         </td>
       <?php } ?>

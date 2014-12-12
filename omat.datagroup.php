@@ -45,6 +45,7 @@ if ($_GET['message'] == 'deleted') {
 <?php require_once 'include.header.php'; ?>
 <?php require_once 'include.omatheader.php'; ?>
 
+  <a href="omat/<?php echo $project ?>/reports-table/<?php echo $id ?>" class="btn btn-primary pull-right">View data table</a>
   <h1>Material Group: <?php echo $info->name ?></h1>
 
   <ol class="breadcrumb">
