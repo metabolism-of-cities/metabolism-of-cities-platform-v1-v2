@@ -55,6 +55,11 @@ foreach ($names as $key => $value) {
   }
 }
 
+foreach ($total as $key => $value) {
+  if (is_int($key)) {
+    $max = max($value, $max);
+  }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -66,8 +71,20 @@ foreach ($names as $key => $value) {
     <?php } ?>
     <style type="text/css">
       #graph{height:500px}
-      .pie{height:500px;width:800px}
+      .pie{height:400px;width:400px;float:left}
     </style>
+    <script type="text/javascript">
+    $(function(){
+      $("#samesize").click(function(e){
+        e.preventDefault();
+        $(".pie").width(500);
+        $(".pie").height(400);
+        <?php foreach ($materials as $row) { ?>
+          drawChart<?php echo $row['id'] ?>();
+        <?php } ?>
+      });
+    });
+    </script>
   </head>
 
   <body>
@@ -113,32 +130,39 @@ foreach ($names as $key => $value) {
 
     <div id="chart_div" style="width: 900px; height: 500px;"></div>
 
+    <h2>Breakdown of flows</h2>
+
+    <a href="#" id="samesize" class="btn btn-default">Show all charts in the same size</a>
+
     <?php foreach ($materials as $row) { ?>
+    <?php
+      $size = $total[$row['code']]*(500/$max);
+    ?>
 
-    <script type="text/javascript">
-      google.load("visualization", "1", {packages:["corechart"]});
-      google.setOnLoadCallback(drawChart);
-      function drawChart() {
+      <script type="text/javascript">
+        google.load("visualization", "1", {packages:["corechart"]});
+        google.setOnLoadCallback(drawChart<?php echo $row['id'] ?>);
+        function drawChart<?php echo $row['id'] ?>() {
 
-        var data = google.visualization.arrayToDataTable([
-          ['Type', 'Size'],
-          <?php foreach ($names as $key => $value) { ?>
-          <?php if (substr($key, 0, 1) == $row['code']) { ?>
-          ['<?php echo $value ?>', <?php echo $total[$key] ?>],
-          <?php } } ?>
-        ]);
+          var data = google.visualization.arrayToDataTable([
+            ['Type', 'Size'],
+            <?php foreach ($names as $key => $value) { ?>
+            <?php if (substr($key, 0, 1) == $row['code']) { ?>
+            ['<?php echo $value ?>', <?php echo $total[$key] ?>],
+            <?php } } ?>
+          ]);
 
-        var options = {
-          title: 'Flow breakdown'
-        };
+          var options = {
+            title: '<?php echo $row['name'] ?>',
+            legend: 'none',
+            pieHole: 0.4
+          };
 
-        var chart = new google.visualization.PieChart(document.getElementById('piechart-<?php echo $row['code'] ?>'));
-
-        chart.draw(data, options);
-      }
-    </script>
-      <h2><?php echo $row['name'] ?></h2>
-      <div class="pie" id="piechart-<?php echo $row['code'] ?>"></div>
+          var chart = new google.visualization.PieChart(document.getElementById('piechart-<?php echo $row['code'] ?>'));
+          chart.draw(data, options);
+        }
+      </script>
+      <div class="pie" id="piechart-<?php echo $row['code'] ?>" style="width:<?php echo $size ?>px;height:<?php echo $size ?>px"></div>
     <?php } ?>
 
   <?php } else { ?>
