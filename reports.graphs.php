@@ -23,14 +23,14 @@ if ($check_info->access == "private") {
 <html lang="en">
   <head>
     <?php echo $header ?>
-    <title>Indicators | <?php echo SITENAME ?></title>
+    <title>Graphs | <?php echo SITENAME ?></title>
   </head>
 
   <body>
 
 <?php require_once 'include.header.php'; ?>
 
-  <h1>Indicators</h1>
+  <h1>Graphs</h1>
 
     <ol class="breadcrumb">
       <?php if ($public_login) { ?>

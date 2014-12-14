@@ -61,9 +61,12 @@ foreach ($names as $key => $value) {
   <head>
     <?php echo $header ?>
     <title>Graphs: <?php echo $info->section ?>. <?php echo $info->name ?> | <?php echo SITENAME ?></title>
-    <link rel="stylesheet" href="css/nv.d3.min.css" />
+    <?php if (!$singleyear) { ?>
+      <link rel="stylesheet" href="css/nv.d3.min.css" />
+    <?php } ?>
     <style type="text/css">
       #graph{height:500px}
+      .pie{height:500px;width:800px}
     </style>
   </head>
 
@@ -85,43 +88,63 @@ foreach ($names as $key => $value) {
     </ol>
 
   <?php if ($singleyear) { ?>
-  <?php
-  
-  ?>
+
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
       google.load("visualization", "1", {packages:["corechart"]});
       google.setOnLoadCallback(drawChart);
       function drawChart() {
       var data = google.visualization.arrayToDataTable([
-        [<?php foreach ($names as $key) { ?>'<?php echo $key ?>',<?php } ?>
-         { role: 'annotation' } ],
+        ['Group', 'Flow size (tons)'],
          <?php foreach ($materials as $row) { ?>
-        ['<?php echo $row['name'] ?>', <?php foreach ($names as $key => $value) { 
-          echo substr($key, 0, 1) == $row['code'] ? (float)$total[$key] : 0; ?>,<?php } ?>],
+        ['<?php echo $row['name'] ?>', <?php echo $total[$row['code']] ?>],
         <?php } ?>
       ]);
 
-      var options = {
-        width: 800,
-        height: 500,
-        legend: { position: 'none' },
-        bar: { groupWidth: '75%' },
-        isStacked: true
-      };
+        var options = {
+          title: 'Flow breakdown',
+        };
 
         var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
 
         chart.draw(data, options);
       }
     </script>
+
     <div id="chart_div" style="width: 900px; height: 500px;"></div>
+
+    <?php foreach ($materials as $row) { ?>
+
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Type', 'Size'],
+          <?php foreach ($names as $key => $value) { ?>
+          <?php if (substr($key, 0, 1) == $row['code']) { ?>
+          ['<?php echo $value ?>', <?php echo $total[$key] ?>],
+          <?php } } ?>
+        ]);
+
+        var options = {
+          title: 'Flow breakdown'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart-<?php echo $row['code'] ?>'));
+
+        chart.draw(data, options);
+      }
+    </script>
+      <h2><?php echo $row['name'] ?></h2>
+      <div class="pie" id="piechart-<?php echo $row['code'] ?>"></div>
+    <?php } ?>
 
   <?php } else { ?>
   <div>
     <svg id="graph"></svg>
   </div>
-
 
   <script src="js/d3.v3.min.js"></script>
   <script src="js/nvd3/nv.d3.min.js"></script>
