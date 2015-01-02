@@ -61,11 +61,11 @@ $id = (int)$_GET['id'];
 
   <h2><?php echo $info->name ?></h2>
 
-  <?php echo $info->description_general ?>
+  <?php echo html($info->description_general) ?>
 
   <?php if ($info->description_companies) { ?>
     <h3>Companies</h3>
-    <p><?php echo $info->dsecription_companies ?></p>
+    <p><?php echo html($info->description_companies) ?></p>
   <?php } ?>
 
   <?php if (count($contacts)) { ?>

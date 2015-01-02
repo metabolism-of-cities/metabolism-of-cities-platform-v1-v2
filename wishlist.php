@@ -85,6 +85,9 @@ $page = 4;
         references and contains a long list of urban and urban-region MFA
         studies that have been undertaken. 
       </li>
+      <li>The <a href="http://cml.leiden.edu/publications/publications-ie-00-04s.html">list of publications</a> by the
+      <a href="http://cml.leiden.edu/organisation/">Institute of Environmental Sciences (CML)</a> at Leiden University
+      </li>
     </ul>
   </li>
   </ul>

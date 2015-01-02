@@ -24,9 +24,9 @@ if ($_POST) {
     'indicator_environment' => (int)$_POST['indicator_environment'],
     'indicator_companies' => (int)$_POST['indicator_companies'],
     'indicator_illegality' => (int)$_POST['indicator_illegality'],
-    'description_companies' => html($_POST['description_companies']),
-    'description_illegality' => html($_POST['description_illegality']),
-    'description_associations' => html($_POST['description_associations']),
+    'description_companies' => mysql_clean($_POST['description_companies']),
+    'description_illegality' => mysql_clean($_POST['description_illegality']),
+    'description_associations' => mysql_clean($_POST['description_associations']),
     'description_general' => mysql_clean($_POST['description_general']),
   );
   if ($id) {
@@ -77,7 +77,12 @@ foreach ($scores as $row) {
   <head>
     <?php echo $header ?>
     <title><?php echo $info->name ? $info->name : "Add Industry"; ?> | <?php echo SITENAME ?></title>
-    <script type="text/javascript" src="js/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="js/autosize.js"></script>
+    <script type="text/javascript">
+    $(function(){
+      $("textarea").autosize();
+    });
+    </script>
     <style type="text/css">
     .table{border-bottom:1px solid #ccc}
     </style>
@@ -108,12 +113,7 @@ foreach ($scores as $row) {
     <div class="form-group">
       <label class="col-sm-2 control-label">Description</label>
       <div class="col-sm-10">
-        <textarea id="description" rows="10" cols="80" class="form-control" name="description_general"><?php echo br2nl($info->description_general) ?></textarea>
-            <script>
-                // Replace the <textarea id="editor1"> with a CKEditor
-                // instance, using default configuration.
-                CKEDITOR.replace('description');
-            </script>
+        <textarea class="form-control" name="description_general"><?php echo br2nl($info->description_general) ?></textarea>
       </div>
     </div>
 
