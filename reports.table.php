@@ -8,6 +8,10 @@ $section = 6;
 $load_menu = 3;
 $sub_page = 3;
 
+$values_only = (int)$_GET['values-only'];
+if ($values_only) {
+  $_GET['id'] = $values_only;
+}
 $id = (int)$_GET['id'];
 $dataset = $db->record("SELECT * FROM mfa_dataset WHERE id = $project");
 
@@ -98,6 +102,11 @@ if (count($dataresults)) {
 
 <?php require_once 'include.header.php'; ?>
 
+  <a href="omat/<?php echo $project ?>/reports-table/<?php echo $id ?><?php echo $values_only ? '' : '/values-only'; ?>"
+  class="btn btn-<?php echo $values_only ? 'info' : 'default'; ?> pull-right">
+    Hide zero values
+  </a>
+
   <h1>
     <?php echo $info->section ?>.
     <?php echo $info->name ?>
@@ -127,8 +136,9 @@ if (count($dataresults)) {
         <th><?php echo $year ?></th>
       <?php } ?>
     </tr>
-    <?php foreach ($list as $row) { ?>
-    <tr class="level<?php echo substr_count($row['code'], ".")+1 ?>">
+    <?php $count = 0; ?>
+    <?php foreach ($list as $row) { $count++; $all_zero = true; ?>
+    <tr class="level<?php echo substr_count($row['code'], ".")+1 ?>" id="row<?php echo $count ?>">
       <td style="padding-left:<?php echo strlen($row['code'])*10; ?>px">
         <span class="cut"><?php echo $row['code'] ?>. <?php echo $row['name'] ?></span>
       </td>
@@ -139,12 +149,17 @@ if (count($dataresults)) {
       ?>
         <td>
         <?php if (!$row['subcategories'] || $datapoint) { ?>
-          <a href="<?php echo $omat_link ?>/<?php echo $project ?>/reports-data/<?php echo $year ?>/<?php echo $row['id'] ?>"><?php echo number_format($datapoint,$dataset->decimal_precision) ?></a>
+          <a href="<?php echo $omat_link ?>/<?php echo $project ?>/reports-data/<?php echo $year ?>/<?php echo $row['id'] ?>">
+            <?php echo number_format($datapoint,$dataset->decimal_precision); ?>
+            <?php if ($datapoint > 0) { $all_zero = false; } ?>
+          </a>
         <?php } else { ?>
           <?php echo number_format($total[$row['code']][$year], $decimal_precision) ?>
+            <?php if ($total[$row['code']][$year] > 0) { $all_zero = false; } ?>
         <?php } ?>
         </td>
       <?php } ?>
+      <?php if ($all_zero && $values_only) { $hiderow[] = $count; } ?>
       </tr>
     <?php } ?>
 
@@ -179,6 +194,16 @@ if (count($dataresults)) {
       </ul>
     </div>
   </div>
+  <?php if ($values_only && $hiderow) { ?>
+  <script type="text/javascript">
+  $(function(){
+    
+  <?php foreach ($hiderow as $value) { ?>
+    $("#row<?php echo $value ?>").hide();
+  <?php } ?>
+  });
+  </script>
+  <?php } ?>
 
 <?php require_once 'include.footer.php'; ?>
 

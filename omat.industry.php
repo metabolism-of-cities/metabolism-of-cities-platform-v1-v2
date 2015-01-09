@@ -24,10 +24,10 @@ if ($_POST) {
     'indicator_environment' => (int)$_POST['indicator_environment'],
     'indicator_companies' => (int)$_POST['indicator_companies'],
     'indicator_illegality' => (int)$_POST['indicator_illegality'],
-    'description_companies' => mysql_clean($_POST['description_companies']),
-    'description_illegality' => mysql_clean($_POST['description_illegality']),
-    'description_associations' => mysql_clean($_POST['description_associations']),
-    'description_general' => mysql_clean($_POST['description_general']),
+    'description_companies' => $_POST['description_companies'],
+    'description_illegality' => $_POST['description_illegality'],
+    'description_associations' => $_POST['description_associations'],
+    'description_general' => $_POST['description_general'],
   );
   if ($id) {
     $db->update("mfa_industries",$post,"id = $id");
@@ -113,7 +113,7 @@ foreach ($scores as $row) {
     <div class="form-group">
       <label class="col-sm-2 control-label">Description</label>
       <div class="col-sm-10">
-        <textarea class="form-control" name="description_general"><?php echo br2nl($info->description_general) ?></textarea>
+        <textarea class="form-control" name="description_general"><?php echo $info->description_general ?></textarea>
       </div>
     </div>
 
