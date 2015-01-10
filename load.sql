@@ -1029,3 +1029,15 @@ CREATE TABLE `mfa_sankey_nodes` (
   `weight` int unsigned NOT NULL,
   FOREIGN KEY (`sankey`) REFERENCES `mfa_sankey` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) COMMENT=''; -- 0.412 s
+
+CREATE TABLE `mfa_population` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `year` year NOT NULL,
+  `dataset` int(10) unsigned NOT NULL,
+  `population` int unsigned NOT NULL,
+  FOREIGN KEY (`dataset`) REFERENCES `mfa_dataset` (`id`)
+) COMMENT='' ENGINE='InnoDB'; -- 0.575 s
+
+ALTER TABLE `mfa_population`
+DROP FOREIGN KEY `mfa_population_ibfk_1`,
+ADD FOREIGN KEY (`dataset`) REFERENCES `mfa_dataset` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.583 s

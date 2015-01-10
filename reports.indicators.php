@@ -34,6 +34,10 @@ ORDER BY i.id");
 
 <?php require_once 'include.header.php'; ?>
 
+  <a href="omat/<?php echo $project ?>/indicator-list" class="btn btn-primary pull-right">
+    View all
+  </a>
+
   <h1>Indicators</h1>
 
   <ol class="breadcrumb">

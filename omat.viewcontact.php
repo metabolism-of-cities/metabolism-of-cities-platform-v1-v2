@@ -14,6 +14,10 @@ FROM mfa_contacts c
   JOIN mfa_status_options o ON c.status = o.id
 WHERE c.id = $id AND c.dataset = $project");
 
+if (!$info) {
+  die("Contact not found");
+}
+
 if ($_GET['activity-deleted']) {
   $print = "Activity has been deleted";
 }

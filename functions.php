@@ -432,7 +432,7 @@ function formatTime($time, $minhour = false)
 	}
 	elseif ($time == 0) { $return = "0:00"; } 
 	elseif ($time < 10) { $return = (int)$time . " min"; }
-	else { $return = $time . " min"; }
+	else { $return = (int)$time . " min"; }
 	return $return;
 }
 

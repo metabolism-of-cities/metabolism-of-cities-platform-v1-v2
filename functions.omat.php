@@ -86,6 +86,7 @@ $omat_menu = array(
       5 => array('label' => 'Filter Contacts', 'url' => "omat/$project/filters/contacts", 'icon' => 'user'),
       3 => array('label' => 'Filter Sources', 'url' => "omat/$project/filters/sources", 'icon' => 'link'),
       4 => array('label' => 'Files', 'url' => "omat/$project/files", 'icon' => 'file-pdf-o'),
+      8 => array('label' => 'Population', 'url' => "omat/$project/population", 'icon' => 'users'),
       6 => array('label' => 'Industries', 'url' => "omat/$project/industries", 'icon' => 'cogs'),
       7 => array('label' => 'Sankey Diagrams', 'url' => "omat/$project/sankeys", 'icon' => 'yelp'),
     ),

@@ -61,16 +61,16 @@ $types = $db->query("SELECT * FROM mfa_activities WHERE dataset = $project ORDER
       google.setOnLoadCallback(drawChart);
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
-          ['Type', 'Minutes spent'],
+          ['Type', 'Time spent (hours)'],
         <?php foreach ($total as $key => $value) { ?>
-          ['<?php echo $key ?>',  <?php echo $value ?>],
+          ['<?php echo $key ?>',  <?php echo $value/60 ?>],
         <?php } ?>
         ]);
 
         var options = {
           chart: {
             title: 'Time spent on different activities',
-            subtitle: 'Time shown in number of minutes',
+            subtitle: 'Time shown in number of hours',
           },
           bars: 'horizontal' // Required for Material Bar Charts.
         };
@@ -88,14 +88,14 @@ $types = $db->query("SELECT * FROM mfa_activities WHERE dataset = $project ORDER
         var data = google.visualization.arrayToDataTable([
           ['Type', <?php foreach ($activitylist as $subkey => $subvalue) { echo "'$subkey',"; } ?> { role: 'annotation'} ],
         <?php foreach ($total as $key => $value) { ?>
-          ['<?php echo $key ?>',  <?php foreach ($activitylist as $subkey => $subvalue) { ?><?php echo (float)$value[$subkey] ?>,<?php } ?> ''],
+          ['<?php echo $key ?>',  <?php foreach ($activitylist as $subkey => $subvalue) { ?><?php echo (float)$value[$subkey]/60 ?>,<?php } ?> ''],
         <?php } ?>
         ]);
 
         var options = {
           chart: {
             title: 'Breakdown of time spent',
-            subtitle: 'Shown by week',
+            subtitle: 'Hours per week',
           },
           stacked: true,
           bars: 'horizontal' // Required for Material Bar Charts.
