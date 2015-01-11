@@ -152,3 +152,9 @@ table.ellipsis {
   font-weight:bold;
   color:#333;
 }
+.showlatex {
+  display:none;
+}
+.latex {
+  cursor:pointer;
+}

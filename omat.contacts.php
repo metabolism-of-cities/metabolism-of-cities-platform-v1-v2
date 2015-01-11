@@ -39,21 +39,11 @@ if ($subgroup) {
       $allowed_contacts[$key] = true;
     }
   }
-}
-
-function findFirstParent($id, $original = false) {
-  global $parent, $mainparent, $firstparents;
-  if (!$original) {
-    $original = $id;
-  }
-  if (!$id) {
-    return false;
-  }
-  if ($mainparent[$id]) {
-    $firstparents[$original] = $id;
-  } else {
-    findFirstParent($parent[$id], $original);
-  }
+  $subgroupnames = array(
+    329 => 'Province',
+    336 => 'Academia',
+    330 => 'City',
+  );
 }
 
 function makeTree($id, $belongs_to) {
@@ -332,10 +322,10 @@ $fullwidth = 600;
       </tr>
       <?php foreach ($totalactivitytime as $key => $value) { ?>
         <tr>
-          <td><?php echo $activityname[$key] ?></td>
+          <td><a href="omat/<?php echo $project ?>/reports-activities/<?php echo $key ?>/<?php echo $subgroup ?>"><?php echo $activityname[$key] ?></a></td>
           <td><?php echo formatTime($value) ?></td>
           <td><?php echo $totalactivitycount[$key] ?></td>
-          <td><?php $avg = (int)$value/$totalactivitycount[$key]; echo formatTime($avg) ?></td>
+          <td><?php $avg[$key] = (int)$value/$totalactivitycount[$key]; echo formatTime($avg[$key]) ?></td>
         </tr>
       <?php } ?>
     </table>
@@ -355,12 +345,16 @@ $fullwidth = 600;
       22 => 'Admin',
     );
   ?>
-    <h2>Vim commands</h2>
+    <h2>LaTeX commands</h2>
     <pre><?php foreach ($totalactivitytime as $key => $value) { 
+      $type = $subgroupnames[$subgroup];
 ?>
 \newcommand{\time<?php echo $type ?><?php echo $names[$key] ?>}{<?php echo formatTime($value) ?>}
 \newcommand{\count<?php echo $type ?><?php echo $names[$key] ?>}{<?php echo $totalactivitycount[$key] ?>}
+\newcommand{\average<?php echo $type ?><?php echo $names[$key] ?>}{<?php echo formatTime($avg[$key]) ?>}
 <?php } ?>
+\newcommand{\contacts}{<?php echo count($totalcontacts) ?>}
+\newcommand{\sources}{<?php echo count($totalsources) ?>}
     </pre>
   <?php } ?>
 

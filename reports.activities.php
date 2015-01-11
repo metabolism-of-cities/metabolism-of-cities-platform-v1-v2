@@ -10,13 +10,41 @@ if ($_GET['type']) {
   $sql .= " AND l.activity = $type";
 }
 
+$subgroup = (int)$_GET['subgroup'];
+if ($subgroup) {
+  // A particular subgroup of contacts has been selected. We need to make sure we only
+  // include activities from this subgroup and everything that falls under this subgroup
+
+  $list = $db->query("SELECT * FROM mfa_contacts WHERE dataset = $project");
+
+  foreach ($list as $row) {
+    if ($row['belongs_to']) {
+      $parent[$row['id']] = $row['belongs_to'];
+    } else {
+      $mainparent[$row['id']] = true;
+    }
+  }
+  $all_contacts = $db->query("SELECT id, belongs_to FROM mfa_contacts WHERE dataset = $project");
+  foreach ($all_contacts as $row) {
+    findFirstParent($row['id']);
+    // This will create an array ($firstparents) that holds the highest level parent for each contact
+  }
+  foreach ($firstparents as $key => $value) {
+    if ($value == $subgroup) {
+      $allowed_contacts[$key] = true;
+    }
+  }
+  $getname = $db->record("SELECT name FROM mfa_contacts WHERE id = $subgroup AND dataset = $project");
+  $subgroupname = $getname->name;
+}
+
 if ($_GET['show'] == 'calendar') {
   $show = 'calendar';
 } elseif ($_GET['show'] == 'graph') {
   $show = 'graph';
 }
 
-$list = $db->query("SELECT l.*, a.name AS activity_name,
+$list = $db->query("SELECT l.*, a.name AS activity_name, mfa_sources.belongs_to,
   mfa_sources.name AS source_name,
   mfa_contacts.name AS contact_name
 FROM mfa_activities_log l 
@@ -24,6 +52,21 @@ FROM mfa_activities_log l
   LEFT JOIN mfa_sources ON l.source = mfa_sources.id
   LEFT JOIN mfa_contacts ON l.contact = mfa_contacts.id
 WHERE a.dataset = $project $sql ORDER BY l.end");
+
+if ($subgroup) {
+  foreach ($list as $key => $row) {
+    $include_in_totals = true;
+    if ($row['contact'] && !$allowed_contacts[$row['contact']]) {
+      $include_in_totals = false;
+    }
+    if ($row['source'] && !$allowed_contacts[$row['belongs_to']]) {
+      $include_in_totals = false;
+    }
+    if (!$include_in_totals) {
+      unset($list[$key]);
+    }
+  }
+}
 
 if ($show == 'graph') {
   foreach ($list as $row) {
@@ -141,21 +184,28 @@ $types = $db->query("SELECT * FROM mfa_activities WHERE dataset = $project ORDER
 
   <div class="alert alert-info">
     <?php echo count($list) ?> records found.
+    <?php if ($subgroup) { ?>
+    Subgroup: <?php echo $subgroupname ?>
+    <?php } ?>
   </div>
+
+  <?php if ($subgroup) { ?>
+
+  <?php } ?>
 
   <ul class="nav nav-tabs">
     <li class="<?php echo !$show ? 'active' : 'n'; ?>">
-      <a href="reports.activities.php?type=<?php echo $type ?>&amp;project=<?php echo $project ?>">
+      <a href="reports.activities.php?type=<?php echo $type ?>&amp;project=<?php echo $project ?>&amp;subgroup=<?php echo $subgroup ?>">
         Table
       </a>
     </li>
     <li class="<?php echo $show == 'calendar' ? 'active' : 'n'; ?>">
-      <a href="reports.activities.php?type=<?php echo $type ?>&amp;project=<?php echo $project ?>&amp;show=calendar">
+      <a href="reports.activities.php?type=<?php echo $type ?>&amp;project=<?php echo $project ?>&amp;show=calendar&amp;subgroup=<?php echo $subgroup ?>">
         Calendar Graph
       </a>
     </li>
     <li class="<?php echo $show == 'graph' ? 'active' : 'n'; ?>">
-      <a href="reports.activities.php?type=<?php echo $type ?>&amp;project=<?php echo $project ?>&amp;show=graph">
+      <a href="reports.activities.php?type=<?php echo $type ?>&amp;project=<?php echo $project ?>&amp;show=graph&amp;subgroup=<?php echo $subgroup ?>">
         Time Graph
       </a>
     </li>

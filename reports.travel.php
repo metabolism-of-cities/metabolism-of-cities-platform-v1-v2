@@ -39,6 +39,13 @@ $types = $db->query("SELECT * FROM mfa_transportation_modes ORDER BY name");
     <style type="text/css">
     select.form-control{width:120px;display:inline}
     </style>
+    <script type="text/javascript">
+    $(function(){
+      $(".latex").click(function(){
+        $(".showlatex").toggle('fast');
+      });
+    });
+    </script>
   </head>
 
   <body>
@@ -91,6 +98,10 @@ $types = $db->query("SELECT * FROM mfa_transportation_modes ORDER BY name");
       <th>Cost</th>
     </tr>
     <?php foreach ($list as $row) { ?>
+    <?php
+      $totaldistance[$row['mode']] += $row['distance'];
+      $totaltime[$row['mode']] += $row['time'];
+    ?>
     <tr>
       <td><a href="omat/<?php echo $project ?>/viewactivity/<?php echo $row['id'] ?>"><?php echo $row['id'] ?></a></td>
       <td>
@@ -115,6 +126,53 @@ $types = $db->query("SELECT * FROM mfa_transportation_modes ORDER BY name");
     <th><?php echo number_format($cost,2) ?></th>
   </tr>
   </table>
+
+  <h2>Summary</h2>
+
+  <table class="table table-striped">
+    <tr>
+      <th>Mode</th>
+      <th>Total distance</th>
+      <th>Total time</th>
+      <th>Average speed</th>
+    </tr>
+    <?php foreach ($totaldistance as $key => $value) { ?>
+      <tr>
+        <td><?php echo $key ?></td>
+        <td><?php echo $value ?></td>
+        <td><?php echo formatTime($totaltime[$key]) ?></td>
+        <td><?php echo number_format($value/$totaltime[$key]*60,1) ?> km/h</td>
+      </tr>
+    <?php } ?>
+  </table>
+
+  <p><img src="img/tex.jpg" class="latex" title="Show this table in LaTeX, ready to copy and paste" alt="" /></p>
+
+  <pre class="showlatex">
+  
+\begin{figure*}
+  \centering
+  \rowcolors{1}{white}{lightgrey}
+  \begin{tabularx}{25cm}{llll}
+  \arrayrulecolor{darkgrey}\hline
+  \hline
+    \textbf{\textcolor{darkgrey}{Mode}} &amp;
+    \textbf{\textcolor{darkgrey}{Total distance}} &amp;
+    \textbf{\textcolor{darkgrey}{Total time}} &amp; 
+    \textbf{\textcolor{darkgrey}{Average speed}} \\
+    \hline
+    <?php foreach ($totaldistance as $key => $value) { ?>
+     <?php echo $key ?> &amp;
+     <?php echo $value ?> &amp;
+     <?php echo formatTime($totaltime[$key]) ?> &amp;
+     <?php echo number_format($value/$totaltime[$key]*60,1) ?> km/h \\
+    <?php } ?>
+  \bottomrule
+  \end{tabularx}
+  \caption{Transportation distance and time}
+\end{figure*}
+
+  </div>
 
   <?php } ?>
 

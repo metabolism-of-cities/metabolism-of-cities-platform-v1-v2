@@ -170,4 +170,19 @@ function timeContact($id) {
   return $time->time + $time_sources->time;
 }
 
+function findFirstParent($id, $original = false) {
+  global $parent, $mainparent, $firstparents;
+  if (!$original) {
+    $original = $id;
+  }
+  if (!$id) {
+    return false;
+  }
+  if ($mainparent[$id]) {
+    $firstparents[$original] = $id;
+  } else {
+    findFirstParent($parent[$id], $original);
+  }
+}
+
 ?>
