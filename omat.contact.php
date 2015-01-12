@@ -51,6 +51,12 @@ $organizations = $db->query("SELECT id,name FROM mfa_contacts WHERE dataset = $p
   <head>
     <?php echo $header ?>
     <title><?php if ($id) { echo $info->name . " | "; } ?> Contacts | <?php echo SITENAME ?></title>
+    <script type="text/javascript" src="js/autosize.js"></script>
+    <script type="text/javascript">
+    $(function(){
+      $("textarea").autosize();
+    });
+    </script>
   </head>
 
   <body>

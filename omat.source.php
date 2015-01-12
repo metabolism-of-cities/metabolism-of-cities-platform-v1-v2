@@ -43,8 +43,10 @@ $organizations = $db->query("SELECT id,name FROM mfa_contacts WHERE dataset = $p
   <head>
     <?php echo $header ?>
     <title>Sources | <?php echo SITENAME ?></title>
+    <script type="text/javascript" src="js/autosize.js"></script>
     <script type="text/javascript">
     $(function(){
+      $("textarea").autosize();
       $("input[name='organization']").change(function(){
         if ($("input[name='organization']").is(":checked")) {
           $("#employer").slideUp('fast');

@@ -43,6 +43,8 @@ if ($subgroup) {
     329 => 'Province',
     336 => 'Academia',
     330 => 'City',
+    334 => 'Gov',
+    335 => 'Private',
   );
 }
 
@@ -201,6 +203,9 @@ $fullwidth = 600;
       <?php if ($_GET['subgroup']) { ?>
         $("#secondlevel").click();
       <?php } ?>
+        $(".latex").click(function(){
+          $(".showlatex").toggle('fast');
+        });
     });
     </script>
     <style type="text/css">
@@ -211,15 +216,18 @@ $fullwidth = 600;
       <?php } ?>
       .btn-success{margin-left:5px}
       .well h2 { margin-top:0;font-size:19px}
-      .activityname{display:inline-block;width:120px;overflow:hidden;height:1.2em}
+      .activityname{display:inline-block;width:100px;overflow:hidden;height:1.3em;text-align:right;padding-right:5px}
       .showbar {
         display:inline-block;
         margin:0 10px;
         background:#CF4803;
         border:1px solid #ccc;
-        height:1em;
+        height:1.2em;
       }
-      .well table{margin-top:30px}
+      .well table{margin-top:30px;display:none}
+      .activitybars{list-style:none;margin-top:20px}
+      .totalblock{list-style:none;margin-left:115px}
+      .totalblock li{display:inline-block;margin-right:30px}
     </style>
   </head>
 
@@ -286,10 +294,8 @@ $fullwidth = 600;
 
   <?php if ($overall_total) { ?>
   <div class="well">
-    <h2>
-      Totals 
-    </h2>
-    <ul>
+    <h2 class="hide">Totals</h2>
+    <ul class="totalblock">
       <li>
         <strong>Time</strong>
         <i class="fa fa-clock-o"></i> <?php echo formatTime($overall_total) ?>
@@ -298,8 +304,7 @@ $fullwidth = 600;
       <li><strong>Sources</strong>: <?php echo count($totalsources) ?></li>
     </ul>
 
-
-    <ul>
+    <ul class="activitybars">
     <?php foreach ($totalactivitytime as $key => $value) { ?>
       <li>
         <span class="activityname">
@@ -344,17 +349,40 @@ $fullwidth = 600;
       21 => 'Reading',
       22 => 'Admin',
     );
+    $type = $subgroupnames[$subgroup];
   ?>
-    <h2>LaTeX commands</h2>
-    <pre><?php foreach ($totalactivitytime as $key => $value) { 
-      $type = $subgroupnames[$subgroup];
+  <p><img src="img/tex.jpg" class="latex" title="Show this table in LaTeX, ready to copy and paste" alt="" /></p>
+
+  <pre class="showlatex">
+  
+\begin{figure}[H]
+  \centering
+  \rowcolors{1}{white}{lightgrey}
+  \begin{tabularx}{10cm}{llll}
+  \arrayrulecolor{darkgrey}\hline
+  \hline
+    \textbf{\textcolor{darkgrey}{Activity}} &amp;
+    \textbf{\textcolor{darkgrey}{Time}} &amp;
+    \textbf{\textcolor{darkgrey}{Quantity}} &amp; 
+    \textbf{\textcolor{darkgrey}{Average time}} \\
+    \hline
+      <?php foreach ($totalactivitytime as $key => $value) { ?>
+        <?php echo $activityname[$key] ?> &amp; <?php echo formatTime($value) ?> &amp; <?php echo $totalactivitycount[$key] ?> &amp; <?php echo formatTime($avg[$key]) ?> \\
+      <?php } ?>
+  \bottomrule
+  \end{tabularx}
+  \caption{Breakdown of activities}
+\end{figure}
+
+\newcommand{\time<?php echo $type ?>}{<?php echo formatTime($overall_total) ?>}
+<?php foreach ($totalactivitytime as $key => $value) { 
 ?>
 \newcommand{\time<?php echo $type ?><?php echo $names[$key] ?>}{<?php echo formatTime($value) ?>}
 \newcommand{\count<?php echo $type ?><?php echo $names[$key] ?>}{<?php echo $totalactivitycount[$key] ?>}
 \newcommand{\average<?php echo $type ?><?php echo $names[$key] ?>}{<?php echo formatTime($avg[$key]) ?>}
 <?php } ?>
-\newcommand{\contacts}{<?php echo count($totalcontacts) ?>}
-\newcommand{\sources}{<?php echo count($totalsources) ?>}
+\newcommand{\contacts<?php echo $type ?>}{<?php echo count($totalcontacts) ?>}
+\newcommand{\sources<?php echo $type ?>}{<?php echo count($totalsources) ?>}
     </pre>
   <?php } ?>
 

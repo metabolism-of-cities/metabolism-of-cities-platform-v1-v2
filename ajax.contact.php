@@ -103,10 +103,14 @@ if ($_POST['action'] == 'addactivity') {
     "<a class='list-group-item active' href='omat/{$project}/viewactivity/{$id}'>
     $icon
     {$getname->name} ($min)</a>";
-} elseif ($_POST['specialty']) {
-  $specialty = (int)$_POST['specialty'];
+} elseif ($_POST['flag']) {
+  $flag = (int)$_POST['flag'];
   $id = (int)$_POST['id'];
-  $db->query("UPDATE mfa_sources SET specialty = $specialty WHERE id = $id AND dataset = $project");
+  $post = array(
+    'contact' => $id,
+    'flag' => $flag,
+  );
+  $db->insert("mfa_contacts_flags",$post);
   $data['response'] = 'OK';
 } elseif ($_POST['belongs_to']) {
   $belongs_to = (int)$_POST['belongs_to'];

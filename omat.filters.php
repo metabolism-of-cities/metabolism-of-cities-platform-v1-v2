@@ -120,15 +120,18 @@ if ($page == "contacts") {
     </style>
     <script type="text/javascript">
     $(function(){
-      $(".specialty").change(function(e){
+      $(".flag").click(function(e){
         var id = $(this).data("id");
+        var flag = $(this).data("flag");
+        var button = $(this);
         $.post("ajax.contact.php?project=<?php echo $project ?>",{
           id: id,
-          specialty: $(this).val(),
+          flag: flag,
           dataType: "json"
         }, function(data) {
           if (data.response == "OK") {
             $(".message").html("#"+id+" - Information was saved").show().addClass("btn-success").removeClass("btn-danger");
+            button.addClass('btn-success');
           } else {
             $(".message").html("There was an error. The information could be saved.").addClass("btn-danger").show().removeClass("btn-succes");
           }
@@ -316,13 +319,6 @@ if ($page == "contacts") {
         <?php if ($edit) { ?>
           <td>
             
-            <select class="form-control specialty hide" data-id="<?php echo $row['id'] ?>">
-              <option></option>
-              <?php foreach ($specialties as $key => $value) { ?>
-                <option <?php echo $key == $row['specialty'] ? 'selected' : ''; ?> value="<?php echo $key ?>"><?php echo $value ?></option>
-              <?php } ?>
-            </select>
-
             <select class="form-control belongs_to" data-id="<?php echo $row['id'] ?>">
               <option></option>
               <?php foreach ($organizations as $subrow) { ?>
@@ -331,7 +327,11 @@ if ($page == "contacts") {
             </select>
 
             <?php foreach ($flags as $flagrow) { ?>
-              <a class="btn btn-<?php echo $flag_active[$row['id']][$flagrow['id']] ? 'success' : 'default'; ?>"><?php echo $flagrow['name'] ?></a>
+              <a class="flag btn btn-<?php echo $flag_active[$row['id']][$flagrow['id']] ? 'success' : 'default'; ?>" 
+                data-flag="<?php echo $flagrow['id'] ?>" 
+                data-id="<?php echo $row['id'] ?>"> 
+                <?php echo $flagrow['name'] ?>
+              </a>
             <?php } ?>
               
           </td>

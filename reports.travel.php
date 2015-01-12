@@ -101,6 +101,7 @@ $types = $db->query("SELECT * FROM mfa_transportation_modes ORDER BY name");
     <?php
       $totaldistance[$row['mode']] += $row['distance'];
       $totaltime[$row['mode']] += $row['time'];
+      $numberoftrips[$row['mode']]++;
     ?>
     <tr>
       <td><a href="omat/<?php echo $project ?>/viewactivity/<?php echo $row['id'] ?>"><?php echo $row['id'] ?></a></td>
@@ -135,6 +136,7 @@ $types = $db->query("SELECT * FROM mfa_transportation_modes ORDER BY name");
       <th>Total distance</th>
       <th>Total time</th>
       <th>Average speed</th>
+      <th>Number of journeys</th>
     </tr>
     <?php foreach ($totaldistance as $key => $value) { ?>
       <tr>
@@ -142,6 +144,7 @@ $types = $db->query("SELECT * FROM mfa_transportation_modes ORDER BY name");
         <td><?php echo $value ?></td>
         <td><?php echo formatTime($totaltime[$key]) ?></td>
         <td><?php echo number_format($value/$totaltime[$key]*60,1) ?> km/h</td>
+        <td><?php echo $numberoftrips[$key] ?></td>
       </tr>
     <?php } ?>
   </table>
@@ -150,29 +153,27 @@ $types = $db->query("SELECT * FROM mfa_transportation_modes ORDER BY name");
 
   <pre class="showlatex">
   
-\begin{figure*}
+\begin{figure}
   \centering
   \rowcolors{1}{white}{lightgrey}
-  \begin{tabularx}{25cm}{llll}
+  \begin{tabularx}{10cm}{lllll}
   \arrayrulecolor{darkgrey}\hline
   \hline
     \textbf{\textcolor{darkgrey}{Mode}} &amp;
     \textbf{\textcolor{darkgrey}{Total distance}} &amp;
     \textbf{\textcolor{darkgrey}{Total time}} &amp; 
-    \textbf{\textcolor{darkgrey}{Average speed}} \\
+    \textbf{\textcolor{darkgrey}{Average speed}} &amp; 
+    \textbf{\textcolor{darkgrey}{Number of journeys}} \\
     \hline
     <?php foreach ($totaldistance as $key => $value) { ?>
-     <?php echo $key ?> &amp;
-     <?php echo $value ?> &amp;
-     <?php echo formatTime($totaltime[$key]) ?> &amp;
-     <?php echo number_format($value/$totaltime[$key]*60,1) ?> km/h \\
+     <?php echo $key ?> &amp; <?php echo number_format($value,1) ?> km &amp; <?php echo formatTime($totaltime[$key]) ?> &amp; <?php echo number_format($value/$totaltime[$key]*60,1) ?> km/h &amp; <?php echo $numberoftrips[$key] ?> \\
     <?php } ?>
   \bottomrule
   \end{tabularx}
   \caption{Transportation distance and time}
-\end{figure*}
+\end{figure}
 
-  </div>
+  </pre>
 
   <?php } ?>
 
