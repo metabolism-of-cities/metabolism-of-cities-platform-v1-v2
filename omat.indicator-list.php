@@ -20,7 +20,8 @@ $list = $db->query("SELECT f.*, mfa_indicators.name, mfa_indicators.id
 FROM mfa_indicators_formula f
   JOIN mfa_indicators ON f.indicator = mfa_indicators.id
   JOIN mfa_groups ON f.mfa_group = mfa_groups.id
-WHERE mfa_groups.dataset = $project");
+WHERE mfa_groups.dataset = $project ORDER BY mfa_indicators.type,
+mfa_indicators.id");
 
 $population_list = $db->query("SELECT * FROM mfa_population WHERE dataset = $id");
 

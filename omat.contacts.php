@@ -123,8 +123,8 @@ if ($check->time_log && is_array($parent)) {
         foreach ($all[$row['belongs_to']] as $key => $value) {
           $totaltime[$value] += $row['time'];
         }
-        $totaltime[$row['belongs_to']] += $row['time'];
       }
+      $totaltime[$row['belongs_to']] += $row['time'];
       $totaltime_source[$row['source']] += $row['time'];
     }
   }
@@ -282,7 +282,7 @@ $fullwidth = 600;
             <?php echo $value ?>
           </a>
           <span class="time">
-             <i class="fa fa-clock-o"></i> <?php echo formatTime($totaltime_source[$key]) ?>
+             <i class="fa fa-clock-o"></i> <?php echo formatTime($totaltime_source[$key]); $overall_total += $totaltime_source[$key]; ?>
            </span>
         </li>
       <?php } ?>
@@ -291,6 +291,7 @@ $fullwidth = 600;
       <?php } ?>
     </ul>
   <?php } ?>
+
 
   <?php if ($overall_total) { ?>
   <div class="well">

@@ -191,7 +191,7 @@ $remove_dashes = array("-" => "");
     <dd><?php echo $info->doi ?></dd>
   <?php } ?>
 
-  <?php if ($info->open_access || $info->abstract_status == "author_approved" || $info->abstract_status == "journal_approved" || $info->abstract_status == "open_access" || $info->abstract_status == "toc_only" || $admin_mode) { ?>
+  <?php if ($info->open_access || $info->abstract_status == "author_approved" ||   $info->abstract_status == "journal_approved" || $info->abstract_status == "open_access" || $info->abstract_status == "toc_only" || $admin_mode || true) { ?>
     <dt>Abstract</dt>
     <dd><?php echo $info->abstract ?></dd>
   <?php } ?>
