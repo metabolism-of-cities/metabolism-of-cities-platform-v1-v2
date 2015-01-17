@@ -94,12 +94,16 @@ if (LOCAL) {
   $menu[5]['menu'][99] = array('label' => 'Regional MFAs', 'url' => 'page/casestudy');
 }
 
-function mailadmins($message, $subject, $from = false) {
+function mailadmins($message, $subject, $from = false, $html = false) {
   $message = utf8_decode($message);
   $from = $from ? $from : "noreply@mfa-tools.net";
   $headers = 'From: MFA Tools<noreply@mfa-tools.net>' . "\r\n" .
       'Reply-To: ' . $from . "\r\n" .
       'X-Mailer: PHP/' . phpversion();
+  if ($html) {
+    $headers .= "MIME-Version: 1.0\r\n";
+    $headers .= "Content-Type: text/html; charset=utf-8\r\n";
+  }
   mail(WEBMASTER_MAIL, $subject, $message, $headers);
   if (LOCAL) {
     echo '<pre>' . $message . '</pre>';
@@ -108,7 +112,7 @@ function mailadmins($message, $subject, $from = false) {
 
 function kill($message) {
     if (PRODUCTION) {
-      mailadmins($message . "\n\n" . getinfo(), "MySQL Error - MFA Tools");
+      mailadmins($message . "\n\n" . getinfo(), "MySQL Error - MFA Tools", true);
       header("HTTP/1.0 404 Not Found");
       header("Location: " . URL . "404");
       exit();
