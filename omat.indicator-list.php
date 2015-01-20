@@ -20,8 +20,8 @@ $list = $db->query("SELECT f.*, mfa_indicators.name, mfa_indicators.id
 FROM mfa_indicators_formula f
   JOIN mfa_indicators ON f.indicator = mfa_indicators.id
   JOIN mfa_groups ON f.mfa_group = mfa_groups.id
-WHERE mfa_groups.dataset = $project ORDER BY mfa_indicators.type,
-mfa_indicators.id");
+WHERE mfa_groups.dataset = $project ORDER BY 
+FIELD(mfa_indicators.id, 13,14,15,9,1,5,8,11)");
 
 $population_list = $db->query("SELECT * FROM mfa_population WHERE dataset = $id");
 
@@ -46,6 +46,11 @@ if (count($dataresults)) {
     $data[$row['year']][$row['mfa_group']] = $row['total'];
   }
 }
+
+/*
+$data[2013][95] = 0;
+$data[2013][96] = 0;
+/**/
 
 foreach ($list as $row) {
   $total = 0;

@@ -41,6 +41,7 @@ $page = 4;
     <li>Create a map to visually show where the studies have been done.</li>
     <li>Add a field to indicate the language of each publication (there are a few that are not in English).</li>
     <li>Send confirmations through e-mail when adding (or removing) research projects.</li>
+    <li>Easier option to add papers, e.g. by BibTex reference copying</li>
   </ul>
 
   <h2>Content-related</h2>
