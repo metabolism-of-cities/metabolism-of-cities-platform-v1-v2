@@ -156,7 +156,7 @@ $types = $db->query("SELECT * FROM mfa_transportation_modes ORDER BY name");
 \begin{figure}
   \centering
   \rowcolors{1}{white}{lightgrey}
-  \begin{tabularx}{10cm}{lllll}
+  \begin{tabular}{10cm}{lllll}
   \arrayrulecolor{darkgrey}\hline
   \hline
     \textbf{\textcolor{darkgrey}{Mode}} &amp;
@@ -169,7 +169,7 @@ $types = $db->query("SELECT * FROM mfa_transportation_modes ORDER BY name");
      <?php echo $key ?> &amp; <?php echo number_format($value,1) ?> km &amp; <?php echo formatTime($totaltime[$key]) ?> &amp; <?php echo number_format($value/$totaltime[$key]*60,1) ?> km/h &amp; <?php echo $numberoftrips[$key] ?> \\
     <?php } ?>
   \bottomrule
-  \end{tabularx}
+  \end{tabular}
   \caption{Transportation distance and time}
 \end{figure}
 

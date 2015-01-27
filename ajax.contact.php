@@ -122,6 +122,22 @@ if ($_POST['action'] == 'addactivity') {
   }
   $data['response'] = 'OK';
 }
+
+// For CT MFA only, can be removed when done.
+if ($_POST['nature']) {
+  $id = (int)$_POST['id'];
+  $nature = (int)$_POST['nature'];
+  $db->query("UPDATE mfa_contacts SET folder = $nature WHERE id = $id");
+  $data['response'] = 'OK';
+} elseif ($_POST['success']) {
+  $id = (int)$_POST['id'];
+  $success = (int)$_POST['success'];
+  $db->query("UPDATE mfa_contacts SET success = $success WHERE id = $id");
+  $data['response'] = 'OK';
+}
+// End CT block
+
+
 if (!$data) {
   $data['reponse'] = 'Fail';
 }

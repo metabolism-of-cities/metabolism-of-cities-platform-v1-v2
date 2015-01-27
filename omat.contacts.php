@@ -2,6 +2,10 @@
 require_once 'functions.php';
 require_once 'functions.omat.php';
 
+if (LOCAL) {
+  require_once 'include.capetown.php';
+}
+
 $section = 6;
 $load_menu = 1;
 $sub_page = 2;
@@ -24,6 +28,9 @@ foreach ($list as $row) {
       $contactnames[$row['id']] = $row['name'];
     }
   }
+  // CT MFA only
+  $success_list[$row['id']] = $row['success'];
+  $nature_list[$row['id']] = $row['nature'];
 }
 
 if ($subgroup) {
@@ -81,7 +88,7 @@ if ($check->time_log && is_array($parent)) {
     LEFT JOIN mfa_sources ON a.source = mfa_sources.id
     JOIN mfa_activities ON a.activity = mfa_activities.id
   WHERE mfa_contacts.dataset = $project OR mfa_sources.dataset = $project
-    ORDER BY FIELD(a.activity, 6,7,21,10,22,12,8,9)
+    ORDER BY FIELD(a.activity, 6,7,10,21,22,12,8,9)
   ");
 
   foreach ($activities as $row) {
@@ -137,15 +144,43 @@ if (is_array($sourcenames)) {
   asort($sourcenames);
 }
 
+// For CT:
+if (LOCAL) {
+  unset($sources);
+}
+
 function buildList($id) {
-  global $contacts, $project, $sources, $totaltime, $totaltime_source;
+  // Last four are CT only
+  global $contacts, $project, $sources, $totaltime, $totaltime_source, $nature, $success, $nature_list, $success_list;
   if (is_array($contacts[$id]) || is_array($sources[$id])) {
     echo '<ul>';
     if (is_array($contacts[$id])) {
       asort($contacts[$id]);
       foreach ($contacts[$id] as $key => $value) {
-        echo '<li class="viewcontact"><a href="omat/'.$project.'/viewcontact/'.$key.'">' . $value . '</a>';
+        echo '<li class="viewcontact time-'.$totaltime[$key].'"><a href="omat/'.$project.'/viewcontact/'.$key.'">' . $value . '</a>';
         echo ' <span class="time"><i class="fa fa-clock-o"></i> ' . formatTime($totaltime[$key]) . '</span>';
+
+        // CT MFA only
+
+        echo '<br />';
+        foreach ($nature as $subkey => $value) {
+          $printclass = 'btn-default';
+          if ($nature_list[$key] == $subkey) {
+            $printclass = 'btn-success';
+          }
+          echo '<span class="btn '.$printclass.' nature" data-id="'.$key.'"
+          data-nature="'.$subkey.'">'.$value.'</span>';
+        }
+        echo '<br />';
+        foreach ($success as $subkey => $value) {
+          $printclass = 'btn-default';
+          if ($success_list[$key] == $subkey) {
+            $printclass = 'btn-success';
+          }
+          echo '<span class="btn '.$printclass.' success" data-id="'.$key.'"
+          data-success="'.$subkey.'">'.$value.'</span>';
+        }
+
         if (is_array($contacts[$key]) || is_array($sources[$key])) {
           buildList($key);
         }
@@ -155,7 +190,7 @@ function buildList($id) {
     if (is_array($sources[$id])) {
       asort($sources[$id]);
       foreach ($sources[$id] as $key => $value) {
-        echo '<li><i class="fa fa-file-o"></i> <a href="omat/'.$project.'/viewsource/'.$key.'">' . $value . '</a>';
+        echo '<li class="time-'.$totaltime_source[$key].'"><i class="fa fa-file-o"></i> <a href="omat/'.$project.'/viewsource/'.$key.'">' . $value . '</a>';
         echo ' <span class="time"><i class="fa fa-clock-o"></i> ' . formatTime($totaltime_source[$key]) . '</span>';
         echo '</li>';
       }
@@ -164,7 +199,7 @@ function buildList($id) {
   }
 }
 
-$fullwidth = 600;
+$fullwidth = 500;
 
 ?>
 <!DOCTYPE html>
@@ -206,6 +241,50 @@ $fullwidth = 600;
         $(".latex").click(function(){
           $(".showlatex").toggle('fast');
         });
+      <?php if ($_GET['active']) { // CT block ?>
+      $(".nature").click(function(e){
+        var id = $(this).data("id");
+        var nature = $(this).data("nature");
+        var button = $(this);
+        $.post("ajax.contact.php?project=<?php echo $project ?>",{
+          id: id,
+          nature: nature,
+          dataType: "json"
+        }, function(data) {
+          if (data.response == "OK") {
+            $(".message").html("#"+id+" - Information was saved").show().addClass("btn-success").removeClass("btn-danger");
+            button.addClass('btn-success');
+          } else {
+            $(".message").html("There was an error. The information could be saved.").addClass("btn-danger").show().removeClass("btn-succes");
+          }
+        },'json')
+        .error(function(){
+            $(".message").html("There was an error. Could not send data.").addClass("btn-danger").show().removeClass("btn-succes");
+        });
+        e.preventDefault();
+      });
+      $(".success").click(function(e){
+        var id = $(this).data("id");
+        var success = $(this).data("success");
+        var button = $(this);
+        $.post("ajax.contact.php?project=<?php echo $project ?>",{
+          id: id,
+          success: success,
+          dataType: "json"
+        }, function(data) {
+          if (data.response == "OK") {
+            $(".message").html("#"+id+" - Information was saved").show().addClass("btn-success").removeClass("btn-danger");
+            button.addClass('btn-success');
+          } else {
+            $(".message").html("There was an error. The information could be saved.").addClass("btn-danger").show().removeClass("btn-succes");
+          }
+        },'json')
+        .error(function(){
+            $(".message").html("There was an error. Could not send data.").addClass("btn-danger").show().removeClass("btn-succes");
+        });
+        e.preventDefault();
+      });
+      <?php } ?>
     });
     </script>
     <style type="text/css">
@@ -228,6 +307,11 @@ $fullwidth = 600;
       .activitybars{list-style:none;margin-top:20px}
       .totalblock{list-style:none;margin-left:115px}
       .totalblock li{display:inline-block;margin-right:30px}
+      <?php if ($_GET['active']) { ?>
+        .time-,.time-0{display:none}
+      <?php } ?>
+    /* CT MFA only */
+    .message{display:none;position:fixed;bottom:10px;right:10px;font-size:15px;color:#fff;font-weight:bold;padding:5px}
     </style>
   </head>
 
@@ -237,6 +321,8 @@ $fullwidth = 600;
 
   <a href="omat/<?php echo $project ?>/contact/0" class="btn btn-success pull-right"><i class="fa fa-user"></i> Add contact</a>
   <a href="omat/<?php echo $project ?>/source/0" class="btn btn-success pull-right"><i class="fa fa-file"></i> Add source</a>
+
+  <div class="message btn"></div>
 
   <h1>Manage Resources</h1>
 
@@ -384,6 +470,19 @@ $fullwidth = 600;
 <?php } ?>
 \newcommand{\contacts<?php echo $type ?>}{<?php echo count($totalcontacts) ?>}
 \newcommand{\sources<?php echo $type ?>}{<?php echo count($totalsources) ?>}
+
+<?php
+// CT MFA
+if (LOCAL) {
+  $check = $db->record("SELECT COUNT(*) AS total FROM mfa_contacts WHERE dataset = $id AND folder = 0");
+  $checkSources = $db->record("SELECT COUNT(*) AS total FROM mfa_sources WHERE dataset = $id");
+
+?>
+\newcommand{\contactsAll<?php echo $type ?>}{<?php echo $check->total ?>}
+\newcommand{\sourcesAll<?php echo $type ?>}{<?php echo $checkSources->total ?>}
+<?php }
+// End CT MFA
+?>
     </pre>
   <?php } ?>
 
