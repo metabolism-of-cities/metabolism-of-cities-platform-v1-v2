@@ -28,9 +28,6 @@ foreach ($list as $row) {
       $contactnames[$row['id']] = $row['name'];
     }
   }
-  // CT MFA only
-  $success_list[$row['id']] = $row['success'];
-  $nature_list[$row['id']] = $row['nature'];
 }
 
 if ($subgroup) {
@@ -151,7 +148,7 @@ if (LOCAL) {
 
 function buildList($id) {
   // Last four are CT only
-  global $contacts, $project, $sources, $totaltime, $totaltime_source, $nature, $success, $nature_list, $success_list;
+  global $contacts, $project, $sources, $totaltime, $totaltime_source;
   if (is_array($contacts[$id]) || is_array($sources[$id])) {
     echo '<ul>';
     if (is_array($contacts[$id])) {
@@ -159,27 +156,6 @@ function buildList($id) {
       foreach ($contacts[$id] as $key => $value) {
         echo '<li class="viewcontact time-'.$totaltime[$key].'"><a href="omat/'.$project.'/viewcontact/'.$key.'">' . $value . '</a>';
         echo ' <span class="time"><i class="fa fa-clock-o"></i> ' . formatTime($totaltime[$key]) . '</span>';
-
-        // CT MFA only
-
-        echo '<br />';
-        foreach ($nature as $subkey => $value) {
-          $printclass = 'btn-default';
-          if ($nature_list[$key] == $subkey) {
-            $printclass = 'btn-success';
-          }
-          echo '<span class="btn '.$printclass.' nature" data-id="'.$key.'"
-          data-nature="'.$subkey.'">'.$value.'</span>';
-        }
-        echo '<br />';
-        foreach ($success as $subkey => $value) {
-          $printclass = 'btn-default';
-          if ($success_list[$key] == $subkey) {
-            $printclass = 'btn-success';
-          }
-          echo '<span class="btn '.$printclass.' success" data-id="'.$key.'"
-          data-success="'.$subkey.'">'.$value.'</span>';
-        }
 
         if (is_array($contacts[$key]) || is_array($sources[$key])) {
           buildList($key);
@@ -241,50 +217,6 @@ $fullwidth = 500;
         $(".latex").click(function(){
           $(".showlatex").toggle('fast');
         });
-      <?php if ($_GET['active']) { // CT block ?>
-      $(".nature").click(function(e){
-        var id = $(this).data("id");
-        var nature = $(this).data("nature");
-        var button = $(this);
-        $.post("ajax.contact.php?project=<?php echo $project ?>",{
-          id: id,
-          nature: nature,
-          dataType: "json"
-        }, function(data) {
-          if (data.response == "OK") {
-            $(".message").html("#"+id+" - Information was saved").show().addClass("btn-success").removeClass("btn-danger");
-            button.addClass('btn-success');
-          } else {
-            $(".message").html("There was an error. The information could be saved.").addClass("btn-danger").show().removeClass("btn-succes");
-          }
-        },'json')
-        .error(function(){
-            $(".message").html("There was an error. Could not send data.").addClass("btn-danger").show().removeClass("btn-succes");
-        });
-        e.preventDefault();
-      });
-      $(".success").click(function(e){
-        var id = $(this).data("id");
-        var success = $(this).data("success");
-        var button = $(this);
-        $.post("ajax.contact.php?project=<?php echo $project ?>",{
-          id: id,
-          success: success,
-          dataType: "json"
-        }, function(data) {
-          if (data.response == "OK") {
-            $(".message").html("#"+id+" - Information was saved").show().addClass("btn-success").removeClass("btn-danger");
-            button.addClass('btn-success');
-          } else {
-            $(".message").html("There was an error. The information could be saved.").addClass("btn-danger").show().removeClass("btn-succes");
-          }
-        },'json')
-        .error(function(){
-            $(".message").html("There was an error. Could not send data.").addClass("btn-danger").show().removeClass("btn-succes");
-        });
-        e.preventDefault();
-      });
-      <?php } ?>
     });
     </script>
     <style type="text/css">
@@ -310,8 +242,6 @@ $fullwidth = 500;
       <?php if ($_GET['active']) { ?>
         .time-,.time-0{display:none}
       <?php } ?>
-    /* CT MFA only */
-    .message{display:none;position:fixed;bottom:10px;right:10px;font-size:15px;color:#fff;font-weight:bold;padding:5px}
     </style>
   </head>
 

@@ -40,10 +40,10 @@ foreach ($formula as $row) {
 
 if ($sql_group) {
   $sql_group = substr($sql_group, 0, -1);
-  $dataresults = $db->query("SELECT SUM(data) AS total, mfa_materials.mfa_group, mfa_data.year
+  $dataresults = $db->query("SELECT SUM(data*multiplier) AS total, mfa_materials.mfa_group, mfa_data.year
     FROM mfa_data
     JOIN mfa_materials ON mfa_data.material = mfa_materials.id
-  WHERE mfa_materials.mfa_group IN ($sql_group)
+  WHERE mfa_materials.mfa_group IN ($sql_group) AND include_in_totals = 1
   GROUP BY mfa_materials.mfa_group, mfa_data.year");
 }
 
@@ -125,7 +125,11 @@ if (count($dataresults)) {
     </tr>
     <tr>
     <?php foreach ($formula as $row) { ?>
-      <td><?php echo $row['name'] ?></td>
+      <td>
+        <a href="omat/<?php echo $project ?>/reports-table/<?php echo $row['mfa_group'] ?>">
+          <?php echo $row['name'] ?>
+        </a>
+      </td>
       <?php foreach ($years as $year) { ?>
       <?php 
         $datapoint = $data[$year][$row['mfa_group']];
@@ -139,7 +143,7 @@ if (count($dataresults)) {
     <tr>
       <th><?php echo $info->name ?></th>
       <?php foreach ($years as $year) { ?>
-        <th><?php echo number_format($final[$year],$decimal_precision) ?></th>
+        <th><?php echo number_format($final[$year],$dataset->decimal_precision) ?></th>
       <?php } ?>
     </tr>
   </table>

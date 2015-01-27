@@ -63,6 +63,16 @@ $list = $db->query("SELECT mfa_data.*, mfa_sources.name AS source_name, mfa_scal
   FROM mfa_data
   LEFT JOIN mfa_sources ON mfa_data.source_id = mfa_sources.id
   LEFT JOIN mfa_scales ON mfa_data.scale = mfa_scales.id
+WHERE material = $id AND mfa_data.include_in_totals = 1 AND year = $year");
+
+// It is possible that several data points have been entered for the same year for the same material (e.g. if there are two 
+// sub materials and no sub division has been made. We get main data from one of these data points, and show all the related values. 
+// If data is different between data points (e.g. source or scale), then sub categories should be made by the user instead. 
+
+$single_info = $db->record("SELECT mfa_data.*, mfa_sources.name AS source_name, mfa_scales.name AS scale_name
+  FROM mfa_data
+  LEFT JOIN mfa_sources ON mfa_data.source_id = mfa_sources.id
+  LEFT JOIN mfa_scales ON mfa_data.scale = mfa_scales.id
 WHERE material = $id AND mfa_data.include_in_totals = 1 AND year = $year LIMIT 1");
 
 $dqi = $db->query("SELECT dqi_classifications.*, dqi_sections.name AS section_name
@@ -187,136 +197,167 @@ ORDER BY dqi_sections.name, dqi_classifications.score");
 
   <h2>General Information</h2>
 
-  <?php 
-  foreach ($list as $row) { 
+  <?php if (!$single_info) { ?>
 
-  $dqi_active = $db->query("SELECT classification FROM mfa_dqi WHERE data = {$row['id']}");
-  foreach ($dqi_active as $subrow) {
-    $active[$subrow['classification']] = true;
-  }
-  ?>
+    <div class="alert alert-danger">No data point found</div>
 
-    <dl class="dl-horizontal">
-      <dt>Data Point ID</dt>
-      <dd><?php echo $row['id'] ?></dd>
-
-      <dt>Year</dt>
-      <dd><?php echo $row['year'] ?></dd>
-
-      <dt>Value</dt>
-      <dd><?php echo number_format($row['data'],2) ?> <?php echo $projectinfo->measurement ?></dd>
-
-      <?php if ($row['source_id'] || $row['source']) { ?>
-
-        <dt>Source</dt>
-        <?php if ($row['source_id']) { ?>
-          <dd>
-            <a href="omat/<?php echo $project ?>/viewsource/<?php echo $row['source_id'] ?>">
-              <?php echo $row['source_name'] ?>
-            </a>
-          </dd>
-        <?php } else { ?>
-          <dd><?php echo $row['source'] ?></dd>
-        <?php } ?>
-
-      <?php } ?>
-
-      <?php if ($row['scale']) { ?>
-
-        <dt>Scale</dt>
-        <dd><?php echo $row['scale_name'] ?></dd>
-
-      <?php } ?>
-
-    </dl>
-
-    <?php if (count($dqi)) { ?>
-
-      <fieldset id="dqi">
-        <legend>Data Quality Indicators</legend>
-
-        <?php $dqisection = false; foreach ($dqi as $subrow) { ?>
-          <?php if ($subrow['section'] != $dqi_section) { ?>
-          <?php if ($dqi_section) { ?>
-          </div>
-          </div>
-          </div><?php } ?>
-          <div class="row">
-            <div class="col-sm-3">
-              <?php echo $subrow['section_name'] ?>
-            </div>
-            <div class="col-sm-9">
-              <div class="btn-group group-<?php echo $subrow['section'] ?>" data-toggle="buttons">
-          <?php } $dqi_section = $subrow['section']; ?>
-          <label class="tooltip btn btn-default <?php echo $active[$subrow['id']] ? "active" : ''; ?>" data-toggle="tooltip" title="<?php echo $subrow['name'] ?>" data-placement="right">
-            <input type="radio" id="q<?php echo $subrow['id'] ?>" name="quality[<?php echo $subrow['section'] ?>]" <?php echo $active[$subrow['id']] ? 'checked' : ''; ?> value="<?php echo $subrow['id'] ?>"> <?php echo $subrow['score'] ?>
-          </label>
-        <?php } ?>
-        </div>
-        </div>
-        </div>
-        
-      </fieldset>
-    <?php } ?>
-
-    <?php if ($row['source_id']) { ?>
-
-    <?php
-      $origins = traceOrigins($row['source_id'], 'source');
-      $origins = array_reverse($origins);
-    ?>
-
-    <h2>Route to success</h2>
+  <?php } else { ?>
 
     <?php 
-    foreach ($origins as $value) {
-      $gettime = trackTime($value['id'], $value['type']);
-      if (is_array($gettime)) {
-        foreach ($gettime as $subkey => $subvalue) {
-          $totaltime[$subkey] += $subvalue;
-          $this_time += $subvalue;
-          $overall_time += $subvalue;
-        }
-      }
+    
+    $dqi_active = $db->query("SELECT classification FROM mfa_dqi WHERE data = {$single_info->id}");
+    foreach ($dqi_active as $subrow) {
+      $active[$subrow['classification']] = true;
+    }
     ?>
 
-    <div class="arrow <?php echo $value['type']; ?>">
-      <a href="omat/<?php echo $project ?>/view<?php echo $value['type'] ?>/<?php echo $value['id'] ?>">
-      <i class="fa fa-<?php echo $value['type'] == 'contact' ? 'user' : 'file'; ?>"></i>
-      <?php echo formatTime($this_time); $this_time = 0; ?>
-      </a>
-    </div>
+      <dl class="dl-horizontal">
+        <dt>Data Point ID</dt>
+        <dd><?php echo $single_info->id ?></dd>
 
-    <?php } ?>
+        <dt>Year</dt>
+        <dd><?php echo $single_info->year ?></dd>
 
-    <div class="summary">
-      <?php echo formatTime($overall_time); ?>
-    </div>
-
-    <?php if ($overall_time) { ?>
-
-      <h2>Time breakdown</h2>
-
-      <table class="table table-striped">
-        <tr>
-          <th>Activity</th>
-          <th>Time</th>
-        </tr>
-        <?php $overall_time = 0; foreach ($totaltime as $key => $value) { ?>
-        <tr>
-          <td><?php echo $key ?></td>
-          <td><?php echo formatTime($value); $overall_time += $value; ?></td>
-        </tr>
+        <dt>Value</dt>
+        <?php $total = 0; foreach ($list as $row) { ?>
+          <dd>
+            <?php echo number_format($row['data'],2) ?> 
+            <?php if ($row['multiplier'] != 1) { ?> x <?php echo $row['multiplier'] ?> = 
+              <?php echo number_format($row['data']*$row['multiplier'],2) ?>
+            <?php } ?>
+          <?php echo $projectinfo->measurement ?></dd>
+        <?php $total += $row['data']*$row['multiplier']; } ?>
+        <?php if (count($list) > 1) { ?>
+          <dd><strong>Total: <?php echo number_format($total,2) ?></strong></dd>
         <?php } ?>
-        <tr>
-          <th>Total</th>
-          <th><?php echo formatTime($overall_time) ?></th>
-        </tr>
-      </table>
 
-    <?php } ?>
+        <?php if ($single_info->source_id || $single_info->source) { ?>
 
-    <?php } ?>
+          <dt>Source</dt>
+          <?php if ($single_info->source_id) { ?>
+            <dd>
+              <a href="omat/<?php echo $project ?>/viewsource/<?php echo $single_info->source_id ?>">
+                <?php echo $single_info->source_name ?>
+              </a>
+            </dd>
+          <?php } else { ?>
+            <dd><?php echo $single_info->source ?></dd>
+          <?php } ?>
+
+        <?php } ?>
+
+        <?php if ($single_info->scale) { ?>
+
+          <dt>Scale</dt>
+          <dd><?php echo $single_info->scale_name ?></dd>
+
+        <?php } ?>
+
+      </dl>
+
+      <?php if (count($dqi)) { ?>
+
+        <fieldset id="dqi">
+          <legend>Data Quality Indicators</legend>
+
+          <?php $dqisection = false; foreach ($dqi as $subrow) { ?>
+            <?php if ($subrow['section'] != $dqi_section) { ?>
+            <?php if ($dqi_section) { ?>
+            </div>
+            </div>
+            </div><?php } ?>
+            <div class="row">
+              <div class="col-sm-3">
+                <?php echo $subrow['section_name'] ?>
+              </div>
+              <div class="col-sm-9">
+                <div class="btn-group group-<?php echo $subrow['section'] ?>" data-toggle="buttons">
+            <?php } $dqi_section = $subrow['section']; ?>
+            <label class="tooltip btn btn-default <?php echo $active[$subrow['id']] ? "active" : ''; ?>" data-toggle="tooltip" title="<?php echo $subrow['name'] ?>" data-placement="right">
+              <input type="radio" id="q<?php echo $subrow['id'] ?>" name="quality[<?php echo $subrow['section'] ?>]" <?php echo $active[$subrow['id']] ? 'checked' : ''; ?> value="<?php echo $subrow['id'] ?>"> <?php echo $subrow['score'] ?>
+            </label>
+          <?php } ?>
+          </div>
+          </div>
+          </div>
+          
+        </fieldset>
+      <?php } ?>
+
+      <?php if ($single_info->source_id) { ?>
+
+      <?php
+        $origins = traceOrigins($single_info->source_id, 'source');
+        $origins = array_reverse($origins);
+      ?>
+
+      <?php if (is_array($origins)) { ?>
+
+      <div class="route">
+
+        <h2>Route to success</h2>
+
+        <?php 
+        foreach ($origins as $value) {
+          $gettime = trackTime($value['id'], $value['type']);
+          if (is_array($gettime)) {
+            foreach ($gettime as $subkey => $subvalue) {
+              $totaltime[$subkey] += $subvalue;
+              $this_time += $subvalue;
+              $overall_time += $subvalue;
+            }
+          }
+        ?>
+
+        <div class="arrow <?php echo $value['type']; ?>">
+          <a href="omat/<?php echo $project ?>/view<?php echo $value['type'] ?>/<?php echo $value['id'] ?>">
+          <i class="fa fa-<?php echo $value['type'] == 'contact' ? 'user' : 'file'; ?>"></i>
+          <?php echo formatTime($this_time); $this_time = 0; ?>
+          </a>
+        </div>
+
+      <div class="summary">
+        <?php echo formatTime($overall_time); ?>
+      </div>
+      </div>
+
+      <?php } ?>
+
+      <?php if (count($origins) == 1 && !$overall_time) { ?>
+        <script type="text/javascript">
+        $(function(){
+          $(".route").hide();
+        });
+        </script>
+      <?php } ?>
+
+
+      <?php if ($overall_time) { ?>
+
+        <h2>Time breakdown</h2>
+
+        <table class="table table-striped">
+          <tr>
+            <th>Activity</th>
+            <th>Time</th>
+          </tr>
+          <?php $overall_time = 0; foreach ($totaltime as $key => $value) { ?>
+          <tr>
+            <td><?php echo $key ?></td>
+            <td><?php echo formatTime($value); $overall_time += $value; ?></td>
+          </tr>
+          <?php } ?>
+          <tr>
+            <th>Total</th>
+            <th><?php echo formatTime($overall_time) ?></th>
+          </tr>
+        </table>
+
+      <?php } ?>
+
+      <?php } ?>
+
+      <?php } ?>
 
     <?php } ?>
 

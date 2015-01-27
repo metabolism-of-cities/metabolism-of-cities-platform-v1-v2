@@ -88,6 +88,13 @@ foreach ($list as $row) {
     <li class="active">List</li>
   </ol>
 
+  <?php if (!count($population_list)) { ?>
+    <div class="alert alert-danger">
+      You have not defined population numbers. Per-capita values can be calculated if
+      you <a href="omat/<?php echo $project ?>/population">define the population first</a>.
+    </div>
+  <?php } else { $per_capita = true; } ?>
+
   <div class="row">
 
   <table class="table table-striped">
@@ -95,7 +102,9 @@ foreach ($list as $row) {
       <th>Indicator</th>
       <?php foreach ($years as $key => $value) { ?>
         <th><?php echo $value ?> - Total</th>
-        <th><?php echo $value ?> - Per capita</th>
+        <?php if ($per_capita) { ?>
+          <th><?php echo $value ?> - Per capita</th>
+        <?php } ?>
       <?php } ?>
     </tr>
 
@@ -104,7 +113,9 @@ foreach ($list as $row) {
       <td><?php echo $name ?></td>
       <?php foreach ($years as $key => $value) { ?>
         <td><?php echo number_format($result[$id][$value],0) ?></td>
-        <td><?php echo number_format($result[$id][$value]/$population[$value],2) ?></td>
+        <?php if ($per_capita) { ?>
+          <td><?php echo number_format($result[$id][$value]/$population[$value],2) ?></td>
+        <?php } ?>
       <?php } ?>
     </tr>    
   <?php } ?>

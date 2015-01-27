@@ -29,7 +29,7 @@ $tables = $db->query("SELECT * FROM mfa_groups WHERE dataset = $project ORDER BY
 
 $info = $db->record("SELECT * FROM mfa_groups WHERE id = $id AND dataset = $project");
 
-$dataresults = $db->query("SELECT AVG(data*multiplier) AS total, mfa_data.year, mfa_data.material,
+$dataresults = $db->query("SELECT SUM(data*multiplier) AS total, mfa_data.year, mfa_data.material,
   mfa_materials.code
   FROM mfa_data
   JOIN mfa_materials ON mfa_data.material = mfa_materials.id
@@ -154,7 +154,7 @@ if (count($dataresults)) {
             <?php if ($datapoint > 0) { $all_zero = false; } ?>
           </a>
         <?php } else { ?>
-          <?php echo number_format($total[$row['code']][$year], $decimal_precision) ?>
+          <?php echo number_format($total[$row['code']][$year], $dataset->decimal_precision) ?>
             <?php if ($total[$row['code']][$year] > 0) { $all_zero = false; } ?>
         <?php } ?>
         </td>
@@ -166,7 +166,7 @@ if (count($dataresults)) {
     <tr>
       <th><?php echo $info->name ?></th>
       <?php foreach ($years as $year) { ?>
-        <th><?php echo number_format($final[$year],$decimal_precision) ?></th>
+        <th><?php echo number_format($final[$year],$dataset->decimal_precision) ?></th>
       <?php } ?>
     </tr>
   </table>
