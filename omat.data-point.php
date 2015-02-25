@@ -15,6 +15,9 @@ if ($_GET['material']) {
   JOIN mfa_groups g ON m.mfa_group = g.id 
   WHERE d.id = $id");
   $project = $getproject->dataset;
+  if (!$project) {
+    die("Data point not found");
+  }
   $projectinfo = $db->record("SELECT * FROM mfa_dataset WHERE id = $project");
 }
 
