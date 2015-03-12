@@ -5,7 +5,7 @@ $page = 3;
 
 $journals = $db->query("SELECT * FROM sources ORDER BY name");
 
-if ($_POST) {
+if ($_POST['title']) {
   if ($_POST['source'] == "unlisted") {
     $post = array(
       'name' => html($_POST['newsource']),
@@ -62,6 +62,44 @@ Review: " . URL . "publication.view.php?id=$id&hash=$hash
   mailadmins($message, "New publication at MFA Tools", $_POST['youremail']);
 
 
+} elseif ($_POST['bibtex']) {
+  $info = $db->record("SELECT '' AS title");
+  // Get an empty object so we can load new values
+
+  $bibtex = $_POST['bibtex'];
+  $explode = explode("\n", $bibtex);
+  $clean = array('\&' => '&');
+  foreach ($explode as $key => $value) {
+    $line = $value;
+    $sub = explode("=", $value);
+    $name = trim($sub[0]);
+    $value = $sub[1];
+    preg_match('/{(.*)}/', $value, $match);
+    $string = strtr($match[1], $clean);
+    if ($name == "title") {
+      $info->title = strip_tags($string);
+    } elseif ($name == "author") {
+      $info->author = strip_tags($string);
+    } elseif ($name == "journal") {
+      $info->journal_name = $string;
+    } elseif ($name == "year") {
+      $info->year = strip_tags($string);
+    } elseif ($name == "volume") {
+      $info->volume = strip_tags($string);
+    } elseif ($name == "pages") {
+      $info->pages = strip_tags($string);
+    } elseif ($name == "number") {
+      $info->issue = strip_tags($string);
+    } elseif ($name == "issue") {
+      $info->issue = strip_tags($string);
+    } elseif ($name == "abstract") {
+      $info->abstract = strip_tags($string);
+    } elseif ($name == "doi") {
+      $info->doi = strip_tags($string);
+    } elseif ($name == "isbn") {
+      $info->doi = strip_tags($string);
+    }
+  }
 }
 
 
@@ -71,9 +109,14 @@ Review: " . URL . "publication.view.php?id=$id&hash=$hash
   <head>
     <?php echo $header ?>
     <title>Add Publication | <?php echo SITENAME ?></title>
+    <script type="text/javascript" src="js/autosize.js"></script>
     <style type="text/css">
     textarea.form-control[name='abstract']{height:300px}
     .newsource{display:none}
+    textarea[name='bibtex']{
+      height:34px;
+    }
+    .bibtexsubmit{display:none}
     </style>
     <script type="text/javascript">
     $(function(){
@@ -91,7 +134,11 @@ Review: " . URL . "publication.view.php?id=$id&hash=$hash
           $(".newsource").hide('fast');
         }
       });
-    });
+      $("textarea[name='bibtex']").focus(function(){
+        $(".bibtexsubmit").show();
+      });
+      $("textarea[name='bibtex']").autosize();
+      });
     </script>
   </head>
 
@@ -102,7 +149,7 @@ Review: " . URL . "publication.view.php?id=$id&hash=$hash
 <h1>Add Publication</h1>
 
 <p>Do you know of a missing publication? Please add the details here so people
-can find this! The publication should be related to Material Flow Analysis.</p>
+can find this! The publication should be related to material flow research.</p>
 
 <?php if ($id) { ?>
 
@@ -119,6 +166,29 @@ can find this! The publication should be related to Material Flow Analysis.</p>
   </div>
 
 <?php } else { ?>
+
+<form method="post" class="form form-horizontal">
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Bibtex code</label>
+    <div class="col-sm-10">
+      <textarea class="form-control" name="bibtex" required placeholder="If you have the Bibtex code available, paste it here, and the fields will be automatically filled. Example:
+      
+@article{author2015,
+  title={Here goes the article title},
+  author={Arduino, Elizabeth and McArthur, Bobby},
+  etc.
+}"></textarea>
+    </div>
+  </div>
+
+  <div class="form-group bibtexsubmit">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-primary">Load Bibtex code</button>
+    </div>
+  </div>
+
+</form>
 
 <form method="post" class="form form-horizontal">
 
@@ -142,7 +212,7 @@ can find this! The publication should be related to Material Flow Analysis.</p>
       <select name="source" class="form-control" required>
         <option value=""></option>
       <?php foreach ($journals as $row) { ?>
-        <option value="<?php echo $row['id'] ?>"<?php if ($row['id'] == $info->source) { echo ' selected'; } ?>><?php echo $row['name'] ?></option>
+        <option value="<?php echo $row['id'] ?>"<?php if ($row['id'] == $info->source || $row['name'] == $info->journal_name) { echo ' selected'; } ?>><?php echo $row['name'] ?></option>
       <?php } ?>
         <option value="unlisted">UNLISTED - add new option</option>
       </select>
