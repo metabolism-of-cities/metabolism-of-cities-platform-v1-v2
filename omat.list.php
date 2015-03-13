@@ -37,7 +37,7 @@ $list = $db->query("SELECT * FROM mfa_dataset $sql");
       <td><?php echo $row['name'] ?></td>
       <td><?php echo $row['year_start'] ?></td>
       <td><?php echo $row['year_end'] ?></td>
-      <td><a href="omat/dataset/<?php echo $row['id'] ?>">View</a></td>
+      <td><a href="omat/<?php echo $row['id'] ?>/projectinfo">View</a></td>
     </tr>
   <?php } ?>
   </table>

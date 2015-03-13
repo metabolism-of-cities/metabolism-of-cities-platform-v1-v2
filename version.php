@@ -20,6 +20,23 @@ $page = 7;
   </div>
 
   <hgroup>
+    <h2>Version 1.1</h2>
+    <h3>December 10, 2014</h3>
+  </hgroup>
+  <p>Important updates made to the website, including the following:</p>
+  <ul>
+    <li>OMAT now features a first public database: </li>
+    <li>Extensive <a href="omat/documentation">documentation</a> has been made available for OMAT.</li>
+    <li>Improvements to OMAT include option to work on different scales, to generate data graphs, and to work with uncertainty indicators</li>
+  </ul>
+  <p>Quick statistics:</p>
+  <ul>
+    <li>176 publications</li>
+    <li>2 public research projects</li>
+    <li>2 private dataset | 1 public dataset</li>
+  </ul>
+
+  <hgroup>
     <h2>Version 1.0</h2>
     <h3>September 22, 2014</h3>
   </hgroup>

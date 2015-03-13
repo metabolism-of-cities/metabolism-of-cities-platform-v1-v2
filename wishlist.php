@@ -8,6 +8,9 @@ $page = 4;
   <head>
     <?php echo $header ?>
     <title>Wish List | <?php echo SITENAME ?></title>
+    <style type="text/css">
+    .done{text-decoration: line-through;background:url(img/check.png) no-repeat left center; padding-left:20px;list-style:none;position:relative;left:-20px;}
+    </style>
   </head>
 
   <body>
@@ -34,14 +37,14 @@ $page = 4;
     <li>Option to download the whole database. This would allow users to do other things with the database, as they please.</li>
     <li>Option to download a dataset as a CSV file.</li>
     <li>Option to download the list of publications as a CSV file.</li>
-    <li>A newsletter option that allows visitors to receive monthly updates of new publications or features added.</li>
+    <li class="done">A newsletter option that allows visitors to receive monthly updates of new publications or features added.</li>
     <li>Better implementation of uncertainty in the MFA software.</li>
     <li>Creation of beautiful graphs based on the dataset.</li>
     <li>A screen-recorded video that shows users how it all works by viewing a 2-3 minute video.</li>
     <li>Create a map to visually show where the studies have been done.</li>
     <li>Add a field to indicate the language of each publication (there are a few that are not in English).</li>
     <li>Send confirmations through e-mail when adding (or removing) research projects.</li>
-    <li>Easier option to add papers, e.g. by BibTex reference copying</li>
+    <li class="done">Easier option to add papers, e.g. by BibTex reference copying</li>
   </ul>
 
   <h2>Content-related</h2>
@@ -91,6 +94,7 @@ $page = 4;
       </li>
     </ul>
   </li>
+    <li>It would be useful to have a section with 'relevant links' to websites that are of interest.</li>
   </ul>
 
   <h2>Quality Control</h2>
