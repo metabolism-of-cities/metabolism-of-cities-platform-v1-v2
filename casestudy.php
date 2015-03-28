@@ -3,37 +3,33 @@ require_once 'functions.php';
 $section = 5;
 $page = 99;
 
-$sql = false;
-if ((int)$_GET['message'] > 0) {
-  $type = (int)$_GET['message'];
-  $sql = "WHERE EXISTS (SELECT * FROM tags_papers WHERE tags_papers.paper = papers.id AND tags_papers.tag = $type)";
-}
+$id = (int)$_GET['id'];
 
-$list = $db->query("SELECT papers.*, case_studies.* 
+$info = $db->record("SELECT papers.*, case_studies.* 
 FROM case_studies 
   JOIN papers
   ON case_studies.paper = papers.id
-  $sql 
-ORDER BY papers.year, case_studies.name
-");
+  WHERE case_studies.id = $id");
 
-if ($_GET['message'] == 'saved') {
-  $print = "Information has been saved";
+$indicators = $db->query("SELECT * 
+FROM analysis 
+  JOIN analysis_options o ON analysis.option = o.id
+WHERE analysis.case_study = $id AND o.type = 1 
+ORDER BY o.name, analysis.year");
+
+foreach ($indicators as $row) {
+  if ($row['name'] == $previous) {
+    $show_table[$row['name']] = true;
+    $table[$row['name']][$row['year']] = $row['result'];
+  }
+  $previous = $row['name'];
 }
-
-$studies = array(
-  87 => "Ecological Footprint",
-  85 => "EW MFA",
-  54 => "LCA",
-  65 => "PIOT",
-  86 => "SFA",
-);
 ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <?php echo $header ?>
-    <title>Material Flow Analysis Case Studies | <?php echo SITENAME ?></title>
+    <title><?php echo $info->name ?> | Material Flow Analysis Case Studies | <?php echo SITENAME ?></title>
     <style type="text/css">
     .table.ellipsis{border-top:0}
     .table > tbody > tr > th {border-top:0}
@@ -48,46 +44,39 @@ $studies = array(
 
   <?php if ($print) { echo "<div class=\"alert alert-success\">$print</div>"; } ?>
 
-  <p>
-    This page provides an overview of case studies that have been done, with in-depth
-    details about the methodology, approaches, outcomes and challenges.
-  </p>
+  <dl class="dl-horizontal">
+    <dt>Paper</dt>
+    <dd><a href="publication/<?php echo $info->paper ?>"><?php echo $info->title ?></a></dd>
+    
+    <dt>Author(s)</dt>
+    <dd><?php echo $info->author ?></dd>
 
-  <div class="alert alert-info">
-    <strong><?php echo count($list) ?></strong> studies found.
-  </div>
+    <dt>City/Region</dt>
+    <dd><?php echo $info->name ?></dd>
 
-  <ul class="nav nav-tabs">
-    <li<?php if (!$type) { echo ' class="active"'; } ?>><a href="page/casestudy">All</a></li>
-    <?php foreach ($studies as $key => $value) { ?>
-      <li<?php if ($type == $key) { echo ' class="active"'; } ?>><a href="page/casestudy/<?php echo $key ?>"><?php echo $value ?></a></li>
+  </dl>
+
+  <?php if ($indicators) { ?>
+
+    <h2>Indicators</h2>
+
+    <?php if (is_array($show_table)) { ?>
+    <?php foreach ($show_table as $value => $key) { ?>
+      <h3><?php echo $value ?></h3>
+      <table class="table table-striped">
+        <tr>
+          <th>Year</th>
+          <th>Value</th>
+        </tr>
+        <?php foreach ($table[$value] as $year => $data) { ?>
+          <tr>
+            <td><?php echo $year ?></td>
+            <td><?php echo $data ?></td>
+          </tr>
+        <?php } ?>
+        </table>
+      <?php } ?>
     <?php } ?>
-  </ul>
-
-  <?php if ($list) { ?>
-
-  <table class="table table-striped ellipsis">
-    <tr>
-      <th class="large">Region</th>
-      <th class="small">Year</th>
-      <th class="large">Paper</th>
-      <th class="large">Authors</th>
-      <th class="small">Information</th>
-    </tr>
-  <?php foreach ($list as $row) { ?>
-    <tr>
-      <td><a href="casestudy.edit.php?id=<?php echo $row['id'] ?>"><?php echo $row['name'] ?></a></td>
-      <td><?php echo $row['year'] ?></td>
-      <td><a href="publication/<?php echo $row['paper'] ?>"><?php echo $row['title'] ?></a></td>
-      <td><?php echo $row['author'] ?></td>
-      <td>
-        <a href="analysis/<?php echo $row['id'] ?>/2"><i class="fa fa-comments-o"></i></a>
-        <a href="analysis/<?php echo $row['id'] ?>/1"><i class="fa fa-bar-chart-o"></i></a>
-      </td>
-    </tr>
-  <?php } ?>
-  </table>
-
   <?php } ?>
 
 
