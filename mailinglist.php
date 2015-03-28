@@ -34,7 +34,7 @@ $page = 6;
         <h2>Subscribe to our mailing list</h2>
       <div class="mc-field-group">
         <label for="mce-EMAIL">Email Address </label>
-        <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+        <input type="email" value="<?php echo strip_tags($_POST['email']) ?>" name="EMAIL" class="required email" id="mce-EMAIL">
       </div>
       <div class="mc-field-group">
         <label for="mce-FNAME">First Name </label>

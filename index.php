@@ -8,6 +8,7 @@ $papers = $db->record("SELECT SQL_CACHE COUNT(*) AS total FROM papers WHERE stat
 $collections = $db->record("SELECT SQL_CACHE COUNT(*) AS total FROM tags_parents");
 $tags = $db->record("SELECT SQL_CACHE COUNT(*) AS total FROM tags");
 $tagsused = $db->record("SELECT SQL_CACHE COUNT(*) AS total FROM tags_papers");
+$projects = $db->record("SELECT SQL_CACHE COUNT(*) AS total FROM research");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -59,6 +60,7 @@ $tagsused = $db->record("SELECT SQL_CACHE COUNT(*) AS total FROM tags_papers");
         </div>
         <div class="panel-body stats">
           <ul>
+            <li><span class="badge"><?php echo $projects->total ?></span> Research projects listed, see the <a href="research/list">current research list</a>.</li>
             <li><span class="badge"><?php echo $papers->total ?></span> Papers and other publications listed in the <a href="publications/list">database</a>.</li>
             <li><span class="badge"><?php echo $collections->total ?></span> Publication <a href="publications/collections">collections</a>.</li>
             <li><span class="badge"><?php echo $tags->total ?></span> Unique tags used for classifying publications.</li>
@@ -66,6 +68,11 @@ $tagsused = $db->record("SELECT SQL_CACHE COUNT(*) AS total FROM tags_papers");
           </ul>
         </div>
       </div>
+
+      <form method="post" class="form form-inline" action="page/mailinglist">
+         <input type="email" class="form-control" name="email" placeholder="Sign up for our newsletter" />
+         <button type="submit" class="btn btn-primary">Sign Up</button>
+      </form>
 
       <h2>Help us improve! <img src="img/pencil.png" alt="" /></h2>
 
