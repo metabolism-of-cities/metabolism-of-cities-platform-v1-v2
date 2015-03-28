@@ -5,6 +5,20 @@ $page = 3;
 
 $journals = $db->query("SELECT * FROM sources ORDER BY name");
 
+function bibtexclean($string) {
+  $array = array(
+    "{\'e}" => "é", 
+    "{\'E}" => "É",
+    "{\`e}" => "è",
+    "{\`E}" => "È",
+    "{\'o}" => "ö",
+    "{\'a}" => "á",
+    "{\~n}" => "ñ",
+    "{\'\i}" => "í",
+  );
+  return strtr($string, $array);
+}
+
 if ($_POST['title']) {
   if ($_POST['source'] == "unlisted") {
     $post = array(
@@ -66,7 +80,7 @@ Review: " . URL . "publication.view.php?id=$id&hash=$hash
   $info = $db->record("SELECT '' AS title");
   // Get an empty object so we can load new values
 
-  $bibtex = $_POST['bibtex'];
+  $bibtex = bibtexclean($_POST['bibtex']);
   $explode = explode("\n", $bibtex);
   $clean = array('\&' => '&');
   foreach ($explode as $key => $value) {
