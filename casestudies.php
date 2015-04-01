@@ -28,6 +28,12 @@ $studies = array(
   65 => "PIOT",
   86 => "SFA",
 );
+
+$options = $db->query("SELECT a.*, t.name AS type,
+  (SELECT COUNT(*) FROM analysis WHERE analysis.option = a.id) AS total
+FROM analysis_options a
+  JOIN analysis_options_types t ON a.type = t.id
+ORDER BY a.type, a.name");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,6 +43,7 @@ $studies = array(
     <style type="text/css">
     .table.ellipsis{border-top:0}
     .table > tbody > tr > th {border-top:0}
+    .optionlist{max-width:500px}
     </style>
   </head>
 
@@ -83,6 +90,7 @@ $studies = array(
       <td>
         <a href="analysis/<?php echo $row['id'] ?>/2"><i class="fa fa-comments-o"></i></a>
         <a href="analysis/<?php echo $row['id'] ?>/1"><i class="fa fa-bar-chart-o"></i></a>
+        <a href="analysis/<?php echo $row['id'] ?>/3"><i class="fa fa-user"></i></a>
       </td>
     </tr>
   <?php } ?>
@@ -90,6 +98,30 @@ $studies = array(
 
   <?php } ?>
 
+  <h2>Indicators and information to compare</h2>
+
+  <div class="optionlist">
+
+  <?php $type = false; foreach ($options as $row) { ?>
+
+    <?php if ($row['type'] != $type ) { ?>
+      <h3><?php echo $row['type'] ?></h3>
+      <?php if ($type) { ?></ul><?php } ?>
+      <ul class="nav nav-list">
+    <?php } $type = $row['type']; ?>
+
+    <li>
+      <a href="regional/options/<?php echo $row['id'] ?>/<?php echo flatten($row['name']) ?>">
+        <?php echo $row['name'] ?>
+        <span class="badge pull-right"><?php echo $row['total'] ?></span>
+      </a>
+    </li>
+
+  <?php } ?>
+
+  </ul>
+
+  </div>
 
 <?php require_once 'include.footer.php'; ?>
 

@@ -1041,3 +1041,6 @@ CREATE TABLE `mfa_population` (
 ALTER TABLE `mfa_population`
 DROP FOREIGN KEY `mfa_population_ibfk_1`,
 ADD FOREIGN KEY (`dataset`) REFERENCES `mfa_dataset` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.583 s
+
+INSERT INTO `analysis_options_types` (`name`)
+VALUES ('Per-capita flows'); -- 0.117 s
