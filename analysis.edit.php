@@ -58,7 +58,7 @@ if ($_POST) {
 
   <form method="post" class="form-horizontal">
 
-  <?php if ($type == 1) { ?>
+  <?php if ($type != 2) { ?>
 
     <div class="form-group">
       <label class="col-sm-2 control-label">Year</label>

@@ -10,10 +10,11 @@ if (!$info) {
   die("Not found");
 }
 
-$list = $db->query("SELECT *, case_studies.name
+$list = $db->query("SELECT *, case_studies.name, papers.title, analysis.year
 FROM analysis 
   JOIN analysis_options o ON analysis.option = o.id
   JOIN case_studies ON analysis.case_study = case_studies.id
+  JOIN papers ON case_studies.paper = papers.id
 WHERE analysis.option = $id
 ORDER BY case_studies.name, analysis.year");
 
@@ -41,12 +42,14 @@ ORDER BY case_studies.name, analysis.year");
       <th>Region</th>
       <th>Year</th>
       <th>Value</th>
+      <th>Source</th>
     </tr>
   <?php foreach ($list as $row) { ?>
     <tr>
       <td><a href="casestudy/<?php echo $row['case_study'] ?>"><?php echo $row['name'] ?></a></td>
       <td><?php echo $row['year'] ?></td>
       <td><?php echo $row['result'] ? $row['result'] : $row['notes'] ?></td>
+      <td><a href="publication/<?php echo $row['paper'] ?>"><?php echo $row['title'] ?></a></td>
     </tr>
   <?php } ?>
   </table>  

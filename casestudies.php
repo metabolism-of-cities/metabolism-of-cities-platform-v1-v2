@@ -65,9 +65,9 @@ ORDER BY a.type, a.name");
   </div>
 
   <ul class="nav nav-tabs">
-    <li<?php if (!$type) { echo ' class="active"'; } ?>><a href="page/casestudy">All</a></li>
+    <li<?php if (!$type) { echo ' class="active"'; } ?>><a href="page/casestudies">All</a></li>
     <?php foreach ($studies as $key => $value) { ?>
-      <li<?php if ($type == $key) { echo ' class="active"'; } ?>><a href="page/casestudy/<?php echo $key ?>"><?php echo $value ?></a></li>
+      <li<?php if ($type == $key) { echo ' class="active"'; } ?>><a href="page/casestudies/<?php echo $key ?>"><?php echo $value ?></a></li>
     <?php } ?>
   </ul>
 

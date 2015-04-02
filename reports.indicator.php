@@ -126,7 +126,7 @@ if (count($dataresults)) {
     <tr>
     <?php foreach ($formula as $row) { ?>
       <td>
-        <a href="omat/<?php echo $project ?>/reports-table/<?php echo $row['mfa_group'] ?>">
+        <a href="<?php echo $public_login ? "omat-public" : "omat"; ?>/<?php echo $project ?>/reports-table/<?php echo $row['mfa_group'] ?>">
           <?php echo $row['name'] ?>
         </a>
       </td>
