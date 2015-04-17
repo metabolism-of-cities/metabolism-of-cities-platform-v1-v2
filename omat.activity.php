@@ -45,7 +45,7 @@ if ($_POST) {
   exit();
 }
 
-$types = $db->query("SELECT * FROM mfa_activities ORDER BY name");
+$types = $db->query("SELECT * FROM mfa_activities WHERE dataset = $project ORDER BY name");
 
 ?>
 <!DOCTYPE html>
