@@ -103,7 +103,7 @@ if (count($dataresults)) {
 <?php require_once 'include.header.php'; ?>
 
   <a href="omat/<?php echo $project ?>/reports-table/<?php echo $id ?><?php echo $values_only ? '' : '/values-only'; ?>"
-  class="btn btn-<?php echo $values_only ? 'info' : 'default'; ?> pull-right">
+  class="printhide btn btn-<?php echo $values_only ? 'info' : 'default'; ?> pull-right">
     Hide zero values
   </a>
 
@@ -178,7 +178,7 @@ if (count($dataresults)) {
     </div>
   <?php } ?>
 
-  <div class="panel panel-info">
+  <div class="panel panel-info printhide">
     <div class="panel-heading">
       <h3 class="panel-title">Data Tables</h3>
     </div>
