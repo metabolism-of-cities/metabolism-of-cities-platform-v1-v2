@@ -28,7 +28,8 @@ $indicator_types = $db->query("SELECT * FROM mfa_indicators WHERE type = {$info-
 $formula = $db->query("SELECT f.*, mfa_groups.section, mfa_groups.name
 FROM mfa_indicators_formula f
   JOIN mfa_groups ON f.mfa_group = mfa_groups.id
-WHERE indicator = $id AND mfa_groups.dataset = $project ORDER BY f.id");
+WHERE indicator = $id AND mfa_groups.dataset = $project AND mfa_material IS NULL
+ORDER BY f.id");
 
 $all_addition = true;
 foreach ($formula as $row) {
@@ -37,7 +38,6 @@ foreach ($formula as $row) {
     $all_addition = false;
   }
 }
-
 if ($sql_group) {
   $sql_group = substr($sql_group, 0, -1);
   $dataresults = $db->query("SELECT SUM(data*multiplier) AS total, mfa_materials.mfa_group, mfa_data.year
@@ -50,6 +50,33 @@ if ($sql_group) {
 if (count($dataresults)) {
   foreach ($dataresults as $row) {
     $data[$row['year']][$row['mfa_group']] = $row['total'];
+  }
+}
+
+$subformula = $db->query("SELECT f.*, mfa_groups.section, mfa_groups.name, 
+mfa_materials.code, mfa_materials.name AS material
+FROM mfa_indicators_formula f
+  JOIN mfa_groups ON f.mfa_group = mfa_groups.id
+  JOIN mfa_materials ON f.mfa_material = mfa_materials.id
+WHERE indicator = $id AND mfa_groups.dataset = $project AND mfa_material IS NOT NULL
+ORDER BY f.id");
+
+$sql = false;
+foreach ($subformula as $row) {
+  $code = $row['code'];
+  $dataresults = $db->query("SELECT SUM(data*multiplier) AS total,
+  mfa_materials.mfa_group, mfa_data.year
+    FROM mfa_data
+    JOIN mfa_materials ON mfa_data.material = mfa_materials.id
+  WHERE ((mfa_materials.mfa_group = {$row['mfa_group']} AND mfa_materials.code LIKE '{$row['code']}%')) AND include_in_totals = 1
+  GROUP BY mfa_materials.mfa_group, mfa_materials.code, mfa_data.year");
+  if ($row['type'] == "subtract") {
+    $all_addition = false;
+  }
+  if (count($dataresults)) {
+    foreach ($dataresults as $row) {
+      $codedata[$row['year']][$row['mfa_group']][$code] += $row['total'];
+    }
   }
 }
 ?>
@@ -73,6 +100,11 @@ if (count($dataresults)) {
   <h1>
     <?php echo $info->name ?>
     <?php if ($info->abbreviation) { ?>(<?php echo $info->abbreviation ?>)<?php } ?>  
+    <?php if (!$public_login) { ?>
+      <a href="reports.indicators.php?id=<?php echo $project ?>&amp;indicator=<?php echo $id ?>">
+        <i class="fa fa-edit pull-right"></i>
+      </a>
+    <?php } ?>
   </h1>
 
   <ol class="breadcrumb">
@@ -102,7 +134,7 @@ if (count($dataresults)) {
     </div>
   </div>
 
-  <?php if (!count($formula)) { ?>
+  <?php if (!count($formula) && !count($subformula)) { ?>
     <div class="alert alert-warning">
       <p>We do not have a formula saved for automatically calculating this indicator. You can define the 
       formula yourself and the system will proceed to calculate the values for this indicator.</p>
@@ -135,7 +167,28 @@ if (count($dataresults)) {
         $datapoint = $data[$year][$row['mfa_group']];
         $final[$year] += $row['type'] == "add" ? $datapoint : $datapoint*-1;
       ?>
-        <td><?php echo number_format($datapoint,$dataset->decimal_precision) ?></td>
+        <td>
+        <?php echo $row['type'] == "add" ? "+" : "-"; ?>
+        <?php echo number_format($datapoint,$dataset->decimal_precision) ?></td>
+      <?php } ?>
+      </tr>
+    <?php } ?>
+
+    <?php foreach ($subformula as $row) { ?>
+      <td>
+        <a href="<?php echo $public_login ? "omat-public" : "omat"; ?>/<?php echo $project ?>/reports-table/<?php echo $row['mfa_group'] ?>">
+          <?php echo $row['name'] ?>
+        </a> &raquo; 
+        <?php echo $row['material'] ?>
+      </td>
+      <?php foreach ($years as $year) { ?>
+      <?php 
+        $datapoint = $codedata[$year][$row['mfa_group']][$row['code']];
+        $final[$year] += $row['type'] == "add" ? $datapoint : $datapoint*-1;
+      ?>
+        <td>
+        <?php echo $row['type'] == "add" ? "+" : "-"; ?>
+        <?php echo number_format($datapoint,$dataset->decimal_precision) ?></td>
       <?php } ?>
       </tr>
     <?php } ?>

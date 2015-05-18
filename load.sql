@@ -1044,3 +1044,8 @@ ADD FOREIGN KEY (`dataset`) REFERENCES `mfa_dataset` (`id`) ON DELETE CASCADE ON
 
 INSERT INTO `analysis_options_types` (`name`)
 VALUES ('Per-capita flows'); -- 0.117 s
+
+ALTER TABLE `mfa_indicators_formula`
+ADD `mfa_material` mediumint(8) unsigned NULL,
+ADD FOREIGN KEY (`mfa_material`) REFERENCES `mfa_materials` (`id`) ON DELETE CASCADE,
+COMMENT=''; -- 0.446 s
