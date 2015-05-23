@@ -1049,3 +1049,6 @@ ALTER TABLE `mfa_indicators_formula`
 ADD `mfa_material` mediumint(8) unsigned NULL,
 ADD FOREIGN KEY (`mfa_material`) REFERENCES `mfa_materials` (`id`) ON DELETE CASCADE,
 COMMENT=''; -- 0.446 s
+
+INSERT INTO `tags` (`tag`, `parent`, `description`)
+VALUES ('Thesis', '1', ''); -- 0.059 s

@@ -108,6 +108,16 @@ if ($_GET['tag']) {
     <a href="publications/list">View all publications</a>
   </p>
   </div>
+<?php } else { ?>
+
+  <div class="alert alert-info">
+    <a href="publications.export.php" class="btn btn-default">
+      <i class="fa fa-table"></i>
+      Download
+    </a>
+    You can download the full publications database including publication title, author(s), year, journal, tags, etc. as a <strong>CSV file</strong>.
+  </div>
+
 <?php } ?>
 
 <div class="resultbox">
@@ -132,6 +142,15 @@ if ($_GET['tag']) {
     </tr>
   <?php } ?>
   </table>
+
+  <div class="alert alert-info">
+    <a href="publications.export.php" class="btn btn-default">
+      <i class="fa fa-table"></i>
+      Download
+    </a>
+    You can download the full publications database including publication title, author(s), year, journal, tags, etc. as a <strong>CSV file</strong>.
+  </div>
+
 
 <?php } ?>
 

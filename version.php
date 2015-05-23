@@ -20,6 +20,22 @@ $page = 7;
   </div>
 
   <hgroup>
+    <h2>Version 1.2</h2>
+    <h3>May 23, 2015</h3>
+  </hgroup>
+  <p>Important updates made to the website, including the following:</p>
+  <ul>
+    <li>Improvements to OMAT include automatic indicator calculation, indicator customization, time graphs, per-capital calculations and a travel log.</li>
+    <li>Option for quick adding of publications by using Bibtex code</li>
+  </ul>
+  <p>Quick statistics:</p>
+  <ul>
+    <li>210 publications</li>
+    <li>4 public research projects</li>
+    <li>9 private datasets | 1 public dataset</li>
+  </ul>
+
+  <hgroup>
     <h2>Version 1.1</h2>
     <h3>December 10, 2014</h3>
   </hgroup>
