@@ -36,7 +36,7 @@ $page = 4;
   <ul>
     <li>Option to download the whole database. This would allow users to do other things with the database, as they please.</li>
     <li>Option to download a dataset as a CSV file.</li>
-    <li>Option to download the list of publications as a CSV file.</li>
+    <li class="done">Option to download the list of publications as a CSV file.</li>
     <li class="done">A newsletter option that allows visitors to receive monthly updates of new publications or features added.</li>
     <li>Better implementation of uncertainty in the MFA software.</li>
     <li>Creation of beautiful graphs based on the dataset.</li>

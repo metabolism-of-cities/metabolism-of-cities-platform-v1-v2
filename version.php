@@ -27,6 +27,7 @@ $page = 7;
   <ul>
     <li>Improvements to OMAT include automatic indicator calculation, indicator customization, time graphs, per-capital calculations and a travel log.</li>
     <li>Option for quick adding of publications by using Bibtex code</li>
+    <li>Option to download the publications database as CSV file</li>
   </ul>
   <p>Quick statistics:</p>
   <ul>
