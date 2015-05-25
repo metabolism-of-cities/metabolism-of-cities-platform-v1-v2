@@ -90,9 +90,7 @@ foreach ($tag_parents as $row) {
   $menu[5]['menu'][$row['id']] = array('label' => $row['name'], 'url' => 'publications/collections/'.$row['id']);
 }
 
-if (LOCAL) {
-  $menu[5]['menu'][99] = array('label' => 'Regional MFAs', 'url' => 'page/casestudies');
-}
+$menu[5]['menu'][99] = array('label' => 'Regional MFAs', 'url' => 'page/casestudies');
 
 function mailadmins($message, $subject, $from = false, $html = false) {
   $message = utf8_decode($message);
@@ -454,6 +452,6 @@ function truncate($string,$length=100,$append="&hellip;") {
 
 // Run to get the total lines for the newsletter: git ls-files *php | xargs wc -l
 
-$version = '1.0';
+$version = '1.2';
 
 ?>

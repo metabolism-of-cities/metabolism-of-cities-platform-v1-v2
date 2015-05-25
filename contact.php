@@ -26,6 +26,7 @@ IP: " . $_SERVER["REMOTE_ADDR"] . "
     <title>Contact Us | <?php echo SITENAME ?></title>
     <style type="text/css">
     textarea.form-control{height:300px}
+    .alert a{font-weight:700}
     </style>
   </head>
 
@@ -35,6 +36,11 @@ IP: " . $_SERVER["REMOTE_ADDR"] . "
 
       <div class="jumbotron">
         <h1>Contact Us</h1>
+
+        <div class="alert alert-info">
+          You can contact us at <a href="mailto:<?php echo EMAIL ?>"><?php echo EMAIL ?></a>, 
+          or by filling out the form below.
+        </div>
 
         <?php if ($_POST) { ?>
 

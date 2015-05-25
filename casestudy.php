@@ -56,7 +56,12 @@ foreach ($indicators as $row) {
 
   </dl>
 
-  <?php if ($indicators) { ?>
+  <div class="well">
+    <em>We soon plan to provide per-capita material flow data from this paper
+    here. Stay tuned!</em>
+  </div>
+
+  <?php if ($indicators && LOCAL) { ?>
 
     <h2>Indicators</h2>
 
@@ -78,6 +83,16 @@ foreach ($indicators as $row) {
       <?php } ?>
     <?php } ?>
   <?php } ?>
+
+  <div class="alert alert-warning">
+    You can help! We want to go through this study and extract the
+    per-capita material flow data from it. By entering the numbers for
+    each study, we can generate one large overview of the material flow data
+    found on an urban level for many different cities, materials and year. Over
+    time, this could provide very useful and comparative insights for
+    researchers. We would like to work on this in June-August 2015. Are you
+    willing to help? <a href="page/contact">Get in touch!</a>
+  </div>
 
 
 <?php require_once 'include.footer.php'; ?>

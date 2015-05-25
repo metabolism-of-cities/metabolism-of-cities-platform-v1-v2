@@ -64,6 +64,16 @@ ORDER BY a.type, a.name");
     <strong><?php echo count($list) ?></strong> studies found.
   </div>
 
+  <div class="alert alert-warning">
+    You can help! We want to go through all these studies and extract the
+    per-capita material flow data from each study. By entering the numbers for
+    each study, we can generate one large overview of the material flow data
+    found on an urban level for many different cities, materials and year. Over
+    time, this could provide very useful and comparative insights for
+    researchers. We would like to work on this in June-August 2015. Are you
+    willing to help? <a href="page/contact">Get in touch!</a>
+  </div>
+
   <ul class="nav nav-tabs">
     <li<?php if (!$type) { echo ' class="active"'; } ?>><a href="page/casestudies">All</a></li>
     <?php foreach ($studies as $key => $value) { ?>
@@ -79,7 +89,7 @@ ORDER BY a.type, a.name");
       <th class="small">Year</th>
       <th class="large">Paper</th>
       <th class="large">Authors</th>
-      <th class="small">Information</th>
+      <th class="small hide">Information</th>
     </tr>
   <?php foreach ($list as $row) { ?>
     <tr>
@@ -87,7 +97,7 @@ ORDER BY a.type, a.name");
       <td><?php echo $row['year'] ?></td>
       <td><a href="publication/<?php echo $row['paper'] ?>"><?php echo $row['title'] ?></a></td>
       <td><?php echo $row['author'] ?></td>
-      <td>
+      <td class="hide">
         <a href="analysis/<?php echo $row['id'] ?>/2"><i class="fa fa-comments-o"></i></a>
         <a href="analysis/<?php echo $row['id'] ?>/1"><i class="fa fa-bar-chart-o"></i></a>
         <a href="analysis/<?php echo $row['id'] ?>/3"><i class="fa fa-user"></i></a>
@@ -98,6 +108,7 @@ ORDER BY a.type, a.name");
 
   <?php } ?>
 
+  <?php if (LOCAL) { ?>
   <h2>Indicators and information to compare</h2>
 
   <div class="optionlist">
@@ -122,6 +133,8 @@ ORDER BY a.type, a.name");
   </ul>
 
   </div>
+
+  <?php } ?>
 
 <?php require_once 'include.footer.php'; ?>
 

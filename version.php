@@ -28,6 +28,7 @@ $page = 7;
     <li>Improvements to OMAT include automatic indicator calculation, indicator customization, time graphs, per-capital calculations and a travel log.</li>
     <li>Option for quick adding of publications by using Bibtex code</li>
     <li>Option to download the publications database as CSV file</li>
+    <li>List with cities subjected to urban metabolism studies, linked to relevant research</li>
   </ul>
   <p>Quick statistics:</p>
   <ul>
