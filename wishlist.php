@@ -50,8 +50,6 @@ $page = 4;
   <h2>Content-related</h2>
 
   <ul>
-    <li>We would like all of the publications to have an abstract available. For that to happen, we need to 
-    obtain permission from authors or journals.</li>
     <li>More publications. There is much more out there! We are strong in specific areas but particularly lack the following:
       <ul>
         <li>More varied journals. There is a strong focus on a few journals, but there must be more out there. </li>
@@ -95,6 +93,13 @@ $page = 4;
     </ul>
   </li>
     <li>It would be useful to have a section with 'relevant links' to websites that are of interest.</li>
+    <li>We want to create a database with regional metabolism indicators. That is, we plan to examine a variety of 
+    research studies that have calculated particular values (material extraction, emissions, construction material 
+    use, imports, exports, etc.) for an urban/provincial region. By creating one large masterlist of these values
+    it is much easier for other researchers to see what values are out there and to compare their own data to 
+    other studies. We need help identifying suitable studies, and extracting relevant numbers! 
+    </li>
+
   </ul>
 
   <h2>Quality Control</h2>
