@@ -110,7 +110,7 @@ function mailadmins($message, $subject, $from = false, $html = false) {
 
 function kill($message) {
     if (PRODUCTION) {
-      mailadmins($message . "\n\n" . getinfo(), "MySQL Error - MFA Tools", true);
+      mailadmins($message . "\n\n" . getinfo(), "MySQL Error - MFA Tools", false, true);
       header("HTTP/1.0 404 Not Found");
       header("Location: " . URL . "404");
       exit();
