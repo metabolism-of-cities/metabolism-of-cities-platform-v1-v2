@@ -1,5 +1,7 @@
 <?php
+$admin_login = true;
 require_once 'functions.php';
+require_once 'functions.omat.php';
 $section = 5;
 $page = 99;
 
@@ -58,8 +60,6 @@ if ($_POST) {
 
   <form method="post" class="form-horizontal">
 
-  <?php if ($type != 2) { ?>
-
     <div class="form-group">
       <label class="col-sm-2 control-label">Year</label>
       <div class="col-sm-10">
@@ -68,22 +68,22 @@ if ($_POST) {
     </div>
 
     <div class="form-group">
-      <label class="col-sm-2 control-label">Result</label>
+      <label class="col-sm-2 control-label">Value</label>
       <div class="col-sm-10">
-        <input class="form-control" type="text" name="result" value="<?php echo $info->result ?>" />
+        <input class="form-control" type="text" name="result" value="<?php echo $info->result ?>" 
+        <?php if ($optioninfo->measure) { ?>
+        placeholder="Measure: <?php echo $optioninfo->measure ?>"
+        <?php } ?>
+        />
       </div>
     </div>
 
-    <?php } else { ?>
-
-      <div class="form-group">
-        <label class="col-sm-2 control-label">Information</label>
-        <div class="col-sm-10">
-          <textarea class="form-control" name="notes"><?php echo br2nl($info->notes) ?></textarea>
-        </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Information</label>
+      <div class="col-sm-10">
+        <textarea class="form-control" name="notes"><?php echo br2nl($info->notes) ?></textarea>
       </div>
-
-    <?php } ?>
+    </div>
 
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">

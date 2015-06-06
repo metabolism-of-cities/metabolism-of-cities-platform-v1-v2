@@ -182,7 +182,7 @@ can find this! The publication should be related to material flow research.</p>
   <?php if (defined("ADMIN")) { ?>
     <h2>Admin Tools</h2>
     <p>
-      <a href="publication/<?php echo $id ?>" class="btn btn-large btn-primary">
+      <a href="publication/<?php echo $id ?>" class="btn btn-large btn-warning">
         <i class="fa fa-gear"></i> View/edit/activate publication
       </a>
     </p>

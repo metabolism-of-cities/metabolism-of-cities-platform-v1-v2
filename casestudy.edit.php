@@ -28,7 +28,7 @@ if ($_POST) {
     'name' => html($_POST['name']),
   );
   $db->update("case_studies",$post,"id = $id");
-  header("Location: " . URL . "page/casestudy/saved");
+  header("Location: " . URL . "page/casestudy/$id/saved");
   exit();
 }
 
@@ -46,12 +46,12 @@ $info = $db->record("SELECT * FROM case_studies WHERE id = $id");
 
 <?php require_once 'include.header.php'; ?>
 
-  <h1>Edit Case Study MFA Deails</h1>
+  <h1>Case Study Deails</h1>
 
   <form method="post" class="form form-horizontal">
 
     <div class="form-group">
-      <label class="col-sm-2 control-label">Name</label>
+      <label class="col-sm-2 control-label">City/region</label>
       <div class="col-sm-10">
         <input class="form-control" type="name" name="name" value="<?php echo $info->name ?>" />
       </div>

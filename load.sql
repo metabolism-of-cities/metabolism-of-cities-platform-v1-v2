@@ -1066,3 +1066,7 @@ ADD FOREIGN KEY (`user`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPD
 
 ALTER TABLE `users_admin`
 ADD INDEX `privilege` (`privilege`); -- 0.202 s
+
+ALTER TABLE `analysis_options`
+ADD `measure` varchar(255) COLLATE 'utf8_unicode_ci' NULL,
+COMMENT=''; -- 0.319 s

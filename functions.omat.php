@@ -51,13 +51,17 @@ if ($login->isUserLoggedIn() == true) {
   $admincheck = $db->record("SELECT * FROM users_admin WHERE user = $user_id");
   if ($admincheck->privilege) {
     define("ADMIN", $admincheck->privilege);
+  } elseif ($admin_login) {
+    // If this page requires an admin login and none is present, redirect
+    header("Location: " . URL . "page/login");
+    exit();
   }
 } elseif (!$skip_login && !$public_login) {
   header("Location: " . URL . "page/login");
   exit();
 }
 
-if (!$skip_login && !$no_project_selected) {
+if (!$skip_login && !$no_project_selected && !$admin_login) {
   if (!$project) {
     $project = $_GET['project'] ? (int)$_GET['project'] : (int)$_GET['id'];
   }

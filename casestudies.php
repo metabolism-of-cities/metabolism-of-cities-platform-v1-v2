@@ -1,5 +1,7 @@
 <?php
+$skip_login = true;
 require_once 'functions.php';
+require_once 'functions.omat.php';
 $section = 5;
 $page = 99;
 
@@ -29,11 +31,11 @@ $studies = array(
   86 => "SFA",
 );
 
-$options = $db->query("SELECT a.*, t.name AS type,
+$options = $db->query("SELECT a.*, t.name AS type_name, t.id AS type,
   (SELECT COUNT(*) FROM analysis WHERE analysis.option = a.id) AS total
-FROM analysis_options a
-  JOIN analysis_options_types t ON a.type = t.id
-ORDER BY a.type, a.name");
+FROM analysis_options_types t
+  LEFT JOIN analysis_options a ON a.type = t.id
+ORDER BY t.id, a.name");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -108,18 +110,36 @@ ORDER BY a.type, a.name");
 
   <?php } ?>
 
-  <?php if (LOCAL) { ?>
-  <h2>Indicators and information to compare</h2>
+  <?php if (defined("ADMIN")) { ?>
+  <h2 id="meta">Meta Information</h2>
+
+  <?php if ($_GET['added']) { ?>
+
+    <div class="alert alert-success">
+      Information was saved
+    </div>
+
+  <?php } ?>
 
   <div class="optionlist">
 
   <?php $type = false; foreach ($options as $row) { ?>
 
-    <?php if ($row['type'] != $type ) { ?>
-      <h3><?php echo $row['type'] ?></h3>
-      <?php if ($type) { ?></ul><?php } ?>
+    <?php if ($row['type_name'] != $type ) { ?>
+      <?php if ($type) { ?>
+        <p>
+          <a href="admin.indicators.php?id=<?php echo $prevtype ?: $row['type']; ?>" class="btn btn-warning">
+            <i class="fa fa-plus"></i>
+            Add Type
+          </a>
+        </p>
+      <?php } ?>
+
+      <h3><?php echo $row['type_name'] ?></h3>
+      <?php if ($type) { ?></ul>
+      <?php } ?>
       <ul class="nav nav-list">
-    <?php } $type = $row['type']; ?>
+    <?php } $type = $row['type_name']; ?>
 
     <li>
       <a href="regional/options/<?php echo $row['id'] ?>/<?php echo flatten($row['name']) ?>">
@@ -128,11 +148,27 @@ ORDER BY a.type, a.name");
       </a>
     </li>
 
-  <?php } ?>
+  <?php $prevtype = $row['type']; } ?>
 
   </ul>
 
+  <p>
+    <a href="admin.indicators.php?id=<?php echo $prevtype ?>" class="btn btn-warning">
+      <i class="fa fa-plus"></i>
+      Add Type
+    </a>
+  </p>
+
   </div>
+
+  <h3>Manage Groups</h3>
+
+  <p>
+    <a href="admin.indicator.php" class="btn btn-warning">
+      <i class="fa fa-plus"></i>
+        Add Group
+    </a>
+  </p>
 
   <?php } ?>
 

@@ -1,5 +1,7 @@
 <?php
+$skip_login = true;
 require_once 'functions.php';
+require_once 'functions.omat.php';
 $section = 5;
 $page = 99;
 
@@ -14,15 +16,23 @@ FROM case_studies
 $indicators = $db->query("SELECT * 
 FROM analysis 
   JOIN analysis_options o ON analysis.option = o.id
-WHERE analysis.case_study = $id AND o.type = 1 
+WHERE analysis.case_study = $id 
 ORDER BY o.name, analysis.year");
 
 foreach ($indicators as $row) {
-  if ($row['name'] == $previous) {
+  if ($row['year']) {
     $show_table[$row['name']] = true;
     $table[$row['name']][$row['year']] = $row['result'];
+    $table[$row['name']][$row['year']] = $row['result'];
+  } 
+  if ($row['notes']) {
+    $infolist[$row['name']][] = $row['notes'];
   }
   $previous = $row['name'];
+}
+
+if (defined("ADMIN")) {
+  $indicator_list = $db->query("SELECT * FROM analysis_options_types ORDER BY name");
 }
 ?>
 <!DOCTYPE html>
@@ -61,9 +71,9 @@ foreach ($indicators as $row) {
     here. Stay tuned!</em>
   </div>
 
-  <?php if ($indicators && LOCAL) { ?>
+  <?php if ($indicators && defined("ADMIN")) { ?>
 
-    <h2>Indicators</h2>
+    <h2>Meta Information</h2>
 
     <?php if (is_array($show_table)) { ?>
     <?php foreach ($show_table as $value => $key) { ?>
@@ -82,17 +92,39 @@ foreach ($indicators as $row) {
         </table>
       <?php } ?>
     <?php } ?>
+    <?php if (is_array($infolist)) { ?>
+      <?php foreach ($infolist as $key => $value) { ?>
+        <h3><?php echo $key ?></h3>
+        <?php foreach ($infolist[$key] as $subkey => $subvalue) { ?>
+        <div class="well">
+          <?php echo $subvalue ?>
+        </div>
+        <?php } ?>
+      <?php } ?>
+    <?php } ?>
   <?php } ?>
 
-  <div class="alert alert-warning">
-    You can help! We want to go through this study and extract the
-    per-capita material flow data from it. By entering the numbers for
-    each study, we can generate one large overview of the material flow data
-    found on an urban level for many different cities, materials and year. Over
-    time, this could provide very useful and comparative insights for
-    researchers. We would like to work on this in June-August 2015. Are you
-    willing to help? <a href="page/contact">Get in touch!</a>
-  </div>
+  <?php if (defined("ADMIN")) { ?>
+    <h2>Manage meta information</h2>
+    <ul class="nav">
+    <?php foreach ($indicator_list as $row) { ?>
+      <li><a href="analysis/<?php echo $id ?>/<?php echo $row['id'] ?>"><?php echo $row['name'] ?></a></li>
+    <?php } ?>
+    </ul>
+
+  <?php } else { ?>
+
+    <div class="alert alert-warning">
+      You can help! We want to go through this study and extract the
+      per-capita material flow data from it. By entering the numbers for
+      each study, we can generate one large overview of the material flow data
+      found on an urban level for many different cities, materials and year. Over
+      time, this could provide very useful and comparative insights for
+      researchers. We would like to work on this in June-August 2015. Are you
+      willing to help? <a href="page/contact">Get in touch!</a>
+    </div>
+
+  <?php } ?>
 
 
 <?php require_once 'include.footer.php'; ?>
