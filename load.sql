@@ -1052,3 +1052,17 @@ COMMENT=''; -- 0.446 s
 
 INSERT INTO `tags` (`tag`, `parent`, `description`)
 VALUES ('Thesis', '1', ''); -- 0.059 s
+
+CREATE TABLE `users_admin` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `user` int(11) NOT NULL,
+  `privilege` enum('admin') NOT NULL DEFAULT 'admin',
+  FOREIGN KEY (`user`) REFERENCES `users` (`user_id`)
+) COMMENT=''; -- 0.301 s
+
+ALTER TABLE `users_admin`
+DROP FOREIGN KEY `users_admin_ibfk_1`,
+ADD FOREIGN KEY (`user`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.370 s
+
+ALTER TABLE `users_admin`
+ADD INDEX `privilege` (`privilege`); -- 0.202 s

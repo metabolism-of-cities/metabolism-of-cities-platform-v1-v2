@@ -48,6 +48,10 @@ if ($login->isUserLoggedIn() == true) {
     $authorized .= $permissionrow['dataset'] . ",";
   }
   $authorized = substr($authorized, 0, -1);
+  $admincheck = $db->record("SELECT * FROM users_admin WHERE user = $user_id");
+  if ($admincheck->privilege) {
+    define("ADMIN", $admincheck->privilege);
+  }
 } elseif (!$skip_login && !$public_login) {
   header("Location: " . URL . "page/login");
   exit();

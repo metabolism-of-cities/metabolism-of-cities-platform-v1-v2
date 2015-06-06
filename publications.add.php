@@ -1,5 +1,7 @@
 <?php
+$skip_login = true;
 require_once 'functions.php';
+require_once 'functions.omat.php';
 $section = 4;
 $page = 3;
 
@@ -176,6 +178,15 @@ can find this! The publication should be related to material flow research.</p>
     <a href="publications/add" class="btn btn-primary btn-large">Add another publication</a>
     <a href="./" class="btn btn-primary btn-large">Back to the homepage</a>
   </p>
+
+  <?php if (defined("ADMIN")) { ?>
+    <h2>Admin Tools</h2>
+    <p>
+      <a href="publication/<?php echo $id ?>" class="btn btn-large btn-primary">
+        <i class="fa fa-gear"></i> View/edit/activate publication
+      </a>
+    </p>
+  <?php } ?>
 
   </div>
 

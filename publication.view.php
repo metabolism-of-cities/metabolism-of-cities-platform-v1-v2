@@ -1,11 +1,13 @@
 <?php
+$skip_login = true;
 require_once 'functions.php';
+require_once 'functions.omat.php';
 $section = 4;
 
 $id = (int)$_GET['id'];
 $hash = $_GET['hash'];
 
-if (!$_GET['hash']) {
+if (!$_GET['hash'] && !defined("ADMIN")) {
   $sql = "AND papers.status = 'active'";
 }
 
