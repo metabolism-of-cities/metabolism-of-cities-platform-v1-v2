@@ -147,8 +147,8 @@ if (LOCAL) {
 }
 
 function buildList($id) {
-  // Last four are CT only
-  global $contacts, $project, $sources, $totaltime, $totaltime_source;
+  // Last seven are CT only
+  global $contacts, $project, $sources, $totaltime, $totaltime_source, $hitlist_contacts, $hitlist_sources, $overall_subtotal;
   if (is_array($contacts[$id]) || is_array($sources[$id])) {
     echo '<ul>';
     if (is_array($contacts[$id])) {
@@ -156,6 +156,7 @@ function buildList($id) {
       foreach ($contacts[$id] as $key => $value) {
         echo '<li class="viewcontact time-'.$totaltime[$key].'"><a href="omat/'.$project.'/viewcontact/'.$key.'">' . $value . '</a>';
         echo ' <span class="time"><i class="fa fa-clock-o"></i> ' . formatTime($totaltime[$key]) . '</span>';
+        if ($hitlist_contacts[$key]) { $overall_subtotal += $totaltime[$key]; }
 
         if (is_array($contacts[$key]) || is_array($sources[$key])) {
           buildList($key);
@@ -169,6 +170,7 @@ function buildList($id) {
         echo '<li class="time-'.$totaltime_source[$key].'"><i class="fa fa-file-o"></i> <a href="omat/'.$project.'/viewsource/'.$key.'">' . $value . '</a>';
         echo ' <span class="time"><i class="fa fa-clock-o"></i> ' . formatTime($totaltime_source[$key]) . '</span>';
         echo '</li>';
+        if ($hitlist_sources[$key]) { $overall_subtotal += $totaltime[$key]; }
       }
     }
     echo '</ul>';
@@ -355,6 +357,22 @@ $fullwidth = 500;
   </div>
 
   <?php if (LOCAL) { ?>
+  <?php if ($overall_subtotal) { ?>
+  <div class="well">
+    <h2 class="hide">Totals</h2>
+    <ul class="totalblock">
+      <li>
+        <strong>Time</strong>
+        <i class="fa fa-clock-o"></i> <?php echo formatTime($overall_subtotal) ?>
+      </li>
+      <li><strong>Contacts</strong>: <?php echo count($hitlist_contacts) ?></li>
+      <li><strong>Sources</strong>: <?php echo count($hitlist_sources) ?></li>
+    </ul>
+
+  </div>
+
+  <?php } ?>
+
   <?php
     $names = array(
       6 => 'Mail',

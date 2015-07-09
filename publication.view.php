@@ -41,12 +41,18 @@ if ($_GET['statuschange']) {
 
 if ($admin_mode) {
   if ($_POST['tag']) {
-    $post = array(
-      'tag' => html($_POST['tag']),
-      'parent' => (int)$_POST['parent'],
-    );
-    $db->insert("tags",$post);
-    $print = "New tag has been created";
+    $tag = html($_POST['tag']);
+    $check = $db->query("SELECT * FROM tags WHERE tag = '$tag'");
+    if (count($check)) {
+      $error = "Tag already exists! Please make sure the name is unique.";
+    } else {
+      $post = array(
+        'tag' => html($_POST['tag']),
+        'parent' => (int)$_POST['parent'],
+      );
+      $db->insert("tags",$post);
+      $print = "New tag has been created";
+    }
   }
   if ($_GET['status']) {
     $status = mysql_clean($_GET['status']);
@@ -166,6 +172,7 @@ $remove_dashes = array("-" => "");
 <h1><?php echo $info->title ?></h1>
 
   <?php if ($print) { echo "<div class=\"alert alert-success\">$print</div>"; } ?>
+  <?php if ($error) { echo "<div class=\"alert alert-danger\">$error</div>"; } ?>
 
 <dl class="dl dl-horizontal status-<?php echo $info->status ?>">
 

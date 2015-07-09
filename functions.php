@@ -104,7 +104,7 @@ function mailadmins($message, $subject, $from = false, $html = false) {
   }
   mail(WEBMASTER_MAIL, $subject, $message, $headers);
   if (LOCAL) {
-    echo '<pre>' . $message . '</pre>';
+    //echo '<pre>' . $message . '</pre>';
   }
 }
 
