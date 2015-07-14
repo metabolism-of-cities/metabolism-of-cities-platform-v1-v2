@@ -73,7 +73,7 @@ if ($admin_mode) {
   }
   $parents = $db->query("SELECT * FROM tags_parents ORDER BY name");
 } else { 
-  $tags = $db->query("SELECT tags.*, tags_parents.name AS parentname 
+  $tags = $db->query("SELECT DISTINCT tags.*, tags_parents.name AS parentname 
   FROM tags
     JOIN tags_papers ON tags.id = tags_papers.tag
     JOIN tags_parents ON tags.parent = tags_parents.id
