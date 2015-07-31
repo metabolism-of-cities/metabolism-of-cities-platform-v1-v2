@@ -1070,3 +1070,9 @@ ADD INDEX `privilege` (`privilege`); -- 0.202 s
 ALTER TABLE `analysis_options`
 ADD `measure` varchar(255) COLLATE 'utf8_unicode_ci' NULL,
 COMMENT=''; -- 0.319 s
+
+ALTER TABLE `users_admin`
+COMMENT='' ENGINE='InnoDB'; -- 0.469 s
+
+ALTER TABLE `users_admin`
+ADD FOREIGN KEY (`user`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.503 s

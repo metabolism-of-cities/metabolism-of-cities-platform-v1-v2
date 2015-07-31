@@ -19,6 +19,7 @@ if ($id) {
 $optioninfo = $db->record("SELECT * FROM analysis_options WHERE id = $option");
 $caseinfo = $db->record("SELECT * FROM case_studies WHERE id = $case");
 $type = $optioninfo->type;
+$publicationinfo = $db->record("SELECT * FROM papers WHERE id = {$caseinfo->paper}");
 
 if ($_POST) {
   $post = array(
@@ -46,6 +47,7 @@ if ($_POST) {
     <title>Analysis | <?php echo SITENAME ?></title>
     <style type="text/css">
     textarea.form-control{height:200px}
+    .movedown{position:relative;top:7px}
     </style>
   </head>
 
@@ -53,12 +55,31 @@ if ($_POST) {
 
 <?php require_once 'include.header.php'; ?>
 
-  <h1>Analysis</h1>
+  <h1><?php echo $id ? "Edit" : "Add" ?> Data Point</h1>
 
-  <p>Case Study: <a href="publication/<?php echo $id ?>"><?php echo $caseinfo->name ?></a></p>
-  <p>Option: <strong><?php echo $optioninfo->name ?></strong></p>
 
   <form method="post" class="form-horizontal">
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Case Study</label>
+    <div class="col-sm-10 movedown">
+        <a href="casestudy/<?php echo $case ?>"><?php echo $caseinfo->name ?></a>
+    </div>
+  </div>
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Publication</label>
+      <div class="col-sm-10 movedown">
+        <a href="publication/<?php echo $caseinfo->paper ?>"><?php echo $publicationinfo->title ?></a>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Data</label>
+      <div class="col-sm-10 movedown">
+        <?php echo $optioninfo->name ?>
+      </div>
+    </div>
 
     <div class="form-group">
       <label class="col-sm-2 control-label">Year</label>
@@ -70,11 +91,12 @@ if ($_POST) {
     <div class="form-group">
       <label class="col-sm-2 control-label">Value</label>
       <div class="col-sm-10">
-        <input class="form-control" type="text" name="result" value="<?php echo $info->result ?>" 
-        <?php if ($optioninfo->measure) { ?>
-        placeholder="Measure: <?php echo $optioninfo->measure ?>"
-        <?php } ?>
-        />
+        <div class="input-group">
+          <input class="form-control" type="text" name="result" value="<?php echo $info->result ?>" />
+          <?php if ($optioninfo->measure) { ?>
+          <span class="input-group-addon"><?php echo $optioninfo->measure ?></span>
+          <?php } ?>
+        </div>
       </div>
     </div>
 

@@ -3,10 +3,6 @@ require_once 'functions.php';
 $section = 5;
 $page = 99;
 
-if (PRODUCTION) {
-  die();
-}
-
 $id = (int)$_GET['id'];
 $new = (int)$_GET['new'];
 
