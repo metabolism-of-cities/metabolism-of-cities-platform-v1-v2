@@ -13,7 +13,7 @@ $id = (int)$_GET['edit'];
 if ($id) {
   $info = $db->record("SELECT * FROM analysis WHERE id = $id");
   $case = $info->case_study;
-  $option = $info->option;
+  $option = $info->analysis_option;
 }
 
 $optioninfo = $db->record("SELECT * FROM analysis_options WHERE id = $option");
@@ -24,7 +24,7 @@ $publicationinfo = $db->record("SELECT * FROM papers WHERE id = {$caseinfo->pape
 if ($_POST) {
   $post = array(
     'result' => $_POST['result'] ? (float)$_POST['result'] : NULL,
-    'option' => $option,
+    'analysis_option' => $option,
     'case_study' => $case,
     'year' => $_POST['year'] ? (int)$_POST['year'] : NULL,
     'notes' => $_POST['notes'] ? html($_POST['notes']) : NULL,

@@ -15,7 +15,7 @@ FROM case_studies
 
 $indicators = $db->query("SELECT * 
 FROM analysis 
-  JOIN analysis_options o ON analysis.option = o.id
+  JOIN analysis_options o ON analysis.analysis_option = o.id
 WHERE analysis.case_study = $id 
 ORDER BY o.name, analysis.year");
 

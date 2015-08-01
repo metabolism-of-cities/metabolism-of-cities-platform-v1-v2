@@ -1076,3 +1076,11 @@ COMMENT='' ENGINE='InnoDB'; -- 0.469 s
 
 ALTER TABLE `users_admin`
 ADD FOREIGN KEY (`user`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.503 s
+
+ALTER TABLE `analysis`
+CHANGE `option` `analysis_option` int(10) unsigned NOT NULL AFTER `id`,
+COMMENT=''; -- 0.664 s
+
+ALTER TABLE `analysis`
+CHANGE `result` `result` decimal(15,2) NULL AFTER `case_study`,
+COMMENT=''; -- 0.490 s
