@@ -32,7 +32,7 @@ $studies = array(
 );
 
 $options = $db->query("SELECT a.*, t.name AS type_name, t.id AS type,
-  (SELECT COUNT(*) FROM analysis WHERE analysis.option = a.id) AS total
+  (SELECT COUNT(*) FROM analysis WHERE analysis.analysis_option = a.id) AS total
 FROM analysis_options_types t
   LEFT JOIN analysis_options a ON a.type = t.id
 ORDER BY t.id, a.name");
