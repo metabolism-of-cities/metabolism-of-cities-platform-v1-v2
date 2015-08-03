@@ -12,10 +12,10 @@ if (!$info) {
 
 $list = $db->query("SELECT *, case_studies.name, papers.title, analysis.year
 FROM analysis 
-  JOIN analysis_options o ON analysis.option = o.id
+  JOIN analysis_options o ON analysis.analysis_option = o.id
   JOIN case_studies ON analysis.case_study = case_studies.id
   JOIN papers ON case_studies.paper = papers.id
-WHERE analysis.option = $id
+WHERE analysis.analysis_option = $id
 ORDER BY case_studies.name, analysis.year");
 
 ?>
@@ -48,7 +48,7 @@ ORDER BY case_studies.name, analysis.year");
     <tr>
       <td><a href="casestudy/<?php echo $row['case_study'] ?>"><?php echo $row['name'] ?></a></td>
       <td><?php echo $row['year'] ?></td>
-      <td><?php echo $row['result'] ? $row['result'] : $row['notes'] ?></td>
+      <td><?php echo $row['result'] ? number_format($row['result'],2) : $row['notes'] ?></td>
       <td><a href="publication/<?php echo $row['paper'] ?>"><?php echo $row['title'] ?></a></td>
     </tr>
   <?php } ?>
