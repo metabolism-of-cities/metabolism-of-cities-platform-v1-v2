@@ -91,16 +91,36 @@ $page = 4;
       <a href="http://cml.leiden.edu/organisation/">Institute of Environmental Sciences (CML)</a> at Leiden University
       </li>
     </ul>
-  </li>
     <li>It would be useful to have a section with 'relevant links' to websites that are of interest.</li>
-    <li>We want to create a database with regional metabolism indicators. That is, we plan to examine a variety of 
+  </ul>
+
+  <h2>Urban data mining project</h2>
+  <p>
+    We want to create a database with regional metabolism indicators. That is, we plan to examine a variety of 
     research studies that have calculated particular values (material extraction, emissions, construction material 
     use, imports, exports, etc.) for an urban/provincial region. By creating one large masterlist of these values
     it is much easier for other researchers to see what values are out there and to compare their own data to 
     other studies. We need help identifying suitable studies, and extracting relevant numbers! 
-    </li>
+  </p>
 
+  <p>There are a variety of things to do, some of which include:</p>
+
+  <ul>
+    <li>Extracting the actual data from studies, and putting them in our database</li>
+    <li>Option to download all data as a CSV file</li>
+    <li>Present the results as comparative data</li>
+    <li>Brainstorming and implementing ideas about how to present the numbers</li>
+    <li>Making data entry easy:
+    <ul>
+      <li>Automatic unit conversion when entering data</li>
+    </ul>
+    </li>
   </ul>
+
+  <p>
+    There are more things to do and more ideas in place, so if you are interested 
+    <a href="page/contact">drop us a line</a> to discuss the options!
+  </p>
 
   <h2>Quality Control</h2>
   <ul>
