@@ -172,7 +172,7 @@ ORDER BY dqi_sections.name, dqi_classifications.score");
       clear:both;
       padding-top:22px;
     }
-
+    .col-sm-3 { white-space:nowrap; overflow:hidden; text-overflow: ellipsis; }
     </style>
   </head>
 
@@ -214,6 +214,9 @@ ORDER BY dqi_sections.name, dqi_classifications.score");
       <dl class="dl-horizontal">
         <dt>Data Point ID</dt>
         <dd><?php echo $single_info->id ?></dd>
+
+        <dt>Material</dt>
+        <dd><?php echo $info->name ?></dd>
 
         <dt>Year</dt>
         <dd><?php echo $single_info->year ?></dd>

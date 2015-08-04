@@ -137,7 +137,7 @@ $types = $db->query("SELECT * FROM mfa_dataset_types ORDER BY name");
 
   </fieldset>
 
-    <fieldset class="hide">
+    <fieldset class="hde">
       <legend>Dataset Access</legend>
       
       <div class="btn-group" data-toggle="buttons">
