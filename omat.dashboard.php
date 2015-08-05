@@ -148,6 +148,12 @@ ORDER BY mfa_data.date DESC LIMIT 5");
       <dt>Access</dt>
       <dd><?php echo $info->access ?></dd>
 
+      <?php if ($info->access == "link_only") { ?>
+        <dt>Private link</dt>
+        <dd><a href="<?php echo URL ?>omat/<?php echo $id ?>/projectinfo">
+          <?php echo URL ?>omat/<?php echo $id ?>/projectinfo</a></dd>
+      <?php } ?>
+
       <?php if ($info->research_project) { ?>
         <dt>Project</dt>
         <dd><a href="research/<?php echo $info->research_project ?>"><?php echo $info->research_name ?></a></dd>
