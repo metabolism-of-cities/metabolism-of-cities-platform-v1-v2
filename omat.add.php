@@ -9,6 +9,12 @@ $page = 2;
 // load the registration class
 require_once("login/classes/Registration.php");
 
+if ($login->isUserLoggedIn() == true) {
+  header("Location: " . URL . "omat/create");
+  exit();
+}
+
+
 // create the registration object. when this object is created, it will do all registration stuff automatically
 // so this single line handles the entire registration process.
 $registration = new Registration();
