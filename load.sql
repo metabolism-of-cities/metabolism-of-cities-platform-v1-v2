@@ -1084,3 +1084,7 @@ COMMENT=''; -- 0.664 s
 ALTER TABLE `analysis`
 CHANGE `result` `result` decimal(15,2) NULL AFTER `case_study`,
 COMMENT=''; -- 0.490 s
+
+ALTER TABLE `research`
+ADD `deleted_on` datetime NULL,
+COMMENT=''; -- 0.264 s

@@ -40,6 +40,7 @@ if ($_POST) {
     $added = true;
     $encrypt = encrypt($id);
     $encrypt = substr($encrypt, 0, 20);
+    mail(EMAIL, "New research project added", "New project was added: " . URL . "research/$id", "From:automail@mfa-tools.net");
   }
 }
 
@@ -76,7 +77,7 @@ $status = array('ongoing', 'finished', 'paused', 'cancelled');
             <br />
             Save or bookmark this link for future reference.<br />
             <br />
-            <a href="research/<?php echo $id ?>">View the updated page here.</a>
+            <a href="research/<?php echo $id ?>">View the research page here.</a>
         </div>
 
         <?php } else { ?>

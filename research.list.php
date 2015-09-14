@@ -3,7 +3,7 @@ require_once 'functions.php';
 $section = 3;
 $page = 1;
 
-$list = $db->query("SELECT * FROM research ORDER BY title");
+$list = $db->query("SELECT * FROM research WHERE deleted_on IS NULL ORDER BY title");
 
 ?>
 <!DOCTYPE html>
