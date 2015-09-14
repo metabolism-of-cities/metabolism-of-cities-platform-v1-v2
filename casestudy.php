@@ -33,6 +33,13 @@ foreach ($indicators as $row) {
 
 if (defined("ADMIN")) {
   $indicator_list = $db->query("SELECT * FROM analysis_options_types ORDER BY name");
+  if ($_GET['delete']) {
+    if (!count($indicators)) {
+      $db->query("DELETE FROM case_studies WHERE id = $id");
+      header("Location: " . URL . "casestudies.php?deleted=true");
+      exit();
+    }
+  }
 }
 ?>
 <!DOCTYPE html>
@@ -105,6 +112,9 @@ if (defined("ADMIN")) {
   <?php } ?>
 
   <?php if (defined("ADMIN")) { ?>
+  <?php if (!$indicators) { ?>
+      <a href="casestudy.php?id=<?php echo $id ?>&amp;delete=true" onclick="javascript:return confirm('Are you sure?')" class="btn btn-danger">Delete this as a regional case study</a>
+  <?php } ?>
     <h2>Manage meta information</h2>
     <ul class="nav">
     <?php foreach ($indicator_list as $row) { ?>
@@ -120,7 +130,7 @@ if (defined("ADMIN")) {
       each study, we can generate one large overview of the material flow data
       found on an urban level for many different cities, materials and year. Over
       time, this could provide very useful and comparative insights for
-      researchers. We would like to work on this in June-August 2015. Are you
+      researchers. We would like to work on this in the second half of 2015. Are you
       willing to help? <a href="page/contact">Get in touch!</a>
     </div>
 

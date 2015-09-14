@@ -36,6 +36,10 @@ $options = $db->query("SELECT a.*, t.name AS type_name, t.id AS type,
 FROM analysis_options_types t
   LEFT JOIN analysis_options a ON a.type = t.id
 ORDER BY t.id, a.name");
+
+if ($_GET['deleted']) {
+  $print = "Case study was deleted";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -72,7 +76,7 @@ ORDER BY t.id, a.name");
     each study, we can generate one large overview of the material flow data
     found on an urban level for many different cities, materials and year. Over
     time, this could provide very useful and comparative insights for
-    researchers. We would like to work on this in June-August 2015. Are you
+    researchers. We would like to work on this in the second half of 2015. Are you
     willing to help? <a href="page/contact">Get in touch!</a>
   </div>
 
