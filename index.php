@@ -8,7 +8,7 @@ $papers = $db->record("SELECT SQL_CACHE COUNT(*) AS total FROM papers WHERE stat
 $collections = $db->record("SELECT SQL_CACHE COUNT(*) AS total FROM tags_parents");
 $tags = $db->record("SELECT SQL_CACHE COUNT(*) AS total FROM tags");
 $tagsused = $db->record("SELECT SQL_CACHE COUNT(*) AS total FROM tags_papers");
-$projects = $db->record("SELECT SQL_CACHE COUNT(*) AS total FROM research");
+$projects = $db->record("SELECT SQL_CACHE COUNT(*) AS total FROM research WHERE deleted_on IS NULL");
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -9,7 +9,7 @@
           Creative Commons Attribution 4.0 International license.
           </a>
           <span class="right">
-          Last update: <strong>September 2015</strong>
+          Last update: <strong>October 2015</strong>
           </span>
         </p>
       </div>
