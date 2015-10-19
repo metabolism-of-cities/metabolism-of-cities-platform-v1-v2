@@ -9,7 +9,7 @@ $type = (int)$_GET['type'];
 if ($_GET['delete']) {
   $delete = (int)$_GET['delete'];
   $db->query("DELETE FROM analysis WHERE id = $delete LIMIT 1");
-  $print = "Item successfully removed";
+  $error = "Item successfully removed";
 }
 
 $info = $db->record("SELECT * FROM case_studies WHERE id = $id");
@@ -19,6 +19,7 @@ FROM analysis_options
   LEFT JOIN analysis ON analysis_options.id = analysis.analysis_option AND analysis.case_study = $id
 WHERE type = $type");
 
+$count = $db->record("SELECT COUNT(*) AS total FROM analysis WHERE case_study = $id");
 
 ?>
 <!DOCTYPE html>
@@ -26,6 +27,9 @@ WHERE type = $type");
   <head>
     <?php echo $header ?>
     <title>Analysis | <?php echo SITENAME ?></title>
+    <style type="text/css">
+    .alert-lg{font-size:200%}
+    </style>
   </head>
 
   <body>
@@ -35,8 +39,15 @@ WHERE type = $type");
   <h1>Analysis</h1>
 
   <?php if ($print) { echo "<div class=\"alert alert-success\">$print</div>"; } ?>
+  <?php if ($error) { ?>
+    <div class="alert alert-danger alert-lg">
+      <i class="fa fa-exclamation-triangle"></i>
+      <?php echo $error ?>
+    </div>
+  <?php } ?>
 
   <p>Case study: <a href="casestudy/<?php echo $id ?>"><?php echo $info->name ?></a></p>
+  <p>Total count: <strong><?php echo $count->total ?></strong></p>
 
   <table class="table table-striped ellipsis">
     <tr>

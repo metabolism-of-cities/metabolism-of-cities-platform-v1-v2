@@ -40,6 +40,8 @@ ORDER BY t.id, a.name");
 if ($_GET['deleted']) {
   $print = "Case study was deleted";
 }
+
+$count = $db->record("SELECT COUNT(*) AS total FROM analysis");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -116,6 +118,8 @@ if ($_GET['deleted']) {
 
   <?php if (defined("ADMIN")) { ?>
   <h2 id="meta">Meta Information</h2>
+
+  <p><strong><?php echo $count->total ?></strong> records found in total</p>
 
   <?php if ($_GET['added']) { ?>
 
