@@ -49,6 +49,13 @@ if (count($dataresults)) {
     }
   }
 }
+
+$population_list = $db->query("SELECT * FROM mfa_population WHERE dataset = $project");
+
+foreach ($population_list as $row) {
+  $population[$row['year']] = $row['population'];
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -88,6 +95,7 @@ if (count($dataresults)) {
     .moreinfo{opacity:0.7}
     .moreinfo:hover{opacity:1}
     #chart{height:400px}
+    table tr.level2, table tr.level3, table tr.level4{display:none}
     .cut{
       max-width: 200px;
       white-space: nowrap;
@@ -102,9 +110,9 @@ if (count($dataresults)) {
 
 <?php require_once 'include.header.php'; ?>
 
-  <a href="omat/<?php echo $project ?>/reports-table/<?php echo $id ?><?php echo $values_only ? '' : '/values-only'; ?>"
+  <a href="<?php echo $omat_link ?>/<?php echo $project ?>/reports-table/<?php echo $id ?><?php echo $values_only ? '' : '/values-only'; ?>"
   class="printhide btn btn-<?php echo $values_only ? 'info' : 'default'; ?> pull-right">
-    Hide zero values
+    Hide empty values
   </a>
 
   <h1>
@@ -123,10 +131,10 @@ if (count($dataresults)) {
   </ol>
 
   <p class="display">
-    <a href="#" class="btn btn-default" data-level="1"><strong>1</strong> First level categories only</a>
+    <a href="#" class="btn btn-primary" data-level="1"><strong>1</strong> First level categories only</a>
     <a href="#" class="btn btn-default" data-level="2"><strong>2</strong> Up to second level</a>
     <a href="#" class="btn btn-default" data-level="3"><strong>3</strong> Up to third level</a>
-    <a href="#" class="btn btn-primary" data-level="all">Show all</a>
+    <a href="#" class="btn btn-default" data-level="all">Show all</a>
   </p>
 
   <table class="table table-striped data">
@@ -134,6 +142,9 @@ if (count($dataresults)) {
       <th></th>
       <?php foreach ($years as $year) { ?>
         <th><?php echo $year ?></th>
+        <?php if ($population[$year]) { $extra_th++; ?>
+          <th>Per cap.</th>
+        <?php } ?>
       <?php } ?>
     </tr>
     <?php $count = 0; ?>
@@ -150,14 +161,19 @@ if (count($dataresults)) {
         <td>
         <?php if (!$row['subcategories'] || $datapoint) { ?>
           <a href="<?php echo $omat_link ?>/<?php echo $project ?>/reports-data/<?php echo $year ?>/<?php echo $row['id'] ?>">
-            <?php echo number_format($datapoint,$dataset->decimal_precision); ?>
+            <?php $data_print = $datapoint; ?>
+            <?php echo number_format($data_print,$dataset->decimal_precision); ?>
             <?php if ($datapoint > 0) { $all_zero = false; } ?>
           </a>
         <?php } else { ?>
-          <?php echo number_format($total[$row['code']][$year], $dataset->decimal_precision) ?>
+          <?php $data_print = $total[$row['code']][$year]; ?>
+          <?php echo number_format($data_print, $dataset->decimal_precision) ?>
             <?php if ($total[$row['code']][$year] > 0) { $all_zero = false; } ?>
         <?php } ?>
         </td>
+        <?php if ($population[$year]) { ?>
+          <td><?php echo number_format($data_print/$population[$year]*1000, $dataset->decimal_precision) ?></td>          
+        <?php } ?>
       <?php } ?>
       <?php if ($all_zero && $values_only) { $hiderow[] = $count; } ?>
       </tr>
@@ -167,6 +183,9 @@ if (count($dataresults)) {
       <th><?php echo $info->name ?></th>
       <?php foreach ($years as $year) { ?>
         <th><?php echo number_format($final[$year],$dataset->decimal_precision) ?></th>
+        <?php if ($population[$year]) { ?>
+          <th><?php echo number_format($final[$year]/$population[$year]*1000,$dataset->decimal_precision) ?></th>
+        <?php } ?>
       <?php } ?>
     </tr>
   </table>

@@ -228,6 +228,7 @@ AddDefaultCharset utf-8
     RewriteRule ^page/(.+)/?$ $1.php
     RewriteRule ^casestudy/(.+)/?$ casestudy.php?id=$1
     RewriteRule ^omat/([0-9]+)/sources/?$ omat.contacts.php?id=$1
+    RewriteRule ^(omat|omat-public)/([0-9]+)/source/([0-9]+)?$ omat.sourcedetails.php?project=$2&id=$3&type=$1
     RewriteRule ^regional/options/([0-9]+)/(.*)/?$ analysis.options.php?id=$1
     RewriteRule ^omat/data-edit/([0-9]+)?$ omat.data-point.php?id=$1
     RewriteRule ^omat/data-entry/([0-9]+)?$ omat.data-point.php?material=$1
@@ -261,6 +262,7 @@ AddDefaultCharset utf-8
     RewriteRule ^omat/([0-9]+)/(.+)/([0-9]+)/?$ omat.$2.php?project=$1&id=$3
     RewriteRule ^omat/([0-9]+)/(.+)/(.+)/?$ omat.$2.php?id=$1&$3=true
     RewriteRule ^omat/([0-9]+)/(.+)/?$ omat.$2.php?id=$1
+    RewriteRule ^omat-public/([0-9]+)/indicator-list?$ omat.indicator-list.php?id=$1&public_login=true
 
     RewriteRule ^omat/(.+)/([0-9]+)/(.+)/([0-9]+)?$ omat.$1.php?id=$2&$3=$4
     RewriteRule ^omat/(.+)/([0-9]+)/(.+)/?$ omat.$1.php?id=$2&message=$3

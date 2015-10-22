@@ -116,12 +116,13 @@ $omat_menu = array(
     'label' => 'Reports', 
     'url' => "omat/$project/reports", 
     'menu' => array(
-      1 => array('label' => 'Data Overview', 'url' => "omat/$project/reports-dataoverview"),
-      2 => array('label' => 'Indicators', 'url' => "omat/$project/reports-indicators"),
-      6 => array('label' => 'Graphs', 'url' => "omat/$project/reports-graphs"),
-      3 => array('label' => 'Data Tables', 'url' => "omat/$project/reports-tables"),
-      4 => array('label' => 'Activity Log', 'url' => "omat/$project/reports-activities"),
-      5 => array('label' => 'Travel Log', 'url' => "omat/$project/reports-travel"),
+      1 => array('label' => 'Data Overview', 'url' => "omat/$project/reports-dataoverview", 'icon' => 'list'),
+      2 => array('label' => 'Indicators', 'url' => "omat/$project/reports-indicators", 'icon' => 'bar-chart'),
+      6 => array('label' => 'Graphs', 'url' => "omat/$project/reports-graphs", 'icon' => 'line-chart'),
+      3 => array('label' => 'Data Tables', 'url' => "omat/$project/reports-tables", 'icon' => 'table'),
+      4 => array('label' => 'Activity Log', 'url' => "omat/$project/reports-activities", 'icon' => 'table'),
+      5 => array('label' => 'Travel Log', 'url' => "omat/$project/reports-travel", 'icon' => 'bicycle'),
+      7 => array('label' => 'Data Sources', 'url' => "omat/$project/reports-sources", 'icon' => 'arrow-circle-down'),
     ),
   ),
 );
@@ -155,8 +156,13 @@ if (!$check->dqi) {
 
 if ($public_login) {
   unset($omat_menu[3]['menu'][1]);
+  unset($omat_menu[3]['menu'][4]);
+  unset($omat_menu[3]['menu'][5]);
 }
 
+if (!$check->contact_management) {
+  unset($omat_menu[3]['menu'][7]);
+}
 function hierarchyTree($id) {
   global $db, $ancestors;
   $info = $db->record("SELECT id, name, belongs_to FROM mfa_contacts WHERE id = $id");
@@ -191,6 +197,46 @@ function findFirstParent($id, $original = false) {
   } else {
     findFirstParent($parent[$id], $original);
   }
+}
+
+
+function materialGroupFlow($group) {
+  global $db;
+
+  $dataresults = $db->query("SELECT SQL_CACHE SUM(data*multiplier) AS total, 
+  mfa_materials.mfa_group, mfa_data.year
+    FROM mfa_data
+    JOIN mfa_materials ON mfa_data.material = mfa_materials.id
+  WHERE mfa_materials.mfa_group = $group AND include_in_totals = 1
+  GROUP BY mfa_materials.mfa_group, mfa_data.year");
+
+   if (count($dataresults)) {
+     foreach ($dataresults as $row) {
+       $data[$row['year']][$group] = $row['total'];
+     }
+   }
+   return $data;
+}
+
+function materialFlow($group, $material) {
+  global $db;
+
+  $info = $db->record("SELECT code FROM mfa_materials WHERE id = $material");
+
+  $dataresults = $db->query("SELECT SQL_CACHE SUM(data*multiplier) AS total,
+  mfa_materials.mfa_group, mfa_data.year
+    FROM mfa_data
+    JOIN mfa_materials ON mfa_data.material = mfa_materials.id
+  WHERE ((mfa_materials.mfa_group = {$group} 
+    AND mfa_materials.code LIKE '{$info->code}%')) AND include_in_totals = 1
+  GROUP BY mfa_data.year");
+
+   if (count($dataresults)) {
+     foreach ($dataresults as $row) {
+       $data[$row['year']][$group][$material] = $row['total'];
+     }
+   }
+   return $data;
 }
 
 ?>

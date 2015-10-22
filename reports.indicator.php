@@ -23,7 +23,8 @@ FROM mfa_indicators i
   LEFT JOIN papers ON i.more_information = papers.id  
 WHERE i.id = $id");
 
-$indicator_types = $db->query("SELECT * FROM mfa_indicators WHERE type = {$info->type} AND (dataset = $project OR dataset IS NULL)");
+$indicator_types = $db->query("SELECT * FROM mfa_indicators 
+  WHERE type = {$info->type} AND (dataset = $project OR dataset IS NULL)");
 
 $formula = $db->query("SELECT f.*, mfa_groups.section, mfa_groups.name
 FROM mfa_indicators_formula f

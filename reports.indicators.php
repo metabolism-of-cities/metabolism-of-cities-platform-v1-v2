@@ -59,7 +59,7 @@ if ($indicator) {
 
 <?php require_once 'include.header.php'; ?>
 
-  <a href="omat/<?php echo $project ?>/indicator-list" class="btn btn-primary pull-right">
+  <a href="<?php echo $omat_link ?>/<?php echo $project ?>/indicator-list" class="btn btn-primary pull-right">
     View all
   </a>
 
@@ -90,11 +90,11 @@ if ($indicator) {
       <?php } $type = $row['type_name']; ?>
 
         <a href="<?php echo $public_login ? 'omat-public' : 'omat'; ?>/<?php echo $project ?>/reports-indicator/<?php echo $row['id'] ?>" class="list-group-item">
-          <h4 class="list-group-item-heading"><?php echo $row['name'] ?></h4>
-          <p class="list-group-item-text"><?php echo truncate($row['description'],140) ?>
           <?php if ($row['formula']) { ?>
             <span class="badge pull-right"><i class="fa fa-bar-chart"></i></span>
           <?php } ?>
+          <h4 class="list-group-item-heading"><?php echo $row['name'] ?></h4>
+          <p class="list-group-item-text"><?php echo truncate($row['description'],140) ?>
           </p>
         </a>
 

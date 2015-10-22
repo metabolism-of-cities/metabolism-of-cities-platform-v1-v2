@@ -65,9 +65,12 @@ $list = $db->query("SELECT mfa_data.*, mfa_sources.name AS source_name, mfa_scal
   LEFT JOIN mfa_scales ON mfa_data.scale = mfa_scales.id
 WHERE material = $id AND mfa_data.include_in_totals = 1 AND year = $year");
 
-// It is possible that several data points have been entered for the same year for the same material (e.g. if there are two 
-// sub materials and no sub division has been made. We get main data from one of these data points, and show all the related values. 
-// If data is different between data points (e.g. source or scale), then sub categories should be made by the user instead. 
+// It is possible that several data points have been entered for the 
+// same year for the same material (e.g. if there are two 
+// sub materials and no sub division has been made. We get main 
+// data from one of these data points, and show all the related values. 
+// If data is different between data points (e.g. source or scale), 
+// then sub categories should be made by the user instead. 
 
 $single_info = $db->record("SELECT mfa_data.*, mfa_sources.name AS source_name, mfa_scales.name AS scale_name
   FROM mfa_data
@@ -224,14 +227,14 @@ ORDER BY dqi_sections.name, dqi_classifications.score");
         <dt>Value</dt>
         <?php $total = 0; foreach ($list as $row) { ?>
           <dd>
-            <?php echo number_format($row['data'],2) ?> 
+            <?php echo number_format($row['data'],$dataset->decimal_precision) ?> 
             <?php if ($row['multiplier'] != 1) { ?> x <?php echo $row['multiplier'] ?> = 
-              <?php echo number_format($row['data']*$row['multiplier'],2) ?>
+              <?php echo number_format($row['data']*$row['multiplier'],$dataset->decimal_precision) ?>
             <?php } ?>
           <?php echo $projectinfo->measurement ?></dd>
         <?php $total += $row['data']*$row['multiplier']; } ?>
         <?php if (count($list) > 1) { ?>
-          <dd><strong>Total: <?php echo number_format($total,2) ?></strong></dd>
+          <dd><strong>Total: <?php echo number_format($total,$dataset->decimal_precision) ?></strong></dd>
         <?php } ?>
 
         <?php if ($single_info->source_id || $single_info->source) { ?>
@@ -239,7 +242,7 @@ ORDER BY dqi_sections.name, dqi_classifications.score");
           <dt>Source</dt>
           <?php if ($single_info->source_id) { ?>
             <dd>
-              <a href="omat/<?php echo $project ?>/viewsource/<?php echo $single_info->source_id ?>">
+              <a href="<?php echo $omat_link ?>/<?php echo $project ?>/source/<?php echo $single_info->source_id ?>">
                 <?php echo $single_info->source_name ?>
               </a>
             </dd>
@@ -287,7 +290,7 @@ ORDER BY dqi_sections.name, dqi_classifications.score");
         </fieldset>
       <?php } ?>
 
-      <?php if ($single_info->source_id) { ?>
+      <?php if ($single_info->source_id && !$public_login) { ?>
 
       <?php
         $origins = traceOrigins($single_info->source_id, 'source');

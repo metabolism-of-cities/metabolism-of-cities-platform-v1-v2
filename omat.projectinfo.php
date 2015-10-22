@@ -66,9 +66,6 @@ if ($info->access == "private") {
       <dt>Period</dt>
       <dd><?php echo $info->year_start ?> <?php echo $info->year_end > $info->year_start ? " - " . $info->year_end : ''; ?></dd>
 
-      <dt>Decimal precision</dt>
-      <dd><?php echo $info->decimal_precision ?></dd>
-
       <dt>Standard measure</dt>
       <dd><?php echo $info->measurement ?></dd>
 
@@ -82,6 +79,9 @@ if ($info->access == "private") {
       <li><a href="omat-public/<?php echo $id ?>/reports-indicators" class="btn btn-success"><i class="fa fa-bar-chart"></i> Indicators</a></li>
       <li><a href="omat-public/<?php echo $id ?>/reports-graphs" class="btn btn-success"><i class="fa fa-line-chart"></i> Graphs</a></li>
       <li><a href="omat-public/<?php echo $id ?>/reports-tables" class="btn btn-success"><i class="fa fa-table"></i> Data Tables</a></li>
+      <?php if ($info->resource_management) { ?>
+      <li><a href="omat-public/<?php echo $id ?>/reports-sources" class="btn btn-success"><i class="fa fa-arrow-circle-down"></i> Data Sources</a></li>
+      <?php } ?>
     </ul>
     <?php if ($info->source_paper) { ?>
       <div class="well">
