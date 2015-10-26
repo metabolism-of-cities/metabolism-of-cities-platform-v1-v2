@@ -1088,3 +1088,43 @@ COMMENT=''; -- 0.490 s
 ALTER TABLE `research`
 ADD `deleted_on` datetime NULL,
 COMMENT=''; -- 0.264 s
+
+ALTER TABLE `dqi_sections`
+DROP FOREIGN KEY `dqi_sections_ibfk_1`,
+ADD FOREIGN KEY (`dataset`) REFERENCES `mfa_dataset` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.357 s
+
+ALTER TABLE `mfa_scales`
+DROP FOREIGN KEY `mfa_scales_ibfk_1`,
+ADD FOREIGN KEY (`dataset`) REFERENCES `mfa_dataset` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.659 s
+
+ALTER TABLE `mfa_sources`
+DROP FOREIGN KEY `mfa_sources_ibfk_2`,
+ADD FOREIGN KEY (`dataset`) REFERENCES `mfa_dataset` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.758 s
+
+ALTER TABLE `mfa_contacts`
+DROP FOREIGN KEY `mfa_contacts_ibfk_7`,
+ADD FOREIGN KEY (`belongs_to`) REFERENCES `mfa_contacts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.991 s
+
+ALTER TABLE `mfa_sources`
+DROP FOREIGN KEY `mfa_sources_ibfk_4`,
+ADD FOREIGN KEY (`belongs_to`) REFERENCES `mfa_contacts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.703 s
+
+ALTER TABLE `mfa_activities`
+DROP FOREIGN KEY `mfa_activities_ibfk_1`,
+ADD FOREIGN KEY (`dataset`) REFERENCES `mfa_dataset` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.429 s
+
+ALTER TABLE `mfa_leads`
+DROP FOREIGN KEY `mfa_leads_ibfk_2`,
+ADD FOREIGN KEY (`from_source`) REFERENCES `mfa_sources` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.548 s
+
+ALTER TABLE `mfa_leads`
+DROP FOREIGN KEY `mfa_leads_ibfk_1`,
+ADD FOREIGN KEY (`from_contact`) REFERENCES `mfa_contacts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.592 s
+
+ALTER TABLE `mfa_files`
+DROP FOREIGN KEY `mfa_files_ibfk_1`,
+ADD FOREIGN KEY (`dataset`) REFERENCES `mfa_dataset` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.557 s
+
+ALTER TABLE `mfa_dqi`
+DROP FOREIGN KEY `mfa_dqi_ibfk_1`,
+ADD FOREIGN KEY (`classification`) REFERENCES `dqi_classifications` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.439 s
