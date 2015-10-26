@@ -18,7 +18,7 @@ WHERE mfa_dataset.id = $id");
 
 if ($info->access == "private") {
   kill("No access");
-}
+} 
 
 ?>
 <!DOCTYPE html>
@@ -26,6 +26,9 @@ if ($info->access == "private") {
   <head>
     <?php echo $header ?>
     <title><?php echo $info->name ?> | <?php echo SITENAME ?></title>
+    <?php if ($info->access == 'link_only') { ?>
+      <meta name="robots" content="noindex" />      
+    <?php } ?>
     <style type="text/css">
       dd { max-width:200px;white-space:nowrap; overflow:hidden; text-overflow: ellipsis; }
       dd,dt{padding-bottom:5px}

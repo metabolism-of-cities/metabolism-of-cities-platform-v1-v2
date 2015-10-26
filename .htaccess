@@ -251,6 +251,7 @@ AddDefaultCharset utf-8
     RewriteRule ^omat/([0-9]+)/reports-(.+)/([0-9]+)/(.+)/?$ reports.$2.php?id=$1&$4=$3
     RewriteRule ^omat-public/([0-9]+)/reports-(.+)/([0-9]+)/(.+)/?$ reports.$2.php?id=$1&$4=$3&public_login=true
     RewriteRule ^omat/([0-9]+)/reports-(.+)/([0-9]+)/?$ reports.$2.php?project=$1&id=$3
+    RewriteRule ^omat-public/([0-9]+)/reports-indicators?$ omat.indicator-list.php?id=$1&public_login=true
     RewriteRule ^omat-public/([0-9]+)/reports-(.+)/([0-9]+)/?$ reports.$2.php?project=$1&id=$3&public_login=true
     RewriteRule ^omat/([0-9]+)/reports-(.+)/(.+)/?$ reports.$2.php?id=$1&$3=true
     RewriteRule ^omat/([0-9]+)/reports-(.+)/?$ reports.$2.php?id=$1
@@ -262,7 +263,6 @@ AddDefaultCharset utf-8
     RewriteRule ^omat/([0-9]+)/(.+)/([0-9]+)/?$ omat.$2.php?project=$1&id=$3
     RewriteRule ^omat/([0-9]+)/(.+)/(.+)/?$ omat.$2.php?id=$1&$3=true
     RewriteRule ^omat/([0-9]+)/(.+)/?$ omat.$2.php?id=$1
-    RewriteRule ^omat-public/([0-9]+)/indicator-list?$ omat.indicator-list.php?id=$1&public_login=true
 
     RewriteRule ^omat/(.+)/([0-9]+)/(.+)/([0-9]+)?$ omat.$1.php?id=$2&$3=$4
     RewriteRule ^omat/(.+)/([0-9]+)/(.+)/?$ omat.$1.php?id=$2&message=$3

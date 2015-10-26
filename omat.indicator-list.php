@@ -71,8 +71,7 @@ foreach ($list as $row) {
       <?php } else { ?>
         <li><a href="omat/<?php echo $project ?>/dashboard">Dashboard</a></li>
       <?php } ?>
-      <li><a href="<?php echo $omat_link ?>/<?php echo $project ?>/reports-indicators">Indicators</a></li>
-    <li class="active">List</li>
+    <li class="active">Indicators</li>
   </ol>
 
   <?php if (!count($population_list) && !$public_login) { ?>
