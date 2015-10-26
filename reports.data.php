@@ -242,7 +242,7 @@ ORDER BY dqi_sections.name, dqi_classifications.score");
           <dt>Source</dt>
           <?php if ($single_info->source_id) { ?>
             <dd>
-              <a href="<?php echo $omat_link ?>/<?php echo $project ?>/source/<?php echo $single_info->source_id ?>">
+              <a href="<?php echo $omat_link ?>/<?php echo $project ?>/sourcedetails/<?php echo $single_info->source_id ?>">
                 <?php echo $single_info->source_name ?>
               </a>
             </dd>

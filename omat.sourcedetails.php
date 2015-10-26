@@ -23,6 +23,10 @@ if (!$info->id) {
 
 $files = $db->query("SELECT * FROM mfa_files WHERE source = $id ORDER BY name");
 
+function get_file_extension($source) {
+  return strtolower(substr($source, strrpos($source, '.') + 1));
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -159,7 +163,7 @@ $files = $db->query("SELECT * FROM mfa_files WHERE source = $id ORDER BY name");
       <?php } else { ?>
           <li><a href="omat/<?php echo $project ?>/dashboard">Dashboard</a></li>
       <?php } ?>
-    <li><a href="<?php echo $omat_link ?>/<?php echo $project ?>/reports-sources">Sources</a></li>
+    <li><a href="<?php echo $omat_link ?>/<?php echo $project ?>/reports-sources">Data Sources</a></li>
     <li class="active"><?php echo $info->name ?></li>
   </ol>
 
@@ -214,9 +218,9 @@ $files = $db->query("SELECT * FROM mfa_files WHERE source = $id ORDER BY name");
     <table class="table table-striped ellipsis">
       <tr>
         <th class="long">File</th>
-        <th class="shorter">Website</th>
         <th class="short">Type</th>
-        <th class="shorter">Uploaded</th>
+        <th class="long">MD5 checksum</th>
+        <th class="long">Uploaded</th>
       </tr>
     <?php foreach ($files as $row) { ?>
       <tr>
@@ -230,13 +234,15 @@ $files = $db->query("SELECT * FROM mfa_files WHERE source = $id ORDER BY name");
         <?php } else { ?>
           <?php echo $row['name'] ?>
         <?php } ?>
-        </td>
-        <td class="shorter">
           <?php if ($row['url'] && $row['size']) { ?>
             <a href="<?php echo $row['url'] ?>" title="Link to website"><i class="fa fa-link"></i></a>
           <?php } ?>
         </td>
-        <td><?php echo $row['type'] ?></td>
+        <td><?php echo strtoupper(get_file_extension($row['original_name'])) ?></td>
+        <?php
+          $file = UPLOAD_PATH . "$project.{$row['source']}.{$row['id']}";
+        ?>
+        <td><?php echo md5_file($file) ?></td>
         <td><?php echo format_date("M d, Y", $row['uploaded']) ?></td>
       </tr>
     <?php } ?>

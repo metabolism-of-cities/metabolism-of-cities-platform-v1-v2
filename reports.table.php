@@ -12,6 +12,7 @@ $values_only = (int)$_GET['values-only'];
 if ($values_only) {
   $_GET['id'] = $values_only;
 }
+
 $id = (int)$_GET['id'];
 $dataset = $db->record("SELECT * FROM mfa_dataset WHERE id = $project");
 
@@ -112,7 +113,12 @@ foreach ($population_list as $row) {
 
   <a href="<?php echo $omat_link ?>/<?php echo $project ?>/reports-table/<?php echo $id ?><?php echo $values_only ? '' : '/values-only'; ?>"
   class="printhide btn btn-<?php echo $values_only ? 'info' : 'default'; ?> pull-right">
-    Hide empty values
+    <?php
+      if ($values_only) {
+    ?>
+      <i class="fa fa-check"></i>
+    <?php } ?>
+    Hide absent data categories
   </a>
 
   <h1>
@@ -141,9 +147,15 @@ foreach ($population_list as $row) {
     <tr>
       <th></th>
       <?php foreach ($years as $year) { ?>
-        <th><?php echo $year ?></th>
+        <th>
+          <?php echo $year ?><br />
+          (<?php echo $dataset->measurement ?>)
+        </th>
         <?php if ($population[$year]) { $extra_th++; ?>
-          <th>Per cap.</th>
+          <th>
+            <?php echo $year ?> - per cap.<br />
+            (<?php echo $dataset->measurement ?>/1000)
+          </th>
         <?php } ?>
       <?php } ?>
     </tr>
@@ -218,7 +230,7 @@ foreach ($population_list as $row) {
   $(function(){
     
   <?php foreach ($hiderow as $value) { ?>
-    $("#row<?php echo $value ?>").hide();
+    $("#row<?php echo $value ?>").remove();
   <?php } ?>
   });
   </script>

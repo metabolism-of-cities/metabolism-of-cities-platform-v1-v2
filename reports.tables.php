@@ -41,7 +41,7 @@ $list = $db->query("SELECT * FROM mfa_groups WHERE dataset = $project ORDER BY s
 
   <ul class="nav nav-list nav-stacked">
   <?php foreach ($list as $row) { ?>
-    <li><a href="<?php echo $public_login ? 'omat-public' : 'omat'; ?>/<?php echo $project ?>/reports-table/<?php echo $row['id'] ?>"><?php echo $row['section'] ?>. <?php echo $row['name'] ?></a></li>
+    <li><a href="<?php echo $public_login ? 'omat-public' : 'omat'; ?>/<?php echo $project ?>/reports-table/<?php echo $row['id'] ?>/values-only"><?php echo $row['section'] ?>. <?php echo $row['name'] ?></a></li>
   <?php } ?>
   </ul>
 

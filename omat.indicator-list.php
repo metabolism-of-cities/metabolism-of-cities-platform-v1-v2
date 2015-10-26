@@ -88,9 +88,15 @@ foreach ($list as $row) {
     <tr>
       <th>Indicator</th>
       <?php foreach ($years as $key => $value) { ?>
-        <th><?php echo $value ?> - Total</th>
+        <th>
+          <?php echo $value ?> - total<br />
+          (<?php echo $dataset->measurement ?>)
+        </th>
         <?php if ($per_capita) { ?>
-          <th><?php echo $value ?> - Per capita</th>
+          <th>
+            <?php echo $value ?> - per capita<br />
+            (<?php echo $dataset->measurement ?>)
+          </th>
         <?php } ?>
       <?php } ?>
     </tr>

@@ -44,7 +44,7 @@ WHERE dataset = $project ORDER BY mfa_sources.name");
 
   <ul class="nav nav-list nav-stacked">
   <?php foreach ($list as $row) { ?>
-    <li><a href="<?php echo $public_login ? 'omat-public' : 'omat'; ?>/<?php echo $project ?>/source/<?php echo $row['id'] ?>"><?php echo $row['name'] ?></a></li>
+    <li><a href="<?php echo $public_login ? 'omat-public' : 'omat'; ?>/<?php echo $project ?>/sourcedetails/<?php echo $row['id'] ?>"><?php echo $row['name'] ?></a></li>
   <?php } ?>
   </ul>
 
