@@ -1,2 +1,5 @@
 User-agent: *
 Disallow: /analysis.edit.php
+
+User-agent: *
+Disallow: /analysis.case.php

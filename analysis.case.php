@@ -1,5 +1,7 @@
 <?php
+$admin_login = true;
 require_once 'functions.php';
+require_once 'functions.omat.php';
 $section = 5;
 $page = 99;
 
