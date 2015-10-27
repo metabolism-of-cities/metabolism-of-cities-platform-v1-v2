@@ -226,7 +226,7 @@ function get_file_extension($source) {
       <tr>
         <td>
         <?php if ($row['size']) { ?>
-          <a href="omat/<?php echo $project ?>/download/<?php echo $row['id'] ?>">
+          <a href="<?php echo $omat_link ?>/<?php echo $project ?>/download/<?php echo $row['id'] ?>">
             <?php echo $row['name'] ? $row['name'] : 'Download'; ?>
           </a>
         <?php } elseif ($row['url']) { ?>
