@@ -19,4 +19,7 @@ define("SERVER","localhost");
 define("USER","mfa-user");
 define("PASSWORD","metabolism");
 define("DATABASE","mfa-tools");
+
+// Set your local time zone
+date_default_timezone_set('Africa/Johannesburg');
 ?>
