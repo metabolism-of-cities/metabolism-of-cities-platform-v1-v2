@@ -1,5 +1,7 @@
 <?php
+$skip_login = true;
 require_once 'functions.php';
+require_once 'functions.omat.php';
 $section = 5;
 $page = 99;
 
@@ -27,6 +29,7 @@ ORDER BY case_studies.name, analysis.year");
     <style type="text/css">
     .table.ellipsis{border-top:0}
     .table > tbody > tr > th {border-top:0}
+    i.fa-edit{font-size:30px}
     .optionlist{max-width:500px}
     </style>
   </head>
@@ -34,6 +37,13 @@ ORDER BY case_studies.name, analysis.year");
   <body>
 
 <?php require_once 'include.header.php'; ?>
+
+  <?php if (defined("ADMIN")) { ?>
+    <a class="pull-right" href="admin.indicators.php?edit=<?php echo $id ?>">
+      <i class="fa fa-edit"></i>
+      </i>
+    </a>
+  <?php } ?>
 
   <h2><?php echo $info->name ?></h2>
 
