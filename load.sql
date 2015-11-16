@@ -1128,3 +1128,7 @@ ADD FOREIGN KEY (`dataset`) REFERENCES `mfa_dataset` (`id`) ON DELETE CASCADE ON
 ALTER TABLE `mfa_dqi`
 DROP FOREIGN KEY `mfa_dqi_ibfk_1`,
 ADD FOREIGN KEY (`classification`) REFERENCES `dqi_classifications` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 0.439 s
+
+ALTER TABLE `papers`
+ADD `date_added` datetime NULL,
+COMMENT=''; -- 1.309 s

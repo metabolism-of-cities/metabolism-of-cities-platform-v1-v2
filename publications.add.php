@@ -43,6 +43,7 @@ if ($_POST['title']) {
     'link' => html($_POST['link']),
     'source' => (int)$_POST['source'],
     'status' => mysql_clean('pending'),
+    'date_added' => mysql_clean(date("Y-m-d H:i:s")),
   );
   $id = $db->insert("papers",$post);
   $id = $db->lastInsertId();

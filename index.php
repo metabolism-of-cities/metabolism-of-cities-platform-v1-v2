@@ -84,6 +84,15 @@ $projects = $db->record("SELECT SQL_CACHE COUNT(*) AS total FROM research WHERE 
         <li>Telling others about this website!</li>
       </ul>
 
+      <h2>Acknowledgements</h2>
+
+      <p>
+        Hosting and domain registration for our website is sponsored by 
+        <a href="https://penguinprotocols.com">Penguin Protocols</a>. We would furthermore like to 
+        thanks all individuals contributing content to our website. The website run by a <a href="page/team">small team</a> of 
+        volunteers.
+      </p>
+
 <?php require_once 'include.footer.php'; ?>
 
   </body>
