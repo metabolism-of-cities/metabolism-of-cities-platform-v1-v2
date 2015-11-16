@@ -41,7 +41,10 @@ if ($_GET['deleted']) {
   $print = "Case study was deleted";
 }
 
-$count = $db->record("SELECT COUNT(*) AS total FROM analysis");
+$count = $db->record("SELECT COUNT(*) AS total FROM case_studies");
+$count_indicators = $db->record("SELECT COUNT(*) AS total FROM analysis");
+$count_studies = $db->query("SELECT DISTINCT case_study FROM analysis");
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,6 +55,8 @@ $count = $db->record("SELECT COUNT(*) AS total FROM analysis");
     .table.ellipsis{border-top:0}
     .table > tbody > tr > th {border-top:0}
     .optionlist{max-width:500px}
+    hgroup h2{font-size:29px;margin:0}
+    hgroup h3{font-size:15px;margin:0}
     </style>
   </head>
 
@@ -60,6 +65,40 @@ $count = $db->record("SELECT COUNT(*) AS total FROM analysis");
 <?php require_once 'include.header.php'; ?>
 
   <h1>Regional Material Flow Analysis</h1>
+
+    
+<div class="row">
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail alert alert-info">
+      <div class="caption">
+        <hgroup>
+        <h2><?php echo $count->total ?></h2>
+        <h3>Total Case Studies</h3>
+        </hgroup>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail alert alert-warning">
+      <div class="caption">
+      <hgroup>
+        <h2><?php echo count($count_studies) ?></h2>
+        <h3>Case Studies Processed</h3>
+      </hgroup>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail alert alert-success">
+      <div class="caption">
+      <hgroup>
+        <h2><?php echo $count_indicators->total ?></h2>
+        <h3>Total Indicators</h3>
+      </hgroup>
+      </div>
+    </div>
+  </div>
+</div>
 
   <?php if ($print) { echo "<div class=\"alert alert-success\">$print</div>"; } ?>
 
