@@ -22,7 +22,7 @@ FROM mfa_indicators_formula f
   JOIN mfa_indicators ON f.indicator = mfa_indicators.id
   JOIN mfa_groups ON f.mfa_group = mfa_groups.id
 WHERE mfa_groups.dataset = $project ORDER BY 
-FIELD(mfa_indicators.id, 13,14,15,9,1,5,8,11), mfa_indicators.name");
+mfa_indicators.name");
 
 $population_list = $db->query("SELECT * FROM mfa_population WHERE dataset = $id");
 

@@ -199,7 +199,7 @@ $count_studies = $db->query("SELECT DISTINCT case_study FROM analysis");
   <?php if (defined("ADMIN")) { ?>
   <h2 id="meta">Meta Information</h2>
 
-  <p><strong><?php echo $count->total ?></strong> records found in total</p>
+  <p><strong><?php echo $count_indicators->total ?></strong> records found in total</p>
 
   <?php if ($_GET['added']) { ?>
 
