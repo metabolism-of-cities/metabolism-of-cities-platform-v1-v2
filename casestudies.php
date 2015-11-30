@@ -44,6 +44,14 @@ if ($_GET['deleted']) {
 $count = $db->record("SELECT COUNT(*) AS total FROM case_studies");
 $count_indicators = $db->record("SELECT COUNT(*) AS total FROM analysis");
 $count_studies = $db->query("SELECT DISTINCT case_study FROM analysis");
+$count_per_study = $db->query("SELECT COUNT(*) AS total, case_study 
+FROM analysis 
+GROUP BY case_study
+");
+
+foreach ($count_per_study as $row) {
+  $study_count[$row['case_study']] = $row['total'];
+}
 
 ?>
 <!DOCTYPE html>
@@ -57,6 +65,7 @@ $count_studies = $db->query("SELECT DISTINCT case_study FROM analysis");
     .optionlist{max-width:500px}
     hgroup h2{font-size:29px;margin:0}
     hgroup h3{font-size:15px;margin:0}
+    .explanation{border-bottom:2px dotted #999}
     </style>
   </head>
 
@@ -175,6 +184,12 @@ $count_studies = $db->query("SELECT DISTINCT case_study FROM analysis");
     <tr>
       <th class="large">Region</th>
       <th class="small">Year</th>
+      <th class="small">
+      <span class="explanation" data-toggle="tooltip" data-placement="bottom"  title="This displays the total number of indicators that have been extracted from this study, so far">
+        Quantity
+        <i class="fa fa-question-circle"></i>
+      </span>
+      </th>
       <th class="large">Paper</th>
       <th class="large">Authors</th>
       <th class="small hide">Information</th>
@@ -183,6 +198,7 @@ $count_studies = $db->query("SELECT DISTINCT case_study FROM analysis");
     <tr>
       <td><a href="casestudy/<?php echo $row['id'] ?>"><?php echo $row['name'] ?></a></td>
       <td><?php echo $row['year'] ?></td>
+      <td><span class="badge badge-info"><?php echo (int)$study_count[$row['id']] ?></span></td>
       <td><a href="publication/<?php echo $row['paper'] ?>"><?php echo $row['title'] ?></a></td>
       <td><?php echo $row['author'] ?></td>
       <td class="hide">
@@ -261,6 +277,14 @@ $count_studies = $db->query("SELECT DISTINCT case_study FROM analysis");
   <?php } ?>
 
 <?php require_once 'include.footer.php'; ?>
+
+<script type="text/javascript">
+$(function(){
+    $('[data-toggle="tooltip"]').tooltip({
+      container: 'body'
+    });
+});
+</script>
 
   </body>
 </html>

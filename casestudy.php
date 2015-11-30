@@ -82,33 +82,36 @@ if (defined("ADMIN")) {
 
     <h2>Meta Information</h2>
 
-    <?php if (is_array($show_table)) { ?>
-    <?php foreach ($show_table as $value => $key) { ?>
-      <h3><?php echo $value ?></h3>
-      <table class="table table-striped">
-        <tr>
-          <th>Year</th>
-          <th>Value</th>
-        </tr>
-        <?php foreach ($table[$value] as $year => $data) { ?>
-          <tr>
-            <td><?php echo $year ?></td>
-            <td><?php echo $data ?></td>
-          </tr>
-        <?php } ?>
-        </table>
-      <?php } ?>
-    <?php } ?>
-    <?php if (is_array($infolist)) { ?>
-      <?php foreach ($infolist as $key => $value) { ?>
-        <h3><?php echo $key ?></h3>
-        <?php foreach ($infolist[$key] as $subkey => $subvalue) { ?>
-        <div class="well">
-          <?php echo $subvalue ?>
-        </div>
-        <?php } ?>
-      <?php } ?>
-    <?php } ?>
+     <table class="table table-striped">
+       <tr>
+         <th>Material</th>
+         <th>Year</th>
+         <th>Value</th>
+         <th>Comments</th>
+       </tr>
+       <?php foreach ($indicators as $row) { ?>
+       <?php
+         if ((int)$row['result'] == $row['result']) {
+           $decimals = 0;
+         } else {
+           $decimals = 2;
+         }
+       ?>
+       <tr>
+         <?php if ($row['name'] == $name) { ?>
+           <td></td>
+         <?php } else { ?>
+         <td><?php echo $row['name'] ?></td>
+         <?php } ?>
+         <?php $name = $row['name']; ?>
+
+         <td><?php echo $row['year'] ?></td>
+         <td><?php echo number_format($row['result'],$decimals) ?> <?php echo $row['measure'] ?></td>
+         <td><?php echo $row['notes'] ?></td>
+       </tr>
+     <?php } ?>
+     </table>
+
   <?php } ?>
 
   <?php if (defined("ADMIN")) { ?>
