@@ -1132,3 +1132,25 @@ ADD FOREIGN KEY (`classification`) REFERENCES `dqi_classifications` (`id`) ON DE
 ALTER TABLE `papers`
 ADD `date_added` datetime NULL,
 COMMENT=''; -- 1.309 s
+
+ALTER TABLE `mfa_dqi`
+DROP FOREIGN KEY `mfa_dqi_ibfk_1`,
+ADD FOREIGN KEY (`classification`) REFERENCES `dqi_classifications` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 1.196 s
+
+
+
+ALTER TABLE `mfa_data`
+DROP FOREIGN KEY `mfa_data_ibfk_4`,
+ADD FOREIGN KEY (`source_id`) REFERENCES `mfa_sources` (`id`) ON DELETE SET NULL ON UPDATE CASCADE; -- 3.503 s
+
+ALTER TABLE `mfa_activities_log`
+DROP FOREIGN KEY `mfa_activities_log_ibfk_4`,
+ADD FOREIGN KEY (`source`) REFERENCES `mfa_sources` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 1.470 s
+
+ALTER TABLE `mfa_activities_log`
+DROP FOREIGN KEY `mfa_activities_log_ibfk_3`,
+ADD FOREIGN KEY (`contact`) REFERENCES `mfa_contacts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 1.353 s
+
+ALTER TABLE `mfa_activities_log`
+DROP FOREIGN KEY `mfa_activities_log_ibfk_1`,
+ADD FOREIGN KEY (`activity`) REFERENCES `mfa_activities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE; -- 1.304 s

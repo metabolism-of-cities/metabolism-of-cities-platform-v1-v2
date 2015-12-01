@@ -78,11 +78,23 @@ if ($_GET['status']) {
   exit();
 }
 
+if ($_GET['deleteconfirm']) {
+  $_GET['delete'] = true;
+  $_GET['confirm'] = true;
+}
+
 if ($_GET['delete']) {
   $delete = (int)$_GET['id'];
-  $db->query("DELETE FROM mfa_sources WHERE id = $delete LIMIT 1");
-  header("Location: " . URL . "omat/$project/sources/deleted");
-  exit();
+  $data = $db->query("SELECT * FROM mfa_data WHERE source_id = $delete");
+  if (count($data)) {
+    $alert = "<li>You have data points associated with this data source. The data points will remain in place, but they won't have an associated source anymore.</li>";
+  }
+  
+  if (!$alert || $_GET['confirm']) {
+    $db->query("DELETE FROM mfa_sources WHERE id = $delete LIMIT 1");
+    header("Location: " . URL . "omat/$project/sources/deleted");
+    exit();
+  }
 }
 
 if ($_GET['flag']) {
@@ -320,6 +332,15 @@ WHERE source = $id");
   </ol>
 
   <?php if ($print) { echo "<div class=\"alert alert-success\">$print</div>"; } ?>
+
+  <?php if ($alert) { echo "<div class=\"alert alert-danger\"><ul>$alert</ul></div>"; ?>
+  <p>
+    <a href="omat/<?php echo $project ?>/viewsource/<?php echo $info->id ?>/deleteconfirm" class="btn btn-danger">Yes, I am sure. Delete this source</a>
+    <a href="omat/<?php echo $project ?>/viewsource/<?php echo $info->id ?>" class="btn btn-default">No, cancel this operation</a>
+    
+  </p>
+
+  <?php } else { ?>
 
   <dl class="dl-horizontal">
 
@@ -621,8 +642,7 @@ WHERE source = $id");
 
   <a id="delete" href="omat/<?php echo $project ?>/viewsource/<?php echo $info->id ?>/delete" onclick="javascript:return confirm('Are you sure?')" class="btn btn-danger">Delete this source</a>
 
-
-  
+  <?php } ?>
 
 <?php require_once 'include.footer.php'; ?>
 

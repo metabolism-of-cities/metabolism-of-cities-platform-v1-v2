@@ -210,6 +210,7 @@ function get_file_extension($source) {
 
   </dl>
 
+  <?php if (count($files)) { ?>
   <section>
     <h1>Files</h1>
 
@@ -251,6 +252,8 @@ function get_file_extension($source) {
     <?php } ?>
 
   </section>
+
+  <?php } ?>
 
 <?php require_once 'include.footer.php'; ?>
 
