@@ -3,7 +3,9 @@ require_once 'functions.php';
 $skip_login = true;
 require_once 'functions.omat.php';
 
-$permissions = $db->query("SELECT * FROM users_permissions WHERE user = $user_id");
+if ($user_id) {
+  $permissions = $db->query("SELECT * FROM users_permissions WHERE user = $user_id");
+}
 
 if (!count($permissions)) {
   header("Location: " . URL . "page/login");
