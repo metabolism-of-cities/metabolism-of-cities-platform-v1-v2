@@ -82,7 +82,7 @@ if ($admin_mode) {
 }
 
 if ($info->doi) {
-  $type_of_link = strpos($info->doi, "http") > -1 ? "web" : "doi";
+  $type_of_link = strpos($info->doi, "http") > -1 && !strpos($info->doi, "dx.doi.org") ? "web" : "doi";
   if ($type_of_link == "doi") {
     $type_of_link = strpos($info->doi, "/") > -1 ? "doi" : "isbn";
   }
@@ -223,7 +223,7 @@ $remove_dashes = array("-" => "");
     <dd>
       <?php if (!$info->link) { ?>
         <?php if ($type_of_link == "doi") { ?>
-          <a href="http://dx.doi.org/<?php echo $info->doi ?>">http://dx.doi.org/<?php echo $info->doi ?></a>
+          <a href="<?php if (!strpos($info->doi, "dx.doi.org")) { ?>http://dx.doi.org/<?php } ?><?php echo $info->doi ?>"><?php if (!strpos($info->doi, "dx.doi.org")) { ?>http://dx.doi.org/<?php } ?><?php echo $info->doi ?></a>
         <?php } else { ?>
           <a href="http://www.google.com/search?tbo=p&tbm=bks&q=isbn:<?php echo strtr($info->doi, $remove_dashes) ?>">http://www.google.com/search?tbo=p&tbm=bks&q=isbn:<?php echo strtr($info->doi, $remove_dashes) ?></a>
         <?php } ?>
