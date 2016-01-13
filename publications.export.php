@@ -59,5 +59,3 @@ $csv[] = array("Errors or shortcomings? Add or edit publications yourself on our
 outputCSV($csv);
 
 ?>
-
-

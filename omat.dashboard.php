@@ -59,7 +59,14 @@ ORDER BY mfa_data.date DESC LIMIT 5");
   <h1><i class="fa fa-database"></i> OMAT Dataset: <?php echo $info->name ?></h1>
 
   <div class="alert alert-info">
+  <?php if ($info->access == 'public') { ?>
+    This project is publicly available at 
+    <strong><a href="<?php echo URL ?>omat/list"><?php echo URL ?>omat/list</a></strong><br />
+    Is the dataset not yet complete? You can change the setting and make this a 
+    private dataset for now by changing the <a href="omat/edit/<?php echo $id ?>">settings</a>.
+  <?php } else { ?>
     From this dashboard you can manage your dataset. 
+  <?php } ?>
   </div>
 
   <div class="col-sm-6">
