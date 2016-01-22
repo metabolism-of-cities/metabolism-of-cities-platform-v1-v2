@@ -91,6 +91,7 @@ foreach ($tag_parents as $row) {
 }
 
 $menu[5]['menu'][99] = array('label' => 'Regional MFAs', 'url' => 'page/casestudies');
+$menu[5]['menu'][98] = array('label' => 'UM Publications: Map', 'url' => 'page/map');
 
 function mailadmins($message, $subject, $from = false, $html = false) {
   $message = utf8_decode($message);

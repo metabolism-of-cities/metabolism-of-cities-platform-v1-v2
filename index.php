@@ -74,6 +74,14 @@ $projects = $db->record("SELECT SQL_CACHE COUNT(*) AS total FROM research WHERE 
          <button type="submit" class="btn btn-primary">Sign Up</button>
       </form>
 
+      <h2>New: Urban Metabolism Map</h2>
+
+      <p><a href="page/map"><img src="img/map.png" alt="Map" /></a></p>
+      <p>
+        We have recently created a map to visualize all urban metabolism studies that have been indexed
+        in our database with publications. <a href="page/map">Check it out!</a>
+      </p>
+
       <h2>Help us improve! <img src="img/pencil.png" alt="" /></h2>
 
       <p>You can help us by:</p>
