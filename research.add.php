@@ -40,7 +40,7 @@ if ($_POST) {
     $added = true;
     $encrypt = encrypt($id);
     $encrypt = substr($encrypt, 0, 20);
-    mail(EMAIL, "New research project added", "New project was added: " . URL . "research/$id", "From:automail@mfa-tools.net");
+    mail(EMAIL, "New research project added", "New project was added: " . URL . "research/$id", "From:automail@metabolismofcities.org");
   }
 }
 

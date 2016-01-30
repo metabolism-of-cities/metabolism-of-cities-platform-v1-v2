@@ -82,7 +82,7 @@ $page = 4;
         great!).
       </li>
       <li>
-        The in-depth <a href="http://mfa-tools.net/publication/174">review of
+        The in-depth <a href="publication/174">review of
         urban metabolism assessment tools</a> prepared by UNEP is full of
         references and contains a long list of urban and urban-region MFA
         studies that have been undertaken. 
