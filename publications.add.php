@@ -76,7 +76,7 @@ Review: " . URL . "publication.view.php?id=$id&hash=$hash
 -----------------------------------------
 " . getinfo();
 
-  mailadmins($message, "New publication at MFA Tools", $_POST['youremail']);
+  mailadmins($message, "New publication at the Metabolism of Cities website", $_POST['youremail']);
 
 
 } elseif ($_POST['bibtex']) {

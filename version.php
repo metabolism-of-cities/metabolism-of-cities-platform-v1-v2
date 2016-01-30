@@ -16,8 +16,38 @@ $page = 7;
 
   <div class="jumbotron">
     <h1>Version History</h1>
-    <p>MFA Tools is currently at version <?php echo $version ?>. View the development log below for more details.</p>
+    <p>The Metabolism of Cities website is currently at version <?php echo $version ?>. View the development log below for more details.</p>
+    <p>Quick statistics:</p>
+    <ul>
+      <li>266 publications</li>
+      <li>5 public research projects</li>
+      <li>20 private datasets | 2 public datasets</li>
+    </ul>
   </div>
+
+  <hgroup>
+    <h2>Version 1.3</h2>
+    <h3>January 30, 2016</h3>
+  </hgroup>
+  <p>
+    The quantity of publications continues to grow. More and more projects and data is becoming available, and 
+    we have started to work on implementing different ways of displaying information. Our team has expanded
+    to three members.
+  </p>
+  <p>Important updates made to the website, including the following:</p>
+  <ul>
+    <li>The website was renamed to Metabolism of Cities. The domain name was changed accordingly.</li>
+    <li>An online map was added, showing the geographical distribution of the studies in our publication collection.</li>
+    <li>A regional data collection project was started. Data is currently being added, with 37 case studies and 220 indicators
+    currently identified.</li>
+
+  </ul>
+  <p>Quick statistics:</p>
+  <ul>
+      <li>266 publications</li>
+      <li>5 public research projects</li>
+      <li>20 private datasets | 2 public datasets</li>
+  </ul>
 
   <hgroup>
     <h2>Version 1.2</h2>

@@ -17,7 +17,7 @@ $page = 6;
   <h1>Stay up to date!</h1>
 
   <p> 
-    Receive a monthly e-mail with updates from MFA Tools! We use <a href="http://mailchimp.com">Mailchimp</a>
+    Receive a monthly e-mail with updates from the Metabolism of Cities website! We use <a href="http://mailchimp.com">Mailchimp</a>
     for sending out the newsletters and they will keep your e-mail safe. You can unsubscribe at any time.
   </p>
 

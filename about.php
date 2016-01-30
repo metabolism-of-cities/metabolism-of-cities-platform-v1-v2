@@ -8,7 +8,7 @@ $papers = $db->query("SELECT SQL_CACHE COUNT(*) AS total FROM papers WHERE statu
 <html lang="en">
   <head>
     <?php echo $header ?>
-    <title>About MFA Tools | <?php echo SITENAME ?></title>
+    <title>About the Metabolism of Cities website | <?php echo SITENAME ?></title>
   </head>
 
   <body>
@@ -17,10 +17,10 @@ $papers = $db->query("SELECT SQL_CACHE COUNT(*) AS total FROM papers WHERE statu
 
 <div class="jumbotron">
 
-  <h1>MFA Tools</h1>
+  <h1>Metabolism of Cities</h1>
 
   <p>
-    MFA Tools is a website that collects information useful to researchers involved in Material Flow Analysis (MFA) research.
+    The Metabolism of Cities website collects information useful to researchers involved in Urban Metabolism (UM) research.
     There are three primary sections:
   </p>
 
@@ -30,7 +30,7 @@ $papers = $db->query("SELECT SQL_CACHE COUNT(*) AS total FROM papers WHERE statu
   <a href="research/list" class="list-group-item">
     <h4 class="list-group-item-heading">Current research</h4>
     <p class="list-group-item-text">
-      A list of current, ongoing research. Material Flow Analyses is currently undertaken throughout the world
+      A list of current, ongoing research. Urban metabolism is currently undertaken throughout the world
       on many different levels (urban, national, regional), and with very different scopes (economy-wide, particular
       substances, etc.). This section aims to list currently ongoing research with the goal to encourage cooperation
       and to facilitate communication between different groups of researchers. Are you undertaking research? Add
@@ -47,9 +47,9 @@ $papers = $db->query("SELECT SQL_CACHE COUNT(*) AS total FROM papers WHERE statu
     </p>
   </a>
   <a href="publications/list" class="list-group-item">
-    <h4 class="list-group-item-heading">MFA Publications</h4>
+    <h4 class="list-group-item-heading">UM Publications</h4>
     <p class="list-group-item-text">
-      We have collected information on a variety of MFA-related publications. These publications
+      We have collected information on a variety of UM-related publications. These publications
       include methodology research, case studies, handbooks, and more. The database currently 
       includes <strong><?php echo $papers->total ?></strong> publications, and we encourage
       our visitors to add references to missing publications.

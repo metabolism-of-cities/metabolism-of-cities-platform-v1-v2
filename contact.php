@@ -15,7 +15,7 @@ IP: " . $_SERVER["REMOTE_ADDR"] . "
 -----------------------------------------
 " . mail_clean($_POST['message'], "box");
 
-  mailadmins($message, "Contact form MFA Tools", $_POST['email']);
+  mailadmins($message, "Contact form Metabolism of Cities website", $_POST['email']);
 }
 
 ?>

@@ -53,7 +53,7 @@ foreach ($list as $row) {
 
 $csv[] = array();
 $csv[] = array("Total: " . count($list) . " publications. Generation date: " . date("r"));
-$csv[] = array("This list is available on the open source MFA Tools website: http://mfa-tools.net."); 
+$csv[] = array("This list is available on the open source Metabolism of Cities website: http://metabolismofcities.org."); 
 $csv[] = array("Errors or shortcomings? Add or edit publications yourself on our website!");
 
 outputCSV($csv);

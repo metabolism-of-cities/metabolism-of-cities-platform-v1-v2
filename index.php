@@ -14,7 +14,7 @@ $projects = $db->record("SELECT SQL_CACHE COUNT(*) AS total FROM research WHERE 
 <html lang="en">
   <head>
     <?php echo $header ?>
-    <title>Material Flow Analysis Resources and Tools | <?php echo SITENAME ?></title>
+    <title><?php echo SITENAME ?>: Urban Metabolism Research Resources and Tools</title>
     <style type="text/css">
     .jumbotron{background:#f4f4f4 url(img/globe.arrow.png) no-repeat right top;}
     .stats{background:url(img/stats.png) no-repeat right top}
@@ -24,12 +24,19 @@ $projects = $db->record("SELECT SQL_CACHE COUNT(*) AS total FROM research WHERE 
   <body>
 
 <?php require_once 'include.header.php'; ?>
+      <?php if (date("Ymd") < 20160228) { ?>
+          <div class="alert alert-info">
+            <strong>Jan 30, 2016</strong> We have renamed our website! Formerly known as MFA Tools, we have gradually
+            been broadening our scope to include other metabolism research as well, and have thus renamed
+            our site to metabolismofcities.org!
+          </div>
+      <?php } ?>
 
       <div class="jumbotron">
-        <h1>MFA Tools</h1>
+        <h1>Metabolism of Cities</h1>
         <p>
           This website attempts to group together tools and publications related to 
-          Material Flow Analysis (MFA). The principal sections are the following:
+          the metabolism of cities or urban metabolism (UM). The principal sections are the following:
         </p>
         <p>
           <a class="btn btn-lg btn-primary" href="publications/collections" role="button">Publication Collections</a>
@@ -42,14 +49,17 @@ $projects = $db->record("SELECT SQL_CACHE COUNT(*) AS total FROM research WHERE 
       <h2>About</h2>
 
       <p>
-        This website is an open source initiative launched in August 2014. It was launched with the purpose of:
+        This website is an open source initiative launched in August 2014 as 'MFA Tools'. It was launched with the purpose of:
       </p>
       <ul>
         <li>Making it easier to get an overview of the publications out there related to Material Flow Analysis.</li>
         <li>Allowing researchers to easily (co-) create online Material Flow Analysis projects and share the underlying datasets.</li>
       </ul>
 
-      <p>All code for this website is hosted on <a href="https://github.com/paulhoekman/mfa-tools">github</a> and we invite programmers to help us improve the
+      <p>In January 2016 the website was renamed to <strong>Metabolism of Cities</strong>, to reflect the broadening scope to other
+      methodologies. </p>
+      <p>All code for this website is hosted on <a href="https://github.com/paulhoekman/mfa-tools">github</a> and we invite
+      programmers to help us improve the
       website and the online MFA software. But you don't need to be a programmer to help improve this website (see below!).
       Sign up for <a href="page/mailinglist">our mailing list</a> if you wish to receive updates about changes and additions.
       </p>

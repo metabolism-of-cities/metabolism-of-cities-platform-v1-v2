@@ -45,7 +45,7 @@ $menu = array(
     'label' => 'About', 
     'url' => 'about.php', 
     'menu' => array(
-      1 => array('label' => 'About MFA Tools', 'url' => 'page/about'),
+      1 => array('label' => 'About Us', 'url' => 'page/about'),
       4 => array('label' => 'Wish List', 'url' => 'page/wishlist'),
       3 => array('label' => 'Team', 'url' => 'page/team'),
       5 => array('label' => 'Contact Us', 'url' => 'page/contact'),
@@ -96,7 +96,7 @@ $menu[5]['menu'][98] = array('label' => 'UM Publications: Map', 'url' => 'page/m
 function mailadmins($message, $subject, $from = false, $html = false) {
   $message = utf8_decode($message);
   $from = $from ? $from : "noreply@mfa-tools.net";
-  $headers = 'From: MFA Tools<noreply@mfa-tools.net>' . "\r\n" .
+  $headers = 'From: Metabolism of Cities<noreply@metabolismofcities.net>' . "\r\n" .
       'Reply-To: ' . $from . "\r\n" .
       'X-Mailer: PHP/' . phpversion();
   if ($html) {
@@ -111,7 +111,7 @@ function mailadmins($message, $subject, $from = false, $html = false) {
 
 function kill($message) {
     if (PRODUCTION) {
-      mailadmins($message . "<br /><br /><pre>" . getinfo() . "</pre>", "MySQL Error - MFA Tools", false, true);
+      mailadmins($message . "<br /><br /><pre>" . getinfo() . "</pre>", "MySQL Error - Metabolism of Cities", false, true);
       header("HTTP/1.0 404 Not Found");
       header("Location: " . URL . "404");
       exit();
@@ -453,6 +453,6 @@ function truncate($string,$length=100,$append="&hellip;") {
 
 // Run to get the total lines for the newsletter: git ls-files *php | xargs wc -l
 
-$version = '1.2';
+$version = '1.3';
 
 ?>

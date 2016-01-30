@@ -112,7 +112,7 @@ foreach ($count_per_study as $row) {
   <?php if ($print) { echo "<div class=\"alert alert-success\">$print</div>"; } ?>
 
   <p>
-     At the open source MFA Tools website we want to create a database with
+     At the open source Metabolism of Cities website we want to create a database with
      regional metabolism indicators. That is, we plan to examine a variety of
      research studies that have calculated particular values (material
      extraction, emissions, construction material use, imports, exports, etc.)
