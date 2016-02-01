@@ -63,6 +63,10 @@ $projects = $db->record("SELECT SQL_CACHE COUNT(*) AS total FROM research WHERE 
       website and the online MFA software. But you don't need to be a programmer to help improve this website (see below!).
       Sign up for <a href="page/mailinglist">our mailing list</a> if you wish to receive updates about changes and additions.
       </p>
+      <p>
+           You can now also follow us on 
+          <a href="https://twitter.com/CityMetabolism"><i class="fa fa-twitter"></i> Twitter</a>
+      </p>
 
       <div class="panel panel-default">
         <div class="panel-heading">

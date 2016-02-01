@@ -161,3 +161,6 @@ table.ellipsis {
 .latex {
   cursor:pointer;
 }
+.footer p {
+  text-align:center;
+}
