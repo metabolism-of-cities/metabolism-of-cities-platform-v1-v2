@@ -8,6 +8,12 @@ $page = 3;
   <head>
     <?php echo $header ?>
     <title>Team | <?php echo SITENAME ?></title>
+    <style type="text/css">
+    .jumbotron li a{font-size:140%;display:block}
+    .jumbotron img {float:left;max-height:100px;margin:0 10px 10px 0;border:1px solid #ccc;padding:3px;}
+    .jumbotron li{clear:both;padding-bottom:10px;}
+    .jumbotron ul{list-style:none;}
+    </style>
   </head>
 
   <body>
@@ -19,13 +25,16 @@ $page = 3;
         <p>Our team is slowly expanding and we welcome new people! When will you join in?!</p>
         <ul>
           <li>
-          <strong>Paul Hoekman </strong> - 
-          Recently graduated MPhil Student at the University of
-          Cape Town, South Africa - Initial creator of this website while doing
-          research into the feasibility of undertaking an urban-scale Material
-          Flow Analysis in the South African context.
+            <img src="img/team.paul.jpg" alt="" />
+            <strong>Paul Hoekman </strong> - 
+            Recently graduated MPhil Student at the University of
+            Cape Town, South Africa. Initial creator of this website while doing
+            research into the feasibility of undertaking an urban-scale Material
+            Flow Analysis in a South African context. Paul enjoys combining IT and 
+            urban metabolism research. 
           </li>
           <li>
+            <img src="img/team.aris.jpg" alt="" />
             <strong>Aristide Athanassiadis</strong> - 
             Joint-PhD student at the Université Libre
             de Bruxelles (Brussels, Belgium) and University of Melbourne,
@@ -33,8 +42,10 @@ $page = 3;
             Melbourne, he has been interested in identifying the
             context-specific factors that influence urban metabolisms using a
             temporal and spatial perspective. 
+            <a href="https://www.linkedin.com/in/arisatha"><i class="fa fa-linkedin-square"></i></a>
           </li>
           <li>
+            <img src="img/team.gabriela.jpg" alt="" />
             <strong>Gabriela Fernandez</strong> - 
             Ph.D. candidate in Urban Planning, Design
             and Policy in the Department of Architecture and Urban Studies

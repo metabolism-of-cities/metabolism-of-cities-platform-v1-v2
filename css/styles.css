@@ -164,3 +164,9 @@ table.ellipsis {
 .footer p {
   text-align:center;
 }
+.footer i {
+  font-size:140%;
+}
+.navbar-default .navbar-nav .open .dropdown-menu > li > a {
+  color:#fff;
+}
