@@ -167,6 +167,8 @@ table.ellipsis {
 .footer i {
   font-size:140%;
 }
-.navbar-default .navbar-nav .open .dropdown-menu > li > a {
-  color:#fff;
+@media (max-width: 767px) {
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+    color:#fff;
+  }
 }
