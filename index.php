@@ -18,6 +18,7 @@ $projects = $db->record("SELECT SQL_CACHE COUNT(*) AS total FROM research WHERE 
     <style type="text/css">
     .jumbotron{background:#f4f4f4 url(img/globe.arrow.png) no-repeat right top;}
     .stats{background:url(img/stats.png) no-repeat right top}
+    .jumbotron .btn-lg {margin:5px 0}
     </style>
   </head>
 
