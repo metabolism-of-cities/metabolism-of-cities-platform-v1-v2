@@ -103,7 +103,7 @@ function mailadmins($message, $subject, $from = false, $html = false) {
     $headers .= "MIME-Version: 1.0\r\n";
     $headers .= "Content-Type: text/html; charset=utf-8\r\n";
   }
-  mail(WEBMASTER_MAIL, $subject, $message, $headers);
+  mail(EMAIL, $subject, $message, $headers);
   if (LOCAL) {
     //echo '<pre>' . $message . '</pre>';
   }
