@@ -95,8 +95,8 @@ $menu[5]['menu'][98] = array('label' => 'UM Publications: Map', 'url' => 'page/m
 
 function mailadmins($message, $subject, $from = false, $html = false) {
   $message = utf8_decode($message);
-  $from = $from ? $from : "noreply@mfa-tools.net";
-  $headers = 'From: Metabolism of Cities<noreply@metabolismofcities.net>' . "\r\n" .
+  $from = $from ? $from : "noreply@metabolismofcities.org";
+  $headers = 'From: Metabolism of Cities<noreply@metabolismofcities.org>' . "\r\n" .
       'Reply-To: ' . $from . "\r\n" .
       'X-Mailer: PHP/' . phpversion();
   if ($html) {
