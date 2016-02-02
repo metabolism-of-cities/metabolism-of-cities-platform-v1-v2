@@ -101,7 +101,8 @@ $google_translate = '
   </script>
   <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>';
 
-function mailadmins($message, $subject, $from = false, $html = false) {
+function mailadmins($message, $subject, $from = false, $html = false, $webmaster = false) {
+  $to = $webmaster ? WEBMASTER_MAIL : EMAIL;
   $message = utf8_decode($message);
   $from = $from ? $from : "noreply@metabolismofcities.org";
   $headers = 'From: Metabolism of Cities<noreply@metabolismofcities.org>' . "\r\n" .
@@ -111,7 +112,7 @@ function mailadmins($message, $subject, $from = false, $html = false) {
     $headers .= "MIME-Version: 1.0\r\n";
     $headers .= "Content-Type: text/html; charset=utf-8\r\n";
   }
-  mail(EMAIL, $subject, $message, $headers);
+  mail($to, $subject, $message, $headers);
   if (LOCAL) {
     //echo '<pre>' . $message . '</pre>';
   }
@@ -119,7 +120,7 @@ function mailadmins($message, $subject, $from = false, $html = false) {
 
 function kill($message) {
     if (PRODUCTION) {
-      mailadmins($message . "<br /><br /><pre>" . getinfo() . "</pre>", "MySQL Error - Metabolism of Cities", false, true);
+      mailadmins($message . "<br /><br /><pre>" . getinfo() . "</pre>", "MySQL Error - Metabolism of Cities", false, true, true);
       header("HTTP/1.0 404 Not Found");
       header("Location: " . URL . "404");
       exit();
