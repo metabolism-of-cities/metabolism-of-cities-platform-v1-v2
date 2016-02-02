@@ -93,6 +93,14 @@ foreach ($tag_parents as $row) {
 $menu[5]['menu'][99] = array('label' => 'Regional MFAs', 'url' => 'page/casestudies');
 $menu[5]['menu'][98] = array('label' => 'UM Publications: Map', 'url' => 'page/map');
 
+$google_translate = '
+  <script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({pageLanguage: \'en\', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, \'google_translate_element\');
+  }
+  </script>
+  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>';
+
 function mailadmins($message, $subject, $from = false, $html = false) {
   $message = utf8_decode($message);
   $from = $from ? $from : "noreply@metabolismofcities.org";

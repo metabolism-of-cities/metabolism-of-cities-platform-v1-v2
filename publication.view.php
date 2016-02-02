@@ -94,7 +94,10 @@ $remove_dashes = array("-" => "");
   <head>
     <?php echo $header ?>
     <title><?php echo $info->title ?> <?php if (!$notfound) { ?>by <?php echo $info->author ?> (<?php echo $info->year ?>) <?php } ?> | <?php echo SITENAME ?></title>
+
     <style type="text/css">
+    #google_translate_element{float:right}
+    .footer{bottom:-80px}
     dt,dd{padding:5px 0}
     ul#tags, ul#tags ul{list-style:none;margin-left:0;padding-left:0}
     ul#tags ul{margin-bottom:20px}
@@ -151,6 +154,8 @@ $remove_dashes = array("-" => "");
     <a href="publication.view.php?id=<?php echo $id ?>&amp;hash=<?php echo $hash ?>&amp;status=active" class="btn btn-primary right">Activate</a>
   <?php } ?>
 <?php } ?>
+
+  <div id="google_translate_element"></div>
 
 <?php if ($notfound) { ?>
 
@@ -289,6 +294,8 @@ $remove_dashes = array("-" => "");
 <?php } ?>
 
 <?php require_once 'include.footer.php'; ?>
+
+<?php echo $google_translate ?>
 
   </body>
 </html>

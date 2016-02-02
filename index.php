@@ -16,9 +16,11 @@ $projects = $db->record("SELECT SQL_CACHE COUNT(*) AS total FROM research WHERE 
     <?php echo $header ?>
     <title><?php echo SITENAME ?>: Urban Metabolism Research Resources and Tools</title>
     <style type="text/css">
-    .jumbotron{background:#f4f4f4 url(img/globe.arrow.png) no-repeat right top;}
+    .jumbotron{background:#f4f4f4 url(img/globe.arrow.png) no-repeat right top;position:relative}
     .stats{background:url(img/stats.png) no-repeat right top}
     .jumbotron .btn-lg {margin:5px 0}
+    #google_translate_element{position:absolute;top:10px;left:10px}
+    .footer {bottom:-80px}
     </style>
   </head>
 
@@ -34,6 +36,7 @@ $projects = $db->record("SELECT SQL_CACHE COUNT(*) AS total FROM research WHERE 
       <?php } ?>
 
       <div class="jumbotron">
+        <div id="google_translate_element"></div>
         <h1>Metabolism of Cities</h1>
         <p>
           This website attempts to group together tools and publications related to 
@@ -116,7 +119,10 @@ $projects = $db->record("SELECT SQL_CACHE COUNT(*) AS total FROM research WHERE 
         volunteers.
       </p>
 
-<?php require_once 'include.footer.php'; ?>
+
+    <?php require_once 'include.footer.php'; ?>
+
+    <?php echo $google_translate ?>
 
   </body>
 </html>
