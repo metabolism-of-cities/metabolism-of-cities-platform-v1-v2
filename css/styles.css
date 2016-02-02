@@ -182,4 +182,7 @@ table.ellipsis {
   .footer {
     height:100px;
   }
+  body {
+    margin-bottom:110px;
+  }
 }
