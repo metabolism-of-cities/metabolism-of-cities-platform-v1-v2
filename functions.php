@@ -93,7 +93,7 @@ foreach ($tag_parents as $row) {
 $menu[5]['menu'][99] = array('label' => 'Regional MFAs', 'url' => 'page/casestudies');
 $menu[5]['menu'][98] = array('label' => 'UM Publications: Map', 'url' => 'page/map');
 
-$google_translate = '
+$google_translate = LOCAL ? '' : '
   <script type="text/javascript">
   function googleTranslateElementInit() {
     new google.translate.TranslateElement({pageLanguage: \'en\', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, \'google_translate_element\');

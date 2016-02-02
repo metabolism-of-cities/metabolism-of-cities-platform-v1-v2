@@ -17,8 +17,14 @@ $projects = $db->record("SELECT SQL_CACHE COUNT(*) AS total FROM research WHERE 
     <title><?php echo SITENAME ?>: Urban Metabolism Research Resources and Tools</title>
     <style type="text/css">
     .jumbotron{background:#f4f4f4 url(img/globe.arrow.png) no-repeat right top;position:relative}
-    .stats{background:url(img/stats.png) no-repeat right top}
-    .jumbotron .btn-lg {margin:5px 0}
+    @media (min-width:666px){
+      .stats{background:url(img/stats.png) no-repeat right top}
+    }
+    @media (max-width:800px){
+    .btn-primary {
+      margin-top:5px;
+    }
+    }
     #google_translate_element{position:absolute;top:10px;left:10px}
     .footer {bottom:-80px}
     </style>

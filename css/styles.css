@@ -171,4 +171,15 @@ table.ellipsis {
   .navbar-default .navbar-nav .open .dropdown-menu > li > a {
     color:#fff;
   }
+  .btn-lg {
+    margin-bottom:5px;
+  }
+  .footer span.right, .footer .pull-left {
+    display:block;
+    text-align:center;
+    float:none !important;
+  }
+  .footer {
+    height:100px;
+  }
 }
