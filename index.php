@@ -9,6 +9,8 @@ $collections = $db->record("SELECT SQL_CACHE COUNT(*) AS total FROM tags_parents
 $tags = $db->record("SELECT SQL_CACHE COUNT(*) AS total FROM tags");
 $tagsused = $db->record("SELECT SQL_CACHE COUNT(*) AS total FROM tags_papers");
 $projects = $db->record("SELECT SQL_CACHE COUNT(*) AS total FROM research WHERE deleted_on IS NULL");
+
+$hide_regular_translate = true;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,7 +28,6 @@ $projects = $db->record("SELECT SQL_CACHE COUNT(*) AS total FROM research WHERE 
     }
     }
     #google_translate_element{position:absolute;top:10px;left:10px}
-    .footer {bottom:-80px}
     </style>
   </head>
 
@@ -125,10 +126,7 @@ $projects = $db->record("SELECT SQL_CACHE COUNT(*) AS total FROM research WHERE 
         volunteers.
       </p>
 
-
     <?php require_once 'include.footer.php'; ?>
-
-    <?php echo $google_translate ?>
 
   </body>
 </html>

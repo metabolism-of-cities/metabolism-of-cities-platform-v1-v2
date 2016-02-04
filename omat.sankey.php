@@ -40,7 +40,7 @@ if ($_GET['saved']) {
     <title>Sankey Diagrams | <?php echo SITENAME ?></title>
   </head>
 
-  <body>
+  <body class="omat">
 
 <?php require_once 'include.header.php'; ?>
 

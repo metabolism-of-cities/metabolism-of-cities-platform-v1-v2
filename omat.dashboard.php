@@ -44,7 +44,7 @@ ORDER BY mfa_data.date DESC LIMIT 5");
     </style>
   </head>
 
-  <body>
+  <body class="omat">
 
 <?php require_once 'include.header.php'; ?>
   

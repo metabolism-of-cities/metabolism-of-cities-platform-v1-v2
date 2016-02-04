@@ -16,3 +16,4 @@
       </div>
     </div>
 
+    <?php echo $google_translate ?>

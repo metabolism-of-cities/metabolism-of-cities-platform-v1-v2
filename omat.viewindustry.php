@@ -45,7 +45,7 @@ $id = (int)$_GET['id'];
     <script type="text/javascript" src="js/ckeditor/ckeditor.js"></script>
   </head>
 
-  <body>
+  <body class="omat">
 
 <?php require_once 'include.header.php'; ?>
 

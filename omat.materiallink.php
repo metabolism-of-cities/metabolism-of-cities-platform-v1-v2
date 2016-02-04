@@ -60,7 +60,7 @@ $groups = $db->query("SELECT * FROM mfa_groups WHERE dataset = $project ORDER BY
     <title>Material Links | <?php echo $info->name ?> | <?php echo SITENAME ?></title>
   </head>
 
-  <body>
+  <body class="omat">
 
 <?php require_once 'include.header.php'; ?>
 

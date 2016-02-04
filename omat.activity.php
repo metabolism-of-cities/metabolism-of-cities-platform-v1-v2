@@ -55,7 +55,7 @@ $types = $db->query("SELECT * FROM mfa_activities WHERE dataset = $project ORDER
     <title>Activity # <?php echo $id ?> | <?php echo $info->source ? $sourceinfo-> name : $contactinfo->name ?> | <?php echo SITENAME ?></title>
   </head>
 
-  <body>
+  <body class="omat">
 
 <?php require_once 'include.header.php'; ?>
 

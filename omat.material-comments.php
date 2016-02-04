@@ -99,7 +99,7 @@ $contacts = $db->query("SELECT * FROM mfa_contacts WHERE dataset = $project ORDE
     </style>
   </head>
 
-  <body>
+  <body class="omat">
 
 <?php require_once 'include.header.php'; ?>
 

@@ -37,10 +37,11 @@ if ($_GET['message'] == 'deleted') {
     <title><?php echo $info->name ?> | <?php echo SITENAME ?></title>
     <style type="text/css">
     .align-right{text-align:right}
+    #google_translate_element{position:absolute}
     </style>
   </head>
 
-  <body>
+  <body class="omat">
 
 <?php require_once 'include.header.php'; ?>
 <?php require_once 'include.omatheader.php'; ?>

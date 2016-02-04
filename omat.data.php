@@ -46,6 +46,7 @@ $notes = $db->record("SELECT COUNT(*) AS total FROM mfa_materials_notes WHERE ma
     <?php echo $header ?>
     <title><?php echo $info->name ?> | <?php echo SITENAME ?></title>
     <style type="text/css">
+    #google_translate_element{position:absolute}
     a.right{float:right}
     table {border:1px solid #ccc; width:100px;table-layout: fixed;}
     th, td { max-width:150px;white-space:nowrap; overflow:hidden; text-overflow: ellipsis; }
@@ -54,7 +55,7 @@ $notes = $db->record("SELECT COUNT(*) AS total FROM mfa_materials_notes WHERE ma
     </style>
   </head>
 
-  <body>
+  <body class="omat">
 
 <?php require_once 'include.header.php'; ?>
 

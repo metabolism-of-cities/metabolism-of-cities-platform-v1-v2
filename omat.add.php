@@ -26,7 +26,7 @@ $registration = new Registration();
     <title>Create your project | <?php echo SITENAME ?></title>
   </head>
 
-  <body>
+  <body class="omat">
 
 <?php require_once 'include.header.php'; ?>
 

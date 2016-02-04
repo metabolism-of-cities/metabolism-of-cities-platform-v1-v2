@@ -113,6 +113,7 @@ $file_children = $db->query("SELECT * FROM mfa_sources WHERE belongs_to = $id AN
     <?php echo $header ?>
     <title><?php echo $info->name ?> | <?php echo SITENAME ?></title>
     <style type="text/css">
+    #google_translate_element{position:absolute;top:10px;left:10px}
     dd{margin-bottom:10px;}
     .form-inline select.small{width:140px}
     div.right,a.right{float:right;margin-left:5px}
@@ -238,7 +239,7 @@ $file_children = $db->query("SELECT * FROM mfa_sources WHERE belongs_to = $id AN
     </script>
   </head>
 
-  <body>
+  <body class="omat">
 
 <?php require_once 'include.header.php'; ?>
   

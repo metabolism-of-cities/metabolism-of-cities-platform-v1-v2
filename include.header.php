@@ -51,4 +51,8 @@
 
     <div class="container">
 
+    <?php if (!$hide_regular_translate) { ?>
+      <div id="google_translate_element"></div>
+    <?php } ?>
+
     <?php if ($omat_sidebar) { require_once 'include.omatheader.php'; } ?>

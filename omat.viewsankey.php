@@ -26,7 +26,7 @@ $list = $db->query("SELECT * FROM mfa_sankey_nodes WHERE sankey = $id ORDER BY f
     </script>
   </head>
 
-  <body>
+  <body class="omat">
 
 <?php require_once 'include.header.php'; ?>
 

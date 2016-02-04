@@ -151,7 +151,7 @@ function get_file_extension($source) {
     </script>
   </head>
 
-  <body>
+  <body class="omat">
 
 <?php require_once 'include.header.php'; ?>
 

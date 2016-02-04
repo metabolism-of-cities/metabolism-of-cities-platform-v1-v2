@@ -50,7 +50,7 @@ if ($_GET['message'] == 'deleted') {
     </style>
   </head>
 
-  <body>
+  <body class="omat">
 
 <?php require_once 'include.header.php'; ?>
 <?php require_once 'include.omatheader.php'; ?>

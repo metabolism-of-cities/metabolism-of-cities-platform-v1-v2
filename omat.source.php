@@ -59,7 +59,7 @@ $organizations = $db->query("SELECT id,name FROM mfa_contacts WHERE dataset = $p
     </script>
   </head>
 
-  <body>
+  <body class="omat">
 
 <?php require_once 'include.header.php'; ?>
 

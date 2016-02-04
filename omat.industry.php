@@ -88,7 +88,7 @@ foreach ($scores as $row) {
     </style>
   </head>
 
-  <body>
+  <body class="omat">
 
 <?php require_once 'include.header.php'; ?>
 

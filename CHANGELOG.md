@@ -1,9 +1,6 @@
 # Current
 
-* BibTex quick-load option was provided to quickly load publication data
-
-# 1.1
-
-* OMAT documentation was created
-* Iceland dataset was loaded
-* Indicators and graphs are automatically generated for datasets
+* Integration of map with urban metabolism studies
+* Integration of Google Translate on each page
+* Renaming of website
+* Setup and link to Twitter

@@ -34,7 +34,7 @@ ORDER BY year");
     <title>Population | <?php echo SITENAME ?></title>
   </head>
 
-  <body>
+  <body class="omat">
 
 <?php require_once 'include.header.php'; ?>
 
