@@ -16,13 +16,13 @@ $page = 98;
 
   <h1>Map with urban metabolism studies</h1>
 
-  <iframe width="100%" height="590" frameborder="0" src="https://metabolismofcities.cartodb.com/viz/8f39cc9e-ce3e-11e5-91be-0e8c56e2ffdb/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
+  <iframe width="100%" height="590" frameborder="0" src="https://metabolismofcities.cartodb.com/viz/8d9c273e-ce47-11e5-bff5-0e787de82d45/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
 
   <p>
-    This map shows urban metabolism studies that have been identified as part of 
-    our database with <a href="publications/list">publications</a>. This map is periodically 
-    synced so the most recent publications are not necessarily included. If you would like to
-    add a study, be sure to <a href="publications/add">add it online</a>.
+    This map shows urban metabolism studies that have been identified as part
+    of our database with <a href="publications/list">publications</a>. If you
+    would like to add a study, be sure to <a href="publications/add">add it
+    online</a>.
   </p>
 
   <div class="alert alert-info">
