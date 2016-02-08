@@ -26,7 +26,7 @@ FROM tags_papers
   LEFT JOIN papers ON tags_papers.paper = papers.id
 WHERE tags.parent = 4 AND papers.status = 'active'");
 
-$csv[] = array("Publication(s)", "City", "Author(s)", "URL", "Year", "Quantity");
+$csv[] = array("City", "Author", "Publications", "URL", "Tag ID", "Quantity");
 
 foreach ($list as $row) {
   // First we do a first loop to group all the same city studies
@@ -43,39 +43,27 @@ foreach ($list as $row) {
 
 foreach ($cities as $city => $studies) {
 
-  if (count($studies) > 1) {
-    // There are multiple studies, so we will have to group them onto one line. This is 
-    // done because CartoDB does not (easily) support multiple dots in one place. 
-    // See: https://gis.stackexchange.com/questions/91983
-    $csv[$city][0] = "<ul>";
-    $csv[$city][1] = $city;
+  // There are multiple studies, so we will have to group them onto one line. This is 
+  // done because CartoDB does not (easily) support multiple dots in one place. 
+  // See: https://gis.stackexchange.com/questions/91983
+  $csv[$city][1] = $city;
 
-    // The author field will remain empty
-    $csv[$city][2] = false;
+  // At first we showed the author, but this string gets too long and with multiple publications
+  // it's not practical. So leave it empty for now. 
 
-    foreach ($studies as $row) {
+  $csv[$city][2] = false;
 
-      // Instead of featuring one article title, the title field will contain a list with all publication titles
-      $csv[$city][0] .= "<li><a href='{$row['link']}'>{$row['title']}</a> ({$row['year']})</li>";
+  foreach ($studies as $row) {
 
-      // The link will point to the overview with all studies from this city
-      $csv[$city][3] = URL . "tags/{$row['tag']}/" . flatten($city);
-    }
+    // Instead of featuring one article title, the title field will contain a list with all publication titles
+    $csv[$city][0] .= "· <a href='{$row['link']}'>{$row['title']}</a> ({$row['year']})<br />";
 
-    $csv[$city][4] = false; // Don't set a year as a separate field
-    $csv[$city][5] = count($studies);
-    $csv[$city][0] .= "</ul>";
-
-  } else {
-    $csv[$city] = array(
-      $studies[0]['title'],
-      $city,
-      $studies[0]['author'],
-      $studies[0]['link'],
-      $studies[0]['year'],
-      1, // The quantity of studies for this city
-    );
+    // The link will point to the overview with all studies from this city
+    $csv[$city][3] = URL . "tags/{$row['tag']}/" . flatten($city);
+    $csv[$city][4] = $row['tag'];
   }
+
+  $csv[$city][5] = count($studies);
 
 }
 
