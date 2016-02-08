@@ -60,8 +60,8 @@ foreach ($cities as $city => $studies) {
   foreach ($studies as $row) {
 
     $explode = explode(",", $row['gps']);
-    $lat = $explode[0];
-    $long = $explode[1];
+    $lat = $explode[1];
+    $long = $explode[0];
 
     // Instead of featuring one article title, the title field will contain a list with all publication titles
     $csv[$city][0] .= "· <a target='_parent' href='{$row['link']}'>{$row['title']}</a> ({$row['year']})<br />";
