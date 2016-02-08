@@ -29,7 +29,7 @@ WHERE tags.parent = 4 AND papers.status = 'active'
 ORDER BY papers.year DESC
 ");
 
-$csv[] = array("City", "Author", "Publications", "URL", "Tag ID", "GPS", "Quantity");
+$csv[] = array("City", "Author", "Publications", "URL", "Tag ID", "Lat", "Long", "Quantity");
 
 foreach ($list as $row) {
   // First we do a first loop to group all the same city studies
@@ -59,16 +59,21 @@ foreach ($cities as $city => $studies) {
 
   foreach ($studies as $row) {
 
+    $explode = explode(",", $row['gps']);
+    $lat = $explode[0];
+    $long = $explode[1];
+
     // Instead of featuring one article title, the title field will contain a list with all publication titles
     $csv[$city][0] .= "· <a target='_parent' href='{$row['link']}'>{$row['title']}</a> ({$row['year']})<br />";
 
     // The link will point to the overview with all studies from this city
     $csv[$city][3] = URL . "tags/{$row['tag']}/" . flatten($city);
     $csv[$city][4] = $row['tag'];
-    $csv[$city][5] = $row['gps'];
+    $csv[$city][5] = $lat;
+    $csv[$city][6] = $long;
   }
 
-  $csv[$city][6] = count($studies);
+  $csv[$city][7] = count($studies);
 
 }
 
