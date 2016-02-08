@@ -101,7 +101,7 @@ $hide_regular_translate = true;
 
       <h2>New: Urban Metabolism Map</h2>
 
-      <p><a href="page/map"><img src="img/map.png" alt="Map" /></a></p>
+      <p><a href="page/map"><img src="img/map.png?refresh" alt="Map" /></a></p>
       <p>
         We have recently created a map to visualize all urban metabolism studies that have been indexed
         in our database with publications. <a href="page/map">Check it out!</a>
