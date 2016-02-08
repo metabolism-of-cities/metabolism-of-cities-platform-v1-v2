@@ -16,7 +16,7 @@ $page = 98;
 
   <h1>Map with urban metabolism studies</h1>
 
-<iframe width="100%" height="590" frameborder="0" src="https://mfatools.cartodb.com/viz/eb35be38-ce37-11e5-823c-0ecfd53eb7d3/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
+  <iframe width="100%" height="590" frameborder="0" src="https://mfatools.cartodb.com/viz/5798656a-ce3a-11e5-bb64-0e3ff518bd15/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
 
   <p>
     This map shows urban metabolism studies that have been identified as part of 

@@ -20,13 +20,16 @@ function outputCSV($data) {
 }
 
 $list = $db->query("SELECT 
-  tags.tag, papers.title, papers.author, papers.id, tags.id AS tag_id, papers.year
+  tags.tag, tags.id AS tag_id, tags.gps,
+  papers.title, papers.author, papers.id, papers.year
 FROM tags_papers 
   LEFT JOIN tags ON tags_papers.tag = tags.id
   LEFT JOIN papers ON tags_papers.paper = papers.id
-WHERE tags.parent = 4 AND papers.status = 'active'");
+WHERE tags.parent = 4 AND papers.status = 'active'
+ORDER BY papers.year DESC
+");
 
-$csv[] = array("City", "Author", "Publications", "URL", "Tag ID", "Quantity");
+$csv[] = array("City", "Author", "Publications", "URL", "Tag ID", "GPS", "Quantity");
 
 foreach ($list as $row) {
   // First we do a first loop to group all the same city studies
@@ -38,6 +41,7 @@ foreach ($list as $row) {
     'link' => URL . "publication/" . $row['id'], 
     'tag' => $row['tag_id'],
     'year' => $row['year'],
+    'gps' => $row['gps'],
   );
 }
 
@@ -56,14 +60,15 @@ foreach ($cities as $city => $studies) {
   foreach ($studies as $row) {
 
     // Instead of featuring one article title, the title field will contain a list with all publication titles
-    $csv[$city][0] .= "· <a href='{$row['link']}'>{$row['title']}</a> ({$row['year']})<br />";
+    $csv[$city][0] .= "· <a target='_parent' href='{$row['link']}'>{$row['title']}</a> ({$row['year']})<br />";
 
     // The link will point to the overview with all studies from this city
     $csv[$city][3] = URL . "tags/{$row['tag']}/" . flatten($city);
     $csv[$city][4] = $row['tag'];
+    $csv[$city][5] = $row['gps'];
   }
 
-  $csv[$city][5] = count($studies);
+  $csv[$city][6] = count($studies);
 
 }
 
