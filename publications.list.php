@@ -1,5 +1,7 @@
 <?php
+$skip_login = true;
 require_once 'functions.php';
+require_once 'functions.omat.php';
 $section = 4;
 $page = 1;
 
@@ -45,8 +47,25 @@ if (is_array($_POST['tags'])) {
   }
 }
 
+if ($_POST['update_tag'] && defined("ADMIN")) {
+  $post = array(
+    'tag' => html($_POST['tag']),
+    'description' => mysql_clean($_POST['description']),
+    'gps' => html($_POST['gps']),
+    'parent' => (int)$_POST['parent'],
+  );
+  $update_tag = (int)$_POST['update_tag'];
+  $db->update("tags",$post,"id = $update_tag");
+  $print = "Information was saved";
+}
+
 if ($_GET['tag']) {
   $tag = (int)$_GET['tag'];
+
+  if (defined("ADMIN")) {
+    $parent_tag_list = $db->query("SELECT * FROM tags_parents ORDER BY name");
+  }
+
   $list = $db->query("SELECT papers.* 
   FROM 
     tags_papers 
@@ -84,6 +103,48 @@ if ($_GET['tag']) {
 <?php require_once 'include.header.php'; ?>
 
 <h1>MFA Publications</h1>
+
+<?php if ($print) { echo "<div class=\"alert alert-success\">$print</div>"; } ?>
+
+<?php if (defined("ADMIN")) { ?>
+
+  <form method="post" class="form form-horizontal">
+  
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Tag</label>
+      <div class="col-sm-10">
+        <input class="form-control" type="text" name="tag" value="<?php echo $info->tag ?>" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label">GPS coordinates</label>
+      <div class="col-sm-10">
+        <input class="form-control" type="text" name="gps" value="<?php echo $info->gps ?>" placeholder="E.g. 2.3488, 48.8534 for Paris" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Group</label>
+      <div class="col-sm-10">
+        <select name="parent" class="form-control">
+          <?php foreach ($parent_tag_list as $row) { ?>
+            <option value="<?php echo $row['id'] ?>"<?php if ($row['id'] == $info->parent) { echo ' selected'; } ?>><?php echo $row['name'] ?></option>
+          <?php } ?>
+        </select>
+        <input type="hidden" name="update_tag" value="<?php echo $tag ?>" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+
+  </form>
+
+<?php } ?>
 
 <p>
   This section provides a collection of papers related to Material Flow Analysis. These papers have been 

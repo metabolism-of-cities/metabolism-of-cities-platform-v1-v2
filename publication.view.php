@@ -51,7 +51,13 @@ if ($admin_mode) {
         'parent' => (int)$_POST['parent'],
       );
       $db->insert("tags",$post);
+      $get_id = $db->record("SELECT id FROM tags WHERE tag = '" . html($_POST['tag']) . "'");
+      $new_tag_id = $get_id->id;
       $print = "New tag has been created";
+      if ($_POST['parent'] == 4) {
+        $print .= "<br /><strong>NOTE! </strong> New cities will only appear on the map if you enter the GPS coordinates.
+        Please go to the <a href='tags/$new_tag_id/newtag'>Tag detail page</a> to set the coordinates.";
+      }
     }
   }
   if ($_GET['status']) {
