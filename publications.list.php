@@ -119,8 +119,11 @@ if ($_GET['tag']) {
 
     <div class="form-group">
       <label class="col-sm-2 control-label">GPS coordinates</label>
-      <div class="col-sm-10">
-        <input class="form-control" type="text" name="gps" value="<?php echo $info->gps ?>" placeholder="E.g. 2.3488, 48.8534 for Paris" />
+      <div class="col-sm-7">
+        <input class="form-control" type="text" name="gps" value="<?php echo $info->gps ?>" placeholder="Enter LONG, LAT - e.g. 2.3488, 48.8534 for Paris" />
+      </div>
+      <div class="col-sm-2">
+<a class="btn btn-info" target="_blank" href="http://itouchmap.com/latlong.html">Get the GPS coordinates here</a>
       </div>
     </div>
 
