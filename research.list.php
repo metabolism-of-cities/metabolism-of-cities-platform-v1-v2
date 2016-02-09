@@ -10,7 +10,7 @@ $list = $db->query("SELECT * FROM research WHERE deleted_on IS NULL ORDER BY tit
 <html lang="en">
   <head>
     <?php echo $header ?>
-    <title><?php echo _('Current MFA research'); ?> | <?php echo SITENAME ?></title>
+    <title><?php echo _('Current urban metabolism research'); ?> | <?php echo SITENAME ?></title>
   </head>
 
   <body>
@@ -20,11 +20,11 @@ $list = $db->query("SELECT * FROM research WHERE deleted_on IS NULL ORDER BY tit
 <h1>Current Research - Project List</h1>
 
 <p>
-In this section we aim to provide a collection of ongoing MFA-related
+In this section we aim to provide a collection of ongoing urban metabolism-related
 research. Our website is still relatively young so the list is slowly growing,
-but we encourage everyone who works on MFA studies to submit their project
+but we encourage everyone who works on UM studies to submit their project
 here! Projects are listed to improve global knowledge of what is going on in
-the world of MFA studies, and to facilitate communication between researchers. 
+the world of UM studies, and to facilitate communication between researchers. 
 </p>
 
   <table class="table table-striped">

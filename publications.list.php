@@ -102,7 +102,7 @@ if ($_GET['tag']) {
 
 <?php require_once 'include.header.php'; ?>
 
-<h1>MFA Publications</h1>
+<h1>Urban Metabolism Publications</h1>
 
 <?php if ($print) { echo "<div class=\"alert alert-success\">$print</div>"; } ?>
 

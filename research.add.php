@@ -98,7 +98,7 @@ $status = array('ongoing', 'finished', 'paused', 'cancelled');
           <?php } ?>
         <?php } else { ?>
           <div class="alert alert-warning">
-            Are you currently involved in an MFA-related research project? Add it now! 
+            Are you currently involved in an urban metabolism-related research project? Add it now! 
             After submitting this form, you will be provided a unique link. With this link, you can amend/remove
             the project details at any time.
           </div>

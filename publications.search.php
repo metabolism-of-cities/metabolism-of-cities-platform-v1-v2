@@ -173,7 +173,7 @@ $sources = $db->query("SELECT * FROM sources ORDER BY name");
 <div class="alert alert-warning">
   Tags have been manually assigned by our team to each paper. The tags have been standardized
   among papers and we have tried to be consistent and make tags useful for filtering through 
-  MFA-related papers. 
+  urban metabolism-related papers. 
 </div>
 
 <h3>Tag List</h3>
@@ -222,7 +222,7 @@ $sources = $db->query("SELECT * FROM sources ORDER BY name");
   Please note that keywords are provided directly by authors and possibly adjusted by
   editors. There are no industry-wide standards and the keywords used come in
   a wide variety. We have listed the different keywords used in papers here, but
-  if you want to filter using a more MFA-specific and shorter list of keywords,
+  if you want to filter using a shorter and more standardized list of keywords,
   then we recommend you use the <a href="tags">tags</a> that we assigned to
   classify each paper instead.
 </div>
