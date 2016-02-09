@@ -50,7 +50,6 @@ if (is_array($_POST['tags'])) {
 if ($_POST['update_tag'] && defined("ADMIN")) {
   $post = array(
     'tag' => html($_POST['tag']),
-    'description' => mysql_clean($_POST['description']),
     'gps' => html($_POST['gps']),
     'parent' => (int)$_POST['parent'],
   );
