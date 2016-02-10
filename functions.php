@@ -390,8 +390,6 @@ $files = "============== FILES VARIABLES ============ \n".
 $cookies = "============ COOKIE VARIABLES =========== \n".
 (($_COOKIE) ? print_r($_COOKIE, true) . "\n\n": $cookies ="NO COOKIES\n\n");
 
-$sql=(mysql_error()) ? "================ SQL ERROR ================ \n".mysql_error() : '';
-
 $backtrace="================== PHP DEBUG ================ \n".print_r(debug_backtrace(),true); 
 
 $lasterror="============== PHP LAST ERROR ============ \n".print_r(error_get_last(),true);

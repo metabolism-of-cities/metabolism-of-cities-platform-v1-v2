@@ -105,7 +105,7 @@ if ($_GET['tag']) {
 
 <?php if ($print) { echo "<div class=\"alert alert-success\">$print</div>"; } ?>
 
-<?php if (defined("ADMIN")) { ?>
+<?php if (defined("ADMIN") && $info->tag) { ?>
 
   <form method="post" class="form form-horizontal">
   
