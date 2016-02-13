@@ -22,7 +22,7 @@ class db extends PDO {
 
 	public function __construct($dsn, $user="", $passwd="") {
 		$options = array(
-			PDO::ATTR_PERSISTENT => true, 
+			PDO::ATTR_PERSISTENT => false, 
 			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
       PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
 		);
