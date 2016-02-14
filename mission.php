@@ -22,8 +22,9 @@ $page = 1;
 
     <p> 
     The Metabolism of Cities aims to be a open source platform for urban
-    metabolism, bringing together people and <a href="publications/list">information</a>
-    in one central place.
+    metabolism, bringing together people, <a
+    href="publications/list">information</a> and <a
+    href="page/casestudies">data</a> in one central place.
     </p>
 
     <p>We strive to:</p>
