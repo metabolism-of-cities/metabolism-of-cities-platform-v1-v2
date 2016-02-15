@@ -1227,3 +1227,23 @@ UPDATE tags SET gps = '9.1770, 48.7823' WHERE id = 211;
 UPDATE tags SET gps = '14.4208, 50.0880' WHERE id = 212;
 UPDATE tags SET gps = '106.5528, 29.5628' WHERE id = 215;
 UPDATE tags SET gps = '100.4517, 38.9342' WHERE id = 216;
+
+CREATE TABLE `people` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `firstname` varchar(100) NOT NULL,
+  `lastname` varchar(100) NOT NULL,
+  `affiliation` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `email_public` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `profile` text NOT NULL,
+  `research_interests` text NOT NULL,
+  `url` varchar(200) NOT NULL
+) ENGINE='InnoDB' COLLATE 'utf8_unicode_ci';
+
+CREATE TABLE `people_papers` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `paper` int(11) NOT NULL,
+  `people` int(10) unsigned NOT NULL,
+  FOREIGN KEY (`paper`) REFERENCES `papers` (`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`people`) REFERENCES `people` (`id`) ON DELETE CASCADE
+) ENGINE='InnoDB' COLLATE 'utf8_unicode_ci';

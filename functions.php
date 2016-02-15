@@ -460,6 +460,95 @@ function truncate($string,$length=100,$append="&hellip;") {
 
 // Run to get the total lines for the newsletter: git ls-files *php | xargs wc -l
 
+function nameScraper($string, $insert = true) {
+  // This function attempts to extract a name or list of names
+  // from a string, and look these names up in the list with authors.
+  // Optionally the name(s) will be inserted if they don't exist
+
+  global $db;
+
+  $explode = explode(" and ", $string);
+  foreach ($explode as $name) {
+    $firstname = false;
+    $lastname = false;
+    $id = false;
+    $comma_explode = explode(",", $name);
+    if (count($comma_explode) > 1) {
+      // Normally the name is in the format of Lastname, Firstname so this
+      // should yield two items in the array
+      $firstname = trim($comma_explode[1]);
+      $lastname = trim($comma_explode[0]);
+    } else {
+      // If this has no commas then we assume it is "Firstname Lastname" or
+      // This is error prone as names could consist of several firstnames or lastnames
+      // But this will give a good-enough first result, and manual checking is
+      // required anyway. 
+      $name = trim($name);
+      $explode_space = explode(" ", $name);
+      $firstname = trim($explode_space[0]);
+      $lastname = trim($explode_space[1]);
+    }
+    if ($lastname) {
+      $info = $db->query("SELECT * FROM people WHERE lastname = '$lastname'");
+      if (count($info) == 1) {
+        $id = $info[0]['id'];
+        $firstname_found = $info[0]['firstname'];
+        if (strlen($firstname_found) <= 5 && strlen($firstname) > strlen($firstname_found)) {
+          // The present firstname is less than 4 characters (so likely only the initials)
+          // so if we now have a larger firstname, let's update this.
+         $post = array(
+            'firstname' => mysql_clean($firstname),
+          );
+          $db->update("people",$post,"id = " . $info[0]['id']);
+        }
+      } elseif (count($info) > 1) {
+        // If we have more than one record (same last names?) we try using the first name as well
+        $info_with_firstname = $db->record("SELECT * FROM people WHERE lastname = '$lastname' AND firstname LIKE '%{$firstname}% LIMIT 1'");
+        if ($info_with_firstname->id) {
+          // If this returns one record, great, let's go for it:
+          $id = $info_with_firstname->id;
+        } else {
+          // But if not then we'll just grab the first record from the first check
+          // there are very few people with the same last name anyway so if need be we manually
+          // move them, but likely it's just a matter of the first name being spelled differently
+          $id = $info[0]['id'];
+        }
+      }
+      if (!$id) {
+        $post = array(
+          'firstname' => mysql_clean($firstname),
+          'lastname' => mysql_clean($lastname),
+        );
+        $db->insert("people",$post);
+        $info = $db->record("SELECT id FROM people 
+          WHERE firstname = '".mysql_clean($firstname)."' AND lastname='".mysql_clean($lastname)."' 
+          ORDER BY id DESC LIMIT 1");
+        $id = $info->id;
+      }
+      $return[] = $id;
+      if ($id == 125) {
+        echo "Lastname $lastname, firstname $firstname, id $id -- string $string<br />";
+      }
+    }
+  }
+  return $return;
+}
+
+function authorlist($id, $type = 'html') {
+  global $db;
+  $authors = $db->query("SELECT people.* 
+  FROM 
+    people_papers 
+  JOIN people ON people_papers.people = people.id
+  WHERE people_papers.paper = $id");
+  foreach ($authors as $row) {
+    $name = $row['firstname'] . " " . $row['lastname'];
+    $return .= '<li><a href="people/'.$row['id'].'-'.flatten($name).'">'.$name.'</li>';
+    $return_plain .= $row['lastname'] . ', ' . $row['firstname'] . ' and ';
+  }
+  return $type == 'html' ? "<ul>$return</ul>" : substr($return_plain, 0, -5);
+}
+
 $version = '1.3';
 
 ?>
