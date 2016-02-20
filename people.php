@@ -6,7 +6,9 @@ $page = 6;
 $list = $db->query("SELECT 
   people.*,
   (SELECT COUNT(*) FROM people_papers WHERE people.id = people_papers.people) AS publications
-FROM people ORDER BY lastname");
+FROM people 
+WHERE active IS TRUE
+ORDER BY lastname");
 ?>
 <!DOCTYPE html>
 <html lang="en">

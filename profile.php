@@ -1,9 +1,11 @@
 <?php
+$skip_login = true;
 require_once 'functions.php';
+require_once 'functions.omat.php';
 $section = 2;
 $page = 6;
 $id = (int)$_GET['id'];
-$info = $db->record("SELECT * FROM people WHERE id = $id");
+$info = $db->record("SELECT * FROM people WHERE id = $id AND active IS TRUE");
 if (!$info->id) {
   kill("Person not found", "critical");
 }
@@ -30,6 +32,78 @@ foreach ($tags as $row) {
   $tag_parent_list[$row['parent']] = true;
   $tag_counter[$row['id']]++;
 }
+
+if (defined("ADMIN")) { 
+  if ($_POST['merge']) {
+    $merge = (int)$_POST['merge'];
+    if ($merge == $id) {
+      die("You can not merge this profile with this same profile");
+    }
+    $db->query("UPDATE people_papers SET people = $merge WHERE people = $id");
+    $db->query("UPDATE people SET active = 0 WHERE id = $id");
+    header("Location: " . URL . "people/$merge-profile");
+    exit();
+  }
+  $authors = $db->query("SELECT * FROM people WHERE active IS TRUE ORDER BY lastname");
+}
+
+if ($_POST['fax']) {
+
+  // We call this field 'fax' to make sure bots don't enter a valid address and will
+  // thus not trigger any e-mail to be sent.
+
+  $mail = trim($_POST['fax']);
+
+  if (!check_mail($mail)) {
+    die("You did not enter a valid e-mail address. Please try again.");
+  }
+
+  $check = $db->record("SELECT * FROM people_access WHERE people = $id AND active IS TRUE LIMIT 1");
+
+  if ($check->id) {
+
+    $error = "The access link has already been supplied. If you lost this link, please e-mail us at " . EMAIL;
+
+  } else {
+
+    require_once 'functions.mail.php';
+
+    $post = array(
+      'people' => $id,
+      'email' => mysql_clean($mail),
+      'ip' => mysql_clean($_SERVER["REMOTE_ADDR"]),
+      'details' => mysql_clean(getinfo()),
+    );
+    $db->insert("people_access",$post);
+
+    $accessinfo = $db->record("SELECT * FROM people_access WHERE people = $id ORDER BY id DESC LIMIT 1");
+    $access_id = $accessinfo->id;
+
+    $link = URL . "access/$access_id/" . encrypt("PROFILE $access_id");
+
+    $message = 
+
+"Dear {$info->firstname} {$info->lastname},
+
+Thanks for requesting a link to edit your profile on the Metabolism of Cities website. We hereby send you a link that you can use to edit your profile and submit information to our site. This is a unique link that will give you instant access without having to log in. Keep the link safe. If you lose it, or if you want to request a new link, please feel free to e-mail us at info@metabolismofcities.org. For security purposes the website will not process an automated request for a new link after you have opened this link. 
+
+*Access link:*
+
+[$link Open your profile]
+
+We highly value input from our visitors and would like to encourage you to let us know how you think our website can be improved. You can also join our group of volunteers and help out adding new content, creating new functionalities or helping out analyzing data. Please do not hesitate to get in touch if you want to learn more. 
+
+Best regards,
+
+The Metabolism of Cities Team
+info@metabolismofcities.org";
+
+    pearMail($mail, "Link to access Metabolism of Cities", $message);
+
+    $print = "We have e-mailed the access link to {$mail}";
+  }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,6 +113,7 @@ foreach ($tags as $row) {
     <style type="text/css">
     .tags{list-style:none;padding:0}
     .tags li{margin:6px 0px}
+    #getaccess{display:none}
     </style>
   </head>
 
@@ -48,11 +123,23 @@ foreach ($tags as $row) {
 
   <h1><?php echo $info->firstname ?> <?php echo $info->lastname ?></h1>
 
+  <?php if ($error) { echo "<div class=\"alert alert-danger\">$error</div>"; } ?>
+  <?php if ($print) { echo "<div class=\"alert alert-success\">$print</div>"; } ?>
+
   <dl class="dl dl-horizontal">
     <?php if ($info->affiliation) { ?>
       <dt>Affiliation</dt>
       <dd><?php echo $info->affiliation ?></dd>
     <?php } ?>
+    <?php if ($info->city) { ?>
+      <dt>City</dt>
+      <dd><?php echo $info->city ?></dd>
+    <?php } ?>
+    <?php if ($info->country) { ?>
+      <dt>Country</dt>
+      <dd><?php echo $info->country ?></dd>
+    <?php } ?>
+
     <?php if ($info->email && $info->email_public) { ?>
       <dt>E-mail</dt>
       <dd><?php echo $info->email ?></dd>
@@ -92,22 +179,26 @@ foreach ($tags as $row) {
 <?php } ?>
 </table>
 
-<h2>Common themes</h2>
+<?php if ($tag_parent_list) { ?>
 
-<p>
-  All publications listed here have been tagged by our team. This enables us to review the 
-  tags that most commonly appear for this author. Please find the list, generated automatically, below. 
-</p>
+  <h2>Common themes</h2>
 
-<?php foreach ($tag_parent_list as $parent => $value) { ?>
-  <h3><?php echo $parent ?></h3>
-  <ul class="tags">
-  <?php foreach ($tag[$parent] as $key => $value) { ?>
-    <li><a class="btn btn-primary" href="http://"><?php echo $value ?></a>
-      <span class="badge"><?php echo $tag_counter[$key] ?></span>
-    </li>
+  <p>
+    All publications listed here have been tagged by our team. This enables us to review the 
+    tags that most commonly appear for this author. Please find the list, generated automatically, below. 
+  </p>
+
+  <?php foreach ($tag_parent_list as $parent => $value) { ?>
+    <h3><?php echo $parent ?></h3>
+    <ul class="tags">
+    <?php foreach ($tag[$parent] as $key => $value) { ?>
+      <li><a class="btn btn-primary" href="http://"><?php echo $value ?></a>
+        <span class="badge"><?php echo $tag_counter[$key] ?></span>
+      </li>
+    <?php } ?>
+    </ul>
+
   <?php } ?>
-  </ul>
 
 <?php } ?>
 
@@ -120,14 +211,92 @@ publications</a>. If you spot a mistake please <a href="page/contact">contact us
 </p>
 <p>
 Are you <strong><?php echo $info->firstname ?> <?php echo $info->lastname ?></strong>? You can
-edit your profile and add or edit your own publications by clicking here.
+edit your profile and add or edit your own publications by <a href="" id="access">clicking here</a>.
 </p>
+
+<div id="getaccess">
+
+  <h3>Edit your profile</h3>
+
+  <div class="alert alert-info">
+    If you are <strong><?php echo $info->firstname ?> <?php echo $info->lastname ?></strong>
+    then you can edit your profile. To do so, please enter your e-mail address. We will send 
+    you a link to edit your profile. You can only request this link once. If you have lost your
+    profile editing link, <a href="page/contact">please contact us</a>.
+  </div>
+
+  <form method="post" class="form form-horizontal">
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label">E-mail</label>
+      <div class="col-sm-10">
+        <input class="form-control" type="email" name="fax" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-primary">Request access</button>
+      </div>
+    </div>
+
+  </form>
+
+</div>
 
 <p>
   <a href="people" class="btn btn-info">View all people</a>
 </p>
 
+<?php if (defined("ADMIN")) { ?>
+
+  <h3>Admin options</h3>
+
+  <p>Merge this person with another profile.</p>
+
+  <div class="alert alert-info">
+    <strong>Note</strong>: 
+    this current profile will cease to exist. All publications currently associated with
+    this profile will be transferred to the profile you select from the list.
+  </div>
+
+  <form method="post" class="form form-horizontal">
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Merge with</label>
+      <div class="col-sm-10">
+        <select name="merge" class="form-control">
+          <?php foreach ($authors as $row) { ?>
+            <option value="<?php echo $row['id'] ?>"<?php if ($row['id'] == $id) { echo ' selected'; } ?>>
+              <?php echo $row['lastname'] ?>, <?php echo $row['firstname'] ?>
+              [<?php echo $row['id'] ?>]
+              <?php if ($id == $row['id']) { ?>
+              -- CURRENT AUTHOR
+              <?php } ?>
+            </option>
+          <?php } ?>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-primary">Merge</button>
+      </div>
+    </div>
+  </form>
+
+<?php } ?>
+
 <?php require_once 'include.footer.php'; ?>
+
+<script type="text/javascript">
+$(function(){
+  $("#access").click(function(e){
+    e.preventDefault();
+    $("#getaccess").show('fast');
+  });
+
+});
+</script>
 
   </body>
 </html>

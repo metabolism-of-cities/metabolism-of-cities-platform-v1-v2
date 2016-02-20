@@ -51,6 +51,11 @@ if ($_POST) {
 
 $abstract_status = array('pending','author_approved','journal_approved','open_access','not_approved','toc_only');
 
+if ($_GET['profile']) {
+  require_once 'functions.profile.php';
+  $sub_page = 2;
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -93,16 +98,28 @@ $abstract_status = array('pending','author_approved','journal_approved','open_ac
 
   <p>Information was saved.</p>
 
-  <p>
-    <a class="btn btn-primary" href="publication.edit.php?id=<?php echo $id ?>&amp;hash=<?php echo $hash ?>">Re-edit</a>
-    <a class="btn btn-primary" href="publication.view.php?id=<?php echo $id ?>&amp;hash=<?php echo $hash ?>">Edit tags</a>
-    <a class="btn btn-primary" href="publication.view.php?id=<?php echo $id ?>&amp;test_mode=1">View as user</a>
-  </p>
+  <?php if ($_GET['profile']) { ?>
 
-  <p>
-    <a href="publications/add" class="btn btn-primary btn-large">Add another publication</a>
-    <a href="./" class="btn btn-primary btn-large">Back to the homepage</a>
-  </p>
+    <p>
+      <a class="btn btn-primary" href="publication.edit.php?id=<?php echo $id ?>&amp;hash=<?php echo $hash ?>&amp;profile=true">Re-edit</a>
+      <a class="btn btn-primary" href="publication.view.php?id=<?php echo $id ?>&amp;test_mode=1">View publication</a>
+      <a href="profile/<?php echo $profile_id ?>/publication" class="btn btn-primary btn-large">Add another publication</a>
+    </p>
+
+  <?php } else { ?>
+
+    <p>
+      <a class="btn btn-primary" href="publication.edit.php?id=<?php echo $id ?>&amp;hash=<?php echo $hash ?>">Re-edit</a>
+      <a class="btn btn-primary" href="publication.view.php?id=<?php echo $id ?>&amp;hash=<?php echo $hash ?>">Edit tags</a>
+      <a class="btn btn-primary" href="publication.view.php?id=<?php echo $id ?>&amp;test_mode=1">View as user</a>
+    </p>
+
+    <p>
+      <a href="publications/add" class="btn btn-primary btn-large">Add another publication</a>
+    </p>
+
+
+  <?php } ?>
 
   </div>
 
@@ -230,7 +247,7 @@ $abstract_status = array('pending','author_approved','journal_approved','open_ac
 
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
-      <button type="submit" class="btn btn-primary">Add</button>
+      <button type="submit" class="btn btn-primary">Save</button>
     </div>
   </div>
 

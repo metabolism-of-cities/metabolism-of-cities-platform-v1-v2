@@ -17,6 +17,11 @@
     border-right: 1px solid #eee;
   }
 }
+@media (max-width:769px) {
+  .sidebar {
+    display:block;
+  }
+}
 
 /* Sidebar navigation */
 .nav-sidebar {

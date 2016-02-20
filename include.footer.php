@@ -1,4 +1,5 @@
     <?php if ($omat_sidebar) { require_once 'include.omatfooter.php'; } ?>
+    <?php if ($profile_sidebar) { require_once 'include.profilefooter.php'; } ?>
     </div> <!-- /container -->
 
     <div class="footer">

@@ -1247,3 +1247,21 @@ CREATE TABLE `people_papers` (
   FOREIGN KEY (`paper`) REFERENCES `papers` (`id`) ON DELETE CASCADE,
   FOREIGN KEY (`people`) REFERENCES `people` (`id`) ON DELETE CASCADE
 ) ENGINE='InnoDB' COLLATE 'utf8_unicode_ci';
+
+ALTER TABLE `people`
+ADD `active` tinyint(1) unsigned NOT NULL DEFAULT '1';
+
+ALTER TABLE `people`
+ADD `city` varchar(100) COLLATE 'utf8_unicode_ci' NOT NULL AFTER `affiliation`,
+ADD `country` varchar(100) COLLATE 'utf8_unicode_ci' NOT NULL AFTER `city`;
+
+CREATE TABLE `people_access` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `people` int(10) unsigned NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `ip` varchar(100) NOT NULL,
+  `active` tinyint(1) unsigned NOT NULL,
+  `date` timestamp NOT NULL,
+  `details` text NOT NULL,
+  FOREIGN KEY (`people`) REFERENCES `people` (`id`) ON DELETE CASCADE
+) ENGINE='InnoDB' COLLATE 'utf8_unicode_ci';

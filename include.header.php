@@ -56,3 +56,5 @@
     <?php } ?>
 
     <?php if ($omat_sidebar) { require_once 'include.omatheader.php'; } ?>
+
+    <?php if ($profile_sidebar) { require_once 'include.profileheader.php'; } ?>

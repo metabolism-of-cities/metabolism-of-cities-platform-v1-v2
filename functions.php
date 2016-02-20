@@ -526,9 +526,6 @@ function nameScraper($string, $insert = true) {
         $id = $info->id;
       }
       $return[] = $id;
-      if ($id == 125) {
-        echo "Lastname $lastname, firstname $firstname, id $id -- string $string<br />";
-      }
     }
   }
   return $return;
@@ -540,14 +537,115 @@ function authorlist($id, $type = 'html') {
   FROM 
     people_papers 
   JOIN people ON people_papers.people = people.id
-  WHERE people_papers.paper = $id");
+  WHERE people_papers.paper = $id AND people.active IS TRUE");
   foreach ($authors as $row) {
     $name = $row['firstname'] . " " . $row['lastname'];
-    $return .= '<li><a href="people/'.$row['id'].'-'.flatten($name).'">'.$name.'</li>';
-    $return_plain .= $row['lastname'] . ', ' . $row['firstname'] . ' and ';
+    if ($type == 'html') {
+      $return .= '<li><a href="people/'.$row['id'].'-'.flatten($name).'">'.$name.'</li>';
+    } elseif ($type == 'plain') {
+      $return .= $row['lastname'] . ', ' . $row['firstname'] . ' and ';
+    } elseif ($type == 'array') {
+      $return[$row['id']] = $row['firstname'] . ' ' . $row['lastname'];
+    }
   }
-  return $type == 'html' ? "<ul>$return</ul>" : substr($return_plain, 0, -5);
+  if ($type == 'plain') {
+    $return = substr($return, 0, -5);
+  } elseif ($type == 'html') {
+    $return = "<ul>$return</ul>";
+  }
+  return $return;
 }
+
+function bbcode($string, $clean=false) {
+	
+	// Add a line break to make things easier... we'll remove this later
+	$string .= "\n"; 
+
+	// Convert to html entities
+	$string = htmlentities($string, ENT_NOQUOTES, 'UTF-8');
+
+	// *Bold*
+	$string = preg_replace('/\*([^\n\']+)\*/','<strong>${1}</strong>',$string);
+
+	// _Italic_
+	$string = preg_replace('/\_([^\n\']+)\_/','<em>${1}</em>',$string);
+
+	// ## Headers
+	for ($i=7;$i>0;$i--) {
+		$string = preg_replace('/[#]{'.$i.'}(.*)/', '<h'.$i.'>${1}</h'.$i.'>',	$string);
+	}
+
+	// * Lists
+  // We need to add an extra white line; if not, the first item in the list will not be recognized, if this 
+  // is the first line of the stirng. However, in case that this string contains no lists, then we need to remove
+  // this extra \n
+  $temp_string = "\n" . $string;
+	$temp_string = preg_replace('/(\n[ ]*[^#* ][^\n]*)\n(([ ]*[*]([^\n]*)\n)+)/', '${1}<ul>'."\n".'${2}'.'</ul>'."\n", $temp_string);
+	$temp_string = preg_replace('/\n[ ]*[\*#]+([^\n]*)/','<li>${1}</li>',$temp_string);
+
+  $string = $temp_string == "\n" . $string ? $string : $temp_string;
+
+	// <p> Paragraphs and <br /> line breaks
+	$string = '<p>'.preg_replace('#(<br\s*?/?>\s*?){2,}#', '</p>'."\n".'<p>', nl2br($string, true)).'</p>';
+
+	// Remove \r\n that are wondering about
+	$remove = array(
+		"\n" => '', 
+		"\r" => '', 
+	);
+	$string = strtr($string,$remove);
+
+	// Convert incorrect closing tags after p and br conversion
+	$convert = array(
+		'<br /></h1></p>' => '</h1>',
+		'<br /></h2></p>' => '</h2>',
+		'<br /></h3></p>' => '</h3>',
+		'<br /></h4></p>' => '</h4>',
+		'<br /></h5></p>' => '</h5>',
+		'<br /></h6></p>' => '</h6>',
+		'<br /><ul>' => '</p><ul>',
+		'</ul><br />' => '</ul><p>',
+		'<br /><h' => '</p><h',
+		'<br /></h' => '</h',
+		'<p><h' => '<h',
+		'<br /></li>' => '</li>',
+		'<p></p>' => '',
+		'<p><ul>' => '<ul>',
+		'<br /></ul></p>' => '</ul>',
+		'<p><br />' => '<p>',
+		'</li><br /></ul>' => '</li></ul>',
+		'<p><li>' => '<ul><li>',
+		'</li><br /></p>' => '</li></ul>',
+		'</li></p>' => '</li></ul>',
+	);
+	$string = strtr($string,$convert);
+
+	$array = array(
+		'<p></p>' => '',
+		'</li></p>' => '</li></ul>',
+	);
+	// Removing these extra empty p's
+	$string = strtr($string, $array);
+
+  // Regular links
+	$string = preg_replace("/\[(.*?) (.*?)\]/", "<a href=\"\$1\">\$2</a>", $string);
+
+  $end = substr($string, strlen($string)-5, 5);
+
+  if ($end != "</ul>") {
+	  $string = substr($string, 0, -4);
+	  $string .= "</p>";
+  }
+
+	if ($clean) { $string = mysql_clean($string); }
+	return $string;
+}
+
+function check_mail($email)
+{        
+  return (filter_var($email,FILTER_VALIDATE_EMAIL)) ? true : false;
+}
+
 
 $version = '1.3';
 

@@ -5,6 +5,11 @@ require_once 'functions.omat.php';
 $section = 4;
 $page = 3;
 
+if ($_GET['profile']) {
+  require_once 'functions.profile.php';
+  $sub_page = 3;
+}
+
 $journals = $db->query("SELECT * FROM sources ORDER BY name");
 
 function bibtexclean($string) {
@@ -166,7 +171,7 @@ Review: " . URL . "publication.view.php?id=$id&hash=$hash
 <h1>Add Publication</h1>
 
 <p>Do you know of a missing publication? Please add the details here so people
-can find this! The publication should be related to material flow research.</p>
+can find this! The publication should be related to urban metabolism research.</p>
 
 <?php if ($id) { ?>
 
@@ -175,10 +180,17 @@ can find this! The publication should be related to material flow research.</p>
   <p>Thanks, the paper has been submitted! This entry will be reviewed and most likely soon be added to the database.
   You will receive an e-mail confirmation when this paper has been added.</p>
 
-  <p>
-    <a href="publications/add" class="btn btn-primary btn-large">Add another publication</a>
-    <a href="./" class="btn btn-primary btn-large">Back to the homepage</a>
-  </p>
+  <?php if ($_GET['profile']) { ?>
+    <p>
+      <a href="profile/<?php echo $profile_id ?>/publication" class="btn btn-primary btn-large">Add another publication</a>
+      <a href="profile/<?php echo $profile_id ?>/dashboard" class="btn btn-primary btn-large">Back to your dashboard</a>
+    </p>
+  <?php } else { ?>
+    <p>
+      <a href="publications/add" class="btn btn-primary btn-large">Add another publication</a>
+      <a href="./" class="btn btn-primary btn-large">Back to the homepage</a>
+    </p>
+  <?php } ?>
 
   <?php if (defined("ADMIN")) { ?>
     <h2>Admin Tools</h2>
@@ -283,14 +295,14 @@ can find this! The publication should be related to material flow research.</p>
   <div class="form-group">
     <label class="col-sm-2 control-label">Your name</label>
     <div class="col-sm-10">
-      <input class="form-control" type="text" name="yourname" value="<?php echo $info->yourname ?>" />
+      <input class="form-control" type="text" name="yourname" value="<?php echo $profile_info->firstname ?> <?php echo $profile_info->lastname ?>" />
     </div>
   </div>
 
   <div class="form-group">
     <label class="col-sm-2 control-label">Your e-mail</label>
     <div class="col-sm-10">
-      <input class="form-control" type="email" name="youremail" value="<?php echo $info->youremail ?>" />
+      <input class="form-control" type="email" name="youremail" value="<?php echo $profile_info->email ?>" />
     </div>
   </div>
 
