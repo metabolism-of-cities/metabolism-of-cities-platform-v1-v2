@@ -291,9 +291,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.80269307"
-     inkscape:cx="170.26112"
-     inkscape:cy="311.84241"
+     inkscape:zoom="0.91346511"
+     inkscape:cx="313.3941"
+     inkscape:cy="256.85924"
      inkscape:document-units="px"
      inkscape:current-layer="layer2"
      showgrid="false"
@@ -317,7 +317,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -397,21 +397,21 @@
        inkscape:export-ydpi="400" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18.75px;line-height:125%;font-family:'Droid Sans';-inkscape-font-specification:'Droid Sans';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#333333;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="67.964264"
-       y="377.92902"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18.75px;line-height:125%;font-family:'Droid Sans';-inkscape-font-specification:'Droid Sans';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;opacity:1;fill:#333333;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="444.6702"
+       y="365.92902"
        id="text5275"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
-         id="tspan5277"
-         x="67.964264"
-         y="377.92902"
-         style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:60px;font-family:'Erbar Neo Mini D';-inkscape-font-specification:'Erbar Neo Mini D Medium';fill:#333333;fill-opacity:1">     Metabolism </tspan><tspan
+         x="444.6702"
+         y="365.92902"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:60px;font-family:'Ubuntu Condensed';-inkscape-font-specification:'Ubuntu Condensed, ';text-align:end;text-anchor:end;fill:#333333;fill-opacity:1"
+         id="tspan5622">Metabolism</tspan><tspan
          sodipodi:role="line"
-         x="67.964264"
-         y="452.92902"
-         style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:60px;font-family:'Erbar Neo Mini D';-inkscape-font-specification:'Erbar Neo Mini D Medium';fill:#333333;fill-opacity:1"
-         id="tspan5622">           of Cities</tspan></text>
+         x="444.6702"
+         y="440.92902"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:60px;font-family:'Ubuntu Condensed';-inkscape-font-specification:'Ubuntu Condensed, ';text-align:end;text-anchor:end;fill:#333333;fill-opacity:1"
+         id="tspan4296">of Cities</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
