@@ -18,16 +18,19 @@ $hide_regular_translate = true;
     <?php echo $header ?>
     <title><?php echo SITENAME ?>: Urban Metabolism Research Resources and Tools</title>
     <style type="text/css">
-    .jumbotron{background:#f4f4f4 url(img/globe.arrow.png) no-repeat right top;position:relative}
+    .jumbotron{background:#f4f4f4;position:relative;overflow:hidden;}
     @media (min-width:666px){
       .stats{background:url(img/stats.png) no-repeat right top}
     }
-    @media (max-width:800px){
     .btn-primary {
       margin-top:5px;
     }
-    }
     #google_translate_element{position:absolute;top:10px;left:10px}
+    .jumbotron h1 img {
+      width:60%;
+      float:left;
+      margin:0 20px 10px 0;
+    }
     </style>
   </head>
 
@@ -44,7 +47,7 @@ $hide_regular_translate = true;
 
       <div class="jumbotron">
         <div id="google_translate_element"></div>
-        <h1>Metabolism of Cities</h1>
+        <h1><img src="img/logo.text.svg" alt="Metabolism of Cities" /></h1>
         <p>
           This website attempts to group together tools and publications related to 
           the metabolism of cities or urban metabolism (UM). The principal sections are the following:

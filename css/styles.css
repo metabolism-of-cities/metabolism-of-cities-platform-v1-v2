@@ -202,3 +202,10 @@ table.ellipsis {
  * right class.
 */
 .omat #google_translate_element{position:absolute}
+.navbar-brand img {
+  width:50px;
+}
+.navbar-brand {
+  position:relative;
+  top:-14px;
+}
