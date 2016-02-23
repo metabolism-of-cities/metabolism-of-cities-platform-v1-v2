@@ -332,7 +332,7 @@
      inkscape:label="Layer 2"
      transform="translate(-0.30000041,4.1113283e-6)">
     <path
-       style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#333333;stroke-width:13;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker6995)"
+       style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#333333;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker6995)"
        id="path4151"
        sodipodi:type="arc"
        sodipodi:cx="300.35114"
@@ -355,7 +355,7 @@
        d=""
        inkscape:connector-curvature="0" />
     <path
-       style="opacity:0.98999999;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:url(#linearGradient7507);stroke-width:13;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#TriangleOutM)"
+       style="opacity:0.98999999;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:url(#linearGradient7507);stroke-width:5;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#TriangleOutM)"
        id="path4151-5"
        sodipodi:type="arc"
        sodipodi:cx="300.35114"
@@ -388,7 +388,7 @@
        x="279.2403"
        y="512.44012" />
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#333333;stroke-width:13;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       style="fill:none;fill-rule:evenodd;stroke:#333333;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        d="m 57.255552,325.43717 34.0438,0.0548 0,-132.06924 21.101108,0 0,4.92346 55.27624,0 0,20.18619 0.17786,0 0,44.80351 8.94541,0 0,-22.15558 4.82997,0 0,-6.4005 3.75662,0 0,-1.96939 16.63654,0 0,-7.38519 25.22314,0 0,19.69385 6.43995,0 0,14.77039 24.68647,0 0,10.83161 11.26991,0 0,-81.72948 12.8799,0 0,-39.88003 49.37297,0 0,45.29585 17.70984,0 0,82.47143 17.17321,0 0,-61.79289 29.51644,0 0,37.91066 16.09987,0 0,24.61731 15.56321,0 0,-32.49485 12.87989,0 0,-121.51379 35.9564,0 0,58.49348 19.31984,0 0,-8.86223 13.95323,0 0,153.11966 33.16889,-0.0935"
        id="path4158"
        inkscape:connector-curvature="0"
@@ -398,20 +398,15 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18.75px;line-height:125%;font-family:'Droid Sans';-inkscape-font-specification:'Droid Sans';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;opacity:1;fill:#333333;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="444.6702"
-       y="365.92902"
+       x="497.21735"
+       y="391.10785"
        id="text5275"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
-         x="444.6702"
-         y="365.92902"
+         x="497.21735"
+         y="391.10785"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:60px;font-family:'Ubuntu Condensed';-inkscape-font-specification:'Ubuntu Condensed, ';text-align:end;text-anchor:end;fill:#333333;fill-opacity:1"
-         id="tspan5622">Metabolism</tspan><tspan
-         sodipodi:role="line"
-         x="444.6702"
-         y="440.92902"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:60px;font-family:'Ubuntu Condensed';-inkscape-font-specification:'Ubuntu Condensed, ';text-align:end;text-anchor:end;fill:#333333;fill-opacity:1"
-         id="tspan4296">of Cities</tspan></text>
+         id="tspan4296">Metabolism of Cities</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
