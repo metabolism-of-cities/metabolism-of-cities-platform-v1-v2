@@ -22,14 +22,14 @@ $hide_regular_translate = true;
     @media (min-width:666px){
       .stats{background:url(img/stats.png) no-repeat right top}
     }
-    .btn-primary {
-      margin-top:5px;
-    }
     #google_translate_element{position:absolute;top:10px;left:10px}
     .jumbotron h1 img {
-      width:60%;
+      width:55%;
       float:left;
       margin:0 20px 10px 0;
+    }
+    .jumbotron p {
+      margin:0 0 6px 0;
     }
     </style>
   </head>
@@ -52,12 +52,12 @@ $hide_regular_translate = true;
           This website attempts to group together tools and publications related to 
           the metabolism of cities or urban metabolism (UM). The principal sections are the following:
         </p>
-        <p>
-          <a class="btn btn-lg btn-primary" href="publications/collections" role="button">Publication Collections</a>
-          <a class="btn btn-lg btn-primary" href="publications/list" role="button">Publication Database</a>
-          <a class="btn btn-lg btn-primary" href="research/list" role="button">Current Research</a>
-          <a class="btn btn-lg btn-primary" href="omat/about" role="button">Online MFA Tool (OMAT)</a>
-        </p>
+        <div class="list-group">
+          <p><a class="btn btn-lg btn-primary" href="publications/collections" role="button">Publication Collections</a></p>
+          <p><a class="btn btn-lg btn-primary" href="publications/list" role="button">Publication Database</a></p>
+          <p><a class="btn btn-lg btn-primary" href="research/list" role="button">Current Research</a></p>
+          <p><a class="btn btn-lg btn-primary" href="omat/about" role="button">Online MFA Tool (OMAT)</a></p>
+        </div>
       </div>
 
       <h2>About</h2>
