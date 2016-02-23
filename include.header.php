@@ -61,3 +61,5 @@
     <?php if ($omat_sidebar) { require_once 'include.omatheader.php'; } ?>
 
     <?php if ($profile_sidebar) { require_once 'include.profileheader.php'; } ?>
+
+    <?php if ($cms_sidebar) { require_once 'include.cmsheader.php'; } ?>

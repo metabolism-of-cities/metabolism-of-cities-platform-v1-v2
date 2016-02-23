@@ -4,6 +4,10 @@ $skip_login = true;
 require_once 'functions.omat.php';
 
 if ($login->isUserLoggedIn() == true) {
+  if (defined("ADMIN")) {
+    header("Location: ".URL."cms/index");
+    exit();
+  }
   if (count($permissions) == 1) {
     foreach ($permissions as $row) {
       $project = $row['dataset'];

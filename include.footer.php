@@ -1,5 +1,6 @@
     <?php if ($omat_sidebar) { require_once 'include.omatfooter.php'; } ?>
     <?php if ($profile_sidebar) { require_once 'include.profilefooter.php'; } ?>
+    <?php if ($cms_sidebar) { require_once 'include.profilefooter.php'; } ?>
     </div> <!-- /container -->
 
     <div class="footer">
@@ -16,5 +17,9 @@
         </p>
       </div>
     </div>
+
+    <?php if (defined("ADMIN")) { ?>
+      <a id="admin" class="btn btn-default" href="cms/index"><i class="fa fa-lock"></i> Admin</a>
+    <?php } ?>
 
     <?php echo $google_translate ?>

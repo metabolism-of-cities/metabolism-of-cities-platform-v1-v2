@@ -1265,3 +1265,41 @@ CREATE TABLE `people_access` (
   `details` text NOT NULL,
   FOREIGN KEY (`people`) REFERENCES `people` (`id`) ON DELETE CASCADE
 ) ENGINE='InnoDB' COLLATE 'utf8_unicode_ci';
+
+CREATE TABLE `blog_authors` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `name` varchar(200) NOT NULL,
+  `profile` text NOT NULL,
+  `url` varchar(200) NOT NULL,
+  `email` varchar(200) NOT NULL
+) ENGINE='InnoDB' COLLATE 'utf8_unicode_ci';
+
+CREATE TABLE `blog` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `title` varchar(200) NOT NULL,
+  `content` text NOT NULL,
+  `date` date NOT NULL,
+  `active` tinyint(1) unsigned NOT NULL DEFAULT '1'
+) ENGINE='InnoDB' COLLATE 'utf8_unicode_ci';
+
+CREATE TABLE `blog_links` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `blog` int(10) unsigned NOT NULL,
+  `paper` int(11) NOT NULL,
+  FOREIGN KEY (`blog`) REFERENCES `blog` (`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`paper`) REFERENCES `papers` (`id`) ON DELETE CASCADE
+) ENGINE='InnoDB' COLLATE 'utf8_unicode_ci';
+
+ALTER TABLE `blog_authors`
+CHANGE `profile` `profile` longtext COLLATE 'utf8_unicode_ci' NOT NULL AFTER `name`;
+
+ALTER TABLE `blog`
+CHANGE `content` `content` longtext COLLATE 'utf8_unicode_ci' NOT NULL AFTER `title`;
+
+CREATE TABLE `blog_authors_pivot` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `blog` int(10) unsigned NOT NULL,
+  `author` int(10) unsigned NOT NULL,
+  FOREIGN KEY (`blog`) REFERENCES `blog` (`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`author`) REFERENCES `blog_authors` (`id`) ON DELETE CASCADE
+) ENGINE='InnoDB' COLLATE 'utf8_unicode_ci';

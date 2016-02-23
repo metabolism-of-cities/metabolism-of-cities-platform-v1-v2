@@ -272,6 +272,8 @@ AddDefaultCharset utf-8
     RewriteRule ^omat/(.+)/([0-9]+)/?$ omat.$1.php?id=$2
     RewriteRule ^omat/(.+)/(deleted|saved)?$ omat.$1.php?message=$2
     RewriteRule ^omat/(.+)/?$ omat.$1.php
+    RewriteRule ^cms/(.+)/?$ cms.$1.php
+    RewriteRule ^blog/([0-9]+)-(.+)/?$ blog.php?id=$1
 
     RewriteRule ^access/([0-9]+)/(.+)$ access.php?id=$1&hash=$2
     RewriteRule ^profile/([0-9]+)/publication/?$ publications.add.php?profile=true

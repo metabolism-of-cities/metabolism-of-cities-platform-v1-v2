@@ -54,6 +54,10 @@ $header .= PRODUCTION ?
 
 $header .= '<script src="js/bootstrap.min.js"></script>';
 
+if ($add_to_header) {
+  $header .= $add_to_header;
+}
+
 $tag_parents = $db->query("SELECT SQL_CACHE id, name FROM tags_parents ORDER BY parent_order");
 
 $menu = array(

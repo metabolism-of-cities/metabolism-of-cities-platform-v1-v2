@@ -1,9 +1,8 @@
 <?php
-$admin_login = true;
+require_once 'functions.cms.php';
 require_once 'functions.php';
 require_once 'functions.omat.php';
-$section = 2;
-$page = 6;
+$sub_page = 1;
 ?>
 <!DOCTYPE html>
 <html lang="en">

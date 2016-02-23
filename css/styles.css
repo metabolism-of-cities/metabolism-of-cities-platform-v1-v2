@@ -197,6 +197,16 @@ table.ellipsis {
   position:relative;
   top:56px;
 }
+.navbar-brand {
+  position:relative;
+  top:-14px;
+}
+#admin {
+  position:fixed;
+  bottom:5px;
+  right:5px;
+  z-index:400000;
+}
 /* In OMAT we don't need to show the translate button. At that point, users have either already 
  * activated the transation or they are not interested. Pending: marking all body tags with the
  * right class.
@@ -204,8 +214,4 @@ table.ellipsis {
 .omat #google_translate_element{position:absolute}
 .navbar-brand img {
   width:50px;
-}
-.navbar-brand {
-  position:relative;
-  top:-14px;
 }
