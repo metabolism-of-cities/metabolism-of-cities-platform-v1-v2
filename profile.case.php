@@ -224,6 +224,10 @@ ORDER BY o.type, o.name");
 
    <?php } ?>
 
+   <div class="alert alert-warning">
+     Questions or comments? Let us know at <a href="mailto:<?php echo EMAIL ?>"><?php echo EMAIL ?></a>
+   </div>
+
 <?php require_once 'include.footer.php'; ?>
 
   </body>
