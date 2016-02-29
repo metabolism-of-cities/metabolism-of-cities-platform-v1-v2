@@ -53,6 +53,33 @@ $sub_page = 4;
   from there.
 </p>
 
+<h2>FAQ</h2>
+
+<h3>Who owns the data?</h3>
+
+<p>
+  You do. Or whoever owns the data at the moment. We only dissemminate data that has already been published. We link
+  to the original source whenever we allow people to download the data. In no way is ownership transferred by adding 
+  your data to our website.
+</p>
+
+<h3>What data can I enter?</h3>
+
+<p>
+  We are looking for urban or regional metabolism data. The data points range from indicators (e.g. DMI, DMC, NAS)
+  to consumption or input/output data like CO2 emissions per capita or energy use per capita. 
+</p>
+
+<h3>Should data have been published before?</h3>
+
+<p>
+  Yes.<br />
+  We are not looking to publish original research in this section. However, data can be published in many forms:
+  as a thesis, peer-reviewed publication, or as a (research) report.
+</p>
+
+
+
 <?php require_once 'include.footer.php'; ?>
 
   </body>

@@ -135,6 +135,7 @@ function mailadmins($message, $subject, $from = false, $html = false, $webmaster
   mail($to, $subject, $message, $headers);
   if (LOCAL) {
     //echo '<pre>' . $message . '</pre>';
+    //die();
   }
 }
 

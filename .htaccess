@@ -277,6 +277,7 @@ AddDefaultCharset utf-8
 
     RewriteRule ^access/([0-9]+)/(.+)$ access.php?id=$1&hash=$2
     RewriteRule ^profile/([0-9]+)/publication/?$ publications.add.php?profile=true
+    RewriteRule ^profile/([0-9]+)/(.+)/([0-9]+)?$ profile.$2.php?id=$1&paper=$3
     RewriteRule ^profile/([0-9]+)/(.+)/?$ profile.$2.php?id=$1
 
 </IfModule>

@@ -1303,3 +1303,9 @@ CREATE TABLE `blog_authors_pivot` (
   FOREIGN KEY (`blog`) REFERENCES `blog` (`id`) ON DELETE CASCADE,
   FOREIGN KEY (`author`) REFERENCES `blog_authors` (`id`) ON DELETE CASCADE
 ) ENGINE='InnoDB' COLLATE 'utf8_unicode_ci';
+
+ALTER TABLE `papers`
+CHANGE `status` `status` enum('active','pending','deleted','pending_data') COLLATE 'utf8_unicode_ci' NOT NULL DEFAULT 'active' AFTER `source`;
+
+ALTER TABLE `papers`
+CHANGE `source` `source` smallint(6) NULL AFTER `keywords`;
