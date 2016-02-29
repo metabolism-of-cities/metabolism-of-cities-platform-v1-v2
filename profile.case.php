@@ -114,7 +114,7 @@ ORDER BY o.type, o.name");
     </script>
   </head>
 
-  <body>
+  <body class="profile">
 
 <?php require_once 'include.header.php'; ?>
 

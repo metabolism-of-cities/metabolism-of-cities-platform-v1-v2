@@ -20,7 +20,7 @@ ORDER BY papers.year DESC");
     <title>Publications | <?php echo SITENAME ?></title>
   </head>
 
-  <body>
+  <body class="profile">
 
 <?php require_once 'include.header.php'; ?>
 

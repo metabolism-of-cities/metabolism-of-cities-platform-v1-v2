@@ -36,7 +36,7 @@ if ($_POST) {
     </style>
   </head>
 
-  <body>
+  <body class="profile">
 
 <?php require_once 'include.header.php'; ?>
 

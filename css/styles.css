@@ -210,8 +210,10 @@ table.ellipsis {
 /* In OMAT we don't need to show the translate button. At that point, users have either already 
  * activated the transation or they are not interested. Pending: marking all body tags with the
  * right class.
+ * Note that we can't do DISPLAY:NONE as we have tweaked some other CSS because the Google Translate
+ * Javascript messes with other CSS / layout on the page
 */
-.omat #google_translate_element{position:absolute}
+.omat #google_translate_element, .profile #google_translate_element{position:absolute}
 .navbar-brand img {
   width:50px;
 }

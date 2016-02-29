@@ -12,7 +12,7 @@ $sub_page = 4;
     <title>Datasets | <?php echo SITENAME ?></title>
   </head>
 
-  <body>
+  <body class="profile">
 
 <?php require_once 'include.header.php'; ?>
 
