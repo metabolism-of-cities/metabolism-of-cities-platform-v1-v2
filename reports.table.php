@@ -98,11 +98,18 @@ foreach ($population_list as $row) {
     #chart{height:400px}
     table tr.level2, table tr.level3, table tr.level4{display:none}
     .cut{
+      <?php if (count($years) > 2) { ?>
       max-width: 200px;
+      <?php } else { ?>
+      max-width: 400px;
+      <?php } ?>
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       display:inline-block;
+    }
+    .textright {
+      text-align:right;
     }
     </style>
   </head>
@@ -147,12 +154,12 @@ foreach ($population_list as $row) {
     <tr>
       <th></th>
       <?php foreach ($years as $year) { ?>
-        <th>
+        <th class="textright">
           <?php echo $year ?><br />
           (<?php echo $dataset->measurement ?>)
         </th>
         <?php if ($population[$year]) { $extra_th++; ?>
-          <th>
+          <th class="textright">
             <?php echo $year ?> - per cap.<br />
             (<?php echo $dataset->measurement ?>/1000)
           </th>
@@ -170,7 +177,7 @@ foreach ($population_list as $row) {
         $datapoint = $data[$year][$row['id']];
         $final[$year] += $datapoint;
       ?>
-        <td>
+        <td class="textright">
         <?php if (!$row['subcategories'] || $datapoint) { ?>
           <a href="<?php echo $omat_link ?>/<?php echo $project ?>/reports-data/<?php echo $year ?>/<?php echo $row['id'] ?>">
             <?php $data_print = $datapoint; ?>
@@ -184,7 +191,7 @@ foreach ($population_list as $row) {
         <?php } ?>
         </td>
         <?php if ($population[$year]) { ?>
-          <td><?php echo number_format($data_print/$population[$year]*1000, $dataset->decimal_precision) ?></td>          
+          <td class="textright"><?php echo number_format($data_print/$population[$year]*1000, $dataset->decimal_precision) ?></td>          
         <?php } ?>
       <?php } ?>
       <?php if ($all_zero && $values_only) { $hiderow[] = $count; } ?>
@@ -194,9 +201,9 @@ foreach ($population_list as $row) {
     <tr>
       <th><?php echo $info->name ?></th>
       <?php foreach ($years as $year) { ?>
-        <th><?php echo number_format($final[$year],$dataset->decimal_precision) ?></th>
+        <th class="textright"><?php echo number_format($final[$year],$dataset->decimal_precision) ?></th>
         <?php if ($population[$year]) { ?>
-          <th><?php echo number_format($final[$year]/$population[$year]*1000,$dataset->decimal_precision) ?></th>
+          <th class="textright"><?php echo number_format($final[$year]/$population[$year]*1000,$dataset->decimal_precision) ?></th>
         <?php } ?>
       <?php } ?>
     </tr>

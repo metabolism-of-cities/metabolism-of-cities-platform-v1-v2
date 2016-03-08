@@ -239,4 +239,13 @@ function materialFlow($group, $material) {
    return $data;
 }
 
+if ($cms_sidebar) {
+
+  if (count($permissions)) {
+    $cms_menu[] = array('label' => 'OMAT Projects', 'url' => 'omat/projects', 'icon' => 'list');
+  }
+
+}
+
+
 ?>

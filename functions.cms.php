@@ -19,4 +19,5 @@ $cms_menu = array(
   4 => array('label' => 'Add Author', 'url' => "cms/author", 'icon' => 'user'),
   5 => array('label' => 'Log Out', 'url' => "login.php?logout=true", 'icon' => 'sign-out'),
 );
+
 ?>

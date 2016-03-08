@@ -12,7 +12,7 @@
           Creative Commons Attribution 4.0 International license.
           </a>
           <span class="right">
-          Last update: <strong>February 2016</strong>
+          Last update: <strong>March 2016</strong>
           </span>
         </p>
       </div>
