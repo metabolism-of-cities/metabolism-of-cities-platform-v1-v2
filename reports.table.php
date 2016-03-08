@@ -40,6 +40,7 @@ GROUP BY mfa_materials.code, mfa_data.year");
 if (count($dataresults)) {
   foreach ($dataresults as $row) {
     $data[$row['year']][$row['material']] = $row['total'];
+    $overall_total[$row['year']] += $row['total'];
     $explode = explode(".", $row['code']);
     if (is_array($explode)) {
       unset($code);
@@ -111,6 +112,12 @@ foreach ($population_list as $row) {
     .textright {
       text-align:right;
     }
+    .progress-bg {
+      background:url(img/progress.png); /* Fancier bar? Perhaps give people a choice */
+      background:url(img/green.png);
+      background-repeat:no-repeat;
+      background-position:0 6px;
+    }
     </style>
   </head>
 
@@ -176,8 +183,17 @@ foreach ($population_list as $row) {
       <?php 
         $datapoint = $data[$year][$row['id']];
         $final[$year] += $datapoint;
+        if ($overall_total[$year]) {
+          if (!$row['subcategories'] || $datapoint) {
+            $width = $datapoint/$overall_total[$year]*100;
+          } else {
+            $width = ($total[$row['code']][$year]/$overall_total[$year])*100;
+          }
+        } else {
+          $width = 0;
+        }
       ?>
-        <td class="textright">
+        <td class="textright progress-bg" style="background-size:<?php echo $width ?>% 25px">
         <?php if (!$row['subcategories'] || $datapoint) { ?>
           <a href="<?php echo $omat_link ?>/<?php echo $project ?>/reports-data/<?php echo $year ?>/<?php echo $row['id'] ?>">
             <?php $data_print = $datapoint; ?>
@@ -201,7 +217,7 @@ foreach ($population_list as $row) {
     <tr>
       <th><?php echo $info->name ?></th>
       <?php foreach ($years as $year) { ?>
-        <th class="textright"><?php echo number_format($final[$year],$dataset->decimal_precision) ?></th>
+        <th class="textright progress-bg" style="background-size:100% 25px"><?php echo number_format($final[$year],$dataset->decimal_precision) ?></th>
         <?php if ($population[$year]) { ?>
           <th class="textright"><?php echo number_format($final[$year]/$population[$year]*1000,$dataset->decimal_precision) ?></th>
         <?php } ?>
