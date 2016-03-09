@@ -189,7 +189,7 @@ if ($_GET['profile']) {
     </div>
   </div>
 
-  <div class="form-group">
+  <div class="form-group hide">
     <label class="col-sm-2 control-label">Abstract status</label>
     <div class="col-sm-10">
       <select name="abstract_status" class="form-control">

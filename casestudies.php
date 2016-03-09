@@ -5,6 +5,10 @@ require_once 'functions.omat.php';
 $section = 5;
 $page = 99;
 
+if ($_GET['preview']) {
+  setcookie("preview", "true", time()+60*60*24*7, "/");
+}
+
 $sql = false;
 if ((int)$_GET['message'] > 0) {
   $type = (int)$_GET['message'];

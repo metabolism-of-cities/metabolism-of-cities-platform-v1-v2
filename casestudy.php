@@ -31,7 +31,7 @@ foreach ($indicators as $row) {
   $previous = $row['name'];
 }
 
-if (defined("ADMIN")) {
+if (defined("ADMIN") || $_COOKIE['preview']) {
   $indicator_list = $db->query("SELECT * FROM analysis_options_types ORDER BY name");
   if ($_GET['delete']) {
     if (!count($indicators)) {
@@ -73,14 +73,16 @@ if (defined("ADMIN")) {
 
   </dl>
 
+  <?php if (!$_COOKIE['preview']) { ?>
   <div class="well">
     <em>We soon plan to provide per-capita material flow data from this paper
     here. Stay tuned!</em>
   </div>
+  <?php } ?>
 
-  <?php if ($indicators && defined("ADMIN")) { ?>
+  <?php if ($indicators && (defined("ADMIN") || $_COOKIE['preview'])) { ?>
 
-    <h2>Meta Information</h2>
+    <h2>Data</h2>
 
      <table class="table table-striped">
        <tr>
@@ -133,7 +135,7 @@ if (defined("ADMIN")) {
       each study, we can generate one large overview of the material flow data
       found on an urban level for many different cities, materials and year. Over
       time, this could provide very useful and comparative insights for
-      researchers. We would like to work on this in the second half of 2015. Are you
+      researchers. We are working on this right now (first half of 2016). Are you
       willing to help? <a href="page/contact">Get in touch!</a>
     </div>
 

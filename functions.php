@@ -70,6 +70,7 @@ $menu = array(
       3 => array('label' => 'Team', 'url' => 'page/team'),
       5 => array('label' => 'Contact Us', 'url' => 'page/contact'),
       6 => array('label' => 'Mailing List', 'url' => 'page/mailinglist'),
+      8 => array('label' => 'Stakeholders Initiative', 'url' => 'page/stakeholders'),
       7 => array('label' => 'Version History', 'url' => 'page/version'),
     ),
   ),

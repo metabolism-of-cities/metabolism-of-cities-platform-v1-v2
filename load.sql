@@ -1309,3 +1309,9 @@ CHANGE `status` `status` enum('active','pending','deleted','pending_data') COLLA
 
 ALTER TABLE `papers`
 CHANGE `source` `source` smallint(6) NULL AFTER `keywords`;
+
+CREATE TABLE `mails` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `subject` varchar(200) NOT NULL,
+  `content` text NOT NULL
+) ENGINE='InnoDB' COLLATE 'utf8_unicode_ci';

@@ -25,7 +25,16 @@ if (!$info->active) {
 setcookie("id", $id, time()+60*60*24*7, "/");
 setcookie("hash", $hash, time()+60*60*24*7, "/");
 
-header("Location: " . URL . "profile/$id/dashboard");
-exit();
+if ($_GET['page'] == 'data') {
+
+  header("Location: " . URL . "profile/$id/data");
+  exit();
+
+} else {
+
+  header("Location: " . URL . "profile/$id/dashboard");
+  exit();
+
+}
 
 ?>
