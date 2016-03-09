@@ -25,7 +25,7 @@ require_once 'Mail/mime.php';
 function pearMail($to, $subject, $text, $from = false) {
 
   if (!$from) {
-    $from = EMAIL;
+    $from = SITENAME . '<' . EMAIL . '>';
   }
 
   $headers = array(
@@ -52,14 +52,15 @@ function pearMail($to, $subject, $text, $from = false) {
       body{font-family: Arial, sans-serif;}
       a{color: #0088cc}
       a:hover {color: #005580;text-decoration: none;}
-      table{width:600px}
       td,th{padding:0px}
       body,html,table{margin:0;padding:0}
+      table{width:600px;margin:0 auto}
+      body{padding:5px}
       table {
         border-collapse: collapse;
         border-spacing: 0;
       }
-      body,td,tr{font-size:12px}
+      body,td,tr{font-size:13px}
       h1{font-size:15px}
     </style>
     </head>
