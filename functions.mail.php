@@ -78,7 +78,7 @@ function pearMail($to, $subject, $text, $from = false) {
       </tr>
       <tr>
           <td style="background:#CF4803;color:#fff;font-size:11px;height:30px;text-align:center">
-            ' . URL . ' | ' . EMAIL . '
+            <a style="color:#fff" href="'.URL.'">' . URL . '</a> | <a style="color:#fff" href="mailto:'.EMAIL.'">' . EMAIL . '</a>
           </td>
         </tr>
         </table>
@@ -91,7 +91,7 @@ function pearMail($to, $subject, $text, $from = false) {
   // We never want mails to send out from local machines. It's all too easy
   // to accidentally send out a test mail to a client or their clients. 
   if (LOCAL) {
-    //die($html);
+    die($html);
   } else {
     $mime = new Mail_mime();
     $mime->setTXTBody($text);

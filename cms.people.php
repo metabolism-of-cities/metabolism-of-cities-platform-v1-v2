@@ -18,12 +18,13 @@ if ($_POST) {
   );
   if ($id) {
     $db->update("people",$post,"id = $id");
+    $print = "Information was saved";
   } else {
     $db->insert("people",$post);
     $id = $db->insert_id;
+    header("Location: " . URL . "cms/peoplelist");
+    exit();
   }
-  header("Location: " . URL . "cms/peoplelist");
-  exit();
 }
 
 if ($id) {
@@ -42,6 +43,8 @@ if ($id) {
 <?php require_once 'include.header.php'; ?>
 
   <h1>Contact</h1>
+
+  <?php if ($print) { echo "<div class=\"alert alert-success\">$print</div>"; } ?>
 
   <form method="post" class="form form-horizontal" enctype="multipart/form-data">
   
