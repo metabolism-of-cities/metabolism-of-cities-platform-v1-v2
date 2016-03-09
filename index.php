@@ -47,7 +47,7 @@ $hide_regular_translate = true;
 
       <div class="jumbotron">
         <div id="google_translate_element"></div>
-        <h1><img src="img/logo.text.svg?refresh" alt="Metabolism of Cities" /></h1>
+        <h1><img src="img/logo.png?refresh" alt="Metabolism of Cities" /></h1>
         <p>
           This website attempts to group together tools and publications related to 
           the metabolism of cities or urban metabolism (UM). The principal sections are the following:
