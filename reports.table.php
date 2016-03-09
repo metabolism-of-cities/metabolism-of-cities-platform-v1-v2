@@ -116,7 +116,7 @@ foreach ($population_list as $row) {
       background:url(img/progress.png); /* Fancier bar? Perhaps give people a choice */
       background:url(img/green.png);
       background-repeat:no-repeat;
-      background-position:1px 6px;
+      background-position:3px 6px;
     }
     </style>
   </head>
