@@ -49,15 +49,19 @@ if ($singleyear) {
   }
 }
 
-foreach ($names as $key => $value) {
-  if (substr_count($key, ".") != 1) {
-    unset($names[$key]);
+if (is_array($names)) {
+  foreach ($names as $key => $value) {
+    if (substr_count($key, ".") != 1) {
+      unset($names[$key]);
+    }
   }
 }
 
-foreach ($total as $key => $value) {
-  if (is_int($key)) {
-    $max = max($value, $max);
+if (is_array($total)) {
+  foreach ($total as $key => $value) {
+    if (is_int($key)) {
+      $max = max($value, $max);
+    }
   }
 }
 ?>
@@ -185,15 +189,60 @@ foreach ($total as $key => $value) {
 
 var histcatexplong = [
   <?php 
-    foreach ($materials as $row) { $counter++; 
-    $data = $db->query("SELECT SUM(data) AS total, mfa_data.year
-      FROM mfa_data
-      JOIN mfa_materials ON mfa_data.material = mfa_materials.id
-    WHERE mfa_materials.mfa_group = {$id} 
-      AND mfa_data.year >= {$dataset->year_start} 
-      AND mfa_data.year <= {$dataset->year_end}
-      AND mfa_materials.code LIKE '{$row['code']}%'
-    GROUP BY mfa_data.year");
+    foreach ($materials as $row) { 
+
+      $data = $db->query("SELECT SUM(data) AS total, mfa_data.year
+        FROM mfa_data
+        JOIN mfa_materials ON mfa_data.material = mfa_materials.id
+      WHERE mfa_materials.mfa_group = {$id} 
+        AND mfa_data.year >= {$dataset->year_start} 
+        AND mfa_data.year <= {$dataset->year_end}
+        AND mfa_materials.code LIKE '{$row['code']}%'
+      GROUP BY mfa_data.year");
+
+      foreach ($data as $subrow) {
+
+        // We can't have one of the years missing or D3 won't render
+        // the graph, so we first check if data is available for 
+        // all of the years for all of the materials.
+
+        // We should really optimize this script a bit, very roundabout way 
+        // of doing things at the moment. 
+
+        $years_active[$subrow['year']][$row['code']] = true;
+
+      }
+
+    }
+
+    foreach ($years_active as $key => $value) {
+      // Let's count how many records there are for each year
+      $count = count($value);
+      $max_number_of_years = max($max_number_of_years, $count);
+    }
+
+    foreach ($years_active as $key => $value) {
+      if (count($value) == $max_number_of_years) {
+        // And we only allow this year to be included if it has 
+        // values for all years
+        $in_years .= $key.",";
+      }
+    }
+
+    $in_years = substr($in_years, 0, -1);
+
+    foreach ($materials as $row) { 
+      $counter++; 
+
+      $data = $db->query("SELECT SUM(data) AS total, mfa_data.year
+        FROM mfa_data
+        JOIN mfa_materials ON mfa_data.material = mfa_materials.id
+      WHERE mfa_materials.mfa_group = {$id} 
+        AND mfa_data.year IN ($in_years)
+        AND mfa_materials.code LIKE '{$row['code']}%'
+      GROUP BY mfa_data.year");
+
+      if (count($data)) {
 
   ?>
   {
@@ -204,7 +253,7 @@ var histcatexplong = [
     <?php } ?>
     ]
   } <?php if (count($materials) > $counter) { echo ','; } ?>
-  <?php } ?>
+  <?php } } ?>
   ];
 
 var colors = d3.scale.category20();
