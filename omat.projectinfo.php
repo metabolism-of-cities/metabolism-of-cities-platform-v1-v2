@@ -6,6 +6,16 @@ require_once 'functions.omat.php';
 $section = 6;
 $page = 4;
 
+if ($_GET['data']) {
+  setcookie("restricted_project_view", "true", time()+60*60*24*7, "/");
+  $restricted_view = true;
+}
+
+if ($_GET['all']) {
+  setcookie("restricted_project_view", false, time()-1, "/");
+  $restricted_view = false;
+}
+
 $id = (int)$_GET['id'];
 
 $info = $db->record("SELECT mfa_dataset.*, research.title AS research_name, mfa_dataset_types.name AS type, 
@@ -79,8 +89,10 @@ if ($info->access == "private") {
   <div class="col-sm-6">
     <h2>Reports</h2>
     <ul class="flatlist">
-      <li><a href="omat-public/<?php echo $id ?>/reports-indicators" class="btn btn-success"><i class="fa fa-bar-chart"></i> Indicators</a></li>
-      <li><a href="omat-public/<?php echo $id ?>/reports-graphs" class="btn btn-success"><i class="fa fa-line-chart"></i> Graphs</a></li>
+      <?php if (!$restricted_view) { ?>
+        <li><a href="omat-public/<?php echo $id ?>/reports-indicators" class="btn btn-success"><i class="fa fa-bar-chart"></i> Indicators</a></li>
+        <li><a href="omat-public/<?php echo $id ?>/reports-graphs" class="btn btn-success"><i class="fa fa-line-chart"></i> Graphs</a></li>
+      <?php } ?>
       <li><a href="omat-public/<?php echo $id ?>/reports-tables" class="btn btn-success"><i class="fa fa-table"></i> Data Tables</a></li>
       <?php if ($info->resource_management) { ?>
       <li><a href="omat-public/<?php echo $id ?>/reports-sources" class="btn btn-success"><i class="fa fa-arrow-circle-down"></i> Data Sources</a></li>

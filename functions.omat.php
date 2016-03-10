@@ -127,6 +127,12 @@ $omat_menu = array(
   ),
 );
 
+if ($_COOKIE['restricted_project_view']) {
+  unset($omat_menu[3]['menu'][2]);
+  unset($omat_menu[3]['menu'][6]);
+  $restricted_view = true;
+}
+
 if (!LOCAL) {
   unset($omat_menu[1]['menu'][6]);
 }
