@@ -97,7 +97,8 @@ $remove_dashes = array("-" => "");
 
 $authors = authorlist($id, 'array');
 
-if ($admin_mode && $_GET['authorscrape'] && !$authors) {
+if ($admin_mode && $_GET['authorscrape']) {
+  $db->query("DELETE FROM people_papers WHERE paper = $id");
   $authors = nameScraper($info->author);
   if (is_array($authors)) {
     foreach ($authors as $author_id) {
@@ -208,6 +209,7 @@ if ($admin_mode && $_GET['authorscrape'] && !$authors) {
     <?php foreach ($authors as $key => $value) { ?>
       <dd><a href="people/<?php echo $key ?>-<?php echo flatten($value) ?>"><?php echo $value ?></a></dd>
     <?php } ?>
+      <dd><a class="btn btn-info" href="publication.view.php?id=<?php echo $id ?>&amp;authorscrape=true">Re-classify authors</a></dd>
   <?php } else { ?>
     <dd><?php echo $info->author ?></dd>
     <?php if ($admin_mode) { ?>
