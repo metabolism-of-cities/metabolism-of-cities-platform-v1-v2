@@ -213,7 +213,7 @@ table.ellipsis {
  * Note that we can't do DISPLAY:NONE as we have tweaked some other CSS because the Google Translate
  * Javascript messes with other CSS / layout on the page
 */
-.omat #google_translate_element, .profile #google_translate_element{position:absolute}
+.notranslate #google_translate_element, .omat #google_translate_element, .profile #google_translate_element{position:absolute}
 .navbar-brand img {
   width:50px;
 }

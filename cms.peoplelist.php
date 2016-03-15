@@ -29,7 +29,7 @@ FROM people $sql ORDER BY firstname, lastname");
     <title>Contacts | <?php echo SITENAME ?></title>
   </head>
 
-  <body>
+  <body class="notranslate">
 
 <?php require_once 'include.header.php'; ?>
 

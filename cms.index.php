@@ -12,7 +12,7 @@ $info = $db->record("SELECT * FROM users WHERE user_id = $user_id");
     <title>Dashboard | <?php echo SITENAME ?></title>
   </head>
 
-  <body>
+  <body class="notranslate">
 
 <?php require_once 'include.header.php'; ?>
 

@@ -19,7 +19,7 @@ WHERE people = $id");
     <title>Mails sent | <?php echo SITENAME ?></title>
   </head>
 
-  <body>
+  <body class="notranslate">
 
 <?php require_once 'include.header.php'; ?>
 
