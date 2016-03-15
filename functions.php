@@ -526,7 +526,7 @@ function nameScraper($string, $insert = true) {
           // move them, but likely it's just a matter of the first name being spelled differently
           $id = $info[0]['id'];
         }
-      } elseif (!$count($info)) {
+      } elseif (!count($info)) {
         $info = $db->query("SELECT * FROM people WHERE lastname = '$lastname'");
         if (count($info) == 1) {
           $id = $info[0]['id'];
