@@ -82,6 +82,9 @@ Review: " . URL . "publication.view.php?id=$id&hash=$hash
 " . getinfo();
 
   mailadmins($message, "New publication at the Metabolism of Cities website", $_POST['youremail']);
+  if ($_GET['profile']) {
+    peoplelog("User added a new publication");
+  }
 
 
 } elseif ($_POST['bibtex']) {

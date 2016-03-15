@@ -19,6 +19,7 @@ if ($_POST) {
   );
   $db->update("people",$post,"id = $people_id");
   $print = "Thanks, your profile has been updated";
+  peoplelog("User changed details in the profile");
   
   require_once 'functions.mail.php';
   pearMail(EMAIL, "Profile updated", "The profile of {$info->firstname} {$info->lastname} was updated. Please visit [" . URL . "profile.php?id=$people_id this page] to review. 

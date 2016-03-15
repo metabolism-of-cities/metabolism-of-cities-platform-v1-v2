@@ -63,6 +63,9 @@ This publication was added in order to enter data.
     'people' => $people_id,
   );
   $db->insert("people_papers",$post);
+
+  peoplelog("User added a new publication");
+
   header("Location: " . URL . "profile/{$profile_id}/data-entry/$id");
   exit();
 }

@@ -35,6 +35,7 @@ TECH DETAILS:
 " . getinfo();
 
   mailadmins($message, "Data point deleted");
+  peoplelog("User deleted a data point");
 }
 
 if ($_POST) {
@@ -63,6 +64,7 @@ TECH DETAILS:
 " . getinfo();
 
   mailadmins($message, "New data point added");
+  peoplelog("User added a new data point");
 }
 
 $indicators = $db->query("SELECT *, analysis.id

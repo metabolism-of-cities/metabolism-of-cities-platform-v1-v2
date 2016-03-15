@@ -77,8 +77,7 @@ FROM people $sql ORDER BY firstname, lastname");
       <a href="cms/mailssent/<?php echo $row['id'] ?>">
         <?php echo $row['total'] ?>
       </a>
-      | <a href="cms/mail/<?php echo $row['id'] ?>">preview</a> | 
-      <a href="cms/mail/<?php echo $row['id'] ?>/send">send mail</a>
+      | <a href="cms/mail/<?php echo $row['id'] ?>">preview</a>
       
       </td>
     </tr>

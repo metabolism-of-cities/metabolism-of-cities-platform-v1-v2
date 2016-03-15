@@ -669,6 +669,22 @@ function check_mail($email)
 }
 
 
+function peoplelog($action) {
+  global $db;
+
+  $post = array(
+    'url' => mysql_clean($_SERVER['REQUEST_URI']),
+    'ip' => mysql_clean($_SERVER["REMOTE_ADDR"]),
+    'action' => mysql_clean($action),
+    'info' => mysql_clean(getinfo()),
+    'people' => (int)$_COOKIE['id'],
+  );
+
+  $db->insert("people_log",$post);
+
+  return true;
+}
+
 $version = '1.3';
 
 ?>

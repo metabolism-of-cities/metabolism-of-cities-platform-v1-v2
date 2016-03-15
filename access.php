@@ -22,6 +22,9 @@ if (!$info->active) {
   $db->query("UPDATE people_access SET active = 1 WHERE id = $id LIMIT 1");
 }
 
+$_COOKIE['id'] = $id;
+peoplelog("User logged in to dashboard");
+
 setcookie("id", $id, time()+60*60*24*7, "/");
 setcookie("hash", $hash, time()+60*60*24*7, "/");
 

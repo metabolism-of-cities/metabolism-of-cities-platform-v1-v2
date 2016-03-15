@@ -1330,3 +1330,20 @@ CREATE TABLE `people_mails` (
 ALTER TABLE `people_mails`
 ADD `sent_by` int(11) NOT NULL,
 ADD FOREIGN KEY (`sent_by`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
+
+CREATE TABLE `people_log` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `url` varchar(500) NOT NULL,
+  `date` timestamp NOT NULL,
+  `ip` varchar(200) NOT NULL,
+  `action` varchar(200) NOT NULL,
+  `info` text NOT NULL
+) ENGINE='InnoDB' COLLATE 'utf8_unicode_ci';
+
+ALTER TABLE `people_log`
+ADD `people` int(10) unsigned NOT NULL,
+ADD FOREIGN KEY (`people`) REFERENCES `people` (`id`) ON DELETE CASCADE;
+
+ALTER TABLE `people_log`
+DROP FOREIGN KEY `people_log_ibfk_1`,
+ADD FOREIGN KEY (`people`) REFERENCES `people_access` (`id`) ON DELETE CASCADE ON UPDATE CASCADE

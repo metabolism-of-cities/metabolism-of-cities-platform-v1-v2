@@ -47,6 +47,10 @@ if ($_POST) {
   $db->update("papers",$post,"id = $id");
   $hash = encrypt($id . html($_POST['title'], false));
 
+  if ($_GET['profile']) {
+    peoplelog("User made a change to an existing publication");
+  }
+
 }
 
 $abstract_status = array('pending','author_approved','journal_approved','open_access','not_approved','toc_only');
