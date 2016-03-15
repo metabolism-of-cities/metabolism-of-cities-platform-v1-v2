@@ -205,11 +205,13 @@ if ($admin_mode && $_GET['authorscrape']) {
   <dd><?php echo $info->title ?></dd>
 
   <dt>Author(s)</dt>
-  <?php if ($admin_mode && $authors) { ?>
+  <?php if ($authors) { ?>
     <?php foreach ($authors as $key => $value) { ?>
       <dd><a href="people/<?php echo $key ?>-<?php echo flatten($value) ?>"><?php echo $value ?></a></dd>
     <?php } ?>
+    <?php if ($admin_mode) { ?>
       <dd><a class="btn btn-info" href="publication.view.php?id=<?php echo $id ?>&amp;authorscrape=true">Re-classify authors</a></dd>
+    <?php } ?>
   <?php } else { ?>
     <dd><?php echo $info->author ?></dd>
     <?php if ($admin_mode) { ?>

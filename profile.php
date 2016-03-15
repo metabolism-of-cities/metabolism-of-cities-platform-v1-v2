@@ -2,8 +2,8 @@
 $skip_login = true;
 require_once 'functions.php';
 require_once 'functions.omat.php';
-$section = 2;
-$page = 6;
+$section = 4;
+$page = 4;
 $id = (int)$_GET['id'];
 $info = $db->record("SELECT * FROM people WHERE id = $id AND active IS TRUE");
 if (!$info->id) {
@@ -192,7 +192,7 @@ info@metabolismofcities.org";
     <h3><?php echo $parent ?></h3>
     <ul class="tags">
     <?php foreach ($tag[$parent] as $key => $value) { ?>
-      <li><a class="btn btn-primary" href="http://"><?php echo $value ?></a>
+      <li><a class="btn btn-primary" href="tags/<?php echo $key ?>/<?php echo flatten($value) ?>"><?php echo $value ?></a>
         <span class="badge"><?php echo $tag_counter[$key] ?></span>
       </li>
     <?php } ?>

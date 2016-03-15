@@ -104,6 +104,7 @@ $menu = array(
       1 => array('label' => 'Full list', 'url' => 'publications/list'),
       2 => array('label' => 'Search', 'url' => 'publications/search'),
       3 => array('label' => 'Add', 'url' => 'publications/add'),
+      4 => array('label' => 'Authors', 'url' => 'people'),
     ),
   ),
 );
