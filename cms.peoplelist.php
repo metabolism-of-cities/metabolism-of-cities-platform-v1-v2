@@ -18,7 +18,9 @@ if ($_GET['mail']) {
   $sql = "WHERE email != ''";
 }
 
-$authors = $db->query("SELECT * FROM people $sql ORDER BY firstname, lastname");
+$authors = $db->query("SELECT *,
+  (SELECT COUNT(*) FROM people_mails WHERE people_mails.people = people.id) AS total
+FROM people $sql ORDER BY firstname, lastname");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -71,7 +73,14 @@ $authors = $db->query("SELECT * FROM people $sql ORDER BY firstname, lastname");
         <a target="_blank" href="https://www.google.co.za/#q=<?php echo urlencode($row['firstname'] ." " . $row['lastname']) ?>+email">Search</a> | 
         <a target="_blank" href="https://www.google.co.za/#q=<?php echo urlencode($row['firstname'] ." " . $row['lastname']) ?>+urban+metabolism+email">Search +um</a>
       </td>
-      <td>0 | <a href="cms/mail/<?php echo $row['id'] ?>">preview</a></td>
+      <td>
+      <a href="cms/mailssent/<?php echo $row['id'] ?>">
+        <?php echo $row['total'] ?>
+      </a>
+      | <a href="cms/mail/<?php echo $row['id'] ?>">preview</a> | 
+      <a href="cms/mail/<?php echo $row['id'] ?>/send">send mail</a>
+      
+      </td>
     </tr>
   <?php } ?>
   </table>

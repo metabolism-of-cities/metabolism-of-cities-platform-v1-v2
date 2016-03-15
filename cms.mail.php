@@ -4,6 +4,7 @@ require_once 'functions.php';
 require_once 'functions.omat.php';
 
 $id = (int)$_GET['id'];
+$mail_id = 1;
 
 if ($id) {
   $info = $db->record("SELECT * FROM people WHERE id = $id");
@@ -13,7 +14,7 @@ if (!$info->email) {
   die("Please set an e-mail address first!");
 }
 
-$mailinfo = $db->record("SELECT * FROM mails WHERE id = 1");
+$mailinfo = $db->record("SELECT * FROM mails WHERE id = $mail_id");
 
 $paperlist = $db->query("SELECT 
   papers.*
@@ -25,7 +26,7 @@ ORDER BY papers.year DESC");
 $count = 0;
 foreach ($paperlist as $row) {
   $count++;
-  $papers .= $count . ". " . html_entity_decode($row['title'], ENT_QUOTES) . " ({$row['year']})\n";
+  $papers .= $count . ". [" . URL . "publication/{$row['id']} " . html_entity_decode($row['title'], ENT_QUOTES) . "] ({$row['year']})\n";
 }
 
 $content = $mailinfo->content;
@@ -70,8 +71,25 @@ if ($_POST) {
   $print = "Mail was sent to $your_mail";
 }
 
-$content = bbcode($content);
+if ($_GET['send']) {
+  $check = $db->query("SELECT * FROM people_mails WHERE people = {$info->id} AND mail = {$mail_id}");
+  if (count($check)) {
+    die("This mail was already sent to this user.");
+  }
+  require_once 'functions.mail.php';
+  pearMail($info->email, $mailinfo->subject, $content);
+  $post = array(
+    'people' => $info->id,
+    'mail' => $mail_id,
+    'address' => mysql_clean($info->email),
+    'content' => mysql_clean($content),
+    'sent_by' => $user_id,
+  );
+  $db->insert("people_mails",$post);
+  $print = "Mail was sent to {$info->email}";
+}
 
+$content = bbcode($content);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -109,6 +127,14 @@ $content = bbcode($content);
 
     <div class="form-group">
         <button type="submit" class="btn btn-primary" name="mail" value="true">Mail to <?php echo $your_mail ?></button>
+    </div>
+
+  </form>
+
+  <form method="get" class="form form-horizontal" action="<?php echo URL ?>/cms/mail/<?php echo $id ?>/send">
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary" name="mail" value="true">Mail to <?php echo $info->email ?></button>
     </div>
   
   </form>

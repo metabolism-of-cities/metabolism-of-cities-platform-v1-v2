@@ -1315,3 +1315,18 @@ CREATE TABLE `mails` (
   `subject` varchar(200) NOT NULL,
   `content` text NOT NULL
 ) ENGINE='InnoDB' COLLATE 'utf8_unicode_ci';
+
+CREATE TABLE `people_mails` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `people` int(10) unsigned NOT NULL,
+  `mail` int(10) unsigned NOT NULL,
+  `date` timestamp NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `content` text NOT NULL,
+  FOREIGN KEY (`people`) REFERENCES `people` (`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`mail`) REFERENCES `mails` (`id`) ON DELETE CASCADE
+) ENGINE='InnoDB' COLLATE 'utf8_unicode_ci';
+
+ALTER TABLE `people_mails`
+ADD `sent_by` int(11) NOT NULL,
+ADD FOREIGN KEY (`sent_by`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
