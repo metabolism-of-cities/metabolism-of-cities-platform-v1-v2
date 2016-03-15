@@ -19,6 +19,7 @@ $cms_menu = array(
   4 => array('label' => 'Add Blog Author', 'url' => "cms/author", 'icon' => 'user'),
   7 => array('label' => 'Contacts', 'url' => "cms/peoplelist", 'icon' => 'users'),
   8 => array('label' => 'Add Contact', 'url' => "cms/people", 'icon' => 'user'),
+  9 => array('label' => 'View Log', 'url' => "cms/log", 'icon' => 'th-list'),
   5 => array('label' => 'Log Out', 'url' => "login.php?logout=true", 'icon' => 'sign-out'),
 );
 
