@@ -511,18 +511,9 @@ function nameScraper($string, $insert = true) {
       $lastname = trim($explode_space[1]);
     }
     if ($lastname) {
-      $info = $db->query("SELECT * FROM people WHERE lastname = '$lastname'");
+      $info = $db->query("SELECT * FROM people WHERE lastname = '$lastname' AND firstname = '$firstname'");
       if (count($info) == 1) {
         $id = $info[0]['id'];
-        $firstname_found = $info[0]['firstname'];
-        if (strlen($firstname_found) <= 5 && strlen($firstname) > strlen($firstname_found)) {
-          // The present firstname is less than 4 characters (so likely only the initials)
-          // so if we now have a larger firstname, let's update this.
-         $post = array(
-            'firstname' => mysql_clean($firstname),
-          );
-          $db->update("people",$post,"id = " . $info[0]['id']);
-        }
       } elseif (count($info) > 1) {
         // If we have more than one record (same last names?) we try using the first name as well
         $info_with_firstname = $db->record("SELECT * FROM people WHERE lastname = '$lastname' AND firstname LIKE '%{$firstname}% LIMIT 1'");
@@ -534,6 +525,20 @@ function nameScraper($string, $insert = true) {
           // there are very few people with the same last name anyway so if need be we manually
           // move them, but likely it's just a matter of the first name being spelled differently
           $id = $info[0]['id'];
+        }
+      } elseif (!$count($info)) {
+        $info = $db->query("SELECT * FROM people WHERE lastname = '$lastname'");
+        if (count($info) == 1) {
+          $id = $info[0]['id'];
+          $firstname_found = $info[0]['firstname'];
+          if (strlen($firstname_found) <= 5 && strlen($firstname) > strlen($firstname_found)) {
+            // The present firstname is less than 4 characters (so likely only the initials)
+            // so if we now have a larger firstname, let's update this.
+           $post = array(
+              'firstname' => mysql_clean($firstname),
+            );
+            $db->update("people",$post,"id = " . $info[0]['id']);
+          }
         }
       }
       if (!$id) {
