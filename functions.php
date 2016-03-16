@@ -512,23 +512,18 @@ function nameScraper($string, $insert = true) {
       $lastname = trim($explode_space[1]);
     }
     if ($lastname) {
-      $info = $db->query("SELECT * FROM people WHERE lastname = '$lastname' AND firstname = '$firstname'");
+      $info = $db->query("SELECT * FROM people WHERE lastname = '$lastname' AND firstname = '$firstname' AND active = 1");
       if (count($info) == 1) {
         $id = $info[0]['id'];
       } elseif (count($info) > 1) {
         // If we have more than one record (same last names?) we try using the first name as well
-        $info_with_firstname = $db->record("SELECT * FROM people WHERE lastname = '$lastname' AND firstname LIKE '%{$firstname}% LIMIT 1'");
-        if ($info_with_firstname->id) {
+        $info_with_firstname = $db->query("SELECT * FROM people WHERE lastname = '$lastname' AND firstname LIKE '%{$firstname}% AND active = 1'");
+        if (count($info_with_firstname) == 1) {
           // If this returns one record, great, let's go for it:
-          $id = $info_with_firstname->id;
-        } else {
-          // But if not then we'll just grab the first record from the first check
-          // there are very few people with the same last name anyway so if need be we manually
-          // move them, but likely it's just a matter of the first name being spelled differently
-          $id = $info[0]['id'];
+          $id = $info_with_firstname[0]['id'];
         }
       } elseif (!count($info)) {
-        $info = $db->query("SELECT * FROM people WHERE lastname = '$lastname'");
+        $info = $db->query("SELECT * FROM people WHERE lastname = '$lastname' AND active = 1");
         if (count($info) == 1) {
           $id = $info[0]['id'];
           $firstname_found = $info[0]['firstname'];

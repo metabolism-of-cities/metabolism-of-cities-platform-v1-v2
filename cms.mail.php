@@ -72,10 +72,6 @@ if ($_POST) {
 }
 
 if ($_GET['send']) {
-  $check = $db->query("SELECT * FROM people_mails WHERE people = {$info->id} AND mail = {$mail_id}");
-  if (count($check)) {
-    die("This mail was already sent to this user.");
-  }
   require_once 'functions.mail.php';
   pearMail($info->email, $mailinfo->subject, $content);
   $post = array(

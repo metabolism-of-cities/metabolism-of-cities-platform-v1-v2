@@ -14,7 +14,7 @@ $papers = $db->query("SELECT
   papers.*
 FROM people_papers
   JOIN papers ON people_papers.paper = papers.id
-WHERE people_papers.people = $id
+WHERE people_papers.people = $id AND papers.status = 'active'
 ORDER BY papers.year DESC");
 
 $tags = $db->query("SELECT  
