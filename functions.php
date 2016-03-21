@@ -491,6 +491,12 @@ function nameScraper($string, $insert = true) {
   global $db;
 
   $explode = explode(" and ", $string);
+  if (count($explode) == 1) {
+    $explode_commas = explode(",", $string);
+    if (count($explode_commas) > 1) {
+      $explode = $explode_commas;
+    }
+  }
   foreach ($explode as $name) {
     $firstname = false;
     $lastname = false;
