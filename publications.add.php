@@ -35,6 +35,10 @@ if ($_POST['title']) {
     $_POST['source'] = $db->lastInsertId();
   }
 
+  if (!$_POST['source']) {
+    die("Please select a journal/source/publisher for this publication. You can add a new one if yours doesn't appear in the list");
+  }
+
   $post = array(
     'title' => html($_POST['title']),
     'author' => html($_POST['author']),

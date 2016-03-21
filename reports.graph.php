@@ -234,13 +234,15 @@ var histcatexplong = [
     foreach ($materials as $row) { 
       $counter++; 
 
-      $data = $db->query("SELECT SUM(data) AS total, mfa_data.year
-        FROM mfa_data
-        JOIN mfa_materials ON mfa_data.material = mfa_materials.id
-      WHERE mfa_materials.mfa_group = {$id} 
-        AND mfa_data.year IN ($in_years)
-        AND mfa_materials.code LIKE '{$row['code']}%'
-      GROUP BY mfa_data.year");
+      if ($in_years) {
+        $data = $db->query("SELECT SUM(data) AS total, mfa_data.year
+          FROM mfa_data
+          JOIN mfa_materials ON mfa_data.material = mfa_materials.id
+        WHERE mfa_materials.mfa_group = {$id} 
+          AND mfa_data.year IN ($in_years)
+          AND mfa_materials.code LIKE '{$row['code']}%'
+        GROUP BY mfa_data.year");
+      }
 
       if (count($data)) {
 

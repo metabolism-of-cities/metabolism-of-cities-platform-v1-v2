@@ -110,7 +110,11 @@ foreach ($list as $row) {
           </a>
         </td>
         <?php if ($per_capita) { ?>
-          <td><?php echo number_format($result[$id][$value]/$population[$value],2) ?></td>
+          <?php if ($population[$value]) { ?>
+            <td><?php echo number_format($result[$id][$value]/$population[$value],2) ?></td>
+          <?php } else { ?>
+            <td></td>
+          <?php } ?>
         <?php } ?>
       <?php } ?>
     </tr>    
