@@ -496,6 +496,12 @@ function nameScraper($string, $insert = true) {
     if (count($explode_commas) > 1) {
       $explode = $explode_commas;
     }
+    if (count($explode) == 1) {
+      $explode_semicolon = explode(";", $string);
+      if (count($explode_semicolon) > 1) {
+        $explode = $explode_semicolon;
+      }
+    }
   }
   foreach ($explode as $name) {
     $firstname = false;
