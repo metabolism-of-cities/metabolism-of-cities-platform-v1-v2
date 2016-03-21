@@ -20,7 +20,7 @@ if ($_GET['mail']) {
 
 $authors = $db->query("SELECT *,
   (SELECT COUNT(*) FROM people_mails WHERE people_mails.people = people.id) AS total
-FROM people $sql ORDER BY firstname, lastname");
+FROM people $sql WHERE active IS TRUE ORDER BY firstname, lastname");
 ?>
 <!DOCTYPE html>
 <html lang="en">
