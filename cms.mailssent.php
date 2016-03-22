@@ -5,7 +5,21 @@ require_once 'functions.omat.php';
 $sub_page = 7;
 
 $id = (int)$_GET['id'];
+
 $info = $db->record("SELECT * FROM people WHERE id = $id");
+
+if ($_GET['mailreminder']) {
+  $post = array(
+    'people' => $id,
+    'mail' => 2,
+    'address' => mysql_clean($info->email),
+    'content' => mysql_clean('Personal reminder e-mail'),
+    'sent_by' => $user_id,
+  );
+  $db->insert("people_mails",$post);
+  $print = "Sending of e-mail was logged";
+}
+
 $list = $db->query("SELECT people_mails.*, mails.subject, users.user_name
 FROM people_mails
 JOIN mails ON people_mails.mail = mails.id
@@ -32,7 +46,9 @@ ORDER BY people_log.date");
 
 <?php require_once 'include.header.php'; ?>
 
-  <h1>Mails sent</h1>
+  <h1>Mails sent to <?php echo $info->firstname ?> <?php echo $info->lastname ?></h1>
+
+  <?php if ($print) { echo "<div class=\"alert alert-success\">$print</div>"; } ?>
 
   <table class="table table-striped">
     <tr>
@@ -52,6 +68,8 @@ ORDER BY people_log.date");
     </tr>
   <?php } ?>
   </table>
+
+  <p><a href="cms/mailssent/<?php echo $id ?>/mailreminder" class="btn btn-info">I just sent a personal reminder</a></p>
 
   <h1>Log</h1>
 

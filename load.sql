@@ -1347,3 +1347,6 @@ ADD FOREIGN KEY (`people`) REFERENCES `people` (`id`) ON DELETE CASCADE;
 ALTER TABLE `people_log`
 DROP FOREIGN KEY `people_log_ibfk_1`,
 ADD FOREIGN KEY (`people`) REFERENCES `people_access` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+
+INSERT INTO `mails` (`subject`, `content`)
+VALUES ('Personal e-mail reminder', 'Content varies per e-mail... entered directly by the sender in the e-mail client. Not sent automatically.');

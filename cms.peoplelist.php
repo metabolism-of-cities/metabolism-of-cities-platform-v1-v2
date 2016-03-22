@@ -15,12 +15,35 @@ if ($_GET['delete']) {
 }
 
 if ($_GET['mail']) {
-  $sql = "WHERE email != ''";
+  $sql = "AND email != ''";
+}
+
+if ($_GET['loggedin']) {
+  $sql = "AND EXISTS(SELECT * FROM people_log JOIN people_access ON people_log.people = people_access.id 
+  WHERE people_access.people = people.id AND people_log.action = 'User logged in to dashboard')";
+}
+
+if ($_GET['notloggedin']) {
+  $sql = "AND NOT EXISTS(SELECT * FROM people_log JOIN people_access ON people_log.people = people_access.id 
+  WHERE people_access.people = people.id AND people_log.action = 'User logged in to dashboard')";
+}
+
+if ($_GET['interacted']) {
+  $sql = "AND EXISTS(SELECT * FROM people_log JOIN people_access ON people_log.people = people_access.id 
+  WHERE people_access.people = people.id AND people_log.action != 'User logged in to dashboard')";
+}
+
+if ($_GET['notinteracted']) {
+  $sql = "AND EXISTS(SELECT * FROM people_log JOIN people_access ON people_log.people = people_access.id 
+  WHERE people_access.people = people.id AND people_log.action = 'User logged in to dashboard')
+  AND NOT EXISTS(SELECT * FROM people_log JOIN people_access ON people_log.people = people_access.id 
+  WHERE people_access.people = people.id AND people_log.action != 'User logged in to dashboard')
+  ";
 }
 
 $authors = $db->query("SELECT *,
   (SELECT COUNT(*) FROM people_mails WHERE people_mails.people = people.id) AS total
-FROM people $sql WHERE active IS TRUE ORDER BY firstname, lastname");
+FROM people WHERE active IS TRUE $sql ORDER BY firstname, lastname");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,6 +60,13 @@ FROM people $sql WHERE active IS TRUE ORDER BY firstname, lastname");
 
   <?php if ($print) { echo "<div class=\"alert alert-success\">$print</div>"; } ?>
 
+  <p>
+    <a class="btn<?php if ($_GET['loggedin']) { echo ' btn-primary'; } ?>" href="cms/peoplelist/loggedin">Logged in</a>
+    <a class="btn<?php if ($_GET['notloggedin']) { echo ' btn-primary'; } ?>" href="cms/peoplelist/notloggedin">Didn't log in</a>
+    <a class="btn<?php if ($_GET['interacted']) { echo ' btn-primary'; } ?>" href="cms/peoplelist/interacted">Interacted</a>
+    <a class="btn<?php if ($_GET['notinteracted']) { echo ' btn-primary'; } ?>" href="cms/peoplelist/notinteracted">Didn't interact</a>
+  </p>
+
   <div class="alert alert-info">
     <strong><?php echo count($authors) ?></strong> contacts found. 
     <?php if ($_GET['mail']) { ?>
@@ -45,6 +75,17 @@ FROM people $sql WHERE active IS TRUE ORDER BY firstname, lastname");
       <a href="cms.peoplelist.php?mail=true">Show mailing list</a>
     <?php } ?>
   </div>
+
+  <?php if ($_GET['interacted']) { ?>
+    <div class="alert alert-warning">
+      <strong>Interacted</strong> means that these people did more than just log in. For instance, they could have updated
+      their profile or added/updated a publication.
+    </div>
+  <?php } elseif ($_GET['notinteracted']) { ?>
+    <div class="alert alert-warning">
+      <strong>Didn't interact</strong> means that these people logged in, but did nothing more than that.
+    </div>
+  <?php } ?>
 
   <table class="table table-striped">
     <tr>
