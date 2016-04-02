@@ -122,6 +122,17 @@ foreach ($list as $row) {
 
   </table>
 
+  <?php if ($dataset->banner_text) { ?>
+    <div class="alert alert-info info-bar">
+      <i class="fa fa-info-circle"></i>
+      <?php echo $dataset->banner_text ?>
+      <?php if ($dataset->description) { ?>
+        <br />
+        <a href="omat/<?php echo $project ?>/<?php echo $public_login ? "projectinfo" : "dataset"; ?>#description">Read more</a>
+      <?php } ?>
+    </div>
+  <?php } ?>
+
   </div>
 
   </div>

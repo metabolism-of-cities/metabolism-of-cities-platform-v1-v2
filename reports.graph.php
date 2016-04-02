@@ -74,6 +74,7 @@ if (is_array($total)) {
       <link rel="stylesheet" href="css/nv.d3.min.css" />
     <?php } ?>
     <style type="text/css">
+      .clear{clear:both}
       #graph{height:500px}
       .pie{height:400px;width:400px;float:left}
     </style>
@@ -296,9 +297,13 @@ nv.addGraph(function() {
 <?php } ?>
 
   <?php if ($dataset->banner_text) { ?>
-    <div class="alert alert-info info-bar">
+    <div class="alert alert-info info-bar clear">
       <i class="fa fa-info-circle"></i>
       <?php echo $dataset->banner_text ?>
+      <?php if ($dataset->description) { ?>
+        <br />
+        <a href="omat/<?php echo $project ?>/<?php echo $public_login ? "projectinfo" : "dataset"; ?>#description">Read more</a>
+      <?php } ?>
     </div>
   <?php } ?>
 

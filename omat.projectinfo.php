@@ -110,6 +110,15 @@ if ($info->access == "private") {
 
   </div>
 
+  <?php if ($info->description) { ?>
+
+    <h2 id="description">Description</h2>
+
+    <?php echo $info->description ?>
+
+  <?php } ?>
+
+
 <?php require_once 'include.footer.php'; ?>
 
   </body>

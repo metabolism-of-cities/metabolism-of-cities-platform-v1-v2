@@ -1350,3 +1350,6 @@ ADD FOREIGN KEY (`people`) REFERENCES `people_access` (`id`) ON DELETE CASCADE O
 
 INSERT INTO `mails` (`subject`, `content`)
 VALUES ('Personal e-mail reminder', 'Content varies per e-mail... entered directly by the sender in the e-mail client. Not sent automatically.');
+
+ALTER TABLE `mfa_dataset`
+ADD `description` text COLLATE 'utf8_unicode_ci' NOT NULL AFTER `banner_text`;

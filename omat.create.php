@@ -33,6 +33,8 @@ if ($_POST) {
       'measurement' => html($_POST['measurement']),
       'multiscale' => (int)$_POST['multiscale'],
       'type' => (int)$_POST['type'],
+      'banner_text' => html($_POST['banner_text']),
+      'description' => html($_POST['description']),
     );
     if ($edit) {
       $db->update("mfa_dataset",$post,"id = $edit");
@@ -61,6 +63,7 @@ $types = $db->query("SELECT * FROM mfa_dataset_types ORDER BY name");
     <title><?php echo $edit ? "Edit" : "Create"; ?> online dataset | <?php echo SITENAME ?></title>
     <style type="text/css">
     .jumpdown{margin-top:14px;}
+    textarea.form-control{height:260px}
     </style>
   </head>
 
@@ -182,6 +185,33 @@ $types = $db->query("SELECT * FROM mfa_dataset_types ORDER BY name");
       </div>
 
     </fieldset>
+
+    <?php if ($edit) { ?>
+      <fieldset style="margin-top:20px">
+            <legend>Public description</legend>
+
+            <p>
+              If you make your project public, then you can provide information about this project here. You can 
+              explain who the authors are, what your project has focused on, any particular restrictions on re-using
+              your data, etc.                            
+            </p>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Short text</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="text" name="banner_text" value="<?php echo $info->banner_text ?>" placeholder="This is shown on every public page of your project. It links to the full description." />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Description</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" name="description"><?php echo br2nl($info->description) ?></textarea>
+                </div>
+            </div>
+            
+        </fieldset>
+    <?php } ?>
 
     <fieldset style="margin-top:20px">
       <legend>Terms and conditions</legend>
