@@ -34,6 +34,8 @@ FROM tags JOIN tags_parents ON tags.parent = tags_parents.id ORDER BY tags.paren
 
   <h1>Tags</h1>
 
+  <?php if ($print) { echo "<div class=\"alert alert-success\">$print</div>"; } ?>
+
   <table class="table table-striped">
     <tr>
       <th>ID</th>
