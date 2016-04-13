@@ -3,6 +3,17 @@ require_once 'functions.cms.php';
 require_once 'functions.php';
 require_once 'functions.omat.php';
 $sub_page = 10;
+
+if ($_GET['delete']) {
+  $delete = (int)$_GET['delete'];
+  $count = $db->query("SELECT * FROM tags_papers WHERE tag = $delete");
+  if (count($count)) {
+    die("Sorry, you can only delete a tag if there are no papers associated with it");
+  }
+  $db->query("DELETE FROM tags WHERE id = $delete LIMIT 1");
+  $print = "Tag was deleted";
+}
+
 $list = $db->query("SELECT tags.*, tags_parents.name AS parentname 
 FROM tags JOIN tags_parents ON tags.parent = tags_parents.id ORDER BY tags.parent, tags.tag");
 ?>
