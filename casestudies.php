@@ -77,7 +77,7 @@ foreach ($count_per_study as $row) {
 
 <?php require_once 'include.header.php'; ?>
 
-  <h1>Regional Material Flow Analysis</h1>
+  <h1>Global Urban Metabolism Data</h1>
 
     
 <div class="row">
@@ -117,7 +117,7 @@ foreach ($count_per_study as $row) {
 
   <p>
      At the open source Metabolism of Cities website we want to create a database with
-     regional metabolism indicators. That is, we plan to examine a variety of
+     urban metabolism data and indicators. That is, we plan to examine a variety of
      research studies that have calculated particular values (material
      extraction, emissions, construction material use, imports, exports, etc.)
      for an urban/provincial region. 
@@ -127,7 +127,7 @@ foreach ($count_per_study as $row) {
      By creating one large masterlist of these
      values it is much easier for other researchers to see what values are
      out there and to compare their own data to other studies.
-     We aim to do this at different spatial scales as well : region, city,
+     We aim to do this at different spatial scales as well: region, city,
      municipalities, ... With this big masterlist it will therefore also become
      possible to identify indicators for resource use and pollution emission.
      </p>
