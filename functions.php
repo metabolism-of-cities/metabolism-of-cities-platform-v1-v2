@@ -112,7 +112,7 @@ foreach ($tag_parents as $row) {
   $menu[5]['menu'][$row['id']] = array('label' => $row['name'], 'url' => 'publications/collections/'.$row['id']);
 }
 
-$menu[5]['menu'][99] = array('label' => 'Regional MFAs', 'url' => 'page/casestudies');
+$menu[5]['menu'][99] = array('label' => 'Global UM data', 'url' => 'page/casestudies');
 $menu[5]['menu'][98] = array('label' => 'UM Publications: Map', 'url' => 'page/map');
 
 $google_translate = LOCAL ? '' : '
