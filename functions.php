@@ -490,6 +490,9 @@ function nameScraper($string, $insert = true) {
 
   global $db;
 
+  $array = array("&" => "and");
+  $string = strtr($string, $array);
+
   $explode = explode(" and ", $string);
   if (count($explode) == 1) {
     $explode_commas = explode(",", $string);
