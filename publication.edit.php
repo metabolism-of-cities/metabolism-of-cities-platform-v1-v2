@@ -30,6 +30,7 @@ if ($_POST) {
 
   $post = array(
     'title' => html($_POST['title']),
+    'title_native' => html($_POST['title_native']),
     'author' => html($_POST['author']),
     'volume' => (int)$_POST['volume'],
     'issue' => (int)$_POST['issue'],
@@ -38,6 +39,8 @@ if ($_POST) {
     'year' => (int)$_POST['year'],
     'doi' => html($_POST['doi']),
     'abstract' => html($_POST['abstract']),
+    'abstract_native' => html($_POST['abstract_native']),
+    'language' => html($_POST['language']),
     'link' => html($_POST['link']),
     'source' => (int)$_POST['source'],
     'open_access' => is_numeric($_POST['open_access']) ? (int)$_POST['open_access'] : NULL,
@@ -68,6 +71,7 @@ if ($_GET['profile']) {
     <title>Edit Publication | <?php echo SITENAME ?></title>
     <style type="text/css">
     textarea.form-control[name='abstract']{height:300px}
+    textarea.form-control[name='abstract_native']{height:300px}
     .newsource{display:none}
     </style>
     <script type="text/javascript">
@@ -86,6 +90,14 @@ if ($_GET['profile']) {
           $(".newsource").hide('fast');
         }
       });
+      $("select[name='language']").change(function(){
+        if ($(this).val() == "English") {
+          $(".foreignlanguage").hide();
+        } else {
+          $(".foreignlanguage").show();
+        }
+      });
+      $("select[name='language']").change();
     });
     </script>
   </head>
@@ -132,9 +144,27 @@ if ($_GET['profile']) {
 <form method="post" class="form form-horizontal">
 
   <div class="form-group">
-    <label class="col-sm-2 control-label">Title</label>
+    <label class="col-sm-2 control-label">Language</label>
+    <div class="col-sm-10">
+      <select name="language" class="form-control">
+        <?php foreach ($languages as $value) { ?>
+          <option value="<?php echo $value ?>"<?php if ($info->language == $value) { echo ' selected'; } ?>><?php echo $value ?></option>
+        <?php } ?>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Title (English)</label>
     <div class="col-sm-10">
       <input class="form-control" type="text" name="title" value="<?php echo $info->title ?>" required />
+    </div>
+  </div>
+
+  <div class="form-group foreignlanguage">
+    <label class="col-sm-2 control-label">Title (original)</label>
+    <div class="col-sm-10">
+      <input class="form-control" type="text" name="title_native" value="<?php echo $info->title_native ?>" />
     </div>
   </div>
 
@@ -187,9 +217,16 @@ if ($_GET['profile']) {
   </div>
 
   <div class="form-group">
-    <label class="col-sm-2 control-label">Abstract</label>
+    <label class="col-sm-2 control-label">Abstract (English)</label>
     <div class="col-sm-10">
       <textarea class="form-control" name="abstract"><?php echo br2nl($info->abstract) ?></textarea>
+    </div>
+  </div>
+
+  <div class="form-group foreignlanguage">
+    <label class="col-sm-2 control-label">Abstract (original)</label>
+    <div class="col-sm-10">
+      <textarea class="form-control" name="abstract_native"><?php echo br2nl($info->abstract_native) ?></textarea>
     </div>
   </div>
 

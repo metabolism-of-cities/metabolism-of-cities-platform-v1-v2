@@ -1353,3 +1353,8 @@ VALUES ('Personal e-mail reminder', 'Content varies per e-mail... entered direct
 
 ALTER TABLE `mfa_dataset`
 ADD `description` text COLLATE 'utf8_unicode_ci' NOT NULL AFTER `banner_text`;
+
+ALTER TABLE `papers`
+ADD `title_native` varchar(255) COLLATE 'utf8_unicode_ci' NULL AFTER `title`,
+ADD `abstract_native` text COLLATE 'utf8_unicode_ci' NULL AFTER `abstract`,
+ADD `language` enum('English','Spanish','Chinese','French','German','Other') NULL DEFAULT 'English';

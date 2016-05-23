@@ -199,10 +199,20 @@ if ($admin_mode && $_GET['authorscrape']) {
   <?php if ($print) { echo "<div class=\"alert alert-success\">$print</div>"; } ?>
   <?php if ($error) { echo "<div class=\"alert alert-danger\">$error</div>"; } ?>
 
+  <?php if ($info->language != "English") { ?>
+    <div class="alert alert-info">
+      <strong>Note:</strong> this publication is published in <strong><?php echo $info->language ?></strong>.
+      We aim to provide a translation of the title and the abstract in English for publications that are originally
+      published in another language. Please note that these translations are not always perfect, but our goal is to 
+      give an idea of the content of this publication. Some of the translations are provided by the authors; others
+      are translated by us or others.
+    </div>
+  <?php } ?>
+
 <dl class="dl dl-horizontal status-<?php echo $info->status ?>">
 
   <dt>Title</dt>
-  <dd><?php echo $info->title ?></dd>
+  <dd><?php echo $info->title_native ?: $info->title; ?></dd>
 
   <dt>Author(s)</dt>
   <?php if ($authors) { ?>
@@ -240,6 +250,10 @@ if ($admin_mode && $_GET['authorscrape']) {
   <?php if ($info->open_access || $info->abstract_status == "author_approved" ||   $info->abstract_status == "journal_approved" || $info->abstract_status == "open_access" || $info->abstract_status == "toc_only" || $admin_mode || true) { ?>
     <dt>Abstract</dt>
     <dd><?php echo $info->abstract ?></dd>
+    <?php if ($info->abstract_native) { ?>
+      <dt>Original Abstract</dt>
+      <dd><?php echo $info->abstract ?></dd>
+    <?php } ?>
   <?php } ?>
 
   <?php if ($info->editor_comments) { ?>

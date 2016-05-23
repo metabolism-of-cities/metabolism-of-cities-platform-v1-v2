@@ -39,8 +39,18 @@ if ($_POST['title']) {
     die("Please select a journal/source/publisher for this publication. You can add a new one if yours doesn't appear in the list");
   }
 
+  if ($_POST['language'] != 'English') {
+    $original = $_POST['title'];
+    $_POST['title'] = $_POST['title_english'];
+    $_POST['title_native'] = $original;
+    $original = $_POST['abstract'];
+    $_POST['abstract'] = $_POST['abstract_english'];
+    $_POST['abstract_native'] = $original;
+  }
+
   $post = array(
     'title' => html($_POST['title']),
+    'title_native' => html($_POST['title_native']),
     'author' => html($_POST['author']),
     'volume' => (int)$_POST['volume'],
     'issue' => (int)$_POST['issue'],
@@ -49,6 +59,8 @@ if ($_POST['title']) {
     'year' => (int)$_POST['year'],
     'doi' => html($_POST['doi']),
     'abstract' => html($_POST['abstract']),
+    'abstract_native' => html($_POST['abstract_native']),
+    'language' => html($_POST['language']),
     'link' => html($_POST['link']),
     'source' => (int)$_POST['source'],
     'status' => mysql_clean('pending'),
@@ -141,11 +153,13 @@ Review: " . URL . "publication.view.php?id=$id&hash=$hash
     <script type="text/javascript" src="js/autosize.js"></script>
     <style type="text/css">
     textarea.form-control[name='abstract']{height:300px}
+    textarea.form-control[name='abstract_english']{height:300px}
     .newsource{display:none}
     textarea[name='bibtex']{
       height:34px;
     }
     .bibtexsubmit{display:none}
+    .foreignlanguage{display:none}
     </style>
     <script type="text/javascript">
     $(function(){
@@ -167,7 +181,14 @@ Review: " . URL . "publication.view.php?id=$id&hash=$hash
         $(".bibtexsubmit").show();
       });
       $("textarea[name='bibtex']").autosize();
+      $("select[name='language']").change(function(){
+        if ($(this).val() == "English") {
+          $(".foreignlanguage").hide();
+        } else {
+          $(".foreignlanguage").show();
+        }
       });
+    });
     </script>
   </head>
 
@@ -238,9 +259,27 @@ can find this! The publication should be related to urban metabolism research.</
 <form method="post" class="form form-horizontal">
 
   <div class="form-group">
+    <label class="col-sm-2 control-label">Language</label>
+    <div class="col-sm-10">
+      <select name="language" class="form-control">
+        <?php foreach ($languages as $value) { ?>
+          <option value="<?php echo $value ?>"<?php if ($row['language'] == 'English') { echo ' selected'; } ?>><?php echo $value ?></option>
+        <?php } ?>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group">
     <label class="col-sm-2 control-label">Title</label>
     <div class="col-sm-10">
       <input class="form-control" type="text" name="title" value="<?php echo $info->title ?>" required />
+    </div>
+  </div>
+
+  <div class="form-group foreignlanguage">
+    <label class="col-sm-2 control-label">Title in English</label>
+    <div class="col-sm-10">
+      <input class="form-control" type="text" name="title_english" value="<?php echo $info->title ?>" />
     </div>
   </div>
 
@@ -296,6 +335,13 @@ can find this! The publication should be related to urban metabolism research.</
     <label class="col-sm-2 control-label">Abstract</label>
     <div class="col-sm-10">
       <textarea class="form-control" name="abstract"><?php echo $info->abstract ?></textarea>
+    </div>
+  </div>
+
+  <div class="form-group foreignlanguage">
+    <label class="col-sm-2 control-label">Abstract in English</label>
+    <div class="col-sm-10">
+      <textarea class="form-control" name="abstract_english"><?php echo $info->abstract ?></textarea>
     </div>
   </div>
 

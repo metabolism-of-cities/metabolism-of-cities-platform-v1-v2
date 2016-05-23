@@ -698,6 +698,8 @@ function peoplelog($action) {
   return true;
 }
 
+$languages = array('English', 'Chinese', 'Spanish', 'French', 'German', 'Other');
+
 $version = '1.3';
 
 ?>

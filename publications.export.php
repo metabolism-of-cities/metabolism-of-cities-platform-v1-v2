@@ -27,7 +27,7 @@ foreach ($tags as $row) {
   $taglist[$row['paper']] .= $row['tag'] . ", ";
 }
 
-$csv[] = array("Title", "Author(s)", "Journal/source", "Volume", "Issue", "Pages", "Year", "DOI/ISBN", "Link", "Open Access", "Abstract", "Tags", "URL");
+$csv[] = array("Title", "Author(s)", "Journal/source", "Volume", "Issue", "Pages", "Year", "DOI/ISBN", "Link", "Open Access", "Abstract", "Tags", "Language", "URL");
 
 foreach ($list as $row) {
 
@@ -46,6 +46,7 @@ foreach ($list as $row) {
     $openaccess,
     strip_tags(html_entity_decode(br2nl($row['abstract']))),
     $tags,
+    $row['language'],
     URL . "publication/" . $row['id'],
   );
 
