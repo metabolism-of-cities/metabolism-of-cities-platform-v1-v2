@@ -22,6 +22,9 @@ if ($_GET['delete']) {
 }
 
 if ($_POST) {
+  if ($_POST['fax'] != "urbanmetabolism") {
+    die("You did not type the control word, please try again");
+  }
   $post = array(
     'researcher' => html($_POST['researcher']),
     'institution' => html($_POST['institution']),
@@ -163,6 +166,20 @@ $status = array('ongoing', 'finished', 'paused', 'cancelled');
             <label class="col-sm-2 control-label">E-mail</label>
             <div class="col-sm-10">
               <input class="form-control" type="email" name="email" value="<?php echo $info->email ?>" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label"></label>
+            <div class="col-sm-10">
+            To make sure you are human, please type the phrase urbanmetabolism in the box below
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Check</label>
+            <div class="col-sm-10">
+              <input class="form-control" type="text" name="fax" value="<?php echo $info->name ?>" />
             </div>
           </div>
 

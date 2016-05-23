@@ -16,6 +16,8 @@ if (!$info->id) {
 if ($_GET['delete'] && defined("ADMIN")) {
   $db->query("UPDATE research SET deleted_on = NOW() WHERE id = $id");
 }
+$encrypt = encrypt($id);
+$encrypt = substr($encrypt, 0, 20);
 
 ?>
 <!DOCTYPE html>
@@ -34,7 +36,7 @@ if ($_GET['delete'] && defined("ADMIN")) {
 
 <?php if ($_GET['delete']) { ?>
   <div class="alert alert-danger">This record has been deleted.</div>
-<?php } ?>
+<?php } else { ?>
 
 <h1><?php echo $info->title ?></h1>
 
@@ -62,10 +64,16 @@ if ($_GET['delete'] && defined("ADMIN")) {
 </dl>
 
 <?php if (defined("ADMIN")) { ?>
+  <div class="well">
+  <p>Admin options</p>
   <p>
     <a href="research.php?id=<?php echo $id ?>&amp;delete=true" onclick="javascript:return confirm('Are you sure?')" class="btn btn-danger">Delete</a>
     <a href="omat/create/<?php echo $id ?>" class="btn btn-primary">Create an online dataset</a>
+    <a href="update/<?php echo $id ?>/<?php echo $encrypt ?>" class="btn btn-info">Edit</a>
   </p>
+  </div>
+<?php } ?>
+
 <?php } ?>
 
 <p><a href="research/list" class="btn btn-primary">&laquo; Back to the list</a></p>

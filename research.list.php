@@ -1,5 +1,7 @@
 <?php
+$skip_login = true;
 require_once 'functions.php';
+require_once 'functions.omat.php';
 $section = 3;
 $page = 1;
 
