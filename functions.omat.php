@@ -75,7 +75,7 @@ if (!$skip_login && !$no_project_selected && !$admin_login) {
     $check = $db->record("SELECT * FROM mfa_dataset WHERE id = $project AND id IN ($authorized)");
   }
   if (!$check->id) {
-    kill("Invalid dataset opened");
+    kill("Invalid dataset opened", false);
   }
   $omat_sidebar = !$disable_sidebar ? true : false;
 }

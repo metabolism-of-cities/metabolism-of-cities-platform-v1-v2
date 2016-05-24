@@ -141,9 +141,11 @@ function mailadmins($message, $subject, $from = false, $html = false, $webmaster
   }
 }
 
-function kill($message) {
+function kill($message, $report = true) {
     if (PRODUCTION) {
-      mailadmins($message . "<br /><br /><pre>" . getinfo() . "</pre>", "MySQL Error - Metabolism of Cities", false, true, true);
+      if ($report) {
+        mailadmins($message . "<br /><br /><pre>" . getinfo() . "</pre>", "MySQL Error - Metabolism of Cities", false, true, true);
+      }
       header("HTTP/1.0 404 Not Found");
       header("Location: " . URL . "404");
       exit();
