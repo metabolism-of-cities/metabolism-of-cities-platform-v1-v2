@@ -59,7 +59,7 @@ $page = 3;
             public policy. <a href="https://it.linkedin.com/in/gabriela-fernandez-56873843"><i class="fa fa-linkedin-square"></i></a>
           </li>
           <li>
-            <img src="img/team.nopicture.png" alt="" />
+            <img src="img/team.rachel.jpg" alt="" />
             <strong>Rachel Spiegel</strong>
             Consulting engineer within energy and environment at Hjellnes
             Consult, based in Oslo, Norway. Spiegel is interested in applying systems
