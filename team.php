@@ -13,6 +13,8 @@ $page = 3;
     .jumbotron img {float:left;max-height:100px;margin:0 10px 10px 0;border:1px solid #ccc;padding:3px;}
     .jumbotron li{clear:both;padding-bottom:10px;}
     .jumbotron ul{list-style:none;}
+    .jumpdown{clear:both;padding-top:20px}
+    .btn-primary{display:block}
     </style>
   </head>
 
@@ -56,8 +58,17 @@ $page = 3;
             the Italian urban context while promoting urban metabolism
             public policy. <a href="https://it.linkedin.com/in/gabriela-fernandez-56873843"><i class="fa fa-linkedin-square"></i></a>
           </li>
+          <li>
+            <img src="img/team.nopicture.png" alt="" />
+            <strong>Rachel Spiegel</strong>
+            Consulting engineer within energy and environment at Hjellnes
+            Consult, based in Oslo, Norway. Spiegel is interested in applying systems
+            thinking to our urban and economic structures to integrate environmental and
+            social impacts. 
+            <a href="https://no.linkedin.com/in/rspiegel"><i class="fa fa-linkedin-square"></i></a>
+          </li>
         </ul>
-        <p>
+        <p class="jumpdown">
           <a class="btn btn-lg btn-primary" href="page/contact" role="button">Join now &raquo;</a>
         </p>
       </div>
