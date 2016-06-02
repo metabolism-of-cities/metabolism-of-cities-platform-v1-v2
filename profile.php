@@ -7,7 +7,7 @@ $page = 4;
 $id = (int)$_GET['id'];
 $info = $db->record("SELECT * FROM people WHERE id = $id AND active IS TRUE");
 if (!$info->id) {
-  kill("Person not found", "critical");
+  kill("Person not found", false);
 }
 
 $papers = $db->query("SELECT 
