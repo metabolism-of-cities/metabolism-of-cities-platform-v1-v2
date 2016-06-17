@@ -13,7 +13,7 @@
           Creative Commons Attribution 4.0 International license.
           </a>
           <span class="right">
-          Last update: <strong>May 2016</strong>
+          Last update: <strong><?php echo format_date("M Y", $update->date_added) ?></strong>
           </span>
         </p>
       </div>

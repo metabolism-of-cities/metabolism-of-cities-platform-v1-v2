@@ -705,6 +705,8 @@ function peoplelog($action) {
 
 $languages = array('English', 'Chinese', 'Spanish', 'French', 'German', 'Other');
 
+$update = $db->record("SELECT date_added FROM papers ORDER BY id DESC LIMIT 1");
+
 $version = '1.3';
 
 ?>

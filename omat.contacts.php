@@ -85,7 +85,7 @@ if ($check->time_log && is_array($parent)) {
     LEFT JOIN mfa_sources ON a.source = mfa_sources.id
     JOIN mfa_activities ON a.activity = mfa_activities.id
   WHERE mfa_contacts.dataset = $project OR mfa_sources.dataset = $project
-    ORDER BY FIELD(a.activity, 6,7,10,21,22,12,8,9)
+    ORDER BY FIELD(a.activity, 6,7,10,12,21,22,8,9)
   ");
 
   foreach ($activities as $row) {
