@@ -252,6 +252,18 @@ foreach ($population_list as $row) {
       </ul>
     </div>
   </div>
+
+  <div class="panel panel-info printhide">
+    <div class="panel-heading">
+      <h3 class="panel-title">Download files</h3>
+    </div>
+    <div class="panel-body">
+      <p>Click on the button below to download the data as a Comma-Separated (CSV) file. This can be opened in 
+      any spreadsheet program.</p>
+      <p><a href="<?php echo $omat_link ?>/<?php echo $project ?>/reports-export/<?php echo $id ?><?php echo $values_only ? '' : '/values-only'; ?>" class="btn btn-info"><i class="fa fa-download"></i> Download data</a></p>
+    </div>
+  </div>
+
   <?php if ($values_only && $hiderow) { ?>
   <script type="text/javascript">
   $(function(){

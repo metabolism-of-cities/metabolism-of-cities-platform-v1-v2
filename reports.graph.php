@@ -307,6 +307,11 @@ nv.addGraph(function() {
     </div>
   <?php } ?>
 
+    <div class="alert alert-info info-bar clear">
+      <i class="fa fa-save"></i>
+      To save a graph to your computer, <a href="http://www.take-a-screenshot.org/" target="_blank">please take a screenshot</a> and save 
+      the image to your computer.
+    </div>
 
 <?php require_once 'include.footer.php'; ?>
 
