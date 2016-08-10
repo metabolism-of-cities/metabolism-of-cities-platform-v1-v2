@@ -57,11 +57,25 @@ foreach ($list as $row) {
   <head>
     <?php echo $header ?>
     <title>Indicator List | <?php echo SITENAME ?></title>
+    <script type="text/javascript">
+    $(function(){
+      $("#percapita").click(function(e){
+        e.preventDefault();
+        $(".percap").toggle();
+      });
+    });
+    </script>
   </head>
 
   <body class="omat">
 
 <?php require_once 'include.header.php'; ?>
+
+  <a id="percapita" href="#"
+  class="printhide btn btn-default pull-right">
+    <i class="fa fa-check hide"></i>
+    Show/hide per-capita values
+  </a>
 
   <h1>Indicator List</h1>
 
@@ -92,7 +106,7 @@ foreach ($list as $row) {
           (<?php echo $dataset->measurement ?>)
         </th>
         <?php if ($per_capita) { ?>
-          <th>
+          <th class="percap">
             <?php echo $value ?> - per capita<br />
             (<?php echo $dataset->measurement ?>)
           </th>
@@ -111,9 +125,9 @@ foreach ($list as $row) {
         </td>
         <?php if ($per_capita) { ?>
           <?php if ($population[$value]) { ?>
-            <td><?php echo number_format($result[$id][$value]/$population[$value],2) ?></td>
+            <td class="percap"><?php echo number_format($result[$id][$value]/$population[$value],2) ?></td>
           <?php } else { ?>
-            <td></td>
+            <td class="percap"></td>
           <?php } ?>
         <?php } ?>
       <?php } ?>

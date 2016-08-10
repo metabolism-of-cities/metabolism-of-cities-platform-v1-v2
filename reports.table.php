@@ -90,6 +90,10 @@ foreach ($population_list as $row) {
         $(".display a").removeClass('btn-primary').addClass('btn-default');
         $(this).addClass('btn-primary').removeClass('btn-default');
       });
+      $("#percapita").click(function(e){
+        e.preventDefault();
+        $(".percap").toggle();
+      });
     });
     </script>
     <style type="text/css">
@@ -135,6 +139,12 @@ foreach ($population_list as $row) {
     Hide absent data categories
   </a>
 
+  <a id="percapita" href="#"
+  class="printhide btn btn-default pull-right">
+    <i class="fa fa-check hide"></i>
+    Show/hide per-capita values
+  </a>
+
   <h1>
     <?php echo $info->section ?>.
     <?php echo $info->name ?>
@@ -166,7 +176,7 @@ foreach ($population_list as $row) {
           (<?php echo $dataset->measurement ?>)
         </th>
         <?php if ($population[$year]) { $extra_th++; ?>
-          <th class="textright">
+          <th class="textright percap">
             <?php echo $year ?> - per cap.<br />
             (<?php echo $dataset->measurement ?>/1000)
           </th>
@@ -207,7 +217,7 @@ foreach ($population_list as $row) {
         <?php } ?>
         </td>
         <?php if ($population[$year]) { ?>
-          <td class="textright"><?php echo number_format($data_print/$population[$year]*1000, $dataset->decimal_precision) ?></td>          
+          <td class="textright percap"><?php echo number_format($data_print/$population[$year]*1000, $dataset->decimal_precision) ?></td>          
         <?php } ?>
       <?php } ?>
       <?php if ($all_zero && $values_only) { $hiderow[] = $count; } ?>
@@ -219,7 +229,7 @@ foreach ($population_list as $row) {
       <?php foreach ($years as $year) { ?>
         <th class="textright progress-bg" style="background-size:100% 25px"><?php echo number_format($final[$year],$dataset->decimal_precision) ?></th>
         <?php if ($population[$year]) { ?>
-          <th class="textright"><?php echo number_format($final[$year]/$population[$year]*1000,$dataset->decimal_precision) ?></th>
+          <th class="textright percap"><?php echo number_format($final[$year]/$population[$year]*1000,$dataset->decimal_precision) ?></th>
         <?php } ?>
       <?php } ?>
     </tr>

@@ -118,22 +118,24 @@ foreach ($subformula as $row) {
     <li class="active"><?php echo $info->name ?></li>
   </ol>
 
-  <div class="panel panel-info">
-    <div class="panel-heading">
-      <h3 class="panel-title">Indicator description</h3>
-    </div>
-    <div class="panel-body">
-      <p>
-        <?php echo $info->description ?>
-      </p>
-      <?php if ($info->title) { ?>
-      <p class="moreinfo">
-      <strong>More information</strong>: 
-        <a href="publication/<?php echo $info->more_information ?>"><?php echo $info->title ?></a>
+  <?php if ($info->description) { ?>
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="panel-title">Indicator description</h3>
+      </div>
+      <div class="panel-body">
+        <p>
+          <?php echo $info->description ?>
         </p>
-        <?php } ?>
+        <?php if ($info->title) { ?>
+        <p class="moreinfo">
+        <strong>More information</strong>: 
+          <a href="publication/<?php echo $info->more_information ?>"><?php echo $info->title ?></a>
+          </p>
+          <?php } ?>
+      </div>
     </div>
-  </div>
+  <?php } ?>
 
   <?php if (!count($formula) && !count($subformula)) { ?>
     <div class="alert alert-warning">
