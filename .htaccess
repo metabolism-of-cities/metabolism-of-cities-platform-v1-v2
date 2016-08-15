@@ -248,6 +248,7 @@ AddDefaultCharset utf-8
     RewriteRule ^omat/([0-9]+)/maintenance-(.+)/?$ maintenance.$2.php?id=$1
     RewriteRule ^404$ 404.php
     RewriteRule ^collaborators$ collaborators.php
+    RewriteRule ^datavisualizations$ datavisualizations.php
 
     RewriteRule ^omat/([0-9]+)/reports-data/([0-9]+)/([0-9]+)/?$ reports.data.php?project=$1&year=$2&id=$3
     RewriteRule ^omat-public/([0-9]+)/reports-data/([0-9]+)/([0-9]+)/?$ reports.data.php?project=$1&year=$2&id=$3&public_login=true
