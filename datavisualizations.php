@@ -29,7 +29,7 @@ $page = 6;
     we want to enlist you help to answer those questions! We are setting up a
     Stakeholders Initiative and invite everyone to join the discussion. Data
     Visualizations will be our first topic of discussion, running from
-    August-October 2016. In this period, we will publish blog posts (guest
+    September-December 2016. In this period, we will publish blog posts (guest
     contributions are welcome), host online discussions, take stock of work in
     this field, and build or expand on open source software that can help
     develop data visualizations. 
