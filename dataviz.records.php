@@ -42,7 +42,13 @@ if ($info->paper) {
     <dd><?php echo $paperinfo->title ?></dd>
     <dt>Year</dt>
     <dd><?php echo $paperinfo->year ?></dd>
+    <dt>Author(s)</dt>
+    <dd><?php echo $paperinfo->author ?></dd>
   <?php } ?>
+    <?php if ($info->source_details) { ?>
+    <dt>Source</dt>
+    <dd><?php echo $info->source_details ?></dd>
+    <?php } ?>
 
     <dt>More information</dt>
     <?php if ($info->url) { ?>
