@@ -5,7 +5,7 @@ $section = 8;
 $page = 1;
 
 $id = (int)$_GET['id'];
-if (!id) {
+if ($id) {
   $info = $db->record("SELECT * FROM blog WHERE id = $id AND active = 1");
 
   if (!$info->id) {
