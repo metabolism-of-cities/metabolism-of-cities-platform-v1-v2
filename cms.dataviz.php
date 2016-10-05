@@ -4,7 +4,7 @@ require_once 'functions.php';
 require_once 'functions.omat.php';
 
 $id = (int)$_GET['id'];
-$sub_page = $id ? 11 : 10;
+$sub_page = $id ? 11 : 12;
 
 if ($_POST) {
   $post = array(
@@ -29,7 +29,7 @@ if ($_POST) {
     move_uploaded_file($_FILES['file']['tmp_name'],$file);
     $image = new SimpleImage();
     $image->load($file);
-    $image->resizeToWidth(800);
+    $image->resizeToWidth(1024);
     $image->save($file.".jpg");
     $image->resizeToWidth(250);
     $image->save($file.".thumb.jpg");
