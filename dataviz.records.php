@@ -49,6 +49,10 @@ if ($info->paper) {
     <dt>Source</dt>
     <dd><?php echo $info->source_details ?></dd>
     <?php } ?>
+    <?php if ($info->year) { ?>
+      <dt>Year</dt>
+      <dd><?php echo $info->year ?></dd>
+    <?php } ?>
 
     <dt>More information</dt>
     <?php if ($info->url) { ?>

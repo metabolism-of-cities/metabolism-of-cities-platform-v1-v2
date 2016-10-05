@@ -1373,3 +1373,5 @@ CREATE TABLE `datavisualizations` (
 ALTER TABLE `datavisualizations`
 ADD `date` date NOT NULL;
 
+ALTER TABLE `datavisualizations`
+ADD `year` year NULL;

@@ -15,6 +15,7 @@ if ($_POST) {
     'url' => html($_POST['url']),
     'source_details' => html($_POST['source_details']),
     'paper' => (int)$_POST['paper'] ?: NULL,
+    'year' => (int)$_POST['year'] ?: NULL,
   );
   if ($id) {
     $db->update("datavisualizations",$post,"id = $id");
@@ -115,6 +116,13 @@ $info = $db->record("SELECT * FROM datavisualizations WHERE id = $id");
         <input class="form-control" type="url" name="url" value="<?php echo $info->url ?>" 
         placeholder="Only required if not linked to a publication"
         />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Year</label>
+      <div class="col-sm-10">
+        <input class="form-control" type="text" name="year" value="<?php echo $info->year ?>" placeholder="Only required if not linked to a publication" />
       </div>
     </div>
 
