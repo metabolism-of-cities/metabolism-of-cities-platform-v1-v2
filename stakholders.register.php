@@ -1,25 +1,27 @@
 <?php
 require_once 'functions.php';
-$section = 8;
-$page = 2;
+$section = 7;
+$page = 1;
 ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <?php echo $header ?>
-    <title>Mailing List | <?php echo SITENAME ?></title>
+    <title>Metabolism of Cities Stakeholder Initiative | <?php echo SITENAME ?></title>
   </head>
 
   <body>
 
 <?php require_once 'include.header.php'; ?>
 
-  <h1>Stay up to date!</h1>
+  <h1>Metabolism of Cities Stakeholder Initiative</h1>
 
   <p> 
-    Receive an occasional email with updates from the Metabolism of Cities website! We use <a href="http://mailchimp.com">Mailchimp</a>
-    for sending out the newsletters and they will keep your e-mail safe. You can unsubscribe at any time. Newsletters are sent out about
-    3 times per year.
+    We aim to bring together people who operate in the field of urban metabolism.
+    Would you like to participate in future discussions, contribute to our forums,
+    or help shape ideas around research and data? Register now to become part of
+    the Stakeholders Initiative! We will add you to our mailing list and keep you
+    informed of upcoming ideas and developments as our network grows.
   </p>
 
     <div id="mailchimp">
@@ -31,8 +33,8 @@ $page = 2;
            We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
       </style>
       <div id="mc_embed_signup">
-      <form action="//mfa-tools.us8.list-manage.com/subscribe/post?u=ac623181f98df6ff1b52a1668&amp;id=59a1b98376" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-        <h2>Subscribe to our mailing list</h2>
+      <form action="//mfa-tools.us8.list-manage.com/subscribe/post?u=ac623181f98df6ff1b52a1668&amp;id=1b372b3ae4" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+        <h2>Subscribe to the Stakeholders Initiative</h2>
       <div class="mc-field-group">
         <label for="mce-EMAIL">Email Address </label>
         <input type="email" value="<?php echo strip_tags($_POST['email']) ?>" name="EMAIL" class="required email" id="mce-EMAIL">

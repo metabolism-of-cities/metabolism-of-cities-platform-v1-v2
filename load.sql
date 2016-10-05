@@ -1358,3 +1358,18 @@ ALTER TABLE `papers`
 ADD `title_native` varchar(255) COLLATE 'utf8_unicode_ci' NULL AFTER `title`,
 ADD `abstract_native` text COLLATE 'utf8_unicode_ci' NULL AFTER `abstract`,
 ADD `language` enum('English','Spanish','Chinese','French','German','Other') NULL DEFAULT 'English';
+
+CREATE TABLE `datavisualizations` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `title` varchar(255) NOT NULL,
+  `paper` int(11) NULL,
+  `source_details` varchar(255) NOT NULL,
+  `url` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `contributor` varchar(255) NOT NULL,
+  FOREIGN KEY (`paper`) REFERENCES `papers` (`id`)
+) ENGINE='InnoDB' COLLATE 'utf8_unicode_ci';
+
+ALTER TABLE `datavisualizations`
+ADD `date` date NOT NULL;
+

@@ -3,7 +3,7 @@ $skip_login = true;
 require_once 'functions.php';
 require_once 'functions.omat.php';
 $section = 4;
-$page = 3;
+$page = 7;
 
 if ($_GET['profile']) {
   require_once 'functions.profile.php';

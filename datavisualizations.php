@@ -1,7 +1,7 @@
 <?php
 require_once 'functions.php';
-$section = 2;
-$page = 6;
+$section = 7;
+$page = 2;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,55 +29,112 @@ $page = 6;
     we want to enlist you help to answer those questions! We are setting up a
     Stakeholders Initiative and invite everyone to join the discussion. Data
     Visualizations will be our first topic of discussion, running from
-    September-December 2016. In this period, we will publish blog posts (guest
+    October-December 2016. In this period, we will publish blog posts (guest
     contributions are welcome), host online discussions, take stock of work in
     this field, and build or expand on open source software that can help
     develop data visualizations. 
     </p>
 
-    <div id="mailchimp">
-      <!-- Begin MailChimp Signup Form -->
-      <link href="//cdn-images.mailchimp.com/embedcode/classic-081711.css" rel="stylesheet" type="text/css">
-      <style type="text/css">
-        #mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; }
-        /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
-           We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
-      </style>
-      <div id="mc_embed_signup">
-      <form action="//mfa-tools.us8.list-manage.com/subscribe/post?u=ac623181f98df6ff1b52a1668&amp;id=1b372b3ae4" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-        <h2>Subscribe to the Stakeholders Initiative</h2>
-      <div class="mc-field-group">
-        <label for="mce-EMAIL">Email Address </label>
-        <input type="email" value="<?php echo strip_tags($_POST['email']) ?>" name="EMAIL" class="required email" id="mce-EMAIL">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Introduction to Data Visualizations</h3>
+            </div>
+            <div class="panel-body">
+            <p>
+              Introduction post on our blog by Aristide Athanassiadis. This post
+              discusses what type of visualizations to use, which software to use, and 
+              provides some examples of data visualizations. 
+            </p>
+            <p><a href="blog/2-data-visualizations" class="btn btn-success">Read more &raquo;</a></p>
+            </div>
+          </div>
       </div>
-      <div class="mc-field-group">
-        <label for="mce-FNAME">First Name </label>
-        <input type="text" value="" name="FNAME" class="" id="mce-FNAME">
+      <div class="col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Data Visualizations Examples</h3>
+            </div>
+            <div class="panel-body">
+              <p>
+                In this section we will post a new data visualization every day!
+                We will showcase great examples and also cases of 'what not to do'. 
+                Your contributions are welcome so if you have anything to share, 
+                please <a href="page/contact">contact us</a>.
+              </p>
+              <p><a href="datavisualization/examples" class="btn btn-success">Read more &raquo;</a></p>
+            </div>
+          </div>
       </div>
-      <div class="mc-field-group">
-        <label for="mce-LNAME">Last Name </label>
-        <input type="text" value="" name="LNAME" class="" id="mce-LNAME">
+    </div>    
+    <div class="row">
+      <div class="col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Call for Research Collaboration</h3>
+            </div>
+            <div class="panel-body">
+              <p>Are you interested in participating in a data visualization research
+              project? Then read more about this call for collaboration! </p>
+              <p><a href="datavisualization/callforcollaboration" class="btn btn-success">Read more &raquo;</a></p>
+            </div>
+          </div>
       </div>
-        <div id="mce-responses" class="clear">
-          <div class="response" id="mce-error-response" style="display:none"></div>
-          <div class="response" id="mce-success-response" style="display:none"></div>
-        </div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-          <div style="position: absolute; left: -5000px;"><input type="text" name="b_ac623181f98df6ff1b52a1668_59a1b98376" tabindex="-1" value=""></div>
-          <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
-      </form>
+      <div class="col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Links</h3>
+            </div>
+            <div class="panel-body">
+              <p>A collection of useful links related to data visualization.</p>
+              <p><a href="datavisualization/links" class="btn btn-success">Read more &raquo;</a></p>
+            </div>
+          </div>
       </div>
-      <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script>
-      <script type='text/javascript'>
-      (function($) {
-      window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';
-      }(jQuery));
-      var $mcj = jQuery.noConflict(true);
-      </script>
-      <!--End mc_embed_signup-->
-      </div>
+    </div>
 
+    <h2>Participate!</h2>
 
+    <p>Would you like to participate? Now is the right time to take action! Here is a list of how
+    you can collaborate in this stakeholders initiative:</p>
 
+    <ul>
+      <li><strong>Contribute interesting data visualizations</strong><br />
+      We are posting a new data visualization every day, and we would love for you to contribute!
+      Do you have a particularly good, bad, interesting or otherwise captivating data visualization
+      to share? E-mail it to us at info@metabolismofcities.org!
+      </li>
+      <li><strong>Write a guest blog post</strong><br />
+      We welcome guest blog posts about any topic related to data visualization. It can be a personal 
+      story about how you dealt with data visualizations, or a study of data visualizations in some of
+      the recent work done by authors you admire. Or anything else you feel contributes to this topic.
+      Interested? <a href="page/contact">Let us know and we can discuss this topic!</a> Contributions 
+      are due any time before the year ends.
+      </li>
+      <li><strong>Collaborate in research</strong><br />
+      There is an open call to collaborate in a research project around data visualizations. 
+      <a href="datavisualization/callforcollaboration">Read more here</a> and sign up if you are 
+      interested in collaborating!
+      </li>
+      <li><strong>Contribute your own idea</strong><br />
+      We are open to any other idea as part of this Stakeholders Initiative. Do you have an activity
+      you'd like us to set up? Is there a creative idea you'd like to share with the people on the
+      mailing list? Do you have any other idea? <a href="page/contact">Let us know right away!</a>
+      </li>
+      <li><strong>Sign up to our stakeholders initiative</strong><br />
+      If you haven't already, be sure to sign up to our Stakeholders Initiative so that you will 
+      receive e-mails throughout the coming months about activities, posts, and other things we 
+      organize in relation to this project.
+      <a href="stakeholders/subscribe">Subscribe now</a>
+      </li>
+      <li><strong>Tell a friend</strong><br />
+      We would like to reach as many people as possible. So send an e-mail to your friends, put 
+      up a notice in the canteen of your faculty, or post this information to social media. 
+      Tell your friends and colleagues!
+      </li>
+
+    </ul>
 
 <?php require_once 'include.footer.php'; ?>
 

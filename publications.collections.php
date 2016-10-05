@@ -1,8 +1,9 @@
 <?php
 require_once 'functions.php';
 $id = (int)$_GET['id'];
-$section = 5;
+$section = 4;
 $page = $id;
+$page = 5;
 
 if ($id) {
 

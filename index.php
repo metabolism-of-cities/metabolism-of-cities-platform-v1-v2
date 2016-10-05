@@ -56,10 +56,19 @@ $hide_regular_translate = true;
           <p><a class="btn btn-lg btn-primary" href="publications/collections" role="button">Publication Collections</a></p>
           <p><a class="btn btn-lg btn-primary" href="publications/list" role="button">Publication Database</a></p>
           <p><a class="btn btn-lg btn-primary" href="research/list" role="button">Current Research</a></p>
+          <p><a class="btn btn-lg btn-primary" href="stakeholders" role="button">Stakeholders Initiative</a></p>
+          <p><a class="btn btn-lg btn-primary" href="data" role="button">Data</a></p>
           <p><a class="btn btn-lg btn-primary" href="omat/about" role="button">Online MFA Tool (OMAT)</a></p>
         </div>
       </div>
 
+      <h2>Just Launched: Data Visualizations Project - October-December 2016</h2>
+
+      <p>We have launched our first <a href="stakeholders">Stakeholders Initiative</a>! From October until 
+      December 2016 we will focus on Data Visualization, and we have many exciting things planned. 
+      And we need YOUR involvement. Check out the new section and start contributing now! 
+      </p>
+      <p><a href="datavisualization" class="btn btn-primary">Data Visualization Project</a></p>
       <h2>About</h2>
 
       <p>

@@ -66,20 +66,10 @@ $menu = array(
     'url' => 'about.php', 
     'menu' => array(
       1 => array('label' => 'About Us', 'url' => 'page/about'),
-      4 => array('label' => 'Wish List', 'url' => 'page/wishlist'),
       3 => array('label' => 'Team', 'url' => 'page/team'),
+      4 => array('label' => 'Wish List', 'url' => 'page/wishlist'),
       5 => array('label' => 'Contact Us', 'url' => 'page/contact'),
-      6 => array('label' => 'Mailing List', 'url' => 'page/mailinglist'),
-      8 => array('label' => 'Stakeholders Initiative', 'url' => 'page/stakeholders'),
       7 => array('label' => 'Version History', 'url' => 'page/version'),
-    ),
-  ),
-  3 => array(
-    'label' => 'Current Research', 
-    'url' => 'mfa.php',
-    'menu' => array(
-      1 => array('label' => 'List of Projects', 'url' => 'research/list'),
-      2 => array('label' => 'Add a Project', 'url' => 'research/add'),
     ),
   ),
   6 => array(
@@ -93,27 +83,54 @@ $menu = array(
       3 => array('label' => 'List of Projects', 'url' => 'omat/list'),
     ),
   ),
-  5 => array(
-    'label' => 'Publication Collections', 
-    'url' => 'publications/collections',
-  ),
   4 => array(
-    'label' => 'Publication Database', 
+    'label' => 'Publications &amp; Research', 
     'url' => 'publications/list',
     'menu' => array(
-      1 => array('label' => 'Full list', 'url' => 'publications/list'),
-      2 => array('label' => 'Search', 'url' => 'publications/search'),
-      3 => array('label' => 'Add', 'url' => 'publications/add'),
-      4 => array('label' => 'Authors', 'url' => 'people'),
+      //1 => array('label' => 'Introduction', 'url' => 'publications'),
+      2 => array('label' => 'Current Research', 'url' => 'research/list'),
+      3 => array('label' => 'Add Your Project', 'url' => 'research/add'),
+      4 => array('label' => 'Publications Database', 'url' => 'publications/list'),
+      5 => array('label' => 'Publications Collections', 'url' => 'publications/collections'),
+      6 => array('label' => 'Search', 'url' => 'publications/search'),
+      7 => array('label' => 'Add Publication', 'url' => 'publications/add'),
+      8 => array('label' => 'People', 'url' => 'people'),
+    ),
+  ),
+  5 => array(
+    'label' => 'Data', 
+    'url' => 'publications/list',
+    'menu' => array(
+      1 => array('label' => 'Introduction', 'url' => 'data'),
+      2 => array('label' => 'Data Overview', 'url' => 'page/casestudies'),
+//      3 => array('label' => 'Download', 'url' => 'data/add'),
+      4 => array('label' => 'Add Data', 'url' => 'data/add'),
+      5 => array('label' => 'Publications Map', 'url' => 'page/map'),
+    ),
+  ),
+  7 => array(
+    'label' => 'Stakeholders Initiative', 
+    'url' => 'stakeholders',
+    'menu' => array(
+      1 => array('label' => 'Introduction', 'url' => 'stakeholders'),
+      2 => array('label' => 'Data Visualization', 'url' => 'datavisualization'),
+      3 => array('label' => 'Subscribe', 'url' => 'stakeholders/subscribe'),
+    ),
+  ),  
+  8 => array(
+    'label' => 'More', 
+    'url' => 'blog',
+    'menu' => array(
+      1 => array('label' => 'Blog', 'url' => 'blog'),
+      2 => array('label' => 'Newsletter', 'url' => 'page/mailinglist'),
+      //3 => array('label' => 'Links', 'url' => 'page/links'),
+      //4 => array('label' => 'Social Media', 'url' => 'page/socialmedia'),
     ),
   ),
 );
 foreach ($tag_parents as $row) {
-  $menu[5]['menu'][$row['id']] = array('label' => $row['name'], 'url' => 'publications/collections/'.$row['id']);
+  $menu[4]['menu'][5][$row['id']] = array('label' => $row['name'], 'url' => 'publications/collections/'.$row['id']);
 }
-
-$menu[5]['menu'][99] = array('label' => 'Global UM data', 'url' => 'page/casestudies');
-$menu[5]['menu'][98] = array('label' => 'UM Publications: Map', 'url' => 'page/map');
 
 $google_translate = LOCAL ? '' : '
   <script type="text/javascript">
@@ -703,10 +720,107 @@ function peoplelog($action) {
   return true;
 }
 
+/*
+* File: SimpleImage.php
+* Author: Simon Jarvis
+* Copyright: 2006 Simon Jarvis
+* Date: 08/11/06
+* Link: http://www.white-hat-web-design.co.uk/articles/php-image-resizing.php
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the GNU General Public License 
+* as published by the Free Software Foundation; either version 2 
+* of the License, or (at your option) any later version.
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+* GNU General Public License for more details: 
+* http://www.gnu.org/licenses/gpl.html
+*/
+ 
+class SimpleImage {
+   
+   var $image;
+   var $image_type;
+ 
+   function load($filename) {
+	  $image_info = getimagesize($filename);
+	  $this->image_type = $image_info[2];
+	  if( $this->image_type == IMAGETYPE_JPEG ) {
+		 $this->image = imagecreatefromjpeg($filename);
+	  } elseif( $this->image_type == IMAGETYPE_GIF ) {
+		 $this->image = imagecreatefromgif($filename);
+	  } elseif( $this->image_type == IMAGETYPE_PNG ) {
+		 $this->image = imagecreatefrompng($filename);
+	  }
+   }
+   
+   function save($filename, $image_type=IMAGETYPE_JPEG, $compression=85, $permissions=null) {
+	  if( $image_type == IMAGETYPE_JPEG ) {
+		 imagejpeg($this->image,$filename,$compression);
+	  } elseif( $image_type == IMAGETYPE_GIF ) {
+		 imagegif($this->image,$filename);         
+	  } elseif( $image_type == IMAGETYPE_PNG ) {
+		 imagepng($this->image,$filename);
+	  }   
+	  if( $permissions != null) {
+		 chmod($filename,$permissions);
+	  }
+   }
+   function output($image_type=IMAGETYPE_JPEG) {
+	  if( $image_type == IMAGETYPE_JPEG ) {
+		 imagejpeg($this->image);
+	  } elseif( $image_type == IMAGETYPE_GIF ) {
+		 imagegif($this->image);         
+	  } elseif( $image_type == IMAGETYPE_PNG ) {
+		 imagepng($this->image);
+	  }   
+   }
+   function getWidth() {
+	  return imagesx($this->image);
+   }
+   function getHeight() {
+	  return imagesy($this->image);
+   }
+   function resizeToHeight($height) {
+	  $ratio = $height / $this->getHeight();
+	  $width = $this->getWidth() * $ratio;
+	  if ($height < $this->getHeight()) {
+		  $this->resize($width,$height);
+	  }
+   }
+   function resizeToWidth($width) {
+	  $ratio = $width / $this->getWidth();
+	  $height = $this->getheight() * $ratio;
+	  if ($width < $this->getWidth()) {
+		   $this->resize($width,$height);
+	  }
+   }
+   function scale($scale) {
+	  $width = $this->getWidth() * $scale/100;
+	  $height = $this->getheight() * $scale/100; 
+	  $this->resize($width,$height);
+   }
+   function resize($width,$height) {
+	  $new_image = imagecreatetruecolor($width, $height);
+	  imagecopyresampled($new_image, $this->image, 0, 0, 0, 0, $width, $height, $this->getWidth(), $this->getHeight());
+	  $this->image = $new_image;   
+   }
+
+   function rotate($angle) {
+		$new_image = imagerotate($this->image,$angle,imageColorAllocateAlpha($this->image, 250, 250, 250,0));
+		imagealphablending($new_image, false);
+		imagesavealpha($new_image, true);
+		$this->image = $new_image;
+   }
+}
+
+
 $languages = array('English', 'Chinese', 'Spanish', 'French', 'German', 'Other');
 
 $update = $db->record("SELECT date_added FROM papers ORDER BY id DESC LIMIT 1");
 
-$version = '1.3';
+$version = '1.5 beta';
 
 ?>

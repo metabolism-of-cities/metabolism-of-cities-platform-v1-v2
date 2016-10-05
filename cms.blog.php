@@ -62,6 +62,9 @@ foreach ($links_authors as $row) {
     <title>Blog Post | <?php echo SITENAME ?></title>
     <link rel="stylesheet" href="css/select2.min.css" />
     <link href="css/summernote.css" rel="stylesheet">
+    <style type="text/css">
+    .navbar-fixed-top{z-index:1}
+    </style>
   </head>
 
   <body>

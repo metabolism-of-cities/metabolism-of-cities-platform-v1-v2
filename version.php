@@ -17,13 +17,34 @@ $page = 7;
   <div class="jumbotron">
     <h1>Version History</h1>
     <p>The Metabolism of Cities website is currently at version <?php echo $version ?>. View the development log below for more details.</p>
-    <p>Quick statistics:</p>
-    <ul>
-      <li>266 publications</li>
-      <li>5 public research projects</li>
-      <li>20 private datasets | 2 public datasets</li>
-    </ul>
   </div>
+
+  <hgroup>
+    <h2>Version 1.4</h2>
+    <h3>October 05, 2016</h3>
+  </hgroup>
+  <p>
+    We have kept adding more information and new sections, and this has
+    resulted in a drastic website re-structuring! We also welcomed Rachel
+    Spiegel to our team! Our group now numbers four volunteers.
+  </p>
+  <p>These are some highlights of the changes to the website:</p>
+  <ul>
+    <li>A new Stakeholders Initiative was launched, together with its first 3-month project: Data Visualization in Urban Metabolism</li>
+    <li>We contacted a large number of authors and requested their help in adding and improving the publications database. This
+    has led to the launch of a section of authors, as well as an increase in the number of publications that are available. 
+    We would like to thank all authors who helped contribute information! </li>
+    <li>We launched our blog! The first two posts have been made available and we are planning to continuously add new posts.</li>
+    <li>We restructured our website to make navigating it easier. The main sections are now 'About', 'OMAT', 'Publications &amp; Research', 
+    'Data', 'Stakeholders Initiative', and 'More'</li>
+
+  </ul>
+  <p>Quick statistics:</p>
+  <ul>
+      <li>359 publications</li>
+      <li>8 public research projects</li>
+      <li>40 private datasets | 4 public datasets</li>
+  </ul>
 
   <hgroup>
     <h2>Version 1.3</h2>

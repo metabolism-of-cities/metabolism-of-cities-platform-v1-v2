@@ -1,11 +1,20 @@
 <?php
 require_once 'functions.php';
-/*
-$section = 2;
-$page = 6;
-*/
+
+$section = 8;
+$page = 1;
+
 $id = (int)$_GET['id'];
-$info = $db->record("SELECT * FROM blog WHERE id = $id AND active = 1");
+if (!id) {
+  $info = $db->record("SELECT * FROM blog WHERE id = $id AND active = 1");
+
+  if (!$info->id) {
+    kill("Blog post not found", false);
+  }
+} else {
+  $info = $db->record("SELECT * FROM blog WHERE active = 1 ORDER BY id DESC LIMIT 1");
+  $id = $info->id;
+}
 
 $authors = $db->query("SELECT blog_authors.* 
 FROM blog_authors_pivot JOIN blog_authors ON blog_authors_pivot.author = blog_authors.id
@@ -29,6 +38,7 @@ WHERE date <= '$today' AND active = 1 ORDER BY date DESC LIMIT 5");
     <title><?php echo $info->title ?> | <?php echo SITENAME ?></title>
     <style type="text/css">
     .side h4.author, .side h2.jumpdown {margin-top:40px}
+    .col-md-9 img{max-width:100%}
     </style>
   </head>
 

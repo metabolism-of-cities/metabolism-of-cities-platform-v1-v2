@@ -1,7 +1,7 @@
 <?php
 require_once 'functions.php';
 $section = 4;
-$page = 2;
+$page = 6;
 
 $keywords = $db->query("SELECT COUNT(*) AS total, keywords.keyword 
 FROM keywords_papers JOIN keywords ON keywords_papers.keyword = keywords.id 

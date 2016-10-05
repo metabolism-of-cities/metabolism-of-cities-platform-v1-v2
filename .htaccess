@@ -249,6 +249,13 @@ AddDefaultCharset utf-8
     RewriteRule ^404$ 404.php
     RewriteRule ^collaborators$ collaborators.php
     RewriteRule ^datavisualizations$ datavisualizations.php
+    RewriteRule ^data$ data.php
+    RewriteRule ^data/(.*)$ data.$1.php
+    RewriteRule ^stakeholders$ stakeholders.php
+    RewriteRule ^datavisualization/?$ datavisualizations.php
+    RewriteRule ^datavisualizations/([0-9]+)-(.*)?$ dataviz.records.php?id=$1
+    RewriteRule ^datavisualization/(.*)$ dataviz.$1.php
+    RewriteRule ^stakeholders/(.*)$ stakeholders.$1.php
 
     RewriteRule ^omat/([0-9]+)/reports-data/([0-9]+)/([0-9]+)/?$ reports.data.php?project=$1&year=$2&id=$3
     RewriteRule ^omat-public/([0-9]+)/reports-data/([0-9]+)/([0-9]+)/?$ reports.data.php?project=$1&year=$2&id=$3&public_login=true
@@ -281,6 +288,7 @@ AddDefaultCharset utf-8
     RewriteRule ^cms/(.+)/(.+)?$ cms.$1.php?$2=true
     RewriteRule ^cms/(.+)/?$ cms.$1.php
     RewriteRule ^blog/([0-9]+)-(.+)/?$ blog.php?id=$1
+    RewriteRule ^blog?$ blog.php
 
     RewriteRule ^access/([0-9]+)/(.+)$ access.php?id=$1&hash=$2
     RewriteRule ^access-data/([0-9]+)/(.+)$ access.php?id=$1&hash=$2&page=data

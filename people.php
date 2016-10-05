@@ -1,7 +1,7 @@
 <?php
 require_once 'functions.php';
-$section = 2;
-$page = 6;
+$section = 4;
+$page = 8;
 
 $list = $db->query("SELECT 
   people.*,

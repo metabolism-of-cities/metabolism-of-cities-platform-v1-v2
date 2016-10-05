@@ -17,6 +17,8 @@ $cms_menu = array(
   2 => array('label' => 'New Blog Post', 'url' => "cms/blog", 'icon' => 'pencil'),
   3 => array('label' => 'Blog Authors', 'url' => "cms/blogauthorlist", 'icon' => 'users'),
   4 => array('label' => 'Add Blog Author', 'url' => "cms/author", 'icon' => 'user'),
+  11 => array('label' => 'Dataviz Posts', 'url' => "cms/datavizlist", 'icon' => 'list'),
+  12 => array('label' => 'New Dataviz Post', 'url' => "cms/dataviz", 'icon' => 'pencil'),
   10 => array('label' => 'Tags', 'url' => "cms/tags", 'icon' => 'tag'),
   7 => array('label' => 'Contacts', 'url' => "cms/peoplelist", 'icon' => 'users'),
   8 => array('label' => 'Add Contact', 'url' => "cms/people", 'icon' => 'user'),

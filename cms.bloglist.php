@@ -39,6 +39,7 @@ $list = $db->query("SELECT * FROM blog WHERE active = 1 ORDER BY date DESC");
       <td><a href="blog/<?php echo $row['id'] ?>-<?php echo flatten($row['title']) ?>"><?php echo $row['title'] ?></a></td>
       <td><?php echo format_date("M d, Y", $row['date']) ?></td>
       <td><a href="cms.blog.php?id=<?php echo $row['id'] ?>" class="btn btn-info">Edit</a>
+      <a href="blog/<?php echo $row['id'] ?>-<?php echo flatten($row['title']) ?>" class="btn btn-success">View post</a>
       <a href="cms.bloglist.php?delete=<?php echo $row['id'] ?>" class="btn btn-danger" onclick="javascript:return confirm('Are you sure?')">Delete</a></td>
     </tr>
   <?php } ?>

@@ -2,8 +2,8 @@
 $skip_login = true;
 require_once 'functions.php';
 require_once 'functions.omat.php';
-$section = 3;
-$page = 1;
+$section = 4;
+$page = 2;
 
 $list = $db->query("SELECT * FROM research WHERE deleted_on IS NULL ORDER BY title");
 

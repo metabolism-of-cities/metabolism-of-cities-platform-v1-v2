@@ -3,7 +3,7 @@ $skip_login = true;
 require_once 'functions.php';
 require_once 'functions.omat.php';
 $section = 4;
-$page = 1;
+$page = 4;
 
 if ($_POST['source']) {
   $_GET['source'] = $_POST['source'];

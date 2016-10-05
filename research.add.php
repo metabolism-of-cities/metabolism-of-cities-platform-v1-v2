@@ -1,7 +1,7 @@
 <?php
 require_once 'functions.php';
-$section = 3;
-$page = 2;
+$section = 4;
+$page = 3;
 
 $id = (int)$_GET['id'];
 $hash = $_GET['hash'];
