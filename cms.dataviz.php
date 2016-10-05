@@ -102,11 +102,11 @@ $info = $db->record("SELECT * FROM datavisualizations WHERE id = $id");
     </div>
 
     <div class="form-group">
-      <label class="col-sm-2 control-label">Source details</label>
+      <label class="col-sm-2 control-label">Sourc details</label>
       <div class="col-sm-10">
-        <input class="form-control" type="text" name="source_details" value="<?php echo $info->source_details ?>"
+        <textarea 
         placeholder="Only required if not linked to a publication"
-        />
+        class="form-control" name="source_details"><?php echo $info->source_details ?></textarea>
       </div>
     </div>
 

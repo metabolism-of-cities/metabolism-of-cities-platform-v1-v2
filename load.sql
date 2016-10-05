@@ -1375,3 +1375,6 @@ ADD `date` date NOT NULL;
 
 ALTER TABLE `datavisualizations`
 ADD `year` year NULL;
+
+ALTER TABLE `datavisualizations`
+CHANGE `source_details` `source_details` text COLLATE 'utf8_unicode_ci' NOT NULL AFTER `paper`;

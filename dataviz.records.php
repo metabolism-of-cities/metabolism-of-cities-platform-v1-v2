@@ -35,8 +35,6 @@ if ($info->paper) {
 
   <h2>Further details</h2>
   <dl class="dl dl-horizontal">
-    <dt>Date added</dt>
-    <dd><?php echo format_date("M d, Y", $info->date) ?></dd>
   <?php if ($info->paper) { ?>
     <dt>Source</dt>
     <dd><?php echo $paperinfo->title ?></dd>
@@ -63,6 +61,8 @@ if ($info->paper) {
 
     <dt>Contributor</dt>
     <dd><?php echo $info->contributor ?></dd>
+    <dt>Date</dt>
+    <dd><?php echo format_date("M d, Y", $info->date) ?></dd>
   </dl>
 
   <p><a href="datavisualization/examples" class="btn btn-primary">&laquo; View the full list</a></p>
