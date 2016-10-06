@@ -50,6 +50,8 @@ $page = 2;
     <p>Be sure to <a href="page/contact">contact us</a> if you can suggest a useful link
     or other resource to be added to this page.</p>
 
+    <p><a href="datavisualization" class="btn btn-primary">Back to the Data Visualization portal</a></p>
+
 <?php require_once 'include.footer.php'; ?>
 
   </body>

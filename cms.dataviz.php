@@ -102,7 +102,7 @@ $info = $db->record("SELECT * FROM datavisualizations WHERE id = $id");
     </div>
 
     <div class="form-group">
-      <label class="col-sm-2 control-label">Sourc details</label>
+      <label class="col-sm-2 control-label">Source details</label>
       <div class="col-sm-10">
         <textarea 
         placeholder="Only required if not linked to a publication"

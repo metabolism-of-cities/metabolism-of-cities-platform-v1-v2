@@ -17,6 +17,11 @@ if ($info->paper) {
   <head>
     <?php echo $header ?>
     <title><?php echo $info->title ?> | <?php echo SITENAME ?></title>
+    <link rel="canonical" href="<?php echo URL . "datavisualization/$id-".flatten($info->title) ?>" />
+    <style type="text/css">
+    .well {text-align:center;}
+    .well img {border:1px solid #ddd; padding:5px}
+    </style>
   </head>
 
   <body>

@@ -46,7 +46,7 @@ ORDER BY date DESC");
     <div class="panel panel-default">
       <div class="panel-heading"><?php echo $row['title'] ?></div>
       <div class="panel-body">
-        <a href="datavisualizations/<?php echo $row['id'] ?>-<?php echo $row['title'] ?>">
+        <a href="datavisualizations/<?php echo $row['id'] ?>-<?php echo flatten($row['title']) ?>">
           <img src="media/dataviz/<?php echo $row['id'] ?>.thumb.jpg" alt="" />
         </a>
         <br />
@@ -57,6 +57,8 @@ ORDER BY date DESC");
      </li>
   <?php } ?>
   </ul>
+
+  <p><a href="datavisualization" class="btn btn-primary">Back to the Data Visualization portal</a></p>
 
 
 <?php require_once 'include.footer.php'; ?>

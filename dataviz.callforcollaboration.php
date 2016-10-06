@@ -91,6 +91,9 @@ other thoughts or ideas, please let us know. </p>
     <img src="img/logo.text.svg" width="210" alt="Metabolism of Cities" />
   </div>
 </div>
+
+<p style="margin-top:100px"><a href="datavisualization" class="btn btn-primary">Back to the Data Visualization portal</a></p>
+
 <?php require_once 'include.footer.php'; ?>
 
   </body>
