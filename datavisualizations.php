@@ -26,7 +26,7 @@ $page = 2;
     dataset. Should you use sankey diagrams, maps, or other visual
     representations? What software to use? How to make it look professional
     without spending a lot of time on it? At the Metabolism of Cities website
-    we want to enlist you help to answer those questions! We are setting up a
+    we want to enlist your help to answer those questions! We are setting up a
     Stakeholders Initiative and invite everyone to join the discussion. Data
     Visualizations will be our first topic of discussion, running from
     October-December 2016. In this period, we will publish blog posts (guest
