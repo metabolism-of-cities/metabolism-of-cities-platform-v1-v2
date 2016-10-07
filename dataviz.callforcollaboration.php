@@ -23,7 +23,7 @@ $section = 7;
 <p>
 We are looking for collaborators on this research project - whether for the
 whole process, or simply offering questions, comments or suggestions. Please
-let us know of your interest by email before 14 October 2016.
+let us know of your interest by email before 21 October 2016.
 </p>
 <h2>Introduction</h2>
 <p>Data visualisation is key in transmitting the results of urban metabolism
