@@ -23,6 +23,13 @@ ORDER BY date DESC");
       width:270px;
       vertical-align:top;
     }
+    .datavizlist li a {
+      max-height:180px;
+      overflow:hidden;
+      display:block;
+      border:1px solid #ccc;
+      padding:2px;
+    }
     </style>
 
   </head>
@@ -46,9 +53,11 @@ ORDER BY date DESC");
     <div class="panel panel-default">
       <div class="panel-heading"><?php echo $row['title'] ?></div>
       <div class="panel-body">
-        <a href="datavisualizations/<?php echo $row['id'] ?>-<?php echo flatten($row['title']) ?>">
-          <img src="media/dataviz/<?php echo $row['id'] ?>.thumb.jpg" alt="" />
-        </a>
+        <span>
+          <a href="datavisualizations/<?php echo $row['id'] ?>-<?php echo flatten($row['title']) ?>">
+            <img src="media/dataviz/<?php echo $row['id'] ?>.thumb.jpg" alt="" />
+          </a>
+        </span>
         <br />
         <?php echo format_date("M d, Y", $row['date']) ?>
       </div>
