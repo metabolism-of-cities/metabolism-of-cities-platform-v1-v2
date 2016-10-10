@@ -26,6 +26,7 @@ $page = 2;
 
     <ul>
       <li><a href="http://www.datavizcatalogue.com/search.html">Dataviz Catalogue</a></li>
+      <li><a href="https://www.tableau.com/sites/default/files/media/which_chart_v6_final_0.pdf">Which chart or graph is right for you?</a> (PDF)</li>
     </ul>
 
     <h2>Software</h2>
@@ -34,6 +35,7 @@ $page = 2;
       <li><a href="https://github.com/d3/d3/wiki">d3</a></li>
       <li><a href="http://raw.densitydesign.org/">RAW</a></li>
       <li><a href="http://sankeymatic.com/">Sankeymatic</a></li>
+      <li><a href="https://www.tableau.com/">Tableau</a></li>
     </ul>
 
     <h2>Inspiring examples</h2>
