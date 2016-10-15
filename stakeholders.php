@@ -51,6 +51,21 @@ $page = 1;
   encourage us to pick one of these topics, please let us know!</p>
 
   <ul>
+    <li><strong>City profiles</strong>
+    Make a short urban metabolism overview of different cities with data
+    available through publications, grey literature and open data. The idea is
+    to briefly present the local characteristics of a studied city and then
+    present its metabolic balance. This could eventually provide comparable
+    analysis of different cities helpful for researchers, local administration,
+    planners, etc.
+    </li>
+    <li><strong>Teaching urban metabolism</strong>
+    How do you teach urban metabolism at your university? What materials do you
+    use? What different formats of teaching do you use? The idea with this
+    project would be to gather good practices and relevant materials
+    (eventually online free courses) to teach urban metabolism. Ideally, we
+    would like to create an open and free course available for everyone online.
+    </li>
     <li><strong>Study replication</strong><br />
       There are many studies done once (or sometimes a few times) on one city (or a
       few cities), but much more interesting insights can be obtained if the some
