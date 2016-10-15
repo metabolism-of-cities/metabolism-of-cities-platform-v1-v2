@@ -1,5 +1,5 @@
 <?php
-if (!file_exists('config.php')) {
+if (!file_exists(__DIR__ . '/config.php')) {
   die("Config file not found! Read the readme file to create your configuration file first");
 }
 require_once 'config.php';
@@ -12,7 +12,7 @@ if ($db) {
   die("Could not connect to the database");
 }
 
-$css = filesize("css/styles.css");
+$css = filesize(__DIR__."/css/styles.css");
 
 $header = '
     <meta charset="utf-8" />
@@ -139,6 +139,7 @@ $google_translate = LOCAL ? '' : '
   }
   </script>
   <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>';
+
 
 function mailadmins($message, $subject, $from = false, $html = false, $webmaster = false) {
   $to = $webmaster ? WEBMASTER_MAIL : EMAIL;
