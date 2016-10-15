@@ -816,6 +816,25 @@ class SimpleImage {
    }
 }
 
+function smartcut($string, $length,$suffix="...") {
+  if (!$string) {
+	return $string;
+  }
+  $string_length = strlen($string);
+  if ($string_length <= $length) {
+	return $string;
+  }
+  $pos = strpos($string, ' ', $length);
+  if ($string_length > $length && !$pos) {
+	$result = substr($string, 0, $length);
+  } else {
+	$result = substr($string,0,$pos);
+  }
+  if ($result != $string) {
+	$result .= $suffix;
+  }
+  return $result;
+}
 
 $languages = array('English', 'Chinese', 'Spanish', 'French', 'German', 'Other');
 

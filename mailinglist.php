@@ -63,6 +63,12 @@ $page = 2;
       <!--End mc_embed_signup-->
       </div>
 
+    <h2>Newsletter archive</h2>
+
+    <p>View the archive of our past newsletters below:</p>
+
+    <p><a href="http://us8.campaign-archive1.com/home/?u=ac623181f98df6ff1b52a1668&id=59a1b98376" class="btn btn-primary">View Archive</a></p>
+
 
 <?php require_once 'include.footer.php'; ?>
 

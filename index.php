@@ -11,6 +11,12 @@ $tagsused = $db->record("SELECT SQL_CACHE COUNT(*) AS total FROM tags_papers");
 $projects = $db->record("SELECT SQL_CACHE COUNT(*) AS total FROM research WHERE deleted_on IS NULL");
 
 $hide_regular_translate = true;
+
+$today = date("Y-m-d");
+
+$blog = $db->record("SELECT * FROM blog WHERE active = 1 AND date <= '$today' ORDER BY date DESC LIMIT 1");
+$dataviz = $db->record("SELECT * FROM datavisualizations WHERE date <= '$today' ORDER BY date DESC LIMIT 1");
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,6 +24,11 @@ $hide_regular_translate = true;
     <?php echo $header ?>
     <title><?php echo SITENAME ?>: Urban Metabolism Research Resources and Tools</title>
     <style type="text/css">
+    .floater {
+      position:absolute;
+      bottom:0;
+      right:0;
+    }
     .jumbotron{background:#f4f4f4;position:relative;overflow:hidden;}
     @media (min-width:666px){
       .stats{background:url(img/stats.png) no-repeat right top}
@@ -31,19 +42,21 @@ $hide_regular_translate = true;
     .jumbotron p {
       margin:0 0 6px 0;
     }
+    p.constrain img {
+      max-width:100%;
+    }
+    p.constrain {
+      height:150px;
+      position:relative;
+      width:100%;
+      overflow:hidden;
+    }
     </style>
   </head>
 
   <body>
 
 <?php require_once 'include.header.php'; ?>
-      <?php if (date("Ymd") < 20160228) { ?>
-          <div class="alert alert-info">
-            <strong>Jan 30, 2016</strong> We have renamed our website! Formerly known as MFA Tools, we have gradually
-            been broadening our scope to include other metabolism research as well, and have thus renamed
-            our site to metabolismofcities.org!
-          </div>
-      <?php } ?>
 
       <div class="jumbotron">
         <div id="google_translate_element"></div>
@@ -60,6 +73,44 @@ $hide_regular_translate = true;
           <p><a class="btn btn-lg btn-primary" href="data" role="button">Data</a></p>
           <p><a class="btn btn-lg btn-primary" href="omat/about" role="button">Online MFA Tool (OMAT)</a></p>
         </div>
+      </div>
+
+      <div class="row">
+      
+        <div class="col-md-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Latest Blog Post <span class="pull-right"><?php echo format_date("M d, Y", $blog->date) ?></span></h3>
+            </div>
+            <div class="panel-body">
+                    <h4><a href="blog/echo"><?php echo $blog->title ?></a></h4>
+                    <?php echo smartcut($blog->content, 200) ?>
+                    <p><a href="http://" class="btn btn-primary">Read more</a></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+       
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Latest Data Visualization <span class="pull-right"><?php echo format_date("M d, Y", $dataviz->date) ?></span></h3>
+            </div>
+            <div class="panel-body">
+              <p class="constrain">
+                <a href="datavisualizations/<?php echo $dataviz->id . "-" . flatten($dataviz->title); ?>">
+                  <img src="media/dataviz/<?php echo $dataviz->id ?>.jpg" alt="" />
+                </a>
+                <a class="floater btn btn-primary" href="datavisualizations/<?php echo $dataviz->id . "-" . flatten($dataviz->title); ?>">
+                  View visualization
+                </a>
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+
       </div>
 
       <h2>Just Launched: Data Visualizations Project - October-December 2016</h2>
