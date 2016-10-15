@@ -35,6 +35,11 @@ if ((defined("ADMIN") && !$_GET['test_mode']) || ($gethash == $_GET['hash'])) {
   WHERE papers.id = $id AND papers.status = 'active'");
 }
 
+if ($admin_mode && $_GET['tweet']) {
+  require_once 'apis/functions.twitter.php';
+  $print = tweet("New publication added: " . $info->title, URL . "publication/$id");
+}
+
 if ($_GET['statuschange']) {
   $print = "Status was changed";
 }
@@ -167,14 +172,20 @@ if ($admin_mode && $_GET['authorscrape']) {
 <?php require_once 'include.header.php'; ?>
 
 <?php if ($admin_mode) { ?>
-  <a href="publication.view.php?id=<?php echo $id ?>&amp;test_mode=1" class="btn btn-primary right">View as user</a>
-  <a href="casestudy.edit.php?new=<?php echo $id ?>" class="btn btn-primary right">Add to case study database</a>
-  <a href="publication.edit.php?id=<?php echo $id ?>&amp;hash=<?php echo $hash ?>" class="btn btn-primary right">Edit</a>
+<div class="well">
+  <a class="btn btn-default" style="margin-right:30px" href="cms/index">
+  <i class="fa fa-lock"></i> Admin Panel
+  </a>
+  <a href="publication.view.php?id=<?php echo $id ?>&amp;test_mode=1" class="btn btn-primary">View as user</a>
+  <a href="casestudy.edit.php?new=<?php echo $id ?>" class="btn btn-primary">Add to case study database</a>
+  <a href="publication.edit.php?id=<?php echo $id ?>&amp;hash=<?php echo $hash ?>" class="btn btn-primary">Edit</a>
   <?php if ($info->status == 'active') { ?>
     <a href="publication.view.php?id=<?php echo $id ?>&amp;hash=<?php echo $hash ?>&amp;status=deleted" class="btn btn-danger right">Delete</a>
   <?php } else { ?>
-    <a href="publication.view.php?id=<?php echo $id ?>&amp;hash=<?php echo $hash ?>&amp;status=active" class="btn btn-primary right">Activate</a>
+    <a href="publication.view.php?id=<?php echo $id ?>&amp;hash=<?php echo $hash ?>&amp;status=active" class="btn btn-primary">Activate</a>
   <?php } ?>
+  <a class="btn" href="publication.view.php?id=<?php echo $id ?>&amp;tweet=true" onclick="javascript:return confirm('This will send a tweet to our Twitter account. Are you sure?')"><i class="fa fa-twitter"></i></a>
+</div>
 <?php } ?>
 
 <?php if ($notfound) { ?>
