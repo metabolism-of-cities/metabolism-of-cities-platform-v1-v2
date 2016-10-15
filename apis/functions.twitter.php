@@ -25,7 +25,6 @@ function tweet($tweet, $url) {
   if (LOCAL) {
     return false;
   }
-  die();
   $status = $connection->post("statuses/update", ["status" => $tweet]);
 
   if ($connection->getLastHttpCode() == 200) {
