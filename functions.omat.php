@@ -51,6 +51,7 @@ if ($login->isUserLoggedIn() == true) {
   $admincheck = $db->record("SELECT * FROM users_admin WHERE user = $user_id");
   if ($admincheck->privilege) {
     define("ADMIN", $admincheck->privilege);
+    $google_translate = ''; // Hide Google Translate button for admins
   } elseif ($admin_login) {
     // If this page requires an admin login and none is present, redirect
     header("Location: " . URL . "page/login");
