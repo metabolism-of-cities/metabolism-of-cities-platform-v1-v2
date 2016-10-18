@@ -32,7 +32,7 @@ $parameters = [
     'status' => $tweet,
     'media_ids' => implode(',', [$image->media_id_string])
 ];
-$status = $connection->post("statuses/update", [$parameters]);
+$status = $connection->post("statuses/update", $parameters);
 
 if ($connection->getLastHttpCode() == 200) {
     // Tweet posted succesfully
