@@ -14,8 +14,8 @@ $connection = getConnectionWithAccessToken($access_token, $access_token_secret);
 $info = $db->record("SELECT * FROM datavisualizations WHERE date <= CURDATE() ORDER BY date DESC LIMIT 1");
 $tweet = "Today's data visualization: " . $info->title;
 
-if (strlen($tweet) > 115) {
-  $tweet = substr($tweet, 0, 112) . "...";
+if (strlen($tweet) > 110) {
+  $tweet = substr($tweet, 0, 107) . "...";
 }
 
 $tweet .= " - " . URL . "datavisualizations/" . $info->id . "-" . flatten($info->title);
