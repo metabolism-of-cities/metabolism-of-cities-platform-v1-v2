@@ -83,9 +83,9 @@ $dataviz = $db->record("SELECT * FROM datavisualizations WHERE date <= '$today' 
               <h3 class="panel-title">Latest Blog Post <span class="pull-right"><?php echo format_date("M d, Y", $blog->date) ?></span></h3>
             </div>
             <div class="panel-body">
-                    <h4><a href="blog/echo"><?php echo $blog->title ?></a></h4>
+                    <h4><a href="blog/<?php echo $blog->id ?>-<?php echo flatten($blog->title) ?>"><?php echo $blog->title ?></a></h4>
                     <?php echo smartcut($blog->content, 200) ?>
-                    <p><a href="http://" class="btn btn-primary">Read more</a></p>
+                    <p><a href="blog/<?php echo $blog->id ?>-<?php echo flatten($blog->title) ?>" class="btn btn-primary">Read more</a></p>
             </div>
           </div>
         </div>
