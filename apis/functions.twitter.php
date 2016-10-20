@@ -16,8 +16,8 @@ function tweet($tweet, $url) {
 
   $connection = getConnectionWithAccessToken($access_token, $access_token_secret);
 
-  if (strlen($tweet) > 115) {
-    $tweet = substr($tweet, 0, 112) . "...";
+  if (strlen($tweet) > 110) {
+    $tweet = substr($tweet, 0, 107) . "...";
   }
 
   $tweet .= " - ". $url;
