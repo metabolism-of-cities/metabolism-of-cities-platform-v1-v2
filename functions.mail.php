@@ -34,7 +34,7 @@ function pearMail($to, $subject, $text, $from = false) {
   );
 
   if ($to != EMAIL) {
-    // $headers['Bcc'] = EMAIL;
+    $headers['Bcc'] = EMAIL;
   }
 
   if ($return_path) {
