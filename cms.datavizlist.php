@@ -11,7 +11,13 @@ if ($_GET['delete']) {
   $print = "Data visualization was deleted";
 }
 
-$list = $db->query("SELECT * FROM datavisualizations ORDER BY date DESC");
+$list = $db->query("SELECT *,
+(SELECT COUNT(*) FROM people AS p
+  JOIN people_papers ON people_papers.people = p.id
+  JOIN datavisualizations d ON d.paper = people_papers.paper
+  WHERE p.email != '' AND datavisualizations.id = d.id
+) AS people
+FROM datavisualizations ORDER BY date DESC");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,7 +38,7 @@ $list = $db->query("SELECT * FROM datavisualizations ORDER BY date DESC");
     <tr>
       <th>Title</th>
       <th>Date</th>
-      <th>Actions</th>
+      <th colspan="2">Actions</th>
     </tr>
     <?php foreach ($list as $row) { ?>
     <tr>
@@ -41,6 +47,11 @@ $list = $db->query("SELECT * FROM datavisualizations ORDER BY date DESC");
       <td><a href="cms.dataviz.php?id=<?php echo $row['id'] ?>" class="btn btn-info">Edit</a>
       <a href="datavisualizations/<?php echo $row['id'] ?>-<?php echo flatten($row['title']) ?>" class="btn btn-success">View post</a>
       <a href="cms.datavizlist.php?delete=<?php echo $row['id'] ?>" class="btn btn-danger" onclick="javascript:return confirm('Are you sure?')">Delete</a></td>
+      <td>
+        <?php if ($row['paper']) { ?>
+        <a href="publication/<?php echo $row['paper'] ?>" class="btn btn-info"><i class="fa fa-user"></i> <?php echo $row['people'] ?></a>
+        <?php } ?>
+      </td>
     </tr>
   <?php } ?>
   </table>
