@@ -77,7 +77,7 @@ if (LOCAL) {
           'DASHBOARD_LINK' => "[" . $link . " Open your personal dashboard]",
           'JOIN_STAKEHOLDERS' => "[" . URL . "page/stakeholders Join the Stakeholders Initiative]",
           'DATA_VIZ_LINK' => "[" . URL . "datavisualizations/{$info->id}-" . flatten($info->title) . " " . $info->title ."]",
-          'PUBLICATION_LINK' => "[" . URL . "publication/{$paperinfo->id}-" . flatten($info->title) . " " . $paperinfo->title ."]",
+          'PUBLICATION_LINK' => "[" . URL . "publication/{$paperinfo->id} " . $paperinfo->title ."]",
         );
 
         $content = strtr($content, $replace);
