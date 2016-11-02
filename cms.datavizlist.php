@@ -7,7 +7,7 @@ $sub_page = 11;
 
 if ($_GET['delete']) {
   $delete = (int)$_GET['delete'];
-  $db->query("DELETE FROM datavisualizations WHERE id = $id LIMIT 1");
+  $db->query("DELETE FROM datavisualizations WHERE id = $delete LIMIT 1");
   $print = "Data visualization was deleted";
 }
 
