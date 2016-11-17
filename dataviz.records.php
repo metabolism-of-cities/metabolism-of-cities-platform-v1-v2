@@ -19,8 +19,8 @@ if ($info->paper) {
     <title><?php echo $info->title ?> | <?php echo SITENAME ?></title>
     <link rel="canonical" href="<?php echo URL . "datavisualization/$id-".flatten($info->title) ?>" />
     <style type="text/css">
-    .well {text-align:center;}
-    .well img {border:1px solid #ddd; padding:5px}
+    .viz {text-align:center;}
+    .viz img {border:1px solid #ddd; padding:5px}
     </style>
   </head>
 
@@ -31,7 +31,7 @@ if ($info->paper) {
   <h1><?php echo $info->title ?></h1>
 
   <?php if (file_exists("media/dataviz/$id.jpg")) { ?>
-    <div class="well">
+    <div class="well viz">
       <img src="media/dataviz/<?php echo $id ?>.jpg" alt="" />
     </div>
   <?php } ?>
@@ -69,6 +69,21 @@ if ($info->paper) {
     <dt>Date</dt>
     <dd><?php echo format_date("M d, Y", $info->date) ?></dd>
   </dl>
+
+  <div class="well">
+  
+    <h3>Copyright notice</h3>
+
+    <p>
+    Please note that these data visualizations come from external sources (journal publications, 
+    academic books, reports, etc.). Copyright of these data visualizations is held by the publishers or 
+    authors. We have included these data visualizations on our website under the principles of 
+    <a href="https://en.wikipedia.org/wiki/Fair_use">fair use</a>. However, if you would like to 
+    reuse any of these images be sure to either comply with the rules around fair use in your country or 
+    consult the original authors or publishers if in doubt.
+    </p>
+
+  </div>
 
   <p><a href="datavisualization/examples" class="btn btn-primary">&laquo; View the full list</a></p>
 
