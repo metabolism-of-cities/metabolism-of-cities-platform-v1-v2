@@ -1390,3 +1390,11 @@ WHERE `id` = '3';
 
 ALTER TABLE `people_mails`
 CHANGE `sent_by` `sent_by` int(11) NULL AFTER `content`;
+
+CREATE TABLE `videos` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `title` varchar(255) NOT NULL,
+  `url` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `author` varchar(255) NOT NULL
+) ENGINE='InnoDB' COLLATE 'utf8_unicode_ci';

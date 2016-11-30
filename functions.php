@@ -123,6 +123,7 @@ $menu = array(
     'menu' => array(
       1 => array('label' => 'Blog', 'url' => 'blog'),
       2 => array('label' => 'Newsletter', 'url' => 'page/mailinglist'),
+      3 => array('label' => 'Videos', 'url' => 'videos'),
       //3 => array('label' => 'Links', 'url' => 'page/links'),
       //4 => array('label' => 'Social Media', 'url' => 'page/socialmedia'),
     ),

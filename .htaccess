@@ -250,12 +250,14 @@ AddDefaultCharset utf-8
     RewriteRule ^404$ 404.php
     RewriteRule ^collaborators$ collaborators.php
     RewriteRule ^datavisualizations$ datavisualizations.php
+    RewriteRule ^videos$ videos.php
     RewriteRule ^data$ data.php
     RewriteRule ^data/(.*)$ data.$1.php
     RewriteRule ^stakeholders$ stakeholders.php
     RewriteRule ^datavisualization/?$ datavisualizations.php
     RewriteRule ^datavisualizations/([0-9]+)-(.*)?$ dataviz.records.php?id=$1
     RewriteRule ^datavisualization/(.*)$ dataviz.$1.php
+    RewriteRule ^videos/([0-9]+)-(.*)?$ video.php?id=$1
     RewriteRule ^stakeholders/(.*)$ stakeholders.$1.php
 
     RewriteRule ^omat/([0-9]+)/reports-data/([0-9]+)/([0-9]+)/?$ reports.data.php?project=$1&year=$2&id=$3
