@@ -33,6 +33,9 @@ $list = $db->query("SELECT * FROM videos ORDER BY title");
     .panel-body {
       padding:0;
     }
+    .panel-default > .panel-heading {
+      height:55px;
+    }
   </style>
   </head>
 
