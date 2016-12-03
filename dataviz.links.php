@@ -16,6 +16,14 @@ $page = 2;
 
 <?php require_once 'include.header.php'; ?>
 
+  <ol class="breadcrumb">
+    <li><a href="./">Home</a></li>
+    <li><a href="stakeholders">Stakeholders Initiative</a></li>
+    <li><a href="datavisualization">Data Visualizations</a></li>
+    <li class="active">Links</li>
+  </ol>
+
+
     <h1>Links</h1>
 
 

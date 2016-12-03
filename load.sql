@@ -1398,3 +1398,20 @@ CREATE TABLE `videos` (
   `description` text NOT NULL,
   `author` varchar(255) NOT NULL
 ) ENGINE='InnoDB' COLLATE 'utf8_unicode_ci';
+
+CREATE TABLE `votes` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `datavisualization` int(10) unsigned NOT NULL,
+  `date` timestamp NOT NULL,
+  `ip` varchar(200) NOT NULL,
+  `browser` varchar(300) NOT NULL,
+  `info` text NOT NULL,
+  FOREIGN KEY (`datavisualization`) REFERENCES `datavisualizations` (`id`)
+) ENGINE='InnoDB' COLLATE 'utf8_unicode_ci';
+
+ALTER TABLE `votes`
+ADD `comments` text COLLATE 'utf8_unicode_ci' NOT NULL,
+ADD `name` varchar(255) COLLATE 'utf8_unicode_ci' NOT NULL AFTER `comments`;
+
+ALTER TABLE `votes`
+ADD `email` varchar(255) COLLATE 'utf8_unicode_ci' NOT NULL;

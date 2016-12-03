@@ -38,6 +38,13 @@ ORDER BY date DESC");
 
 <?php require_once 'include.header.php'; ?>
 
+  <ol class="breadcrumb">
+    <li><a href="./">Home</a></li>
+    <li><a href="stakeholders">Stakeholders Initiative</a></li>
+    <li><a href="datavisualization">Data Visualizations</a></li>
+    <li class="active">Examples</li>
+  </ol>
+
     <h1>Data Visualization Examples</h1>
 
     <div class="alert alert-info">

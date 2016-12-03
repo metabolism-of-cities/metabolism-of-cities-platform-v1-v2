@@ -14,6 +14,7 @@ if ($id) {
 } else {
   $info = $db->record("SELECT * FROM blog WHERE active = 1 ORDER BY id DESC LIMIT 1");
   $id = $info->id;
+  $blog_home = true;
 }
 
 $authors = $db->query("SELECT blog_authors.* 
@@ -45,6 +46,16 @@ WHERE date <= '$today' AND active = 1 ORDER BY date DESC LIMIT 5");
   <body>
 
 <?php require_once 'include.header.php'; ?>
+
+  <ol class="breadcrumb">
+    <li><a href="./">Home</a></li>
+    <?php if ($blog_home) { ?>
+    <li class="active">Blog</li>
+    <?php } else { ?>
+    <li><a href="blog">Blog</a></li>
+    <li class="active"><?php echo $info->title ?></li>
+    <?php } ?>
+  </ol>
 
 <div class="row">
 

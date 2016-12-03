@@ -14,7 +14,11 @@ $page = 2;
 
 <?php require_once 'include.header.php'; ?>
 
-
+  <ol class="breadcrumb">
+    <li><a href="./">Home</a></li>
+    <li><a href="stakeholders">Stakeholders Initiative</a></li>
+    <li class="active">Data Visualization</li>
+  </ol>
 
   <h1>
     Data Visualizations in Urban Metabolism Research</h1>
