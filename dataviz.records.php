@@ -108,7 +108,7 @@ if (defined("ADMIN")) {
           best data visualization by popular vote and 
           you can cast <strong>3 votes</strong> for your
           favorite visualizations. <br /><br />Voting ends on
-          <strong>December 31, 2016</strong>
+          <strong>January 20, 2017</strong>
         </div>
 
         <div class="col-md-5">

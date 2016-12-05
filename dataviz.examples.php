@@ -6,6 +6,11 @@ $today = date("Y-m-d");
 $list = $db->query("SELECT * FROM datavisualizations WHERE 
 date <= '$today'
 ORDER BY date DESC");
+
+if (defined("ADMIN")) {
+  $voting = true;
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,6 +35,10 @@ ORDER BY date DESC");
       border:1px solid #ccc;
       padding:2px;
     }
+    .vote i{font-size:80px;position:relative;top:40px}
+    .vote{background:#61a9bd;border-radius:4px;color:#fff;padding-bottom:10px;margin-bottom:10px;text-align:justify}
+    .vote .col-md-5{text-align:center}
+    .vote a{margin-top:30px}
     </style>
 
   </head>
@@ -47,11 +56,44 @@ ORDER BY date DESC");
 
     <h1>Data Visualization Examples</h1>
 
+    <?php if ($voting) { ?>
+    <div class="row vote">
+
+      <div class="a">
+      
+        <div class="col-md-10">
+      <h2>Vote now</h2>
+      <p>
+          Do you like this data visualization? 
+          Cast your vote now! We are selecting the 
+          best data visualization by popular vote and 
+          you can cast <strong>3 votes</strong> for your
+          favorite visualizations. 
+          
+          To cast your vote, open the data visualizations that you
+          want to vote for, and click the VOTE NOW button 
+          on the page.
+          
+          <br /><br />Voting ends on
+          <strong>January 20, 2017</strong>
+          </p>
+        </div>
+
+        <div class="col-md-2">
+          <i class="fa fa-check-circle"></i>
+        </div>
+
+      </div>
+    </div>
+    <?php } else { ?>
+
     <div class="alert alert-info">
     On this page we are listing interesting data visualization examples. We aim 
     to publish a new example every day, and we welcome your contributions! 
     Mail us at info@metabolismofcities.org with your contributions!
     </div>
+
+    <?php } ?>
 
   <ul class="datavizlist">
   <?php foreach ($list as $row) { ?>

@@ -113,6 +113,24 @@ $dataviz = $db->record("SELECT * FROM datavisualizations WHERE date <= '$today' 
 
       </div>
 
+<div class="alert alert-warning">
+<span class="pull-right">Dec 5, 2016</span>
+<h2>Metabolism of Cities co-organises three masterclasses on urban metabolism</h2>
+
+<p>
+
+As part of our <a href="stakeholders">Stakeholders Initiative</a>, we are proud to announce that Metabolism of Cities will be co-organising (with OVAM, .Fabric, Vlaamse Milieumaatschappij (VMM/MIRA), and Team Vlaams Bouwmeester) three masterclasses on urban metabolism. The masterclasses are entitled Designing With Flows: Towards an Urban-Metabolic Agenda for a Circular Future and will take place in Brussels on the 08/12/2016, 12/01/2017, 02/02/2017. 
+</p>
+
+
+<p>For more information and registration <a href="http://www.architectureworkroom.eu/atelierbrussel/masterclass-designing-with-flows">click here</a>.
+</p>
+
+<p><a href="http://www.architectureworkroom.eu/atelierbrussel/masterclass-designing-with-flows" class="btn btn-primary">Urban metabolism masterclasses &raquo;</a></p>
+
+</div>
+
+
       <h2>Just Launched: Data Visualizations Project - October-December 2016</h2>
 
       <p>We have launched our first <a href="stakeholders">Stakeholders Initiative</a>! From October until 
