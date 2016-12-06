@@ -114,6 +114,7 @@ $menu = array(
     'menu' => array(
       1 => array('label' => 'Introduction', 'url' => 'stakeholders'),
       2 => array('label' => 'Data Visualization', 'url' => 'datavisualization'),
+      4 => array('label' => 'UM Masterclasses', 'url' => 'stakeholders/masterclasses'),
       3 => array('label' => 'Subscribe', 'url' => 'stakeholders/subscribe'),
     ),
   ),  

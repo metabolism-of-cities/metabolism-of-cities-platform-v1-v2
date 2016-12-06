@@ -42,6 +42,10 @@ $page = 1;
   <p>The specific activities that we engage in will vary by topic and it will likely evolve over time. The 
   first topic of choice is <a href="datavisualization">Data Visualizations</a> and will run from 
   <strong>October-December 2016</strong>. </p>
+  <p>In parallel, we are co-organizing masterclasses in urban metabolism. This is a short set of 
+  courses taking place
+  in Brussels in December 2016 and January 2017. Click here <a href="stakeholders/masterclasses">to learn more
+  about the Masterclasses.</a></p>
   <p>
     This Stakeholders Initiative is a new and recent initiative, and open to your input and ideas. So if you
     have any ideas as to how we can move forward, please don't hesitate to <a href="page/contact">contact us</a>!
