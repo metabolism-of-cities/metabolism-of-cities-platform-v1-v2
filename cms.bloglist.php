@@ -8,16 +8,25 @@ $sub_page = 1;
 if ($_GET['delete']) {
   $delete = (int)$_GET['delete'];
   $db->query("UPDATE blog SET active = 0 WHERE id = $delete");
-  $print = "Blog post was deleted";
+  $print = "Blog post was deactivated";
 }
 
-$list = $db->query("SELECT * FROM blog WHERE active = 1 ORDER BY date DESC");
+if ($_GET['undelete']) {
+  $undelete = (int)$_GET['undelete'];
+  $db->query("UPDATE blog SET active = 1 WHERE id = $undelete");
+  $print = "Blog post was reactivated";
+}
+
+$list = $db->query("SELECT * FROM blog ORDER BY date DESC");
 ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <?php echo $header ?>
     <title>Blog Posts | <?php echo SITENAME ?></title>
+    <style type="text/css">
+    .active-0{opacity:0.6;}
+    </style>
   </head>
 
   <body>
@@ -35,12 +44,17 @@ $list = $db->query("SELECT * FROM blog WHERE active = 1 ORDER BY date DESC");
       <th>Actions</th>
     </tr>
     <?php foreach ($list as $row) { ?>
-    <tr>
+    <tr class="active-<?php echo $row['active'] ?>">
       <td><a href="blog/<?php echo $row['id'] ?>-<?php echo flatten($row['title']) ?>"><?php echo $row['title'] ?></a></td>
       <td><?php echo format_date("M d, Y", $row['date']) ?></td>
       <td><a href="cms.blog.php?id=<?php echo $row['id'] ?>" class="btn btn-info">Edit</a>
       <a href="blog/<?php echo $row['id'] ?>-<?php echo flatten($row['title']) ?>" class="btn btn-success">View post</a>
-      <a href="cms.bloglist.php?delete=<?php echo $row['id'] ?>" class="btn btn-danger" onclick="javascript:return confirm('Are you sure?')">Delete</a></td>
+      <?php if ($row['active']) { ?>
+      <a href="cms.bloglist.php?delete=<?php echo $row['id'] ?>" class="btn btn-danger">Deactivate</a>
+      <?php } else { ?>
+      <a href="cms.bloglist.php?undelete=<?php echo $row['id'] ?>" class="btn btn-success">Reactivate</a>
+      <?php } ?>
+      </td>
     </tr>
   <?php } ?>
   </table>

@@ -11,6 +11,7 @@ if ($_POST) {
     'title' => html($_POST['title']),
     'date' => mysql_clean(format_date("Y-m-d", $_POST['date'])),
     'content' => $_POST['content'],
+    'active' => (int)$_POST['active'],
   );
   if ($id) {
     $db->update("blog",$post,"id = $id");
@@ -115,6 +116,17 @@ foreach ($links_authors as $row) {
           <?php } ?>
         </select>
       </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="active" value="1" <?php echo $info->active ? 'checked' : ''; ?> /> 
+                        Published
+                </label>
+          </div>
+        </div>
     </div>
 
     <div class="form-group">
