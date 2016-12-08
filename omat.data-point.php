@@ -246,7 +246,10 @@ if ($projectinfo->dqi) {
       <div class="form-group">
         <label class="col-sm-2 control-label"><?php echo $year ?></label>
         <div class="col-sm-10">
-          <input class="form-control small" type="text" name="data[<?php echo $year ?>]"  />
+          <div class="input-group">
+            <input class="form-control small" type="text" name="data[<?php echo $year ?>]"  />
+            <span class="input-group-addon"><?php echo $projectinfo->measurement ?></span>
+          </div>
         </div>
       </div>
 
