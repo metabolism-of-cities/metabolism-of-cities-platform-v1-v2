@@ -1,6 +1,7 @@
 # Current
 
-* Integration of map with urban metabolism studies
-* Integration of Google Translate on each page
-* Renaming of website
-* Setup and link to Twitter
+* Added video section
+* Added blog articles
+* Added data visualizations
+* New SI project: masterclasses
+

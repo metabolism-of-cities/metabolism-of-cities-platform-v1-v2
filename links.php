@@ -17,6 +17,12 @@ $page = 6;
   <h1>Links</h1>
 
   <ul>
+    <li><a href="https://isie-sem.blogspot.co.za/">ISIE-SEM: Socio-economic Metabolism Blog</a><br />
+    ISIE’s SEM section is the largest global network of researchers employing
+    material flow analysis as a tool for environmental sustainability
+    assessment. This site aims to keep members up to date with news about the
+    section's activities.
+    </li>
     <li><a href="http://www.resourceefficientcities.org/">Global Initiative for Resource Efficient Cities</a></li>
     <li><a href="http://rcnsustainablecities.com/">Research Coordination Network: Sustainable Cities - People and Infrastructures at the Water-Energy-Climate Nexus</a></li>
     <li><a href="http://sdg.iisd.org/sdgs/goal-11-sustainable-cities-communities/">SDG Knowledge Hub - Goal 11: Sustainable Cities &amp; Communities</a></li>

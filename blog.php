@@ -40,6 +40,9 @@ WHERE date <= '$today' AND active = 1 ORDER BY date DESC LIMIT 5");
     <style type="text/css">
     .side h4.author, .side h2.jumpdown {margin-top:40px}
     .col-md-9 img{max-width:100%}
+    <?php if ($id == 4) { ?>
+      .blogarticle img {padding:5px;margin:5px;border:1px solid #ccc}
+    <?php } ?>
     </style>
   </head>
 
@@ -59,7 +62,7 @@ WHERE date <= '$today' AND active = 1 ORDER BY date DESC LIMIT 5");
 
 <div class="row">
 
-  <div class="col-md-9">
+  <div class="col-md-9 blogarticle">
     <h1><?php echo $info->title ?></h1>
     <p><em>Published on <?php echo format_date("M d, Y", $info->date) ?></em></p>
     <?php echo $info->content ?>
