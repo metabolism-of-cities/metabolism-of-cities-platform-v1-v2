@@ -35,16 +35,17 @@ $page = 4;
 
   <ul>
     <li>Option to download the whole database. This would allow users to do other things with the database, as they please.</li>
-    <li>Option to download a dataset as a CSV file.</li>
+    <li class="done">Option to download a dataset as a CSV file.</li>
     <li class="done">Option to download the list of publications as a CSV file.</li>
     <li class="done">A newsletter option that allows visitors to receive monthly updates of new publications or features added.</li>
     <li>Better implementation of uncertainty in the MFA software.</li>
     <li>Creation of beautiful graphs based on the dataset.</li>
     <li>A screen-recorded video that shows users how it all works by viewing a 2-3 minute video.</li>
-    <li>Create a map to visually show where the studies have been done.</li>
+    <li class="done">Create a map to visually show where the studies have been done.</li>
     <li>Add a field to indicate the language of each publication (there are a few that are not in English).</li>
     <li>Send confirmations through e-mail when adding (or removing) research projects.</li>
     <li class="done">Easier option to add papers, e.g. by BibTex reference copying</li>
+    <li>Send automated tweet when a blog post is published</li>
   </ul>
 
   <h2>Content-related</h2>
