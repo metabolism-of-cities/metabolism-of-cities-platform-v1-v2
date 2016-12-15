@@ -4,7 +4,7 @@ require_once 'functions.php';
 require_once 'functions.omat.php';
 
 $id = (int)$_GET['id'];
-$mail_id = 1;
+$mail_id = 4;
 
 if ($id) {
   $info = $db->record("SELECT * FROM people WHERE id = $id");
@@ -48,6 +48,7 @@ $access_id = $accessinfo->id;
 $link = URL . "access/$access_id/" . encrypt("PROFILE $access_id");
 $link_data = URL . "access-data/$access_id/" . encrypt("PROFILE $access_id");
 $link_casestudies = URL . "preview/casestudies";
+$papers_total = $db->record("SELECT SQL_CACHE COUNT(*) AS total FROM papers WHERE status = 'active'");
 
 $replace = array(
   'NAME' => $info->firstname . " " . $info->lastname,
@@ -57,6 +58,7 @@ $replace = array(
   'REVIEW_DATA' => "[" . $link_casestudies . " Review existing data]",
   'DASHBOARD_LINK' => "[" . $link . " Open your personal dashboard]",
   'JOIN_STAKEHOLDERS' => "[" . URL . "page/stakeholders Join the Stakeholders Initiative]",
+  'GRAND_TOTAL_PUBLICATIONS' => $papers_total->total,
 );
 
 $content = strtr($content, $replace);
