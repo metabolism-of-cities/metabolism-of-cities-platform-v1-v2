@@ -1415,3 +1415,6 @@ ADD `name` varchar(255) COLLATE 'utf8_unicode_ci' NOT NULL AFTER `comments`;
 
 ALTER TABLE `votes`
 ADD `email` varchar(255) COLLATE 'utf8_unicode_ci' NOT NULL;
+
+ALTER TABLE `papers`
+CHANGE `year` `year` smallint(4) unsigned NOT NULL AFTER `length`;
