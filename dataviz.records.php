@@ -88,7 +88,7 @@ if (defined("ADMIN")) {
           <dd><a href="publication/<?php echo $info->paper ?>"><?php echo URL ?>publication/<?php echo $info->paper ?></a></dd>
         <?php } ?>
 
-        <dt>Contributor</dt>
+        <dt>Uploaded by</dt>
         <dd><?php echo $info->contributor ?></dd>
         <dt>Date</dt>
         <dd><?php echo format_date("M d, Y", $info->date) ?></dd>
