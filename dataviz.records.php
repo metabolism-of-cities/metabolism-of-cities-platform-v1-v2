@@ -14,7 +14,7 @@ if ($info->paper) {
   $paperinfo = $db->record("SELECT * FROM papers WHERE id = {$info->paper}");
 }
 
-if (defined("ADMIN")) {
+if (date("Y-m-d") < 20170121) {
   $voting = true;
 }
 

@@ -88,7 +88,7 @@ if (is_array($_POST['vote']) && !$_COOKIE['voted']) {
       
       <h1>You have already cast your vote(s)</h1>
       <p>
-        Thanks for participating! Check back in the first week of January 2017
+        Thanks for participating! Check back in the last week of January 2017
         to see the results.
       </p>
 

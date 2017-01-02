@@ -94,15 +94,17 @@ $dataviz = $db->record("SELECT * FROM datavisualizations WHERE date <= '$today' 
        
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title">Latest Data Visualization <span class="pull-right"><?php echo format_date("M d, Y", $dataviz->date) ?></span></h3>
+              <h3 class="panel-title">Data Visualization Voting <span class="pull-right">Jan 1-20, 2017</span></h3>
             </div>
             <div class="panel-body">
+              <h4><a href="datavisualization/examples">Vote now!</a></h4>
               <p class="constrain">
-                <a href="datavisualizations/<?php echo $dataviz->id . "-" . flatten($dataviz->title); ?>">
-                  <img src="media/dataviz/<?php echo $dataviz->id ?>.jpg" alt="" />
-                </a>
-                <a class="floater btn btn-primary" href="datavisualizations/<?php echo $dataviz->id . "-" . flatten($dataviz->title); ?>">
-                  View visualization
+                We are selecting the best data visualization by popular vote and you can cast 3
+                votes for your favorite visualizations. To cast your vote, open the data
+                visualizations that you want to vote for, and click the VOTE NOW button on the
+                page.
+                <a class="floater btn btn-primary" href="datavisualization/examples">
+                  View data visualizations
                 </a>
               </p>
             </div>
