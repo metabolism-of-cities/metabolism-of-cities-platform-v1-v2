@@ -15,7 +15,6 @@ $hide_regular_translate = true;
 $today = date("Y-m-d");
 
 $blog = $db->record("SELECT * FROM blog WHERE active = 1 AND date <= '$today' ORDER BY date DESC LIMIT 1");
-$dataviz = $db->record("SELECT * FROM datavisualizations WHERE date <= '$today' ORDER BY date DESC LIMIT 1");
 
 ?>
 <!DOCTYPE html>
@@ -94,16 +93,16 @@ $dataviz = $db->record("SELECT * FROM datavisualizations WHERE date <= '$today' 
        
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title">Data Visualization Voting <span class="pull-right">Jan 1-20, 2017</span></h3>
+              <h3 class="panel-title">Data Visualization Voting <span class="pull-right">Jan 01-20, 2017</span></h3>
             </div>
             <div class="panel-body">
               <h4><a href="datavisualization/examples">Vote now!</a></h4>
-              <p class="constrain">
-                We are selecting the best data visualization by popular vote and you can cast 3
-                votes for your favorite visualizations. To cast your vote, open the data
-                visualizations that you want to vote for, and click the VOTE NOW button on the
-                page.
-                <a class="floater btn btn-primary" href="datavisualization/examples">
+              <p>
+              We are selecting the best data visualization by popular vote and you can cast 3
+              votes for your favorite visualizations. Browse the data visualizations in our 
+              library and vote now!
+               </p>
+               <p> <a class="btn btn-primary" href="datavisualization/examples">
                   View data visualizations
                 </a>
               </p>
