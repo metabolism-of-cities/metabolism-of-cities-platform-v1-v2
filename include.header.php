@@ -20,7 +20,11 @@
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="./">
-            <img src="img/logo.svg" alt="" />
+            <?php if (ID == 1) { ?>
+              <img src="img/logo.svg" alt="" />
+            <?php } else { ?>
+              <img src="img/logo.2.svg" alt="" />
+            <?php } ?>
             <?php echo SITENAME ?>
           </a>
         </div>

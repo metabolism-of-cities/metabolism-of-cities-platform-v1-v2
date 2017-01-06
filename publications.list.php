@@ -211,8 +211,8 @@ if ($_GET['tag']) {
     <thead>
     <tr>
       <th>Title</th>
-      <th>Author(s)</th>
-      <th>Year</th>
+      <th width="330">Author(s)</th>
+      <th width="80">Year</th>
     </tr>
     </thead>
     <tbody>
