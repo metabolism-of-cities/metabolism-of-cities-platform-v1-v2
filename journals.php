@@ -1,64 +1,48 @@
 <?php
-$skip_login = true;
 $show_breadcrumbs = true;
 require_once 'functions.php';
-require_once 'functions.omat.php';
 $section = 4;
-$page = 8;
+$page = 9;
 
-$list = $db->query("SELECT 
-  people.*,
-  (SELECT COUNT(*) FROM people_papers WHERE people.id = people_papers.people) AS publications
-FROM people 
-WHERE active IS TRUE
-ORDER BY lastname");
+$list = $db->query("SELECT *, 
+(SELECT COUNT(*) FROM papers WHERE source = sources.id AND status = 'active') AS papers
+FROM sources WHERE name LIKE '%journal%' ORDER BY name");
 ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <?php echo $header ?>
-    <title>Authors | <?php echo SITENAME ?></title>
+    <title>Journals | <?php echo SITENAME ?></title>
     <script type="text/javascript" src="js/tablesorter.js"></script>
     <script type="text/javascript" src="js/tablesorter.widgets.js"></script>
     <link rel="stylesheet" href="css/sorter.bootstrap.css" />
-    </head>
+  </head>
 
   <body>
 
 <?php require_once 'include.header.php'; ?>
 
-  <h1>Authors</h1>
+  <h1>Journals</h1>
 
   <p>
-    This section lists authors who do (or have done) research into the metabolism of cities.
-    This list is associated with our database of publications and allows you to review 
-    the publications by each of the authors in this list. Each author can edit her/his 
-    profile by requesting an access link via e-mail (use the link at the bottom of your
-    personal profile). For questions, please don't hesitate to <a href="info/contact">contact us</a>.
+    This page provides an overview of the different journals from which our publications come. Click 
+    on the journal name to see the full list of publications.
   </p>
-
-  <div class="alert alert-info">
-    There are a total of <strong><?php echo count($list) ?></strong> authors in the database.
-  </div>
 
   <table class="table table-striped">
     <thead>
     <tr>
-      <th>First name</th>
-      <th>Last name</th>
+      <th>Journal</th>
       <th>Publications</th>
-      <th>Profile</th>
     </tr>
     </thead>
     <tbody>
-    <?php foreach ($list as $row) { ?>
-    <tr>
-      <td><?php echo $row['firstname'] ?></td>
-      <td><?php echo $row['lastname'] ?></td>
-      <td><?php echo $row['publications'] ?></td>
-      <td><a href="people/<?php echo $row['id'] ?>-<?php echo flatten($row['firstname']. " ".$row['lastname']) ?>">View profile</a></td>
-    </tr>
-  <?php } ?>
+      <?php foreach ($list as $row) { ?>
+        <tr>
+          <td><a href="source/<?php echo $row['id'] ?>"><?php echo $row['name'] ?></a></td>
+          <td><?php echo $row['papers'] ?></td>
+        </tr>
+      <?php } ?>
     </tbody>
   </table>
 

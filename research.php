@@ -2,12 +2,14 @@
 $skip_login = true;
 require_once 'functions.php';
 require_once 'functions.omat.php';
-$section = 3;
-$page = 1;
+$section = 4;
+$page = 2;
 
 $id = (int)$_GET['id'];
 
 $info = $db->record("SELECT * FROM research WHERE id = $id AND deleted_on IS NULL");
+
+$this_page = $info->title;
 
 if (!$info->id) {
   kill("Record not found");

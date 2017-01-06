@@ -1,4 +1,5 @@
 <?php
+$show_breadcrumbs = true;
 require_once 'functions.php';
 $section = 4;
 $page = 6;
@@ -36,6 +37,7 @@ $sources = $db->query("SELECT * FROM sources ORDER BY name");
   <head>
     <?php echo $header ?>
     <title>Studies | <?php echo SITENAME ?></title>
+    <link rel="stylesheet" href="css/select2.min.css" />
     <style type="text/css">
     .shortlist {
       max-height: 270px;
@@ -118,7 +120,10 @@ $sources = $db->query("SELECT * FROM sources ORDER BY name");
 
 <div class="alert alert-warning">
   Use the fields below to create your own filters and easily find what you are looking for. 
-  All of the fields are optional; only fill out those that are of importance to you.
+  All of the fields are optional; only fill out those that are of importance to you. 
+  <br />
+  <strong>The system will only find publications that match ALL of the filters that
+  you select.</strong>
 </div>
 
 <form method="post" class="form form-horizontal" action="publications/list">
@@ -266,6 +271,12 @@ $sources = $db->query("SELECT * FROM sources ORDER BY name");
 
 </div>
 
+<script type="text/javascript" src="js/select2.min.js"></script>
+<script type="text/javascript">
+$(function(){
+  $("select").select2();
+});
+</script>
 
 <?php require_once 'include.footer.php'; ?>
 

@@ -1,5 +1,6 @@
 <?php
 $skip_login = true;
+$show_breadcrumbs = true;
 require_once 'functions.php';
 require_once 'functions.omat.php';
 $section = 4;
@@ -11,6 +12,7 @@ if ($_POST['source']) {
 
 if ($_GET['source']) {
   $source = (int)$_GET['source'];
+  $this_page = "Filter publications";
   $info = $db->record("SELECT * FROM sources WHERE id = $source");
   $filters .= "<strong>Source</strong>: " . $info->name . "<br />";
   $sql .= " AND papers.source = $source";
@@ -30,6 +32,7 @@ if ($_POST['end']) {
 }
 
 if (is_array($_POST['tags'])) {
+  $this_page = "Filter publications";
   foreach ($_POST['tags'] as $key => $value) {
     $id = (int)$key;
     $parent = $db->record("SELECT name FROM tags_parents WHERE id = $id");
@@ -61,6 +64,7 @@ if ($_POST['update_tag'] && defined("ADMIN")) {
 
 if ($_GET['tag']) {
   $tag = (int)$_GET['tag'];
+  $this_page = "Filter publications";
 
   if (defined("ADMIN")) {
     $parent_tag_list = $db->query("SELECT * FROM tags_parents ORDER BY name");
@@ -77,6 +81,7 @@ if ($_GET['tag']) {
   $title = $info->tag . " | ";
 } elseif ($_GET['keyword']) {
   $keyword = (int)$_GET['keyword'];
+  $this_page = "Filter publications";
   $list = $db->query("SELECT papers.* 
   FROM 
     keywords_papers 
@@ -96,13 +101,16 @@ if ($_GET['tag']) {
   <head>
     <?php echo $header ?>
     <title><?php echo $title ?>Publications | <?php echo SITENAME ?></title>
+    <script type="text/javascript" src="js/tablesorter.js"></script>
+    <script type="text/javascript" src="js/tablesorter.widgets.js"></script>
+    <link rel="stylesheet" href="css/sorter.bootstrap.css" />
   </head>
 
   <body>
 
 <?php require_once 'include.header.php'; ?>
 
-<h1>Urban Metabolism Publications</h1>
+<h1><?php echo ID == 2 ? "EPR" : "Urban Metabolism"; ?> Publications</h1>
 
 <?php if ($print) { echo "<div class=\"alert alert-success\">$print</div>"; } ?>
 
@@ -200,18 +208,22 @@ if ($_GET['tag']) {
 <?php if (count($list)) { ?>
 
   <table class="table table-striped">
+    <thead>
     <tr>
       <th>Title</th>
       <th>Author(s)</th>
       <th>Year</th>
     </tr>
-  <?php foreach ($list as $row) { ?>
-    <tr>
-      <td><a href="publication/<?php echo $row['id'] ?>"><?php echo $row['title'] ?></a></td>
-      <td><?php echo $row['author'] ?></td>
-      <td><?php echo $row['year'] ?></td>
-    </tr>
-  <?php } ?>
+    </thead>
+    <tbody>
+    <?php foreach ($list as $row) { ?>
+      <tr>
+        <td><a href="publication/<?php echo $row['id'] ?>"><?php echo $row['title'] ?></a></td>
+        <td><?php echo $row['author'] ?></td>
+        <td><?php echo $row['year'] ?></td>
+      </tr>
+    <?php } ?>
+    </tbody>
   </table>
 
   <div class="alert alert-info">
@@ -226,6 +238,70 @@ if ($_GET['tag']) {
 <?php } ?>
 
 <?php require_once 'include.footer.php'; ?>
+
+<script type="text/javascript">
+$(function(){
+
+	// NOTE: $.tablesorter.theme.bootstrap is ALREADY INCLUDED in the jquery.tablesorter.widgets.js
+	// file; it is included here to show how you can modify the default classes
+	$.tablesorter.themes.bootstrap = {
+		// these classes are added to the table. To see other table classes available,
+		// look here: http://getbootstrap.com/css/#tables
+		table        : 'table table-bordered table-striped',
+		caption      : 'caption',
+		// header class names
+		header       : 'bootstrap-header', // give the header a gradient background (theme.bootstrap_2.css)
+		sortNone     : '',
+		sortAsc      : '',
+		sortDesc     : '',
+		active       : '', // applied when column is sorted
+		hover        : '', // custom css required - a defined bootstrap style may not override other classes
+		// icon class names
+		icons        : '', // add "icon-white" to make them white; this icon class is added to the <i> in the header
+		iconSortNone : 'bootstrap-icon-unsorted', // class name added to icon when column is not sorted
+		iconSortAsc  : 'glyphicon glyphicon-chevron-up', // class name added to icon when column has ascending sort
+		iconSortDesc : 'glyphicon glyphicon-chevron-down', // class name added to icon when column has descending sort
+		filterRow    : '', // filter row class; use widgetOptions.filter_cssFilter for the input/select element
+		footerRow    : '',
+		footerCells  : '',
+		even         : '', // even row zebra striping
+		odd          : ''  // odd row zebra striping
+	};
+
+	// call the tablesorter plugin and apply the uitheme widget
+	$("table").tablesorter({
+		// this will apply the bootstrap theme if "uitheme" widget is included
+		// the widgetOptions.uitheme is no longer required to be set
+		theme : "bootstrap",
+
+		widthFixed: true,
+
+		headerTemplate : '{content} {icon}', // new in v2.7. Needed to add the bootstrap icon!
+
+		// widget code contained in the jquery.tablesorter.widgets.js file
+		// use the zebra stripe widget if you plan on hiding any rows (filter widget)
+		widgets : [ "uitheme", "filter", "zebra" ],
+
+		widgetOptions : {
+			// using the default zebra striping class name, so it actually isn't included in the theme variable above
+			// this is ONLY needed for bootstrap theming if you are using the filter widget, because rows are hidden
+			zebra : ["even", "odd"],
+
+			// reset filters button
+			filter_reset : ".reset",
+
+			// extra css class name (string or array) added to the filter element (input or select)
+			filter_cssFilter: "form-control",
+
+			// set the uitheme widget to use the bootstrap theme class names
+			// this is no longer required, if theme is set
+			// ,uitheme : "bootstrap"
+
+		}
+	})
+
+});
+</script>
 
   </body>
 </html>

@@ -41,6 +41,7 @@ $header = '
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/font-awesome.4.2.0.css" rel="stylesheet" />
     <link href="css/styles.'.$css.'.css" rel="stylesheet" />
+    <link href="css/custom-'.ID.'.css" rel="stylesheet" />
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -63,7 +64,7 @@ $tag_parents = $db->query("SELECT SQL_CACHE id, name FROM tags_parents ORDER BY 
 $menu = array(
   2 => array(
     'label' => 'About', 
-    'url' => 'about.php', 
+    'url' => 'page/about', 
     'menu' => array(
       1 => array('label' => 'About Us', 'url' => 'page/about'),
       3 => array('label' => 'Team', 'url' => 'page/team'),
@@ -74,7 +75,7 @@ $menu = array(
   ),
   6 => array(
     'label' => 'OMAT', 
-    'url' => 'mfa.php',
+    'url' => 'omat/about',
     'menu' => array(
       1 => array('label' => 'How It Works', 'url' => 'omat/about'),
       2 => array('label' => 'Create a Project', 'url' => 'omat/add'),
@@ -85,21 +86,22 @@ $menu = array(
   ),
   4 => array(
     'label' => 'Publications &amp; Research', 
-    'url' => 'publications/list',
+    'url' => 'publications',
     'menu' => array(
-      //1 => array('label' => 'Introduction', 'url' => 'publications'),
+      1 => array('label' => 'Introduction', 'url' => 'publications'),
       2 => array('label' => 'Current Research', 'url' => 'research/list'),
       3 => array('label' => 'Add Your Project', 'url' => 'research/add'),
       4 => array('label' => 'Publications Database', 'url' => 'publications/list'),
       5 => array('label' => 'Publications Collections', 'url' => 'publications/collections'),
       6 => array('label' => 'Search', 'url' => 'publications/search'),
       7 => array('label' => 'Add Publication', 'url' => 'publications/add'),
-      8 => array('label' => 'People', 'url' => 'people'),
+      8 => array('label' => 'Authors', 'url' => 'people'),
+      9 => array('label' => 'Journals', 'url' => 'journals'),
     ),
   ),
   5 => array(
     'label' => 'Data', 
-    'url' => 'publications/list',
+    'url' => 'data',
     'menu' => array(
       1 => array('label' => 'Introduction', 'url' => 'data'),
       2 => array('label' => 'Data Overview', 'url' => 'page/casestudies'),
@@ -132,6 +134,10 @@ $menu = array(
 );
 foreach ($tag_parents as $row) {
   $menu[4]['menu'][5][$row['id']] = array('label' => $row['name'], 'url' => 'publications/collections/'.$row['id']);
+}
+
+if (ID == 2) {
+  unset($menu[6]);
 }
 
 $google_translate = LOCAL ? '' : '
@@ -505,6 +511,7 @@ function truncate($string,$length=100,$append="&hellip;") {
 
 // Run to get the total lines for the newsletter: git ls-files *php | xargs wc -l
 
+
 function nameScraper($string, $insert = true) {
   // This function attempts to extract a name or list of names
   // from a string, and look these names up in the list with authors.
@@ -512,13 +519,32 @@ function nameScraper($string, $insert = true) {
 
   global $db;
 
-  $array = array("&" => "and");
+  // Some last names are very common, so for those names we want
+  // to enforce a check of the first name as well. For other names,
+  // we will accept the lastname as the single parameter to validate
+  // that this is a unique person
+
+  $force_firstname_check = array(
+    "Li" => true,
+    "Lee" => true,
+    "Marques" => true,
+    "Chang" => true,
+    "Chen" => true,
+    "Yu" => true,
+    "Huang" => true,
+    "Ji" => true,
+    "Lin" => true,
+    "Wu" => true,
+    "Wang" => true,
+  );
+
+  $array = array("&" => "and", ";" => " and ");
   $string = strtr($string, $array);
 
   $explode = explode(" and ", $string);
   if (count($explode) == 1) {
     $explode_commas = explode(",", $string);
-    if (count($explode_commas) > 1) {
+    if (count($explode_commas) > 2) {
       $explode = $explode_commas;
     }
     if (count($explode) == 1) {
@@ -549,18 +575,19 @@ function nameScraper($string, $insert = true) {
       $lastname = trim($explode_space[1]);
     }
     if ($lastname) {
-      $info = $db->query("SELECT * FROM people WHERE lastname = '$lastname' AND firstname = '$firstname' AND active = 1");
+      $set_lastname = addslashes($lastname);
+      $info = $db->query("SELECT * FROM people WHERE lastname = '$set_lastname' AND firstname = '$firstname' AND active = 1");
       if (count($info) == 1) {
         $id = $info[0]['id'];
       } elseif (count($info) > 1) {
         // If we have more than one record (same last names?) we try using the first name as well
-        $info_with_firstname = $db->query("SELECT * FROM people WHERE lastname = '$lastname' AND firstname LIKE '%{$firstname}% AND active = 1'");
+        $info_with_firstname = $db->query("SELECT * FROM people WHERE lastname = '$set_lastname' AND firstname LIKE '%{$firstname}% AND active = 1'");
         if (count($info_with_firstname) == 1) {
           // If this returns one record, great, let's go for it:
           $id = $info_with_firstname[0]['id'];
         }
-      } elseif (!count($info)) {
-        $info = $db->query("SELECT * FROM people WHERE lastname = '$lastname' AND active = 1");
+      } elseif (!count($info) && !$force_firstname_check[$lastname]) {
+        $info = $db->query("SELECT * FROM people WHERE lastname = '$set_lastname' AND active = 1");
         if (count($info) == 1) {
           $id = $info[0]['id'];
           $firstname_found = $info[0]['firstname'];
@@ -576,14 +603,19 @@ function nameScraper($string, $insert = true) {
       }
       if (!$id) {
         $post = array(
-          'firstname' => mysql_clean($firstname),
-          'lastname' => mysql_clean($lastname),
+          'firstname' => $firstname,
+          'lastname' => $lastname,
         );
         $db->insert("people",$post);
         $info = $db->record("SELECT id FROM people 
-          WHERE firstname = '".mysql_clean($firstname)."' AND lastname='".mysql_clean($lastname)."' 
+          WHERE firstname = '$firstname' AND lastname='$set_lastname' 
           ORDER BY id DESC LIMIT 1");
         $id = $info->id;
+        if (!$id) {
+        die("SELECT id FROM people 
+          WHERE firstname = '$firstname' AND lastname='$set_lastname' 
+          ORDER BY id DESC LIMIT 1");
+        }
       }
       $return[] = $id;
     }

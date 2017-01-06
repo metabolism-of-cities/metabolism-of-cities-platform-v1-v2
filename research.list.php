@@ -1,4 +1,5 @@
 <?php
+$show_breadcrumbs = true;
 $skip_login = true;
 require_once 'functions.php';
 require_once 'functions.omat.php';

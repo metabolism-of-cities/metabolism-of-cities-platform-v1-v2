@@ -1,4 +1,5 @@
 <?php
+$show_breadcrumbs = true;
 require_once 'functions.php';
 
 $section = 8;
@@ -7,6 +8,8 @@ $page = 1;
 $id = (int)$_GET['id'];
 if ($id) {
   $info = $db->record("SELECT * FROM blog WHERE id = $id AND active = 1");
+
+  $this_page = $info->title;
 
   if (!$info->id) {
     kill("Blog post not found", false);
@@ -17,15 +20,19 @@ if ($id) {
   $blog_home = true;
 }
 
-$authors = $db->query("SELECT blog_authors.* 
-FROM blog_authors_pivot JOIN blog_authors ON blog_authors_pivot.author = blog_authors.id
-WHERE blog_authors_pivot.blog = $id 
-ORDER BY blog_authors.name");
+if ($id) {
 
-$papers = $db->query("SELECT papers.*
-FROM blog_links 
-JOIN papers ON blog_links.paper = papers.id
-WHERE blog_links.blog = $id ORDER BY papers.title");
+  $authors = $db->query("SELECT blog_authors.* 
+  FROM blog_authors_pivot JOIN blog_authors ON blog_authors_pivot.author = blog_authors.id
+  WHERE blog_authors_pivot.blog = $id 
+  ORDER BY blog_authors.name");
+
+  $papers = $db->query("SELECT papers.*
+  FROM blog_links 
+  JOIN papers ON blog_links.paper = papers.id
+  WHERE blog_links.blog = $id ORDER BY papers.title");
+
+}
 
 $today = date("Y-m-d");
 $recent = $db->query("SELECT id, title, date 
@@ -49,16 +56,6 @@ WHERE date <= '$today' AND active = 1 ORDER BY date DESC LIMIT 5");
   <body>
 
 <?php require_once 'include.header.php'; ?>
-
-  <ol class="breadcrumb">
-    <li><a href="./">Home</a></li>
-    <?php if ($blog_home) { ?>
-    <li class="active">Blog</li>
-    <?php } else { ?>
-    <li><a href="blog">Blog</a></li>
-    <li class="active"><?php echo $info->title ?></li>
-    <?php } ?>
-  </ol>
 
 <div class="row">
 

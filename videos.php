@@ -1,4 +1,5 @@
 <?php
+$show_breadcrumbs = true;
 require_once 'functions.php';
 $section = 8;
 $page = 3;
@@ -42,11 +43,6 @@ $list = $db->query("SELECT * FROM videos ORDER BY title");
   <body>
 
 <?php require_once 'include.header.php'; ?>
-
-  <ol class="breadcrumb">
-    <li><a href="./">Home</a></li>
-    <li class="active">Videos</li>
-  </ol>
 
   <h1>Videos</h1>
 

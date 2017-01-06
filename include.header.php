@@ -1,4 +1,4 @@
-<?php if (PRODUCTION) { ?>
+<?php if (PRODUCTION && ID == 1) { ?>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -123,3 +123,20 @@
     <?php if ($profile_sidebar) { require_once 'include.profileheader.php'; } ?>
 
     <?php if ($cms_sidebar) { require_once 'include.cmsheader.php'; } ?>
+
+    <?php if ($show_breadcrumbs || $this_page) { ?>
+      <ol class="breadcrumb">
+        <li><a href="./">Home</a></li>
+        <?php if (!$page || $menu[$section]['menu'][$page]['label'] == "Introduction") { ?>
+          <li class="active"><?php echo $menu[$section]['label'] ?></li>
+        <?php } else { ?>
+          <li><a href="<?php echo $menu[$section]['url'] ?>"><?php echo $menu[$section]['label'] ?></a></li>
+        <?php if ($this_page) { ?>
+          <li><a href="<?php echo $menu[$section]['menu'][$page]['url'] ?>"><?php echo $menu[$section]['menu'][$page]['label'] ?></a></li>
+          <li class="active"><?php echo $this_page ?></li>
+        <?php } else { ?>
+          <li class="active"><?php echo $menu[$section]['menu'][$page]['label'] ?></li>
+        <?php } } ?>
+      </ol>
+    <?php } ?>
+

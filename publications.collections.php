@@ -1,4 +1,5 @@
 <?php
+$show_breadcrumbs = true;
 require_once 'functions.php';
 $id = (int)$_GET['id'];
 $section = 4;
@@ -7,7 +8,9 @@ $page = 5;
 
 if ($id) {
 
+
   $info = $db->record("SELECT * FROM tags_parents WHERE id = $id");
+  $this_page = $info->name;
   $list = $db->query("SELECT * FROM tags WHERE parent = $id ORDER BY tag");
 
   foreach ($list as $row) {

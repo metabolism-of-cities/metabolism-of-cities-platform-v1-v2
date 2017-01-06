@@ -1,4 +1,5 @@
 <?php
+$show_breadcrumbs = true;
 require_once 'functions.php';
 $section = 4;
 $page = 3;

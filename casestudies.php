@@ -1,9 +1,10 @@
 <?php
+$show_breadcrumbs = true;
 $skip_login = true;
 require_once 'functions.php';
 require_once 'functions.omat.php';
 $section = 5;
-$page = 99;
+$page = 2;
 
 if ($_GET['preview']) {
   setcookie("preview", "true", time()+60*60*24*7, "/");

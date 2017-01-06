@@ -3,6 +3,7 @@ $skip_login = true;
 require_once 'functions.php';
 require_once 'functions.omat.php';
 $section = 4;
+$page = 4;
 
 $id = (int)$_GET['id'];
 $hash = $_GET['hash'];
@@ -15,6 +16,8 @@ $info = $db->record("SELECT papers.*, sources.name
 FROM papers 
   JOIN sources ON papers.source = sources.id
 WHERE papers.id = $id $sql");
+
+$this_page = "Publication #$id";
 
 if (!count($info)) {
   header("HTTP/1.0 404 Not Found");
@@ -234,7 +237,7 @@ if ($admin_mode && $_GET['authorscrape']) {
       <dd><a class="btn btn-info" href="publication.view.php?id=<?php echo $id ?>&amp;authorscrape=true">Re-classify authors</a></dd>
     <?php } ?>
   <?php } else { ?>
-    <dd><?php echo $info->author ?></dd>
+    <dd><?php echo $info->author ?: '<em>Author information unavailable</em>'; ?></dd>
     <?php if ($admin_mode) { ?>
       <dd><a class="btn btn-info" href="publication.view.php?id=<?php echo $id ?>&amp;authorscrape=true">Classify authors</a></dd>
     <?php } ?>
@@ -260,7 +263,7 @@ if ($admin_mode && $_GET['authorscrape']) {
 
   <?php if ($info->open_access || $info->abstract_status == "author_approved" ||   $info->abstract_status == "journal_approved" || $info->abstract_status == "open_access" || $info->abstract_status == "toc_only" || $admin_mode || true) { ?>
     <dt>Abstract</dt>
-    <dd><?php echo $info->abstract ?></dd>
+    <dd><?php echo $info->abstract ?: '<em>Abstract unavailable</em>'; ?></dd>
     <?php if ($info->abstract_native) { ?>
       <dt>Original Abstract</dt>
       <dd><?php echo $info->abstract ?></dd>

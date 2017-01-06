@@ -3,12 +3,14 @@ $skip_login = true;
 require_once 'functions.php';
 require_once 'functions.omat.php';
 $section = 4;
-$page = 4;
+$page = 8;
 $id = (int)$_GET['id'];
 $info = $db->record("SELECT * FROM people WHERE id = $id AND active IS TRUE");
 if (!$info->id) {
   kill("Person not found", false);
 }
+
+$this_page = $info->firstname . " " . $info->lastname;
 
 $papers = $db->query("SELECT 
   papers.*
@@ -114,12 +116,28 @@ info@metabolismofcities.org";
     .tags{list-style:none;padding:0}
     .tags li{margin:6px 0px}
     #getaccess{display:none}
+    .original{display:none}
     </style>
+  <?php if (defined("ADMIN")) { ?>
+    <script type="text/javascript">
+    $(function(){
+      $("#original").click(function(e){
+        e.preventDefault();
+        $(".original").toggle('fast');
+      });
+    });
+    </script>
+  <?php } ?>
   </head>
 
   <body>
 
 <?php require_once 'include.header.php'; ?>
+
+
+  <?php if (defined("ADMIN")) { ?>
+    <a class="btn btn-primary pull-right" id="original">View original authors</a>
+  <?php } ?>
 
   <h1><?php echo $info->firstname ?> <?php echo $info->lastname ?></h1>
 
@@ -172,10 +190,20 @@ info@metabolismofcities.org";
   </tr>
 <?php foreach ($papers as $row) { ?>
   <tr>
-    <td><a href="publication/<?php echo $row['id'] ?>"><?php echo $row['title'] ?></a></td>
+    <td><a href="publication/<?php echo $row['id'] ?>"><?php echo $row['title'] ?></a>
+  <?php if (defined("ADMIN")) { ?>
+    <div class="original">
+        Original author list: <br />
+        <strong>
+          <?php echo $row['author'] ?>
+        </strong>
+    </div>
+  <?php } ?>
+    </td>
     <td><?php echo authorlist($row['id']) ?></td>
     <td><?php echo $row['year'] ?></td>
   </tr>
+
 <?php } ?>
 </table>
 
