@@ -1,4 +1,5 @@
 <?php
+die();
 require_once '../vendor/autoload.php';
 require_once '../functions.php';
 

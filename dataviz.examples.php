@@ -4,7 +4,11 @@ $section = 7;
 $page = 2;
 $today = date("Y-m-d");
 $list = $db->query("SELECT * FROM datavisualizations WHERE 
-date <= '$today'
+date <= '2017-01-01'
+ORDER BY date DESC");
+
+$inspiration = $db->query("SELECT * FROM datavisualizations WHERE 
+date > '2017-01-01'
 ORDER BY date DESC");
 
 if (date("Y-m-d") < 20170121) {
@@ -109,6 +113,32 @@ if (date("Y-m-d") < 20170121) {
         </span>
         <br />
         <?php echo format_date("M d, Y", $row['date']) ?>
+      </div>
+    </div>
+
+     </li>
+  <?php } ?>
+  </ul>
+
+  <h2>Inspirational examples</h2>
+
+  <p>Below are some inspirational examples of data visualization techniques. These images are
+  not related to urban metabolism, but they are nonetheless beautiful ways of visualizing
+  data and are therefore included to provide some inspiration. 
+  </p>
+
+  <ul class="datavizlist">
+  <?php foreach ($inspiration as $row) { ?>
+    <li>
+
+    <div class="panel panel-default">
+      <div class="panel-heading"><?php echo $row['title'] ?></div>
+      <div class="panel-body">
+        <span>
+          <a href="datavisualizations/<?php echo $row['id'] ?>-<?php echo flatten($row['title']) ?>">
+            <img src="media/dataviz/<?php echo $row['id'] ?>.thumb.jpg" alt="" />
+          </a>
+        </span>
       </div>
     </div>
 
