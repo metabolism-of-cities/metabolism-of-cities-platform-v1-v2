@@ -8,6 +8,9 @@ $page = 1;
   <head>
     <?php echo $header ?>
     <title>Metabolism of Cities Stakeholder Initiative | <?php echo SITENAME ?></title>
+    <style type="text/css">
+    .nav-list .badge {margin-left:16px}
+    </style>
   </head>
 
   <body>
@@ -40,18 +43,29 @@ $page = 1;
     <li>Collaborative research projects</li>
   </ul>
   <p>The specific activities that we engage in will vary by topic and it will likely evolve over time. The 
-  first topic of choice is <a href="datavisualization">Data Visualizations</a> and will run from 
+  first topic of choice was <a href="datavisualization">Data Visualizations</a> and this project ran from 
   <strong>October-December 2016</strong>. </p>
   <p>In parallel, we are co-organizing masterclasses in urban metabolism. This is a short set of 
   courses taking place
   in Brussels in December 2016 and January 2017. Click here <a href="stakeholders/masterclasses">to learn more
   about the Masterclasses.</a></p>
+  <p>Our current Stakeholders Initiative is around the creation of a <a href="stakeholders/data">Global Urban Metabolism Dataset</a>. 
+  This project runs from <strong>January-March 2017</strong>.
+  </p>
   <p>
     This Stakeholders Initiative is a new and recent initiative, and open to your input and ideas. So if you
     have any ideas as to how we can move forward, please don't hesitate to <a href="page/contact">contact us</a>!
   </p>
 
   <p><a href="stakeholders/subscribe" class="btn btn-primary">Subscribe to the Stakeholders Initiative</a></p>
+
+  <h2>Our Stakholder Initiative Projects</h2>
+
+  <ul class="nav nav-list">
+    <li><a href="stakeholders/data">Global Urban Metabolism Dataset <span class="badge badge-success">Jan-Mar 2017</span></a></li>
+    <li><a href="stakeholders/masterclasses">Urban Metabolism Masterclasses <span class="badge badge-success">Dec 2016-Feb 2017</span></a></li>
+    <li><a href="datavisualization">Data Visualization <span class="badge">Oct-Dec 2016</span></a></li>
+  </ul>
 
   <h2>Future Ideas</h2>
 
@@ -82,13 +96,6 @@ $page = 1;
       or even in another country. But we all know how useful it can be to have the
       exact same study (same methodology) being replicated somewhere else. So how
       about we try to encourage that?!
-    </li>
-    <li><strong>Data collection</strong><br />
-    We are building a <a href="data">Global Urban Metabolism Database</a> and it would
-    be great to use the power of 'crowd-sourcing' to get more people involved in extracting
-    data from publications, statistical websites, and other sources. We can furthermore 
-    look into establishing links with cities and build a network of people who continue
-    to contribute data even after this project is over.
     </li>
     <li><strong>Urban metabolism ontology project</strong><br />
     The field of ontology relates to the "naming and

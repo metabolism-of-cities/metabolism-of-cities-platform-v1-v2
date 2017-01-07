@@ -4,7 +4,7 @@ require_once 'functions.php';
 $section = 4;
 $page = 9;
 
-$list = $db->query("SELECT *, 
+$list = $db->query("SELECT SQL_CACHE *, 
 (SELECT COUNT(*) FROM papers WHERE source = sources.id AND status = 'active') AS papers
 FROM sources WHERE name LIKE '%journal%' ORDER BY name");
 ?>

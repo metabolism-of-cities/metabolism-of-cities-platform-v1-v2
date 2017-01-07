@@ -115,8 +115,9 @@ $menu = array(
     'url' => 'stakeholders',
     'menu' => array(
       1 => array('label' => 'Introduction', 'url' => 'stakeholders'),
-      2 => array('label' => 'Data Visualization', 'url' => 'datavisualization'),
+      5 => array('label' => 'Global Urban Metabolism Dataset', 'url' => 'stakeholders/data'),
       4 => array('label' => 'UM Masterclasses', 'url' => 'stakeholders/masterclasses'),
+      2 => array('label' => 'Data Visualization', 'url' => 'datavisualization'),
       3 => array('label' => 'Subscribe', 'url' => 'stakeholders/subscribe'),
     ),
   ),  
@@ -873,7 +874,7 @@ function smartcut($string, $length,$suffix="...") {
 
 $languages = array('English', 'Chinese', 'Spanish', 'French', 'German', 'Other');
 
-$update = $db->record("SELECT date_added FROM papers ORDER BY id DESC LIMIT 1");
+$update = $db->record("SELECT SQL_CACHE date_added FROM papers ORDER BY id DESC LIMIT 1");
 
 $version = '1.5 beta';
 
