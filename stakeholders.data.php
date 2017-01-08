@@ -58,7 +58,7 @@ $page = 5;
               discusses what the goals are of this project, why it is useful, and what
               our long-term vision is. 
             </p>
-            <p><a href="blog/4-towards-a-global-urban-metabolism-dataset" class="btn btn-success">Read more &raquo;</a></p>
+            <p><a href="blog/6-towards-a-global-urban-metabolism-dataset" class="btn btn-success">Read more &raquo;</a></p>
             </div>
           </div>
       </div>
