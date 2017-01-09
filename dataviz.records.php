@@ -10,6 +10,20 @@ if (!$info->id) {
   kill("Dataviz not found");
 }
 
+if ($_GET['go'] == "previous") {
+  $date = $info->date;
+  $go = $db->record("SELECT * FROM datavisualizations WHERE date < '$date' ORDER BY date DESC LIMIT 1");
+  header("Location: " . URL . "datavisualizations/" . $go->id . "-" . flatten($go->title));
+  exit();
+}
+
+if ($_GET['go'] == "next") {
+  $date = $info->date;
+  $go = $db->record("SELECT * FROM datavisualizations WHERE date > '$date' ORDER BY date ASC LIMIT 1");
+  header("Location: " . URL . "datavisualizations/" . $go->id . "-" . flatten($go->title));
+  exit();
+}
+
 if ($info->paper) {
   $paperinfo = $db->record("SELECT * FROM papers WHERE id = {$info->paper}");
 }
@@ -35,6 +49,7 @@ if (date("Y-m-d") < 20170121 && $info->date < "2017-01-01") {
     @media (max-width:992px){
       .vote a{display:block}
     }
+    h1{text-align:center}
     </style>
   </head>
 
@@ -50,7 +65,15 @@ if (date("Y-m-d") < 20170121 && $info->date < "2017-01-01") {
     <li class="active"><?php echo $info->title ?></li>
   </ol>
 
-  <h1><?php echo $info->title ?></h1>
+  <h1>
+    <?php if ($id != 1) { ?>
+    <a href="datavisualizations/<?php echo $id ?>-<?php echo flatten($info->title) ?>/previous"><i class="fa fa-arrow-circle-left pull-left"></i></a>
+    <?php } ?>
+      <?php echo $info->title ?>
+    <?php if ($id != 106) { ?>
+      <a href="datavisualizations/<?php echo $id ?>-<?php echo flatten($info->title) ?>/next"><i class="fa fa-arrow-circle-right pull-right"></i></a>
+    <?php } ?>
+  </h1>
 
   <?php if (file_exists("media/dataviz/$id.jpg")) { ?>
     <div class="well viz">
@@ -137,7 +160,10 @@ if (date("Y-m-d") < 20170121 && $info->date < "2017-01-01") {
 
   </div>
 
-  <p><a href="datavisualization/examples" class="btn btn-primary">&laquo; View the full list</a></p>
+  <p>
+    <a href="datavisualization/examples" class="btn btn-primary">&laquo Back to the overview</a>
+    <a href="datavisualization/examples/all" class="btn btn-primary pull-right">View ALL data visualizations on a single page</a>
+  </p>
 
 
 <?php require_once 'include.footer.php'; ?>

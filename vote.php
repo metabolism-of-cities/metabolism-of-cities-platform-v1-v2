@@ -108,8 +108,10 @@ if (is_array($_POST['vote']) && !$_COOKIE['voted']) {
       Cast your vote now! You can select up to <strong>3</strong> data visualizations.
     </p>
     <?php if (count($votes) < 3) { ?>
+    <h2>Add other data visualizations</h2>
     <p>
-      <a class="btn btn-lg btn-primary" href="datavisualization/examples" role="button">Add other data visualizations &raquo;</a>
+      <a class="btn btn-lg btn-primary" href="datavisualization/examples" role="button">View overview &raquo;</a>
+      <a class="btn btn-lg btn-primary" href="datavisualization/examples/all" role="button">View all images &raquo;</a>
     </p>
     <?php } ?>
   </div>

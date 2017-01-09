@@ -257,7 +257,9 @@ AddDefaultCharset utf-8
     RewriteRule ^data/(.*)$ data.$1.php
     RewriteRule ^stakeholders$ stakeholders.php
     RewriteRule ^datavisualization/?$ datavisualizations.php
+    RewriteRule ^datavisualizations/([0-9]+)-(.*)/(previous|next)?$ dataviz.records.php?id=$1&go=$3
     RewriteRule ^datavisualizations/([0-9]+)-(.*)?$ dataviz.records.php?id=$1
+    RewriteRule ^datavisualization/examples/all$ dataviz.examples.all.php
     RewriteRule ^datavisualization/(.*)$ dataviz.$1.php
     RewriteRule ^videos/([0-9]+)-(.*)?$ video.php?id=$1
     RewriteRule ^stakeholders/(.*)$ stakeholders.$1.php
