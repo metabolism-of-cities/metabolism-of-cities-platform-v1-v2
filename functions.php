@@ -510,8 +510,6 @@ function truncate($string,$length=100,$append="&hellip;") {
   return $string;
 }
 
-// Run to get the total lines for the newsletter: git ls-files *php | xargs wc -l
-
 
 function nameScraper($string, $insert = true) {
   // This function attempts to extract a name or list of names
@@ -877,5 +875,7 @@ $languages = array('English', 'Chinese', 'Spanish', 'French', 'German', 'Other')
 $update = $db->record("SELECT SQL_CACHE date_added FROM papers ORDER BY id DESC LIMIT 1");
 
 $version = '1.5 beta';
+
+// Run to get the total lines for the newsletter: git ls-files *php | xargs wc -l
 
 ?>
