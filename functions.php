@@ -138,6 +138,13 @@ foreach ($tag_parents as $row) {
 
 if (ID == 2) {
   unset($menu[6]);
+  $menu[2]['label'] = "EPR Menu 1";
+  $menu[5]['label'] = "EPR Menu 3";
+  unset($menu[7]);
+  $menu[8]['label'] = "EPR Menu 4";
+  unset($menu[4]['menu'][1]);
+  unset($menu[4]['menu'][2]);
+  unset($menu[4]['menu'][3]);
 }
 
 $google_translate = LOCAL ? '' : '

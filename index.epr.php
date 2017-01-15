@@ -1,11 +1,6 @@
 <?php
 require_once 'functions.php';
 
-if (ID == 2) {
-  header("Location: " . URL . "index.epr.php");
-  exit();
-}
-
 $section = 1;
 $page = 1;
 
@@ -39,9 +34,8 @@ $blog = $db->record("SELECT * FROM blog WHERE active = 1 AND date <= '$today' OR
     }
     #google_translate_element{position:absolute;top:10px;left:10px}
     .jumbotron h1 img {
-      width:55%;
       float:left;
-      margin:0 20px 10px 0;
+      margin:0 60px 10px 0;
     }
     .jumbotron p {
       margin:0 0 6px 0;
@@ -64,64 +58,23 @@ $blog = $db->record("SELECT * FROM blog WHERE active = 1 AND date <= '$today' OR
 
       <div class="jumbotron">
         <div id="google_translate_element"></div>
-        <h1><img src="img/logo.png?refresh" alt="Metabolism of Cities" /></h1>
+        <h1><img src="img/epr.logo.png?refresh" alt="Metabolism of Cities" /></h1>
         <p>
-          This website attempts to group together tools and publications related to 
-          the metabolism of cities or urban metabolism (UM). The principal sections are the following:
+          This website is a central hub for EPR literature, both journal publications and 
+          grey literature. 
         </p>
-        <div class="list-group">
+        <div class="list-group" style="margin-top:20px">
           <p><a class="btn btn-lg btn-primary" href="publications/collections" role="button">Publication Collections</a></p>
           <p><a class="btn btn-lg btn-primary" href="publications/list" role="button">Publication Database</a></p>
-          <p><a class="btn btn-lg btn-primary" href="research/list" role="button">Current Research</a></p>
-          <p><a class="btn btn-lg btn-primary" href="stakeholders" role="button">Stakeholders Initiative</a></p>
-          <p><a class="btn btn-lg btn-primary" href="data" role="button">Data</a></p>
-          <p><a class="btn btn-lg btn-primary" href="omat/about" role="button">Online MFA Tool (OMAT)</a></p>
+          <p><a class="btn btn-lg btn-primary" href="publications/search" role="button">Search Publications</a></p>
+          <p><a class="btn btn-lg btn-primary" href="people" role="button">Authors</a></p>
         </div>
       </div>
 
-      <div class="row">
-      
-        <div class="col-md-6">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">Latest Blog Post <span class="pull-right"><?php echo format_date("M d, Y", $blog->date) ?></span></h3>
-            </div>
-            <div class="panel-body">
-                    <h4><a href="blog/<?php echo $blog->id ?>-<?php echo flatten($blog->title) ?>"><?php echo $blog->title ?></a></h4>
-                    <?php echo smartcut($blog->content, 200) ?>
-                    <p><a href="blog/<?php echo $blog->id ?>-<?php echo flatten($blog->title) ?>" class="btn btn-primary">Read more</a></p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-6">
-       
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">Data Visualization Voting <span class="pull-right">Jan 01-20, 2017</span></h3>
-            </div>
-            <div class="panel-body">
-              <h4><a href="datavisualization/examples">Vote now!</a></h4>
-              <p>
-              We are selecting the best data visualization by popular vote and you can cast 3
-              votes for your favorite visualizations. Browse the data visualizations in our 
-              library and vote now!
-               </p>
-               <p> <a class="btn btn-primary" href="datavisualization/examples">
-                  View data visualizations
-                </a>
-              </p>
-            </div>
-          </div>
-
-        </div>
-
-
-      </div>
 
 <div class="alert alert-warning">
 <span class="pull-right">Dec 5, 2016</span>
-<h2>Metabolism of Cities co-organises three masterclasses on urban metabolism</h2>
+<h2>EPR Central co-organises three masterclasses on urban metabolism</h2>
 
 <p>
 
@@ -137,36 +90,12 @@ As part of our <a href="stakeholders">Stakeholders Initiative</a>, we are proud 
 </div>
 
 
-      <h2>Just Launched: Data Visualizations Project - October-December 2016</h2>
+      <h2>New Additions: publication ABC on EPR</h2>
 
-      <p>We have launched our first <a href="stakeholders">Stakeholders Initiative</a>! From October until 
-      December 2016 we will focus on Data Visualization, and we have many exciting things planned. 
-      And we need YOUR involvement. Check out the new section and start contributing now! 
-      </p>
+      <p>More details about a recent publication...</p>
       <p><a href="datavisualization" class="btn btn-primary">Data Visualization Project</a></p>
-      <h2>About</h2>
 
-      <p>
-        This website is an open source initiative launched in August 2014 as 'MFA Tools'. It was launched with the purpose of:
-      </p>
-      <ul>
-        <li>Making it easier to get an overview of the publications out there related to Material Flow Analysis.</li>
-        <li>Allowing researchers to easily (co-) create online Material Flow Analysis projects and share the underlying datasets.</li>
-      </ul>
-
-      <p>In January 2016 the website was renamed to <strong>Metabolism of Cities</strong>, to reflect the broadening scope to other
-      methodologies. </p>
-      <p>All code for this website is hosted on <a href="https://github.com/paulhoekman/mfa-tools">github</a> and we invite
-      programmers to help us improve the
-      website and the online MFA software. But you don't need to be a programmer to help improve this website (see below!).
-      Sign up for <a href="page/mailinglist">our mailing list</a> if you wish to receive updates about changes and additions.
-      </p>
-      <p>
-           You can now also follow us on 
-          <a href="https://twitter.com/CityMetabolism"><i class="fa fa-twitter"></i> Twitter</a>
-      </p>
-
-      <div class="panel panel-default">
+      <div class="panel panel-default" style="margin-top:30px">
         <div class="panel-heading">
           <h3 class="panel-title">Quick Statistics</h3>
         </div>
@@ -203,15 +132,6 @@ As part of our <a href="stakeholders">Stakeholders Initiative</a>, we are proud 
         <li>Reviewing <a href="omat/about">our online MFA software roadmap</a> and <a href="page/contact">providing feedback</a>.</li>
         <li>Telling others about this website!</li>
       </ul>
-
-      <h2>Acknowledgements</h2>
-
-      <p>
-        Hosting and domain registration for our website is sponsored by 
-        <a href="https://penguinprotocols.com">Penguin Protocols</a>. We would furthermore like to 
-        thanks all individuals contributing content to our website. The website run by a <a href="page/team">small team</a> of 
-        volunteers.
-      </p>
 
     <?php require_once 'include.footer.php'; ?>
 

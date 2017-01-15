@@ -116,6 +116,47 @@ $sources = $db->query("SELECT * FROM sources ORDER BY name");
 
 <h1>Search</h1>
 
+<h2>Search in title/abstract</h2>
+
+<form method="post" class="form form-horizontal" action="publications/list">
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Search</label>
+    <div class="col-sm-10">
+      <input class="form-control" type="text" name="searchphrase" value="<?php echo $info->name ?>" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" name="title" value="1" checked /> 
+            Search in title
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" name="abstract" value="1" checked /> 
+            Search in abstract
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+  </div>
+
+</form>
+
 <h2>Custom Filters</h2>
 
 <div class="alert alert-warning">

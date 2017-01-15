@@ -10,6 +10,20 @@ if ($_POST['source']) {
   $_GET['source'] = $_POST['source'];
 }
 
+if ($_POST['searchphrase']) {
+  $explode = explode(" ", $_POST['searchphrase']);
+  foreach ($explode as $key => $value) {
+    if ($_POST['title'] && $_POST['abstract']) {
+      $sql .= " AND (abstract LIKE '%" . mysql_clean($value, "wildcard") . "%' OR title LIKE '%" . mysql_clean($value, "wildcard") . "%')";
+    } elseif ($_POST['title']) {
+      $sql .= " AND (title LIKE '%" . mysql_clean($value, "wildcard") . "%')";
+    } elseif ($_POST['abstract']) {
+      $sql .= " AND (abstract LIKE '%" . mysql_clean($value, "wildcard") . "%')";
+    }
+  }
+  $filters = "<strong>Search phrase:</strong> " . html($_POST['searchphrase'], false);
+}
+
 if ($_GET['source']) {
   $source = (int)$_GET['source'];
   $this_page = "Filter publications";
