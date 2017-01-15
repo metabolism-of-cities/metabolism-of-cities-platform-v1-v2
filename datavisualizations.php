@@ -76,12 +76,13 @@ $page = 2;
       <div class="col-md-6">
         <div class="panel panel-primary">
             <div class="panel-heading">
-              <h3 class="panel-title">Call for Research Collaboration</h3>
+              <h3 class="panel-title">Vote Now</h3>
             </div>
             <div class="panel-body">
-              <p>Are you interested in participating in a data visualization research
-              project? Then read more about this call for collaboration! </p>
-              <p><a href="datavisualization/callforcollaboration" class="btn btn-success">Read more &raquo;</a></p>
+              <p> We are selecting the best data visualization by popular vote
+              and you can cast 3 votes for your favorite visualizations. Browse
+              the data visualizations in our library and vote now! </p>
+              <p><a href="datavisualization/examples" class="btn btn-success">Read more &raquo;</a></p>
             </div>
           </div>
       </div>

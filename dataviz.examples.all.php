@@ -7,10 +7,6 @@ $list = $db->query("SELECT * FROM datavisualizations WHERE
 date <= '2017-01-01'
 ORDER BY date DESC");
 
-$inspiration = $db->query("SELECT * FROM datavisualizations WHERE 
-date > '2017-01-01'
-ORDER BY date DESC");
-
 if (date("Y-m-d") < 20170121) {
   $voting = true;
 }
@@ -20,7 +16,7 @@ if (date("Y-m-d") < 20170121) {
 <html lang="en">
   <head>
     <?php echo $header ?>
-    <title>Data Visualization Examples | <?php echo SITENAME ?></title>
+    <title>Data Visualization Examples | All images | <?php echo SITENAME ?></title>
     <style type="text/css">
     .datavizlist {
       list-style:none;
@@ -43,6 +39,7 @@ if (date("Y-m-d") < 20170121) {
     .vote{background:#61a9bd;border-radius:4px;color:#fff;padding-bottom:10px;margin-bottom:10px;text-align:justify}
     .vote .col-md-5{text-align:center}
     .vote a{margin-top:30px}
+    .panel{text-align:center}
     </style>
 
   </head>
@@ -58,7 +55,7 @@ if (date("Y-m-d") < 20170121) {
     <li class="active">Examples</li>
   </ol>
 
-    <h1>Data Visualization Examples</h1>
+    <h1>Data Visualization Examples - All Images</h1>
 
     <?php if ($voting) { ?>
     <div class="row vote">
@@ -74,17 +71,12 @@ if (date("Y-m-d") < 20170121) {
           you can cast <strong>3 votes</strong> for your
           favorite visualizations. 
           
-          To cast your vote, open the data visualizations that you
-          want to vote for, and click the VOTE NOW button 
-          on the page.
+          To cast your vote, simply click the image(s) 
+          of your choice in the list below.
           
           <br /><br />Voting ends on
           <strong>January 20, 2017</strong>
           </p>
-          <h2>View all images</h2>
-          <p>Click the link below to see ALL data visualizations on one page, which is helpful if you want to review them all 
-          in one go.</p>
-          <p><a href="datavisualization/examples/all" class="btn btn-default btn-lg">View all images &raquo;</a></p>
         </div>
 
         <div class="col-md-2">
@@ -93,62 +85,20 @@ if (date("Y-m-d") < 20170121) {
 
       </div>
     </div>
-    <?php } else { ?>
-
-    <div class="alert alert-info">
-    On this page we are listing interesting data visualization examples. 
-    Are there any examples missing?
-    Mail us at info@metabolismofcities.org with your contributions!
-    </div>
 
     <?php } ?>
 
-  <ul class="datavizlist">
   <?php foreach ($list as $row) { ?>
-    <li>
-
-    <div class="panel panel-default">
+      <div class="panel panel-default">
       <div class="panel-heading"><?php echo $row['title'] ?></div>
       <div class="panel-body">
-        <span>
-          <a href="datavisualizations/<?php echo $row['id'] ?>-<?php echo flatten($row['title']) ?>">
-            <img src="media/dataviz/<?php echo $row['id'] ?>.thumb.jpg" alt="" />
+          <a href="vote.php?id=<?php echo $row['id'] ?>" target="_blank">
+            <img src="media/dataviz/<?php echo $row['id'] ?>.jpg" alt="" />
           </a>
-        </span>
-        <br />
-        <?php echo format_date("M d, Y", $row['date']) ?>
       </div>
-    </div>
-
-     </li>
-  <?php } ?>
-  </ul>
-
-  <h2>Inspirational examples</h2>
-
-  <p>Below are some inspirational examples of data visualization techniques. These images are
-  not related to urban metabolism, but they are nonetheless beautiful ways of visualizing
-  data and are therefore included to provide some inspiration. 
-  </p>
-
-  <ul class="datavizlist">
-  <?php foreach ($inspiration as $row) { ?>
-    <li>
-
-    <div class="panel panel-default">
-      <div class="panel-heading"><?php echo $row['title'] ?></div>
-      <div class="panel-body">
-        <span>
-          <a href="datavisualizations/<?php echo $row['id'] ?>-<?php echo flatten($row['title']) ?>">
-            <img src="media/dataviz/<?php echo $row['id'] ?>.thumb.jpg" alt="" />
-          </a>
-        </span>
       </div>
-    </div>
 
-     </li>
   <?php } ?>
-  </ul>
 
   <p><a href="datavisualization" class="btn btn-primary">Back to the Data Visualization portal</a></p>
 

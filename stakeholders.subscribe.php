@@ -40,7 +40,7 @@ $page = 3;
            We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
       </style>
       <div id="mc_embed_signup">
-      <form action="//mfa-tools.us8.list-manage.com/subscribe/post?u=ac623181f98df6ff1b52a1668&amp;id=1b372b3ae4" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+      <form action="//mfa-tools.us8.list-manage.com/subscribe/post?u=ac623181f98df6ff1b52a1668&amp;id=59a1b98376" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
         <h2>Subscribe to the Stakeholders Initiative</h2>
       <div class="mc-field-group">
         <label for="mce-EMAIL">Email Address </label>
