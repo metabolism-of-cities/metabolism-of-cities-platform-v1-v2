@@ -25,7 +25,8 @@ $page = 3;
 
       <div class="jumbotron">
         <h1>Team</h1>
-        <p>Our team is slowly expanding and we welcome new people! When will you join in?!</p>
+
+        <p>Below in chronological order our team members. Our team is slowly expanding and we welcome new people! When will you join us?!</p>
         <ul>
           <li>
             <img src="img/team.paul.jpg" alt="" />
@@ -67,6 +68,14 @@ $page = 3;
             thinking to our urban and economic structures to integrate environmental and
             social impacts. 
             <a href="https://no.linkedin.com/in/rspiegel"><i class="fa fa-linkedin-square"></i></a>
+          </li>
+          <li>
+            <img src="img/team.joao.jpg" alt="" />
+            <strong>Joao Meirelles</strong> - Phd student at HERUS / EPFL. Holds a Bsc in Water Resources
+            and Environmental Engineering and a Msc in Complex Systems Modeling and had
+            worked as a Data Scientist at the big data team for the city of Rio de Janeiro.
+            Meirelles is interested in applying big data analysis and complex systems
+            thinking to the urban metabolism. 
           </li>
         </ul>
         <p class="jumpdown">
