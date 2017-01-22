@@ -39,7 +39,7 @@ $votes = $db->query("SELECT DISTINCT(email) FROM votes");
       <?php foreach ($list as $row) { ?>
       <tr>
           <td><a href="datavisualizations/<?php echo $row['id'] ?>-<?php echo flatten($row['title']) ?>"><?php echo $row['title'] ?></a></td>
-          <td><?php echo $row['votes'] ?></td>
+          <td><a href="cms.voteslist.php?id=<?php echo $row['id'] ?>"><?php echo $row['votes'] ?></a></td>
       </tr>
   <?php } ?>
   </table>

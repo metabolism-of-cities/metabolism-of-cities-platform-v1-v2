@@ -28,9 +28,7 @@ if ($info->paper) {
   $paperinfo = $db->record("SELECT * FROM papers WHERE id = {$info->paper}");
 }
 
-if (date("Y-m-d") < 20170121 && $info->date < "2017-01-01") {
-  $voting = true;
-}
+$voting = false;
 
 ?>
 <!DOCTYPE html>

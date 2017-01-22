@@ -11,9 +11,7 @@ $inspiration = $db->query("SELECT * FROM datavisualizations WHERE
 date > '2017-01-01'
 ORDER BY date DESC");
 
-if (date("Y-m-d") < 20170121) {
-  $voting = true;
-}
+$votin = false;
 
 ?>
 <!DOCTYPE html>

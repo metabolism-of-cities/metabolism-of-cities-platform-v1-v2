@@ -82,7 +82,19 @@ if (is_array($_POST['vote']) && !$_COOKIE['voted']) {
     <li class="active">Vote Now</li>
   </ol>
 
-  <?php if ($_COOKIE['voted']) { ?>
+  <?php if (true) { ?>
+
+    <div class="jumbotron">
+      
+      <h1>Voting has closed</h1>
+      <p>
+      We finished the voting process. Thanks for your interest!
+      </p>
+
+    </div>
+
+
+  <?php } elseif ($_COOKIE['voted']) { ?>
 
     <div class="jumbotron">
       

@@ -101,14 +101,14 @@ $blog = $db->record("SELECT * FROM blog WHERE active = 1 AND date <= '$today' OR
               <h3 class="panel-title">Data Visualization Voting <span class="pull-right">Jan 01-20, 2017</span></h3>
             </div>
             <div class="panel-body">
-              <h4><a href="datavisualization/examples">Vote now!</a></h4>
+              <h4><a href="datavisualizations/36-electricity-consumption-in-hong-kong-in-2010">See the winner!</a></h4>
               <p>
-              We are selecting the best data visualization by popular vote and you can cast 3
-              votes for your favorite visualizations. Browse the data visualizations in our 
-              library and vote now!
+              We have a winner! We held a voting contest which ended on Jan 20, 2017. And we have a winner! 
+              Click here to view the <a href="datavisualizations/36-electricity-consumption-in-hong-kong-in-2010">winning
+              data visualization</a>. A more detailed report will following in the coming week.
                </p>
                <p> <a class="btn btn-primary" href="datavisualization/examples">
-                  View data visualizations
+                  View all data visualizations
                 </a>
               </p>
             </div>
