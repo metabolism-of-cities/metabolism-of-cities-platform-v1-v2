@@ -1,9 +1,12 @@
 <?php
 require_once 'functions.php';
+
+/*
 header("Content-type: text/csv");
 header("Content-Disposition: attachment; filename=publications.csv");
 header("Pragma: no-cache");
 header("Expires: 0");
+*/
 
 // Some "cities" have ": City" after their name to distinguish them
 // from the tag that refers to the country. This is the case with island-states 
@@ -19,13 +22,15 @@ function outputCSV($data) {
   fclose($output);
 }
 
+$tag = ID == 2 ? 2 : 4;
+
 $list = $db->query("SELECT 
   tags.tag, tags.id AS tag_id, tags.gps,
   papers.title, papers.author, papers.id, papers.year
 FROM tags_papers 
   LEFT JOIN tags ON tags_papers.tag = tags.id
   LEFT JOIN papers ON tags_papers.paper = papers.id
-WHERE tags.parent = 4 AND papers.status = 'active'
+WHERE tags.parent = $tag AND papers.status = 'active'
 ORDER BY papers.year DESC
 ");
 
