@@ -881,6 +881,8 @@ $languages = array('English', 'Chinese', 'Spanish', 'French', 'German', 'Other')
 
 $update = $db->record("SELECT SQL_CACHE date_added FROM papers ORDER BY id DESC LIMIT 1");
 
+$topic = ID == 2 ? "EPR" : "Urban Metabolism";
+
 $version = '1.5 beta';
 
 // Run to get the total lines for the newsletter: git ls-files *php | xargs wc -l
