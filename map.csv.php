@@ -28,7 +28,7 @@ $list = $db->query("SELECT
 FROM tags_papers 
   LEFT JOIN tags ON tags_papers.tag = tags.id
   LEFT JOIN papers ON tags_papers.paper = papers.id
-WHERE tags.parent = $tag AND papers.status = 'active'
+WHERE tags.parent = $gps_tagged AND papers.status = 'active'
 ORDER BY papers.year DESC
 ");
 
