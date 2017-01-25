@@ -1423,3 +1423,38 @@ INSERT INTO `mails` (`subject`, `content`)
 SELECT 'Invitation to join the Metabolism of Cities open source platform', 'Dear NAME,\r\n\r\nThe Metabolism of Cities website is an open source platform for urban metabolism. Through our website, our team strives to encourage collaboration between urban metabolism stakeholders (academia, urban administrations, NGOs, local inhabitants, etc), to host and create open data, to gather information on existing publications and to enable a global conversation in the field of urban metabolism in order to advance this field.\r\n\r\nWith these goals in mind, we are engaging in several activities for which we like to ask for your support.\r\n\r\n*Urban metabolism publications*\r\n\r\nOver the past year and a half, we have created a collection of publications related to (urban) metabolism. We have tagged each publication and made it very easy to filter through this list. We now have GRAND_TOTAL_PUBLICATIONS publications but there are many more out there.\r\n\r\nWe have identified you as the author of a total of PUBLICATION_TOTAL publication(s). These are the ones we have in our database:\r\n\r\nPUBLICATION_LIST\r\n\r\nCould you review the publications and edit any incorrect information or add any missing publications? You can also edit your own profile. This is all a matter of clicking one link (no registration required; this link is unique to you):\r\n\r\nDASHBOARD_LINK\r\n\r\n*Urban metabolism data*\r\n\r\nWe are developing a single database with data from urban metabolism studies from all over the world. So far we have identified 37 studies that have published data, and we have logged 220 different data points from these studies. But we need your help! Have you undertaken urban metabolism studies? Can you help review data from your city?\r\n\r\nUPLOAD_STUDIES\r\nREVIEW_DATA\r\n\r\n*Metabolism of Cities Stakeholder Initiative*\r\n\r\nWe aim to bring together people who operate in the field of urban metabolism. Would you like to participate in future discussions, contribute to our forums, or help shape ideas around research and data? Register now to become part of the Stakeholders Initiative! We will add you to our mailing list and keep you informed of upcoming ideas and developments as our network grows.\r\n\r\nJOIN_STAKEHOLDERS\r\n\r\nIf you have any questions or comments, please don\'t hesitate to let us know at [mailto:info@metabolismofcities.org info@metabolismofcities.org].\r\n\r\nSincerely,\r\n\r\n*The Metabolism of Cities Team*\r\n\r\nAristide Athanassiadis\r\nGabriela Fernandez\r\nPaul Hoekman\r\nRachel Spiegel'
 FROM `mails`
 WHERE ((`id` = '1'));
+
+CREATE TABLE `wishlist_types` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `wishlist_types` (`id`, `name`) VALUES
+(1,	'Features'),
+(2,	'Content-related'),
+(3,	'Urban data mining project'),
+(4,	'Quality Control'),
+(5,	'Other');
+
+CREATE TABLE `wishlist` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `description` text NOT NULL,
+  `status` enum('open','finished','removed') NOT NULL DEFAULT 'open',
+  `public` tinyint(1) NOT NULL DEFAULT '1',
+  `type` int(10) unsigned NOT NULL,
+  `assigned_to` int(11) NULL,
+  FOREIGN KEY (`type`) REFERENCES `wishlist_types` (`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`assigned_to`) REFERENCES `users` (`user_id`) ON DELETE CASCADE
+) ENGINE='InnoDB' COLLATE 'utf8_unicode_ci';
+
+
+ALTER TABLE `wishlist`
+ADD `parent_item` int(10) unsigned NULL,
+COMMENT=''; -- 0.022 s
+
+ALTER TABLE `wishlist`
+ADD FOREIGN KEY (`parent_item`) REFERENCES `wishlist` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+
+ALTER TABLE `wishlist`
+ADD `last_update` datetime NULL ;

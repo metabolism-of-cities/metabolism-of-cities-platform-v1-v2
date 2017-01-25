@@ -13,6 +13,7 @@ if ($cms_sidebar) {
 
 $cms_menu = array(
   6 => array('label' => 'Dashboard', 'url' => "cms/index", 'icon' => 'gear'),
+  16 => array('label' => 'To Do List', 'url' => "cms/wishlist", 'icon' => 'check'),
   1 => array('label' => 'Blog Posts', 'url' => "cms/bloglist", 'icon' => 'list'),
   2 => array('label' => 'New Blog Post', 'url' => "cms/blog", 'icon' => 'pencil'),
   3 => array('label' => 'Blog Authors', 'url' => "cms/blogauthorlist", 'icon' => 'users'),
