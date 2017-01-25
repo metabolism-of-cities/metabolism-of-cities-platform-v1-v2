@@ -6,6 +6,16 @@ require_once 'functions.omat.php';
 $id = (int)$_GET['id'];
 $sub_page = 16;
 
+if ($_GET['done']) {
+  $post = array(
+    'last_update' => mysql_clean(date("Y-m-d H:i:s")),
+    'status' => mysql_clean('finished'),
+  );
+  $db->update("wishlist",$post,"id = $id");
+  header("Location: " . URL . "cms/wishlist/closed");
+  exit();
+}
+
 if ($_POST) {
   $post = array(
     'last_update' => mysql_clean(date("Y-m-d H:i:s")),

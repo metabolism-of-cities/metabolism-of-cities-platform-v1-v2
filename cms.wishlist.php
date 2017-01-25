@@ -32,6 +32,11 @@ foreach ($list as $row) {
   }
 }
 
+if ($_GET['saved']) {
+  $print = "Information was saved";
+} elseif ($_GET['closed']) {
+  $print = "Great work -- this item was closed!";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,6 +60,8 @@ foreach ($list as $row) {
   <a href="cms/wishlistitem" class="btn btn-success pull-right">Add new item</a>
 
   <h1>To Do List</h1>
+
+  <?php if ($print) { echo "<div class=\"alert alert-success\">$print</div>"; } ?>
 
   <?php foreach ($wishlist as $key => $value) { ?>
     <h2><?php echo $key ?></h2>
