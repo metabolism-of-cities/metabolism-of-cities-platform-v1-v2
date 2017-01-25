@@ -109,6 +109,7 @@ if ($_GET['tag']) {
   $list = $db->query("SELECT * FROM papers WHERE status = 'active' $sql ORDER BY year DESC, title");
 }
 
+$gps_tagged = ID == 2 ? 2 : 4;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -139,7 +140,7 @@ if ($_GET['tag']) {
       </div>
     </div>
 
-    <div class="form-group <?php echo $info->parent == 4 ? "regular" : "hide"; ?>">
+    <div class="form-group <?php echo $info->parent == $gps_tagged ? "regular" : "hide"; ?>">
       <label class="col-sm-2 control-label">GPS coordinates</label>
       <div class="col-sm-7">
         <input class="form-control" type="text" name="gps" value="<?php echo $info->gps ?>" placeholder="Enter LONG, LAT - e.g. 2.3488, 48.8534 for Paris" />
