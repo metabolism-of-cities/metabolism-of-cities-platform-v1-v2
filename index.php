@@ -137,13 +137,13 @@ As part of our <a href="stakeholders">Stakeholders Initiative</a>, we are proud 
 </div>
 
 
-      <h2>Just Launched: Data Visualizations Project - October-December 2016</h2>
+      <h2>Just Launched: Global Urban Metabolism Database - January-March 2017</h2>
 
-      <p>We have launched our first <a href="stakeholders">Stakeholders Initiative</a>! From October until 
-      December 2016 we will focus on Data Visualization, and we have many exciting things planned. 
+      <p>We have launched our second <a href="stakeholders">Stakeholders Initiative</a>! From January until 
+      March 2017 we will focus on the development of a global urban metabolism database, and we have many exciting things planned. 
       And we need YOUR involvement. Check out the new section and start contributing now! 
       </p>
-      <p><a href="datavisualization" class="btn btn-primary">Data Visualization Project</a></p>
+      <p><a href="stakeholders/data" class="btn btn-primary">Global Urban Metabolism Database Project</a></p>
       <h2>About</h2>
 
       <p>
