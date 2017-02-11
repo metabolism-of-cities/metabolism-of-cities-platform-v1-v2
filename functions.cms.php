@@ -25,7 +25,7 @@ $cms_menu = array(
   15 => array('label' => 'Dataviz Votes', 'url' => "cms/votes", 'icon' => 'check-circle'),
   13 => array('label' => 'Videos', 'url' => "cms/videolist", 'icon' => 'list'),
   14 => array('label' => 'New Video', 'url' => "cms/video", 'icon' => 'play'),
-  10 => array('label' => 'Tags', 'url' => "cms/tags", 'icon' => 'tag'),
+  10 => array('label' => 'Tags', 'url' => "cms/tagparents", 'icon' => 'tag'),
   7 => array('label' => 'Contacts', 'url' => "cms/peoplelist", 'icon' => 'users'),
   8 => array('label' => 'Add Contact', 'url' => "cms/people", 'icon' => 'user'),
   9 => array('label' => 'View Log', 'url' => "cms/log", 'icon' => 'th-list'),

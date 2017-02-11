@@ -1,7 +1,7 @@
 <?php
 $options = array(
-  1 => array("cms/tags", "Tag list"),
   2 => array("cms/tagparents", "Tag headers"),
+  1 => array("cms/tags", "Tag list"),
   3 => array("cms/masstags", "Mass tag review"),
 );
 ?>
