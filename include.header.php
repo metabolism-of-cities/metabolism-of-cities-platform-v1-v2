@@ -71,6 +71,8 @@
       $share_url = urlencode($share_url);
     ?>
 
+    <?php if (!$hide_share_buttons) { ?>
+
     <div id="sharingbuttons">
     <!-- Sharingbutton Facebook -->
     <a class="resp-sharing-button__link" href="https://facebook.com/sharer/sharer.php?u=<?php echo $share_url ?>" target="_blank" aria-label="">
@@ -121,6 +123,7 @@
 
     </div>
 
+    <?php } ?>
 
     <?php if ($omat_sidebar) { require_once 'include.omatheader.php'; } ?>
 

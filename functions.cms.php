@@ -11,6 +11,8 @@ if ($cms_sidebar) {
   $add_to_header .= '<link rel="stylesheet" href="css/sidebar.css" />';
 }
 
+$hide_share_buttons = true;
+
 $cms_menu = array(
   6 => array('label' => 'Dashboard', 'url' => "cms/index", 'icon' => 'gear'),
   16 => array('label' => 'To Do List', 'url' => "cms/wishlist", 'icon' => 'check'),
