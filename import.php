@@ -2,6 +2,7 @@
 require_once 'functions.php';
 
 $file = $_GET['file'] ? '/s/epr/docs/reports.xml' : '/s/epr/docs/papers.xml';
+$file = 'docs/full.xml';
 
 $xmlstring = file_get_contents($file);
 
