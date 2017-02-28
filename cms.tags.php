@@ -217,6 +217,8 @@ $alltags = $db->query("SELECT * FROM tags ORDER BY tag");
 
 <?php require_once 'include.header.php'; ?>
 
+  <a href="cms/plaintags" class="pull-right btn btn-primary"><i class="fa fa-list"></i> View plain text list</a>
+
   <h1>Tags</h1>
 
   <?php require_once 'include.cmstags.php'; ?> 
