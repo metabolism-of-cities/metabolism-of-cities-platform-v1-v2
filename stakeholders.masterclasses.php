@@ -35,19 +35,33 @@ $page = 4;
 <strong>MASTERCLASS 1 - What is urban metabolism? Why is it relevant?</strong> (eng)<br />
 Speakers: <strong>Jan Jongert</strong> (SuperUse Studios), <strong>Ben Kubbinga</strong> (Circle Economy) and&nbsp;<strong>Aristide Athanassiadis</strong> (ULB/BATir, Universit&eacute; Paris 1 Panth&eacute;on-Sorbonne, Metabolism of Cities)<br />
 Moderated by Olv Klijn (.Fabric)<br />
-<a href="https://docs.google.com/forms/d/1fWg3VR6x_IZiyRjchvP4iLMnf8YJ7InxlqNqdt4MiJU/edit">Register</a></p>
+</p>
 <p>12.01.17 at 14:30 &ndash; 18:00<br />
 <strong>MASTERCLASS 2 - What needs to change?</strong> (eng)<br />
 Speakers: <strong>Lola Sheppard</strong> (Lateral Office, University of Waterloo &ndash; Toronto Canada), <strong>Annemieke Roobeek</strong> (Nyenrode Business University, Nederland) and <strong>Phebe Dudek</strong> (MIT Urban Metabolism Group)<br />
 Moderated by .Fabric<br />
-<a href="https://docs.google.com/forms/d/1RgNjbcYP20zjBX72p3tjcY6TaZNvKpOOrsALP0Iq-0A/edit">Register</a></p>
+</p>
 <p>02.02.17 at 14:30 &ndash; 18:00<br />
 <strong>MASTERCLASS 3 - Where do we start?</strong> (eng)<br />
 Introduction of the debate by: <strong>Dirk Sijmons</strong> (H+N+S)<br />
 Reflections and feedback by: <strong>Philippe Vandenbroeck</strong> (ShiftN)<br />
 Moderated by .Fabric<br />
-<a href="https://docs.google.com/forms/d/17r-JjUMTWFPkfmQCm6SUvEDer-zs2R0sgRQue2R8rTI/edit">Register</a><br />
 </p>
+
+<h2>Videos</h2>
+
+<p> 
+  <a href="https://www.youtube.com/channel/UCwaliuWsJWhdhk-KUfQHlYA">
+    <img src="img/videos.jpg" alt="" />
+  </a>
+</p>
+
+<p>Videos of the UM Masterclasses have been uploaded to our 
+  <a href="https://www.youtube.com/channel/UCwaliuWsJWhdhk-KUfQHlYA">Youtube Channel</a>.
+  Be sure to check them out!
+</p>
+
+<p><a href="https://www.youtube.com/channel/UCwaliuWsJWhdhk-KUfQHlYA" class="btn btn-primary btn-lg">View videos <i class="fa fa-video"></i></a></p>
 
 <?php require_once 'include.footer.php'; ?>
 
