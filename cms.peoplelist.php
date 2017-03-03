@@ -107,8 +107,8 @@ FROM people WHERE active IS TRUE $sql ORDER BY firstname, lastname");
           <?php } ?>
         <?php } ?>
       </td>
-      <td><a href="cms/people/<?php echo $row['id'] ?>"><?php echo $row['firstname'] ?> <?php echo $row['lastname'] ?></a></td>
-      <td><a href="cms.people.php?id=<?php echo $row['id'] ?>" class="btn btn-info">Edit</a></td>
+      <td><a href="people/<?php echo $row['id'] ?>-<?php echo flatten($row['firstname'] . "-" . $row['lastname']) ?>"><?php echo $row['firstname'] ?> <?php echo $row['lastname'] ?></a></td>
+      <td><a href="cms/people/<?php echo $row['id'] ?>" class="btn btn-info">Edit</a></td>
       <td><a href="cms.peoplelist.php?delete=<?php echo $row['id'] ?>" class="btn btn-danger" onclick="javascript:return confirm('Are you sure?')">Delete</a></td>
       <td>
         <a target="_blank" href="https://www.google.co.za/#q=<?php echo urlencode($row['firstname'] ." " . $row['lastname']) ?>+email">Search</a> | 
