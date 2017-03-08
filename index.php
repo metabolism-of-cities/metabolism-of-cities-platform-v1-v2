@@ -129,10 +129,9 @@ As part of our <a href="stakeholders">Stakeholders Initiative</a>, we are proud 
 </p>
 
 
-<p>For more information and registration <a href="http://www.architectureworkroom.eu/atelierbrussel/masterclass-designing-with-flows">click here</a>.
-</p>
+<p style="font-weight:700;margin:10px 0"><span class="badge badge-info">Update</span> The masterclasses have finished and videos are now available!</p>
 
-<p><a href="http://www.architectureworkroom.eu/atelierbrussel/masterclass-designing-with-flows" class="btn btn-primary">Urban metabolism masterclasses &raquo;</a></p>
+<p><a href="stakeholders/masterclasses" class="btn btn-primary">Urban metabolism masterclasses &raquo;</a></p>
 
 </div>
 

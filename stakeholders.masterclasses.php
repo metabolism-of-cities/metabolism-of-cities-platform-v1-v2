@@ -32,36 +32,31 @@ $page = 4;
 <p>The masterclasses are open to everybody interested in getting familiar with the idea of urban planning and design through the lens of metabolism. They are recommended for city makers, urban and regional administrations (environment, urban planning, economy, etc.), professionals (construction, material management, design, etc.), academic and researchers, consultants, and everybody who aims to embrace the principles of circular economy in their activity or domain.</p>
 <p><strong>Program</strong></p>
 <p>08.12.16 at 14:30 &ndash; 18:00<br />
-<strong>MASTERCLASS 1 - What is urban metabolism? Why is it relevant?</strong> (eng)<br />
+<strong>MASTERCLASS 1 - What is urban metabolism? Why is it relevant?</strong> (eng)</p>
+<iframe width="100%" height="480" src="https://www.youtube.com/embed/TzhWhbsn70k" frameborder="0" allowfullscreen></iframe>
+<iframe width="100%" height="480" src="https://www.youtube.com/embed/WHh7HaEOKXo" frameborder="0" allowfullscreen></iframe>
+<p>
 Speakers: <strong>Jan Jongert</strong> (SuperUse Studios), <strong>Ben Kubbinga</strong> (Circle Economy) and&nbsp;<strong>Aristide Athanassiadis</strong> (ULB/BATir, Universit&eacute; Paris 1 Panth&eacute;on-Sorbonne, Metabolism of Cities)<br />
 Moderated by Olv Klijn (.Fabric)<br />
 </p>
 <p>12.01.17 at 14:30 &ndash; 18:00<br />
-<strong>MASTERCLASS 2 - What needs to change?</strong> (eng)<br />
-Speakers: <strong>Lola Sheppard</strong> (Lateral Office, University of Waterloo &ndash; Toronto Canada), <strong>Annemieke Roobeek</strong> (Nyenrode Business University, Nederland) and <strong>Phebe Dudek</strong> (MIT Urban Metabolism Group)<br />
+<strong>MASTERCLASS 2 - What needs to change?</strong> (eng)</p>
+<iframe width="100%" height="480" src="https://www.youtube.com/embed/LtX4PGfOxtc" frameborder="0" allowfullscreen></iframe>
+<iframe width="100%" height="480" src="https://www.youtube.com/embed/BC2RR3sin0A" frameborder="0" allowfullscreen></iframe>
+<p>
+Speakers: <strong>Lola Sheppard</strong> (Lateral Office, University of Waterloo &ndash; Toronto Canada), <strong>Julie Marin</strong> (KUL) and <strong>Phebe Dudek</strong> (MIT Urban Metabolism Group)<br />
 Moderated by .Fabric<br />
 </p>
 <p>02.02.17 at 14:30 &ndash; 18:00<br />
-<strong>MASTERCLASS 3 - Where do we start?</strong> (eng)<br />
+<strong>MASTERCLASS 3 - Where do we start?</strong> (eng)</p>
+<iframe width="100%" height="480" src="https://www.youtube.com/embed/bNv-mStKPLs" frameborder="0" allowfullscreen></iframe>
+<iframe width="100%" height="480" src="https://www.youtube.com/embed/bGLVus-NesQ" frameborder="0" allowfullscreen></iframe>
+
+<p>
 Introduction of the debate by: <strong>Dirk Sijmons</strong> (H+N+S)<br />
 Reflections and feedback by: <strong>Philippe Vandenbroeck</strong> (ShiftN)<br />
 Moderated by .Fabric<br />
 </p>
-
-<h2>Videos</h2>
-
-<p> 
-  <a href="https://www.youtube.com/channel/UCwaliuWsJWhdhk-KUfQHlYA">
-    <img src="img/videos.jpg" alt="" />
-  </a>
-</p>
-
-<p>Videos of the UM Masterclasses have been uploaded to our 
-  <a href="https://www.youtube.com/channel/UCwaliuWsJWhdhk-KUfQHlYA">Youtube Channel</a>.
-  Be sure to check them out!
-</p>
-
-<p><a href="https://www.youtube.com/channel/UCwaliuWsJWhdhk-KUfQHlYA" class="btn btn-primary btn-lg">View videos <i class="fa fa-video"></i></a></p>
 
 <?php require_once 'include.footer.php'; ?>
 
