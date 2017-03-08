@@ -674,3 +674,10 @@ FileETag None
    RewriteRule ^(.+)\.(\d+)\.(js|css|png|jpe?g|gif)$ $1.$3 [L]
 </IfModule>
 
+<IfModule mod_headers.c>
+    <FilesMatch "\.(xlsx|XLSX)$">
+        ForceType audio/mpeg
+        Header set Content-Disposition "attachment"
+        Allow from all
+    </FilesMatch>
+</IfModule>
