@@ -676,7 +676,6 @@ FileETag None
 
 <IfModule mod_headers.c>
     <FilesMatch "\.(xlsx|XLSX)$">
-        ForceType audio/mpeg
         Header set Content-Disposition "attachment"
         Allow from all
     </FilesMatch>
