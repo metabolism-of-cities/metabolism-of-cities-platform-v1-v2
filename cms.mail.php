@@ -4,7 +4,7 @@ require_once 'functions.php';
 require_once 'functions.omat.php';
 
 $id = (int)$_GET['id'];
-$mail_id = 4;
+$mail_id = 5;
 
 if ($id) {
   $info = $db->record("SELECT * FROM people WHERE id = $id");
