@@ -119,6 +119,7 @@ FROM people WHERE active IS TRUE $sql ORDER BY firstname, lastname");
         <?php echo $row['total'] ?>
       </a>
       | <a href="cms/mail/<?php echo $row['id'] ?>">preview</a>
+      | <a href="cms/mail/<?php echo $row['id'] ?>/send?mail=true">send</a>
       
       </td>
     </tr>
