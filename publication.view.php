@@ -116,6 +116,8 @@ if ($admin_mode && $_GET['authorscrape']) {
       );
       $db->insert("people_papers",$post);
     }
+  } else {
+    die("No authors found! These were searched: " . $info->author);
   }
   header("Location: " . URL . "publication/$id");
   exit();
