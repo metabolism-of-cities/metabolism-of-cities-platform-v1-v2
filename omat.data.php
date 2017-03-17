@@ -16,11 +16,11 @@ FROM mfa_data
 WHERE mfa_data.material = $id
   ORDER BY mfa_data.year, mfa_data.scale");
 
-$groupinfo = $db->record("SELECT * FROM mfa_groups WHERE id = {$info->mfa_group}");
-$project = $groupinfo->dataset;
-
-$projectinfo = $db->record("SELECT * FROM mfa_dataset WHERE id = $project");
-
+if ($info->mfa_group) {
+  $groupinfo = $db->record("SELECT * FROM mfa_groups WHERE id = {$info->mfa_group}");
+  $project = $groupinfo->dataset;
+  $projectinfo = $db->record("SELECT * FROM mfa_dataset WHERE id = $project");
+}
 require_once 'functions.omat.php';
 
 if ($_GET['message'] ==  "delete-all") {
