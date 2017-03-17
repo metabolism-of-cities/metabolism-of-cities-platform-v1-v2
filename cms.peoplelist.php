@@ -118,8 +118,9 @@ FROM people WHERE active IS TRUE $sql ORDER BY firstname, lastname");
       <a href="cms/mailssent/<?php echo $row['id'] ?>">
         <?php echo $row['total'] ?>
       </a>
-      | <a href="cms/mail/<?php echo $row['id'] ?>">preview</a>
-      | <a href="cms/mail/<?php echo $row['id'] ?>/send?mail=true">send</a>
+       <a href="cms/mail/<?php echo $row['id'] ?>" class="hide">preview</a>
+      | <a href="cms/mail/<?php echo $row['id'] ?>/send?mail=true" class="hide">send</a>
+      <a href="cms.mail.php?id=<?php echo $row['id'] ?>&amp;mail=6">Send welcome message</a>
       
       </td>
     </tr>

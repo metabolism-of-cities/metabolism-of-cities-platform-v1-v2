@@ -4,7 +4,7 @@ require_once 'functions.php';
 require_once 'functions.omat.php';
 
 $id = (int)$_GET['id'];
-$mail_id = 5;
+$mail_id = (int)$_GET['mail'] ?: 5;
 
 if ($id) {
   $info = $db->record("SELECT * FROM people WHERE id = $id");
@@ -129,10 +129,13 @@ $content = bbcode($content);
 
   </form>
 
-  <form method="get" class="form form-horizontal" action="<?php echo URL ?>/cms/mail/<?php echo $id ?>/send">
+  <form method="get" class="form form-horizontal" action="<?php echo URL ?>/cms.mail.php">
 
     <div class="form-group">
         <button type="submit" class="btn btn-primary" name="mail" value="true">Mail to <?php echo $info->email ?></button>
+        <input type="hidden" name="id" value="<?php echo $id ?>" />
+        <input type="hidden" name="send" value="true" />
+        <input type="hidden" name="mail" value="<?php echo $mail_id ?>" />
     </div>
   
   </form>

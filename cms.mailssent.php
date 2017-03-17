@@ -62,7 +62,7 @@ ORDER BY people_log.date");
     <tr>
       <td><?php echo $row['id'] ?></td>
       <td><?php echo $row['date'] ?></td>
-      <td><?php echo $row['subject'] ?></td>
+      <td><a href="cms.mail.php?id=<?php echo $id ?>&amp;mail=<?php echo $row['mail'] ?>"><?php echo $row['subject'] ?></a></td>
       <td><?php echo $row['address'] ?></td>
       <td><?php echo $row['user_name'] ?></td>
     </tr>
