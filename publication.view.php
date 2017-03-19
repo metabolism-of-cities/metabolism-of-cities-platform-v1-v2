@@ -304,6 +304,8 @@ if ($admin_mode && $_GET['authorscrape']) {
 
 <h2>Tags</h2>
 
+<?php if ($admin_mode || PRODUCTION) { ?>
+
 <ul id="tags">
 <?php foreach ($tags as $row) { ?>
   <?php if ($row['parentname'] != $parent && $admin_mode) { ?>
@@ -323,8 +325,40 @@ if ($admin_mode && $_GET['authorscrape']) {
     </a>
   </li>
 <?php } ?>
+  </ul>
 </ul>
+
+<?php } else { ?>
+
+<?php foreach ($tags as $row) { ?>
+<ul id="tags">
+  <?php if ($row['parentname'] != $parent && $admin_mode) { ?>
+  <?php if ($parent) { ?>
+      </ul>
+  <?php } ?>
+    <li><?php echo $row['parentname'] ?>
+      <ul>
+  <?php } $parent = $row['parentname']; ?>
+  <li>
+    <a href="http://">
+      <?php echo $parent ?>
+    </a>
+    &raquo;
+  </li>
+  <li>
+    <a 
+      data-id="<?php echo $row['id'] ?>" 
+      data-action="<?php echo $activetag[$row['id']] ? 'delete' : 'add'; ?>"
+      href="tags/<?php echo $row['id'] ?>/<?php echo flatten($row['tag']) ?>" 
+      class="">
+        <?php echo $row['tag'] ?>
+    <span class="badge"><?php echo rand(33,99) ?></span>
+    </a>
+  </li>
+  </ul>
+<?php } ?>
 </ul>
+<?php } ?>
 
 <?php if ($admin_mode) { ?>
   <h3>Add New Tag</h3>

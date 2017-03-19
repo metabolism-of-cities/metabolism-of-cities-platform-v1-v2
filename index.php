@@ -88,7 +88,7 @@ $blog = $db->record("SELECT * FROM blog WHERE active = 1 AND date <= '$today' OR
             </div>
             <div class="panel-body">
                     <h4><a href="blog/<?php echo $blog->id ?>-<?php echo flatten($blog->title) ?>"><?php echo $blog->title ?></a></h4>
-                    <?php echo smartcut($blog->content, 200) ?>
+                    <?php echo smartcut(strip_tags($blog->content), 200) ?>
                     <p><a href="blog/<?php echo $blog->id ?>-<?php echo flatten($blog->title) ?>" class="btn btn-primary">Read more</a></p>
             </div>
           </div>
