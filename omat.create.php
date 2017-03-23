@@ -18,6 +18,8 @@ if ($_POST) {
     $error = "Please provide start and end years for the dataset. Use the same year if you only want to input data for one year";
   } elseif ($_POST['start_year'] > $_POST['end_year']) {
     $error = "Start year provided was after the end year, please correct this";
+  } elseif (!$_POST['type']) {
+    $error = "You must select a project type";
   }
   if (!$error) {
     $post = array(
