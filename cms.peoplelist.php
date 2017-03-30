@@ -94,7 +94,7 @@ FROM people WHERE active IS TRUE $sql ORDER BY firstname, lastname");
       <th>Edit</th>
       <th>Delete</th>
       <th>Google</th>
-      <th>Mails sent</th>
+      <th colspan="2">Mails</th>
     </tr>
     <?php foreach ($authors as $row) { ?>
     <tr>
@@ -111,16 +111,19 @@ FROM people WHERE active IS TRUE $sql ORDER BY firstname, lastname");
       <td><a href="cms/people/<?php echo $row['id'] ?>" class="btn btn-info">Edit</a></td>
       <td><a href="cms.peoplelist.php?delete=<?php echo $row['id'] ?>" class="btn btn-danger" onclick="javascript:return confirm('Are you sure?')">Delete</a></td>
       <td>
-        <a target="_blank" href="https://www.google.co.za/#q=<?php echo urlencode($row['firstname'] ." " . $row['lastname']) ?>+email">Search</a> | 
-        <a target="_blank" href="https://www.google.co.za/#q=<?php echo urlencode($row['firstname'] ." " . $row['lastname']) ?>+urban+metabolism+email">Search +um</a>
+        <a target="_blank" href="https://www.google.co.za/#q=<?php echo urlencode($row['firstname'] ." " . $row['lastname']) ?>+email"><i class="fa fa-search"></i></a> | 
+        <a target="_blank" href="https://www.google.co.za/#q=<?php echo urlencode($row['firstname'] ." " . $row['lastname']) ?>+urban+metabolism+email"><i class="fa fa-search"></i> +um</a>
       </td>
       <td>
       <a href="cms/mailssent/<?php echo $row['id'] ?>">
         <?php echo $row['total'] ?>
       </a>
        <a href="cms/mail/<?php echo $row['id'] ?>" class="hide">preview</a>
-      | <a href="cms/mail/<?php echo $row['id'] ?>/send?mail=true" class="hide">send</a>
-      <a href="cms.mail.php?id=<?php echo $row['id'] ?>&amp;mail=6">Send welcome message</a>
+       <a href="cms/mail/<?php echo $row['id'] ?>/send?mail=true" class="hide">send</a>
+       </td>
+       <td>
+      <a href="cms.mail.php?id=<?php echo $row['id'] ?>&amp;mail=6" class="btn btn-primary"><i class="fa fa-envelope"></i> Welcome</a>
+      <a href="cms.mail.php?id=<?php echo $row['id'] ?>&amp;mail=7" class="btn btn-primary"><i class="fa fa-envelope"></i> New pub.</a>
       
       </td>
     </tr>
