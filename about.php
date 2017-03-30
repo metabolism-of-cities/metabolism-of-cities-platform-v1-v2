@@ -28,15 +28,6 @@ $papers = $db->record("SELECT SQL_CACHE COUNT(*) AS total FROM papers WHERE stat
 </div>
 
 <div class="list-group">
-  <a href="omat/about" class="list-group-item">
-    <h4 class="list-group-item-heading">Online Material Flow Analysis Tool (OMAT)</h4>
-    <p class="list-group-item-text">
-      The <strong>O</strong>nline <strong>M</strong>aterial Flow <strong>A</strong>nalysis <strong>T</strong>ool (OMAT)
-      is a free, open source tool that assists researchers in undertaking an MFA. It allows for data to be loaded into 
-      an online database, with easy options for collaboration and data management. Data sets can be kept private or 
-      can be publicly shared. 
-    </p>
-  </a>
   <a href="research/list" class="list-group-item">
     <h4 class="list-group-item-heading">Publications &amp; Research</h4>
     <p class="list-group-item-text">
@@ -85,6 +76,15 @@ $papers = $db->record("SELECT SQL_CACHE COUNT(*) AS total FROM papers WHERE stat
       municipalities, ... With this big masterlist it will therefore also
       become possible to identify indicators for resource use and pollution
       emission.
+    </p>
+  </a>
+  <a href="omat/about" class="list-group-item">
+    <h4 class="list-group-item-heading">Online Material Flow Analysis Tool (OMAT)</h4>
+    <p class="list-group-item-text">
+      The <strong>O</strong>nline <strong>M</strong>aterial Flow <strong>A</strong>nalysis <strong>T</strong>ool (OMAT)
+      is a free, open source tool that assists researchers in undertaking an MFA. It allows for data to be loaded into 
+      an online database, with easy options for collaboration and data management. Data sets can be kept private or 
+      can be publicly shared. 
     </p>
   </a>
 </div>

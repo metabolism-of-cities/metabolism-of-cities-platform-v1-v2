@@ -1458,3 +1458,19 @@ ADD FOREIGN KEY (`parent_item`) REFERENCES `wishlist` (`id`) ON DELETE CASCADE O
 
 ALTER TABLE `wishlist`
 ADD `last_update` datetime NULL ;
+
+CREATE TABLE `ontology` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `name` varchar(255) NOT NULL,
+  `parent_id` int unsigned NOT NULL
+) ENGINE='InnoDB' COLLATE 'utf8_unicode_ci';
+
+
+ALTER TABLE `ontology`
+ADD INDEX `parent_id` (`parent_id`);
+
+ALTER TABLE `ontology`
+ADD FOREIGN KEY (`parent_id`) REFERENCES `ontology` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+
+ALTER TABLE `ontology`
+CHANGE `parent_id` `parent_id` int(10) unsigned NULL AFTER `name`;
