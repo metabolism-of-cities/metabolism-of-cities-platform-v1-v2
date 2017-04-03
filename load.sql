@@ -1474,3 +1474,29 @@ ADD FOREIGN KEY (`parent_id`) REFERENCES `ontology` (`id`) ON DELETE CASCADE ON 
 
 ALTER TABLE `ontology`
 CHANGE `parent_id` `parent_id` int(10) unsigned NULL AFTER `name`;
+
+CREATE TABLE `mtu_list` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `city` smallint(5) unsigned NOT NULL,
+  `mtu_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `mtu_code` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `city` (`city`),
+  CONSTRAINT `mtu_list_ibfk_1` FOREIGN KEY (`city`) REFERENCES `tags` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE `mtu_analysis` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `analysis_option` int(10) unsigned NOT NULL,
+  `mtu` int(10) unsigned NOT NULL,
+  `result` decimal(15,2) DEFAULT NULL,
+  `year` year(4) DEFAULT NULL,
+  `notes` text COLLATE utf8_unicode_ci,
+  `url` text COLLATE utf8_unicode_ci,
+  `source_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `mtu_option` (`analysis_option`),
+  KEY `mtu` (`mtu`),
+  CONSTRAINT `mtu_analysis_ibfk_1` FOREIGN KEY (`mtu`) REFERENCES `mtu_list` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `mtu_ibfk_1` FOREIGN KEY (`analysis_option`) REFERENCES `analysis_options` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

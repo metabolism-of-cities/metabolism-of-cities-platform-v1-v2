@@ -21,6 +21,11 @@ $page = 4;
   </ol>
 
 <h1>MASTERCLASSES Designing With Flows </h1>
+
+<div class="well">
+  This is an <strong>archived</strong> Stakeholders Initiative project.
+</div>
+
 <h2>Towards an Urban-Metabolic Agenda for a Circular Future</h2>
 <p>OVAM in collaboration with .Fabric, Vlaamse Milieumaatschappij (VMM/MIRA), Team Vlaams Bouwmeester and Metabolism Of&nbsp;Cities present a first series of masterclasses. The series take place from early December 2016 to February 2017 in the Atelier Vlaams Bouwmeester, against the background of expo and program of the Atelier Brussels &ndash; The Productive Metropolis.</p>
 <p><strong>Context</strong></p>
