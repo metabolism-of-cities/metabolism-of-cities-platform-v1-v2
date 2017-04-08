@@ -6,7 +6,8 @@ require_once 'functions.omat.php';
 $section = 6;
 $page = 4;
 
-if ($_GET['data']) {
+if ($_GET['data'] && false) {
+  // Use this setting for classwork that requires the indicators to be hidden
   setcookie("restricted_project_view", "true", time()+60*60*24*7, "/");
   $restricted_view = true;
 }
