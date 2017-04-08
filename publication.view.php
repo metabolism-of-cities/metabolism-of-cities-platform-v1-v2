@@ -376,7 +376,10 @@ if ($admin_mode && $_GET['authorscrape']) {
   </form>
 <?php } ?>
 
-<p><a href="javascript:history.back()" class="btn btn-info">Back</a></p>
+<p>
+  <a href="javascript:history.back()" class="btn btn-info">Back</a>
+  <a href="publication/<?php echo $id ?>/flag" class="btn btn-warning pull-right"><i class="fa fa-flag"></i> Incorrect or incomplete information? Click here to report this.</a>
+</p>
 
 <div class="alert alert-warning">
   This website provides meta data on papers and other publications, with links

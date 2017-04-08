@@ -221,6 +221,7 @@ AddDefaultCharset utf-8
     RewriteRule ^delete/([0-9]+)/(.+)/?$ research.add.php?id=$1&hash=$2&delete=true
     RewriteRule ^publications/(.+)/([0-9]+)?$ publication.php?id=$2
     RewriteRule ^publication/([0-9]+)-(.+)?$ publication.view.php?id=$1
+    RewriteRule ^publication/([0-9]+)/flag?$ contact.php?publication=$1
     RewriteRule ^publication/([0-9]+)/?$ publication.view.php?id=$1
     RewriteRule ^publication/([0-9]+)/?$ publication.php?id=$1
     RewriteRule ^info/([0-9]+)/(.+)/?$ content.php?id=$1

@@ -140,6 +140,9 @@
           <li><a href="<?php echo $menu[$section]['url'] ?>"><?php echo $menu[$section]['label'] ?></a></li>
         <?php if ($this_page) { ?>
           <li><a href="<?php echo $menu[$section]['menu'][$page]['url'] ?>"><?php echo $menu[$section]['menu'][$page]['label'] ?></a></li>
+          <?php if ($add_page_to_breadcrumbs) { ?>
+            <?php echo $add_page_to_breadcrumbs ?>
+          <?php } ?>
           <li class="active"><?php echo $this_page ?></li>
         <?php } else { ?>
           <li class="active"><?php echo $menu[$section]['menu'][$page]['label'] ?></li>
