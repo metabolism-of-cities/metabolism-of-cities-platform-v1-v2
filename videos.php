@@ -61,7 +61,11 @@ $list = $db->query("SELECT * FROM videos ORDER BY title");
       <div class="panel-body">
         <span>
           <a href="videos/<?php echo $row['id'] ?>-<?php echo flatten($row['title']) ?>">
-            <img src="https://img.youtube.com/vi/<?php echo $row['url'] ?>/0.jpg" alt="" />
+            <?php if ($row['site'] == 'youtube') { ?>
+              <img src="https://img.youtube.com/vi/<?php echo $row['url'] ?>/0.jpg" alt="" />
+            <?php } else { ?>
+              <img src="media/videothumbs/<?php echo $row['id'] ?>.jpg" alt="" />
+            <?php } ?>
           </a>
         </span>
       </div>

@@ -12,17 +12,32 @@ if ($_POST) {
     'author' => html($_POST['author']),
     'description' => $_POST['description'],
     'url' => html($_POST['url']),
+    'site' => html($_POST['site']),
   );
   if ($id) {
     $db->update("videos",$post,"id = $id");
   } else {
     $db->insert("videos",$post);
   }
+
+  if ($_FILES['file']['name']) {
+    $file = "media/videothumbs/$id.jpg";
+    move_uploaded_file($_FILES['file']['tmp_name'],$file);
+    $image = new SimpleImage();
+    $image->load($file);
+    $image->resizeToWidth(480);
+    $image->save($file);
+  }
+
   header("Location: " . URL . "cms/videolist");
   exit();
 }
 
 $info = $db->record("SELECT * FROM videos WHERE id = $id");
+$sites = array(
+  "youtube" => "Youtube",
+  "vimeo" => "Vimeo",
+);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -61,7 +76,25 @@ $info = $db->record("SELECT * FROM videos WHERE id = $id");
     <div class="form-group">
       <label class="col-sm-2 control-label">URL</label>
       <div class="col-sm-10">
-        <input class="form-control" type="text" name="url" placeholder="Last bit of YouTube URL, e.g. 6Sf4aCFhUyQ" value="<?php echo $info->url ?>" />
+        <input class="form-control" type="text" name="url" placeholder="Last bit of YouTube / Vimeo URL, e.g. 6Sf4aCFhUyQ" value="<?php echo $info->url ?>" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Site</label>
+      <div class="col-sm-10">
+        <select name="site" class="form-control">
+          <?php foreach ($sites as $key => $value) { ?>
+            <option value="<?php echo $key ?>"<?php if ($key == $info->site) { echo ' selected'; } ?>><?php echo $value ?></option>
+          <?php } ?>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group thumb">
+      <label class="col-sm-2 control-label">Thumbnail</label>
+      <div class="col-sm-10">
+        <input class="form-control" type="file" name="file" />
       </div>
     </div>
 
@@ -85,6 +118,15 @@ $info = $db->record("SELECT * FROM videos WHERE id = $id");
 
 <script type="text/javascript">
 $(function(){
+
+  $("select[name='site']").change(function(){
+    if ($(this).val() == "vimeo") {
+      $(".thumb").show('fast');
+    } else {
+      $(".thumb").hide('fast');
+    }
+  });
+  $("select[name='site']").change();
   $('#summernote').summernote();
   $("form").submit(function() {
     $('textarea[name="description"]').html($('#summernote').summernote('code'));

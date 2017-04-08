@@ -31,7 +31,11 @@ if (!$info->id) {
 
   <h1><?php echo $info->title ?></h1>
 
-  <iframe width="100%" height="480" src="https://www.youtube.com/embed/<?php echo $info->url ?>" frameborder="0" allowfullscreen></iframe>
+  <?php if ($info->site == "youtube") { ?>
+    <iframe width="100%" height="480" src="https://www.youtube.com/embed/<?php echo $info->url ?>" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+  <?php } else { ?>
+    <iframe src="https://player.vimeo.com/video/<?php echo $info->url ?>" width="100%" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+  <?php } ?>
 
   <div class="well">
     <dl class="dl">
@@ -40,7 +44,11 @@ if (!$info->id) {
       <dt>Author</dt>
       <dd><?php echo $info->author ?></dd>
       <dt>Link</dt>
+      <?php if ($info->site == "youtube") { ?>
       <dd><a href="https://youtube.com/watch?v=<?php echo $info->url ?>">https://youtube.com/watch?v=<?php echo $info->url ?></a></dd>
+      <?php } else { ?>
+      <dd><a href="https://vimeo.com/<?php echo $info->url ?>">https://vimeo.com/<?php echo $info->url ?></a></dd>
+      <?php } ?>
   </div>
 
   <p><a href="videos" class="btn btn-primary">View all videos</a></p>

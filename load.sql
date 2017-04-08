@@ -1500,3 +1500,6 @@ CREATE TABLE `mtu_analysis` (
   CONSTRAINT `mtu_analysis_ibfk_1` FOREIGN KEY (`mtu`) REFERENCES `mtu_list` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `mtu_ibfk_1` FOREIGN KEY (`analysis_option`) REFERENCES `analysis_options` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+ALTER TABLE `videos`
+ADD `site` enum('youtube','vimeo') COLLATE 'utf8_unicode_ci' NOT NULL DEFAULT 'youtube';
