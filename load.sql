@@ -1503,3 +1503,11 @@ CREATE TABLE `mtu_analysis` (
 
 ALTER TABLE `videos`
 ADD `site` enum('youtube','vimeo') COLLATE 'utf8_unicode_ci' NOT NULL DEFAULT 'youtube';
+
+CREATE TABLE `tags_research` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `tag` smallint(5) unsigned NOT NULL,
+  `research` int(10) unsigned NOT NULL,
+  FOREIGN KEY (`tag`) REFERENCES `tags` (`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`research`) REFERENCES `research` (`id`) ON DELETE CASCADE
+) ENGINE='InnoDB' COLLATE 'utf8_unicode_ci';

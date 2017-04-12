@@ -46,9 +46,31 @@ if ($_POST) {
     $encrypt = substr($encrypt, 0, 20);
     mail(EMAIL, "New research project added", "New project was added: " . URL . "research/$id", "From:automail@metabolismofcities.org");
   }
+  if (defined("ADMIN") && $id) {
+    $db->query("DELETE FROM tags_research WHERE research = $id");
+    foreach ($_POST['tags'] as $key => $value) {
+      $post = array(
+        'research' => $id,
+        'tag' => (int)$value,
+      );
+      $db->insert("tags_research",$post);
+    }
+  }
 }
 
 $status = array('ongoing', 'finished', 'paused', 'cancelled');
+
+if (defined("ADMIN") && $id) {
+  $tags = $db->query("SELECT tags.*, tags_parents.name AS parentname 
+  FROM tags
+    JOIN tags_parents ON tags.parent = tags_parents.id
+  ORDER BY tags.parent, tags.tag");
+
+  $researchtags = $db->query("SELECT tag FROM tags_research WHERE research = $id");
+  foreach ($researchtags as $row) {
+    $activetag[$row['tag']] = true;
+  }
+}
 
 ?>
 <!DOCTYPE html>
@@ -60,6 +82,7 @@ $status = array('ongoing', 'finished', 'paused', 'cancelled');
     textarea.form-control{height:170px}
     .right{float:right}
     </style>
+    <link rel="stylesheet" href="css/select2.min.css" />
   </head>
 
   <body>
@@ -94,7 +117,7 @@ $status = array('ongoing', 'finished', 'paused', 'cancelled');
         <h1><?php echo $id ? "Edit" : "Add" ?> your research project</h1>
 
         <?php if ($id) { ?>
-          <?php if ($_POST) { ?>
+          <?php if ($_POST) { $hide_form = true; ?>
             <div class="alert alert-success">
               Thanks for updating your project information. <br />
               <a href="research/<?php echo $id ?>">View the updated page here.</a>
@@ -107,6 +130,8 @@ $status = array('ongoing', 'finished', 'paused', 'cancelled');
             the project details at any time.
           </div>
         <?php } ?>
+
+        <?php if (!$hide_form) { ?>
 
         <form method="post" class="form form-horizontal">
 
@@ -184,6 +209,20 @@ $status = array('ongoing', 'finished', 'paused', 'cancelled');
             </div>
           </div>
 
+          <?php if (defined("ADMIN")) { ?>
+
+            <div class="form-group">
+              <label class="col-sm-2 control-label">Tag(s)</label>
+              <div class="col-sm-10">
+                <select name="tags[]" class="form-control" multiple>
+                  <?php foreach ($tags as $row) { ?>
+                    <option value="<?php echo $row['id'] ?>"<?php if ($activetag[$row['id']]) { echo ' selected'; } ?>><?php echo $row['tag'] ?></option>
+                  <?php } ?>
+              </select>
+              </div>
+            </div>
+          <?php } ?>
+
           <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
               <button type="submit" class="btn btn-primary"><?php echo _('Save'); ?></button>
@@ -192,9 +231,18 @@ $status = array('ongoing', 'finished', 'paused', 'cancelled');
         
         </form>
         <?php } ?>
+        <?php } ?>
       </div>
 
 <?php require_once 'include.footer.php'; ?>
+
+<script type="text/javascript" src="js/select2.min.js"></script>
+<script type="text/javascript">
+$(function(){
+  $("select").select2();
+});
+</script>
+
 
   </body>
 </html>
