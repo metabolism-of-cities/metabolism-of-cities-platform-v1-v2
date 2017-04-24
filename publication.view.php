@@ -122,6 +122,7 @@ if ($admin_mode && $_GET['authorscrape']) {
   header("Location: " . URL . "publication/$id");
   exit();
 }
+$dataviz = $db->query("SELECT * FROM datavisualizations WHERE paper = $id");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -130,6 +131,7 @@ if ($admin_mode && $_GET['authorscrape']) {
     <title><?php echo $info->title ?> <?php if (!$notfound) { ?>by <?php echo $info->author ?> (<?php echo $info->year ?>) <?php } ?> | <?php echo SITENAME ?></title>
 
     <style type="text/css">
+    .panel{display:inline-block}
     dt,dd{padding:5px 0}
     ul#tags, ul#tags ul{list-style:none;margin-left:0;padding-left:0}
     ul#tags ul{margin-bottom:20px}
@@ -299,6 +301,31 @@ if ($admin_mode && $_GET['authorscrape']) {
       <?php } ?>
     </dd>
   <?php } ?>
+
+  <?php if (count($dataviz)) { ?>
+    <dt>Data Visualizations</dt>
+    <?php foreach ($dataviz as $row) { ?>
+      <dd>
+
+        <div class="panel panel-default">
+          <div class="panel-heading"><?php echo $row['title'] ?></div>
+          <div class="panel-body">
+            <span>
+              <a href="datavisualizations/<?php echo $row['id'] ?>-<?php echo flatten($row['title']) ?>">
+                <img src="media/dataviz/<?php echo $row['id'] ?>.thumb.jpg" alt="" />
+              </a>
+            </span>
+            <br />
+              <a href="datavisualizations/<?php echo $row['id'] ?>-<?php echo flatten($row['title']) ?>">
+                View visualization &raquo;
+              </a>
+          </div>
+        </div>
+
+        </dd>
+    <?php } ?>
+  <?php } ?>
+    
 
 </dl>
 
