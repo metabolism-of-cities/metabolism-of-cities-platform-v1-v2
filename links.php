@@ -26,6 +26,7 @@ $page = 6;
     <li><a href="http://www.resourceefficientcities.org/">Global Initiative for Resource Efficient Cities</a></li>
     <li><a href="http://rcnsustainablecities.com/">Research Coordination Network: Sustainable Cities - People and Infrastructures at the Water-Energy-Climate Nexus</a></li>
     <li><a href="http://sdg.iisd.org/sdgs/goal-11-sustainable-cities-communities/">SDG Knowledge Hub - Goal 11: Sustainable Cities &amp; Communities</a></li>
+    <li><a href="https://resourcetrade.earth/">ResourceTrade.earth - beautiful and detailed global trade visualization</a></li>
   </ul>
 
 <?php require_once 'include.footer.php'; ?>

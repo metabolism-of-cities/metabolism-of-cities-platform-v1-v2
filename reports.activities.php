@@ -42,6 +42,8 @@ if ($_GET['show'] == 'calendar') {
   $show = 'calendar';
 } elseif ($_GET['show'] == 'graph') {
   $show = 'graph';
+} elseif ($_GET['show'] == 'heatmap') {
+  $show = 'heatmap';
 }
 
 $list = $db->query("SELECT l.*, a.name AS activity_name, mfa_sources.belongs_to,
@@ -68,7 +70,21 @@ if ($subgroup) {
   }
 }
 
-if ($show == 'graph') {
+if ($show == 'heatmap') { 
+  foreach ($list as $row) {
+    $row['start'] = format_date("Y-m-d", $row['start']);
+    if (!$startdate) {
+      $startdate = strtotime($row['start']) . "000";
+    }
+    $startdate = min(strtotime($row['start']) . "000", $startdate);
+    // Add 12:00 because that way the timezone can add or subtract up to 12 hours without impact
+    // Without this, the server time zone and the browser time zone get messed up
+    // Ideally this should be sorted out properly but for now this works for local use
+    $date = format_date("Y-m-d 12:00:00", $row['start']);
+    $date = strtotime($date);
+    $data[$date] += $row['time'];
+  }
+} elseif ($show == 'graph') {
   foreach ($list as $row) {
     $total[$row['activity_name']] += $row['time'];
   }
@@ -95,7 +111,14 @@ $types = $db->query("SELECT * FROM mfa_activities WHERE dataset = $project ORDER
     select.form-control{width:120px;display:inline}
     #chart{margin-top:40px;}
     </style>
-    <?php if ($show) { ?>
+    <?php if ($show == 'heatmap') { ?>
+
+      <script type="text/javascript" src="//d3js.org/d3.v3.min.js"></script>
+      <script type="text/javascript" src="//cdn.jsdelivr.net/cal-heatmap/3.3.10/cal-heatmap.min.js"></script>
+      <link rel="stylesheet" href="//cdn.jsdelivr.net/cal-heatmap/3.3.10/cal-heatmap.css" />
+      
+
+    <?php } elseif ($show) { ?>
       <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <?php } ?>
     <?php if ($show == 'graph') { ?>
@@ -209,9 +232,45 @@ $types = $db->query("SELECT * FROM mfa_activities WHERE dataset = $project ORDER
         Time Graph
       </a>
     </li>
+    <li class="<?php echo $show == 'heatmap' ? 'active' : 'n'; ?>">
+      <a href="reports.activities.php?type=<?php echo $type ?>&amp;project=<?php echo $project ?>&amp;show=heatmap&amp;subgroup=<?php echo $subgroup ?>">
+        Heat Map
+      </a>
+    </li>
   </ul>
+  <?php if ($show == 'heatmap') { ?>
 
-  <?php if ($show) { ?>
+
+			<button id="example-f-PreviousDomain-selector" style="margin-bottom: 10px;" class="btn"><i class="fa fa-chevron-left"></i></button>
+			<button id="example-f-NextDomain-selector" style="margin-bottom: 10px;" class="btn"><i class="fa fa-chevron-right"></i></button>
+<div id="heatmap"></div>
+<script type="text/javascript">
+	var cal = new CalHeatMap();
+
+cal.init({
+	itemSelector: "#heatmap",
+	domain: "month",
+  range: 9,
+
+	previousSelector: "#example-f-PreviousDomain-selector",
+
+	domainDynamicDimension: false,
+	nextSelector: "#example-f-NextDomain-selector",
+	subDomain: "day",
+	data:  
+{
+  <?php foreach ($data as $key => $value) { ?>
+  "<?php echo $key ?>": <?php echo $value ?>,
+  <?php } ?>
+}
+  ,
+	start: new Date(<?php echo $startdate ?>),
+  cellSize: 15,
+	legend: [60, 120, 180, 240]
+});
+</script>
+
+  <?php } elseif ($show) { ?>
 
     <div id="chart" style="width: 900px; height: 500px;"></div>
 
