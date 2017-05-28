@@ -142,11 +142,17 @@ $scales = array(
       </div>
         <div class="col-sm-5 col-sm-offset-1">
             <div class="form-group">
-                <label>Your Name</label>
-                <input type="text" class="form-control" name="name">
+                <label>First Name</label>
+                <input type="text" class="form-control" name="name" >
             </div>
         </div>
-        <div class="col-sm-5 ">
+        <div class="col-sm-5">
+            <div class="form-group">
+                <label>Last Name</label>
+                <input type="text" class="form-control" name="name" >
+            </div>
+        </div>
+        <div class="col-sm-10 col-sm-offset-1 ">
             <div class="form-group">
                 <label>Affiliation</label>
                 <input type="text" class="form-control" name="affiliation">
@@ -222,7 +228,7 @@ $scales = array(
     </div>
     <div class="row">
         <div class="col-sm-12">
-            <h5 class="info-text">Which of the following areas concerns your work?</h5>
+            <h5 class="info-text">Which of the following areas concerns your work on material stock analysis?</h5>
             <p class="centertext">Mark all that apply</p>
         </div>
         <?php foreach ($work_areas as $key => $value) { ?>

@@ -99,16 +99,24 @@ $scales = array(
 
                               <div class="row">
                               <div class="col-sm-10 col-sm-offset-1">
-                                <h2>Thanks!</h2>
-                                <?php if ($_POST['Send']) { ?>
                                 <div class="alert alert-success">
+                                <h2 style="margin-top:5px">Thanks!</h2>
+                                <?php if ($_POST['Send']) { ?>
                                   Thanks again for your support, we have received your information.
+                                </div>
                                 </div>
                                 <?php } else { ?>
                                 <p>We have received your information. 
+                                  This is all we need for the special session. Thank you!
                                 </p>
+                                </div>
+                                </div>
+        <div class="col-sm-12">
+            <h5 class="info-text">Optional Section</h5>
+        </div>
+                              <div class="col-sm-10 col-sm-offset-1">
                                 <p>
-                                We have one last request. We are trying to set up a <strong>literature database</strong> that contains all work published 
+                                We are trying to set up a <strong>literature database</strong> that contains all work published 
                                 in the field of material stock research. Can you help? Please list publications that you know of in the field below. Any 
                                 number of publications is helpful. You can enter the URL of the publication, the academic reference, or 
                                 the DOI. If you have this in spreadsheet format, please feel free to e-mail it to us. 
