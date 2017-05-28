@@ -87,7 +87,7 @@ $scales = array(
 		            <!--      Wizard container        -->
 		            <div class="wizard-container">
 		                <div class="card wizard-card" data-color="orange" id="wizard">
-		                <form action="" method="">
+		                <form action="" method="post">
 		                <!--        You can switch " data-color="green" "  with one of the next bright colors: "blue", "azure", "orange", "red"       -->
 
 		                    	<div class="wizard-header">
@@ -100,6 +100,11 @@ $scales = array(
                               <div class="row">
                               <div class="col-sm-10 col-sm-offset-1">
                                 <h2>Thanks!</h2>
+                                <?php if ($_POST['Send']) { ?>
+                                <div class="alert alert-success">
+                                  Thanks again for your support, we have received your information.
+                                </div>
+                                <?php } else { ?>
                                 <p>We have received your information. 
                                 </p>
                                 <p>
@@ -109,6 +114,19 @@ $scales = array(
                                 the DOI. If you have this in spreadsheet format, please feel free to e-mail it to us. 
                                 </p>
                                 </div>
+          <div class="col-sm-10 col-sm-offset-1" >
+              <div class="form-group">
+                  <label>Literature references</label>
+                  <textarea class="form-control" placeholder="" rows="9"></textarea>
+              </div>
+          </div>
+<div class="wizard-footer">
+  <div class="pull-right">
+        <input type='submit' class='btn btn-finish btn-fill btn-success btn-wd' name='Send' value='Send' />
+  </div>
+</div>
+                                <?php } ?>
+
                             </div>
                     </form>
                     </div>

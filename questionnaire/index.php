@@ -1,3 +1,43 @@
+<?php
+
+$fields = array(
+  1 => "Academia",
+  2 => "Consulting",
+  3 => "Government",
+  4 => "Industry",
+  5 => "Other",
+);
+
+$work = array(
+  1 => "Material stocks",
+  2 => "Material flows (related to stocks)",
+  3 => "Material flows (non-related to stocks)",
+  4 => "Bottom-up approach",
+  5 => "Top-down approach",
+  6 => "Stationary and quasi-stationary models",
+  7 => "Dynamic MFA models",
+  99 => "Other",
+);
+
+$work_areas = array(
+  1 => "Buildings and infrastructure",
+  2 => "Construction/demolition materials",
+  3 => "GHG emissions",
+  4 => "Energy demand",
+  5 => "Forecasting and scenario development",
+  99 => "Other",
+);
+
+$scales = array(
+  1 => "Urban",
+  2 => "Rural",
+  3 => "National",
+  4 => "Regional",
+  5 => "Global",
+  99 => "Other",
+);
+
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -46,7 +86,7 @@
 		            <!--      Wizard container        -->
 		            <div class="wizard-container">
 		                <div class="card wizard-card" data-color="orange" id="wizard">
-		                <form action="" method="">
+		                <form action="thanks.php" method="post">
 		                <!--        You can switch " data-color="green" "  with one of the next bright colors: "blue", "azure", "orange", "red"       -->
 
 		                    	<div class="wizard-header">
@@ -147,7 +187,7 @@
         <div class="col-sm-12">
             <h5 class="info-text">Information about your work</h5>
         </div>
-        <div class="col-sm-12 ">
+        <div class="col-sm-10 col-sm-offset-1">
             <div class="form-group">
                 <label>What field do you work in?</label>
                 <select class="form-control">
@@ -160,12 +200,12 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-10 col-sm-offset-1">
             <h5 class="info-text">My work includes...</h5>
             <p class="centertext">Mark all that apply</p>
       </div>
         <?php foreach ($work as $key => $value) { ?>
-        <div class="col-sm-12">
+        <div class="col-sm-10 col-sm-offset-1">
             <div class="form-group">
                   <label>
                         <input type="checkbox" name="work[<?php echo $key ?>]" value="true" <?php if ($key == 99) { ?> id="work" <?php } ?>>
@@ -174,7 +214,7 @@
             </div>
         </div>
         <?php } ?>
-        <div class="col-sm-12 otherinfo work_other">
+        <div class="col-sm-10 col-sm-offset-1 otherinfo work_other">
           <div class="form-group">
               <textarea class="form-control" name="work_other" placeholder="Please provide more details here"></textarea>
             </div>
@@ -186,7 +226,7 @@
             <p class="centertext">Mark all that apply</p>
         </div>
         <?php foreach ($work_areas as $key => $value) { ?>
-          <div class="col-sm-12">
+        <div class="col-sm-10 col-sm-offset-1">
               <div class="form-group">
                     <label>
                         <input type="checkbox" name="work_areas[<?php echo $key ?>]" value="true" <?php if ($key == 99) { ?> id="workarea" <?php } ?>>
@@ -195,7 +235,7 @@
               </div>
           </div>
         <?php } ?>
-        <div class="col-sm-12 otherinfo work_areas_other">
+        <div class="col-sm-10 col-sm-offset-1 otherinfo work_areas_other">
           <div class="form-group">
               <textarea class="form-control" name="work_areas_other" placeholder="Please provide more details here"></textarea>
             </div>
@@ -203,9 +243,9 @@
     </div>
   </div>
   <div class="tab-pane" id="research">
-      <h5 class="info-text">Does your work cover specific regions?</h5>
       <div class="row">
-        <div class="col-sm-12 ">
+      <h5 class="info-text">Does your work cover specific regions?</h5>
+        <div class="col-sm-10 col-sm-offset-1">
             <div class="form-group">
                 <select class="form-control" id="regions">
                     <option disabled="" selected="">- select -</option>
@@ -216,7 +256,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-sm-12 extra regions">
+        <div class="col-sm-10 col-sm-offset-1 extra regions">
           <div class="form-group">
               <textarea class="form-control" name="region" placeholder="Which?"></textarea>
             </div>
@@ -228,7 +268,7 @@
             <p class="centertext">Mark all that apply</p>
       </div>
         <?php foreach ($scales as $key => $value) { ?>
-        <div class="col-sm-12">
+        <div class="col-sm-10 col-sm-offset-1">
             <div class="form-group">
                   <label>
                         <input type="checkbox" name="scale[<?php echo $key ?>]" value="true" <?php if ($key == 99) { ?> id="scale" <?php } ?>>
@@ -237,9 +277,11 @@
             </div>
         </div>
         <?php } ?>
-      <h5 class="info-text">Does your work cover specific materials?</h5>
       <div class="row">
-        <div class="col-sm-12 ">
+      <div class="col-sm-12">
+      <h5 class="info-text">Does your work cover specific materials?</h5>
+      </div>
+        <div class="col-sm-10 col-sm-offset-1">
             <div class="form-group">
                 <select class="form-control" id="materials">
                     <option disabled="" selected="">- select -</option>
@@ -250,13 +292,13 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-sm-12 extra materials">
+        <div class="col-sm-10 col-sm-offset-1 extra materials">
           <div class="form-group">
               <textarea class="form-control" name="materials" placeholder="Which?"></textarea>
             </div>
         </div>
       </div>
-        <div class="col-sm-12 otherinfo scale_other">
+        <div class="col-sm-10 col-sm-offset-1 otherinfo scale_other">
           <div class="form-group">
               <textarea class="form-control" name="scale_other" placeholder="Please provide more details here"></textarea>
             </div>
@@ -269,10 +311,10 @@
           <div class="col-sm-5 col-sm-offset-1">
               <div class="form-group">
                   <label>Do you produce primary data in your work?</label>
-                  <select class="form-control">
+                  <select class="form-control" name="primary_data">
                       <option disabled="" selected="">- select -</option>
-                      <option>Yes</option>
-                      <option>No </option>
+                      <option value="1">Yes</option>
+                      <option value="2">No </option>
                   </select>
               </div>
           </div>
@@ -303,7 +345,7 @@
 <div class="wizard-footer">
   <div class="pull-right">
         <input type='button' class='btn btn-next btn-fill btn-success btn-wd' name='next' value='Next' />
-        <input type='button' class='btn btn-finish btn-fill btn-success btn-wd' name='finish' value='Finish' />
+        <input type='submit' class='btn btn-finish btn-fill btn-success btn-wd' name='finish' value='Finish' />
 </div>
 
 	                                <div class="pull-left">
