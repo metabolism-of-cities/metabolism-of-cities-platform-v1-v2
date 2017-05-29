@@ -143,13 +143,13 @@ $scales = array(
         <div class="col-sm-5 col-sm-offset-1">
             <div class="form-group">
                 <label>First Name</label>
-                <input type="text" class="form-control" name="name" >
+                <input type="text" class="form-control" name="firstname" >
             </div>
         </div>
         <div class="col-sm-5">
             <div class="form-group">
                 <label>Last Name</label>
-                <input type="text" class="form-control" name="name" >
+                <input type="text" class="form-control" name="lastname" >
             </div>
         </div>
         <div class="col-sm-10 col-sm-offset-1 ">
@@ -161,7 +161,7 @@ $scales = array(
         <div class="col-sm-5 col-sm-offset-1">
             <div class="form-group">
                 <label>City</label>
-                <input type="text" class="form-control" name="name">
+                <input type="text" class="form-control" name="city">
             </div>
         </div>
         <div class="col-sm-5 ">
@@ -171,6 +171,8 @@ $scales = array(
             </div>
         </div>
     </div>
+
+
     <div class="row">
         <div class="col-sm-12">
             <h5 class="info-text">Disclaimer</h5>
@@ -181,7 +183,7 @@ $scales = array(
         <div class="col-sm-11 col-sm-offset-1" style="margin-top:11px">
             <div class="form-group">
                   <label>
-                        <input type="checkbox" name="work[<?php echo $key ?>]" value="true" <?php if ($key == 99) { ?> id="work" <?php } ?>>
+                        <input type="checkbox" name="do_not_share" value="1" >
                         Do not share my information during the ISIE conference.
                   </label>
             </div>
@@ -196,7 +198,7 @@ $scales = array(
         <div class="col-sm-10 col-sm-offset-1">
             <div class="form-group">
                 <label>What field do you work in?</label>
-                <select class="form-control">
+                <select class="form-control" name="work_field">
                     <option disabled="" selected="">- select -</option>
                     <?php foreach ($fields as $key => $value) { ?>
                     <option value="<?php echo $key ?>"><?php echo $value ?></option>
@@ -226,6 +228,7 @@ $scales = array(
             </div>
         </div>
     </div>
+
     <div class="row">
         <div class="col-sm-12">
             <h5 class="info-text">Which of the following areas concerns your work on material stock analysis?</h5>
@@ -235,7 +238,7 @@ $scales = array(
         <div class="col-sm-10 col-sm-offset-1">
               <div class="form-group">
                     <label>
-                        <input type="checkbox" name="work_areas[<?php echo $key ?>]" value="true" <?php if ($key == 99) { ?> id="workarea" <?php } ?>>
+                        <input type="checkbox" name="areas[<?php echo $key ?>]" value="true" <?php if ($key == 99) { ?> id="workarea" <?php } ?>>
                         <?php echo $value ?>
                     </label>
               </div>
@@ -243,7 +246,7 @@ $scales = array(
         <?php } ?>
         <div class="col-sm-10 col-sm-offset-1 otherinfo work_areas_other">
           <div class="form-group">
-              <textarea class="form-control" name="work_areas_other" placeholder="Please provide more details here"></textarea>
+              <textarea class="form-control" name="areas_other" placeholder="Please provide more details here"></textarea>
             </div>
         </div>
     </div>
@@ -253,7 +256,7 @@ $scales = array(
       <h5 class="info-text">Does your work cover specific regions?</h5>
         <div class="col-sm-10 col-sm-offset-1">
             <div class="form-group">
-                <select class="form-control" id="regions">
+                <select class="form-control" id="regions" name="regions">
                     <option disabled="" selected="">- select -</option>
                     <option value="1">Yes</option>
                     <option value="0">No</option>
@@ -264,10 +267,11 @@ $scales = array(
       <div class="row">
         <div class="col-sm-10 col-sm-offset-1 extra regions">
           <div class="form-group">
-              <textarea class="form-control" name="region" placeholder="Which?"></textarea>
+              <textarea class="form-control" name="regions_other" placeholder="Which?"></textarea>
             </div>
         </div>
       </div>
+
     <div class="row">
         <div class="col-sm-12">
             <h5 class="info-text">What is the scale of your work?</h5>
@@ -277,40 +281,40 @@ $scales = array(
         <div class="col-sm-10 col-sm-offset-1">
             <div class="form-group">
                   <label>
-                        <input type="checkbox" name="scale[<?php echo $key ?>]" value="true" <?php if ($key == 99) { ?> id="scale" <?php } ?>>
+                        <input type="checkbox" name="scales[<?php echo $key ?>]" value="true" <?php if ($key == 99) { ?> id="scale" <?php } ?>>
                       <?php echo $value ?>
                   </label>
             </div>
         </div>
         <?php } ?>
+        <div class="col-sm-10 col-sm-offset-1 otherinfo scale_other">
+          <div class="form-group">
+              <textarea class="form-control" name="scales_other" placeholder="Please provide more details here"></textarea>
+            </div>
+        </div>
       <div class="row">
-      <div class="col-sm-12">
-      <h5 class="info-text">Does your work cover specific materials?</h5>
-      </div>
+        <div class="col-sm-12">
+          <h5 class="info-text">Does your work cover specific materials?</h5>
+        </div>
         <div class="col-sm-10 col-sm-offset-1">
             <div class="form-group">
-                <select class="form-control" id="materials">
+                <select class="form-control" name="materials" id="materials">
                     <option disabled="" selected="">- select -</option>
                     <option value="1">Yes</option>
                     <option value="0">No</option>
                 </select>
             </div>
         </div>
-      </div>
-      <div class="row">
         <div class="col-sm-10 col-sm-offset-1 extra materials">
           <div class="form-group">
-              <textarea class="form-control" name="materials" placeholder="Which?"></textarea>
+              <textarea class="form-control" name="materials_details" placeholder="Which?"></textarea>
             </div>
         </div>
       </div>
-        <div class="col-sm-10 col-sm-offset-1 otherinfo scale_other">
-          <div class="form-group">
-              <textarea class="form-control" name="scale_other" placeholder="Please provide more details here"></textarea>
-            </div>
-        </div>
     </div>
   </div>
+
+
   <div class="tab-pane" id="data">
       <div class="row">
           <h5 class="info-text">Last couple of questions about data use</h5>
@@ -327,7 +331,7 @@ $scales = array(
           <div class="col-sm-5">
               <div class="form-group">
                   <label>What type of data you use?</label>
-                  <textarea class="form-control" placeholder="" rows="9"></textarea>
+                  <textarea class="form-control" name="data_type" rows="9"></textarea>
               </div>
           </div>
       </div>
@@ -335,13 +339,13 @@ $scales = array(
           <div class="col-sm-5 col-sm-offset-1">
               <div class="form-group">
                   <label>How do you process, store, and archive your data?</label>
-                  <textarea class="form-control" placeholder="" rows="9"></textarea>
+                  <textarea class="form-control" name="data_details" rows="9"></textarea>
               </div>
           </div>
           <div class="col-sm-5">
               <div class="form-group">
                   <label>What software do you typically use for calculating MFA?</label>
-                  <textarea class="form-control" placeholder="" rows="9"></textarea>
+                  <textarea class="form-control" name="software" rows="9"></textarea>
               </div>
           </div>
 
@@ -350,7 +354,7 @@ $scales = array(
 </div>
 <div class="wizard-footer">
   <div class="pull-right">
-        <input type='button' class='btn btn-next btn-fill btn-success btn-wd' name='next' value='Next' />
+        <input type='button' class='btn btn-next btn-fill btn-success btn-wd' name='next' id="next" value='Next' />
         <input type='submit' class='btn btn-finish btn-fill btn-success btn-wd' name='finish' value='Finish' />
 </div>
 
@@ -430,6 +434,15 @@ $(function(){
       $(".regions").hide('fast');
     }
   });
+
+
+$("form input").on('keyup keypress', function(e) {
+  var keyCode = e.keyCode || e.which;
+  if (keyCode === 13) { 
+    e.preventDefault();
+    $("#next").click();
+  }
+});
 });
 </script>
 

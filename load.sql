@@ -1511,3 +1511,33 @@ CREATE TABLE `tags_research` (
   FOREIGN KEY (`tag`) REFERENCES `tags` (`id`) ON DELETE CASCADE,
   FOREIGN KEY (`research`) REFERENCES `research` (`id`) ON DELETE CASCADE
 ) ENGINE='InnoDB' COLLATE 'utf8_unicode_ci';
+
+
+CREATE TABLE `questionnaire` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `date` timestamp NOT NULL,
+  `ip` varchar(255) NOT NULL,
+  `browser` varchar(255) NOT NULL,
+  `firstname` varchar(100) NOT NULL,
+  `lastname` varchar(100) NOT NULL,
+  `affiliation` varchar(100) NOT NULL,
+  `city` varchar(100) NOT NULL,
+  `country` varchar(100) NOT NULL,
+  `do_not_share` tinyint(1) unsigned NOT NULL,
+  `work_field` tinyint unsigned NOT NULL,
+  `work` varchar(100) NOT NULL,
+  `work_other` text NOT NULL,
+  `areas` varchar(100) NOT NULL,
+  `areas_other` text NOT NULL,
+  `regions` varchar(100) NOT NULL,
+  `regions_other` text NOT NULL,
+  `scales` varchar(100) NOT NULL,
+  `scales_other` text NOT NULL,
+  `materials` tinyint(1) unsigned NOT NULL,
+  `materials_details` text NOT NULL,
+  `primary_data` tinyint(1) unsigned NOT NULL,
+  `data_type` text NOT NULL,
+  `data_details` text NOT NULL,
+  `software` text NOT NULL,
+  `literature` text NOT NULL
+) ENGINE='InnoDB' COLLATE 'utf8_unicode_ci';

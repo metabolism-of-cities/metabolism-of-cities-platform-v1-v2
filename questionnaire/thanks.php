@@ -1,41 +1,69 @@
 <?php
 
-$fields = array(
-  1 => "Academia",
-  2 => "Consulting",
-  3 => "Government",
-  4 => "Industry",
-  5 => "Other",
-);
+require_once '../functions.php';
 
-$work = array(
-  1 => "Material stocks",
-  2 => "Material flows (related to stocks)",
-  3 => "Material flows (non-related to stocks)",
-  4 => "Bottom-up approach",
-  5 => "Top-down approach",
-  6 => "Stationary and quasi-stationary models",
-  7 => "Dynamic MFA models",
-  99 => "Other",
-);
+if ($_POST['finish']) {
+  $info = getinfo();
+  if (is_array($_POST['areas'])) {
+    foreach ($_POST['areas'] as $key => $value) {
+      $areas .= $key . ",";
+    }
+  }
+  if (is_array($_POST['work'])) {
+    foreach ($_POST['work'] as $key => $value) {
+      $work .= $key . ",";
+    }
+  }
+  if (is_array($_POST['scales'])) {
+    foreach ($_POST['scales'] as $key => $value) {
+      $scales .= $key . ",";
+    }
+  }
 
-$work_areas = array(
-  1 => "Buildings and infrastructure",
-  2 => "Construction/demolition materials",
-  3 => "GHG emissions",
-  4 => "Energy demand",
-  5 => "Forecasting and scenario development",
-  99 => "Other",
-);
+  $post = array(
+  'firstname' => html($_POST['firstname']),
+  'lastname' => html($_POST['lastname']),
+  'affiliation' => html($_POST['affiliation']),
+  'city' => html($_POST['city']),
+  'country' => html($_POST['country']),
+  'do_not_share' => (int)$_POST['do_not_share'],
+  'work_field' => (int)$_POST['work_field'],
+  'work' => $work,
+  'work_other' => html($_POST['work_other']),
+  'areas' => $areas,
+  'areas_other' => html($_POST['areas_other']),
+  'regions' => (int)$_POST['regions'],
+  'regions_other' => html($_POST['regions_other']),
+  'scales' => $scales,
+  'scales_other' => html($_POST['scales_other']),
+  'materials' => (int)$_POST['materials'],
+  'materials_details' => html($_POST['materials_details']),
+  'primary_data' => (int)$_POST['primary_data'],
+  'data_type' => html($_POST['data_type']),
+  'data_details' => html($_POST['data_details']),
+  'software' => html($_POST['software']),
+  'browser' => html($_SERVER["HTTP_USER_AGENT"]),
+  'ip' => html($_SERVER["REMOTE_ADDR"]),
+  'post' => html($info),
+  );
+  $db->insert("questionnaire",$post);
+  $id = $db->lastInsertId();
+  $msg = 
+"The questionnaire was filled out. 
 
-$scales = array(
-  1 => "Urban",
-  2 => "Rural",
-  3 => "National",
-  4 => "Regional",
-  5 => "Global",
-  99 => "Other",
-);
+Name: " . mail_clean($_POST['firstname']) . "  " . mail_clean($_POST['lastname']) . "
+Date: " . date("r") . "
+ID: $id";
+  mailadmins($msg, "Questionnaire filled out");
+}
+
+if ($_POST['literature']) {
+  $id = (int)$_POST['id'];
+  $post = array(
+    'literature' => html($_POST['literature']),
+  );
+  $db->update("questionnaire",$post,"id = $id");
+}
 
 ?>
 <!doctype html>
@@ -101,7 +129,7 @@ $scales = array(
                               <div class="col-sm-10 col-sm-offset-1">
                                 <div class="alert alert-success">
                                 <h2 style="margin-top:5px">Thanks!</h2>
-                                <?php if ($_POST['Send']) { ?>
+                                <?php if ($_POST['literature']) { ?>
                                   Thanks again for your support, we have received your information.
                                 </div>
                                 </div>
@@ -125,12 +153,14 @@ $scales = array(
           <div class="col-sm-10 col-sm-offset-1" >
               <div class="form-group">
                   <label>Literature references</label>
-                  <textarea class="form-control" placeholder="" rows="9"></textarea>
+                  <textarea class="form-control" name="literature" rows="9"></textarea>
               </div>
           </div>
 <div class="wizard-footer">
   <div class="pull-right">
-        <input type='submit' class='btn btn-finish btn-fill btn-success btn-wd' name='Send' value='Send' />
+        <input type='submit' class='btn btn-finish btn-fill btn-success btn-wd' name='lit' value='Send' />
+        <input type="hidden" name="id" value="<?php echo $id ?>" />
+        <input type="hidden" name="hash" value="<?php echo encrypt("Questionnaire$id") ?>" />
   </div>
 </div>
                                 <?php } ?>
