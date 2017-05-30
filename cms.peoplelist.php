@@ -123,7 +123,8 @@ FROM people WHERE active IS TRUE $sql ORDER BY firstname, lastname");
        </td>
        <td>
       <a href="cms.mail.php?id=<?php echo $row['id'] ?>&amp;mail=6" class="btn btn-primary"><i class="fa fa-envelope"></i> Welcome</a>
-      <a href="cms.mail.php?id=<?php echo $row['id'] ?>&amp;mail=7" class="btn btn-primary"><i class="fa fa-envelope"></i> New pub.</a>
+      <a href="cms.mail.php?id=<?php echo $row['id'] ?>&amp;mail=7" class="btn btn-primary"><i class="fa fa-envelope"></i> New pub (self).</a>
+      <a href="cms.mail.php?id=<?php echo $row['id'] ?>&amp;mail=8" class="btn btn-primary"><i class="fa fa-envelope"></i> New pub (external).</a>
       
       </td>
     </tr>

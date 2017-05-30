@@ -1541,3 +1541,8 @@ CREATE TABLE `questionnaire` (
   `software` text NOT NULL,
   `literature` text NOT NULL
 ) ENGINE='InnoDB' COLLATE 'utf8_unicode_ci';
+
+INSERT INTO `mails` (`subject`, `content`)
+SELECT 'Metabolism of Cities - your publication was added', 'Dear NAME,\r\n\r\nThe Metabolism of Cities website is an open source platform for urban metabolism. We recently added a publication of yours to our site. Your publication was manually reviewed and tagged, and activated. We also sent out a tweet to our Twitter followers about this. If you have a moment, please have a look at the publications that we have on our site, and feel free to complement/correct any information.\r\n\r\nCurrently, we have the following publications in our database that have you listed as a (co-) author:\r\n\r\nPUBLICATION_LIST\r\n\r\nWe are hereby sending you a unique link that allows you to edit the details of these publications, of your own profile, and where you can add other publications. \r\n\r\nDASHBOARD_LINK\r\n\r\nIf you have any questions or comments, please don\'t hesitate to let us know at [mailto:info@metabolismofcities.org info@metabolismofcities.org].\r\n\r\nSincerely,\r\n\r\n*The Metabolism of Cities Team*\r\n\r\nAristide Athanassiadis\r\nGabriela Fernandez\r\nPaul Hoekman\r\nRachel Spiegel\r\nJoao Meirelles'
+FROM `mails`
+WHERE ((`id` = '7'));
