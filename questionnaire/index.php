@@ -191,22 +191,24 @@ $scales = array(
     </div>
   </div>
   <div class="tab-pane" id="type">
+
     <div class="row">
-        <div class="col-sm-12">
-            <h5 class="info-text">Information about your work</h5>
-        </div>
+        <div class="col-sm-10 col-sm-offset-1">
+            <h5 class="info-text">What field do you work in?</h5>
+            <p class="centertext">Mark all that apply</p>
+      </div>
+        <?php foreach ($fields as $key => $value) { ?>
         <div class="col-sm-10 col-sm-offset-1">
             <div class="form-group">
-                <label>What field do you work in?</label>
-                <select class="form-control" name="work_field">
-                    <option disabled="" selected="">- select -</option>
-                    <?php foreach ($fields as $key => $value) { ?>
-                    <option value="<?php echo $key ?>"><?php echo $value ?></option>
-                    <?php } ?>
-                </select>
+                  <label>
+                        <input type="checkbox" name="work_field[<?php echo $key ?>]" value="true">
+                      <?php echo $value ?>
+                  </label>
             </div>
         </div>
+        <?php } ?>
     </div>
+
     <div class="row">
         <div class="col-sm-10 col-sm-offset-1">
             <h5 class="info-text">My work includes...</h5>
