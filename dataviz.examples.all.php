@@ -7,10 +7,6 @@ $list = $db->query("SELECT * FROM datavisualizations WHERE
 date <= '2017-01-01'
 ORDER BY date DESC");
 
-if (date("Y-m-d") < 20170121) {
-  $voting = true;
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -92,7 +88,7 @@ if (date("Y-m-d") < 20170121) {
       <div class="panel panel-default">
       <div class="panel-heading"><?php echo $row['title'] ?></div>
       <div class="panel-body">
-          <a href="vote.php?id=<?php echo $row['id'] ?>" target="_blank">
+          <a href="datavisualizations/<?php echo $row['id'] ?>-<?php echo flatten($row['title']) ?>" target="_blank">
             <img src="media/dataviz/<?php echo $row['id'] ?>.jpg" alt="" />
           </a>
       </div>
