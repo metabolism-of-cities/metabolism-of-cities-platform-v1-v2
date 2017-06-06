@@ -255,6 +255,7 @@ AddDefaultCharset utf-8
     RewriteRule ^datavisualizations$ datavisualizations.php
     RewriteRule ^videos$ videos.php
     RewriteRule ^data$ data.php
+    RewriteRule ^starterpack$ starterpack.php
     RewriteRule ^data/(.*)$ data.$1.php
     RewriteRule ^stakeholders$ stakeholders.php
     RewriteRule ^datavisualization/?$ datavisualizations.php

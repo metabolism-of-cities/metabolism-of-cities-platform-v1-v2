@@ -178,16 +178,8 @@ $scales = array(
             <h5 class="info-text">Disclaimer</h5>
       </div>
       <div class="col-sm-11 col-sm-offset-1">
-      The information gathered in this questionnaire are collected and will be processes for the special session on Material Stocks during the ISIE conference. Information will then be processed to provide a general overview of the current state of research. If you wish that your information is not shared with other researchers please tick the following box.
+      The information gathered in this questionnaire are collected and will be processed for the special session on Material Stocks during the ISIE conference. Information will then be presented during the workshop to provide a general overview of the current state of research.
       </div>
-        <div class="col-sm-11 col-sm-offset-1" style="margin-top:11px">
-            <div class="form-group">
-                  <label>
-                        <input type="checkbox" name="do_not_share" value="1" >
-                        Do not share my information during the ISIE conference.
-                  </label>
-            </div>
-        </div>
     </div>
   </div>
   <div class="tab-pane" id="type">
