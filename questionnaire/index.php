@@ -367,6 +367,8 @@ $scales = array(
 	    <div class="footer">
 	        <div class="container text-center">
               Made by the Material Stock Special Session Task Force
+              <br />
+              Contact us at: tomer.fishman@yale.edu
 	        </div>
 	    </div>
 	</div>
