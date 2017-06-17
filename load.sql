@@ -1546,3 +1546,62 @@ INSERT INTO `mails` (`subject`, `content`)
 SELECT 'Metabolism of Cities - your publication was added', 'Dear NAME,\r\n\r\nThe Metabolism of Cities website is an open source platform for urban metabolism. We recently added a publication of yours to our site. Your publication was manually reviewed and tagged, and activated. We also sent out a tweet to our Twitter followers about this. If you have a moment, please have a look at the publications that we have on our site, and feel free to complement/correct any information.\r\n\r\nCurrently, we have the following publications in our database that have you listed as a (co-) author:\r\n\r\nPUBLICATION_LIST\r\n\r\nWe are hereby sending you a unique link that allows you to edit the details of these publications, of your own profile, and where you can add other publications. \r\n\r\nDASHBOARD_LINK\r\n\r\nIf you have any questions or comments, please don\'t hesitate to let us know at [mailto:info@metabolismofcities.org info@metabolismofcities.org].\r\n\r\nSincerely,\r\n\r\n*The Metabolism of Cities Team*\r\n\r\nAristide Athanassiadis\r\nGabriela Fernandez\r\nPaul Hoekman\r\nRachel Spiegel\r\nJoao Meirelles'
 FROM `mails`
 WHERE ((`id` = '7'));
+
+
+ALTER TABLE `analysis_options_types`
+RENAME TO `data_area`;
+
+ALTER TABLE `analysis`
+RENAME TO `data`;
+
+ALTER TABLE `analysis_options`
+RENAME TO `data_indicators`;
+
+ALTER TABLE `data_indicators`
+RENAME TO `data_group`;
+
+ALTER TABLE `data_group`
+CHANGE `type` `area` smallint(5) unsigned NOT NULL AFTER `id`;
+
+ALTER TABLE `data_group`
+RENAME TO `old_data`;
+
+CREATE TABLE `data_subarea` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `name` varchar(255) NOT NULL,
+  `data_area` smallint(5) unsigned NOT NULL,
+  FOREIGN KEY (`data_area`) REFERENCES `data_area` (`id`) ON DELETE CASCADE
+) ENGINE='InnoDB' COLLATE 'utf8_unicode_ci';
+
+
+CREATE TABLE `data_indicators` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `name` varchar(255) NOT NULL,
+  `type` int(10) unsigned NOT NULL,
+  FOREIGN KEY (`type`) REFERENCES `data_subarea` (`id`) ON DELETE CASCADE
+) ENGINE='InnoDB';
+
+
+ALTER TABLE `data_indicators`
+DROP FOREIGN KEY `data_indicators_ibfk_1`,
+ADD FOREIGN KEY (`type`) REFERENCES `data_subarea` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+
+ALTER TABLE `data_area`
+RENAME TO `data_areas`;
+
+ALTER TABLE `data_subarea`
+RENAME TO `data_subareas`;
+
+ALTER TABLE `data_subareas`
+DROP FOREIGN KEY `data_subareas_ibfk_1`,
+ADD FOREIGN KEY (`data_area`) REFERENCES `data_areas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+
+ALTER TABLE `old_data`
+DROP FOREIGN KEY `old_data_ibfk_1`;
+
+ALTER TABLE `data_subareas`
+CHANGE `data_area` `area` smallint(5) unsigned NOT NULL AFTER `name`;
+
+
+ALTER TABLE `data_indicators`
+CHANGE `type` `subarea` int(10) unsigned NOT NULL AFTER `name`;
