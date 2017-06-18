@@ -1602,6 +1602,43 @@ DROP FOREIGN KEY `old_data_ibfk_1`;
 ALTER TABLE `data_subareas`
 CHANGE `data_area` `area` smallint(5) unsigned NOT NULL AFTER `name`;
 
-
 ALTER TABLE `data_indicators`
 CHANGE `type` `subarea` int(10) unsigned NOT NULL AFTER `name`;
+
+ALTER TABLE `old_data`
+RENAME TO `old_data_indicators`;
+
+ALTER TABLE `data`
+RENAME TO `old_data`;
+
+CREATE TABLE `data` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `case_study` int(10) unsigned NOT NULL,
+  `result` decimal(15,2) DEFAULT NULL,
+  `year` year(4) DEFAULT NULL,
+  `notes` text COLLATE utf8_unicode_ci,
+  PRIMARY KEY (`id`),
+  KEY `case` (`case_study`),
+  CONSTRAINT `data_ibfk_2` FOREIGN KEY (`case_study`) REFERENCES `case_studies` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+ALTER TABLE `data`
+CHANGE `result` `result` decimal(15,2) NOT NULL AFTER `case_study`,
+ADD `indicator` int(10) unsigned NOT NULL AFTER `result`,
+CHANGE `year` `year` year(4) NOT NULL AFTER `indicator`,
+ADD `measure` varchar(100) NOT NULL AFTER `year`,
+ADD FOREIGN KEY (`indicator`) REFERENCES `data_indicators` (`id`) ON DELETE CASCADE;
+
+ALTER TABLE `data`
+CHANGE `measure` `unit` varchar(100) COLLATE 'utf8_unicode_ci' NOT NULL AFTER `year`,
+ADD `type` enum('per_capita','total') COLLATE 'utf8_unicode_ci' NOT NULL;
+
+ALTER TABLE `data`
+ADD `year_end` year(4) NULL AFTER `year`;
+
+ALTER TABLE `data`
+CHANGE `result` `value` decimal(15,2) NOT NULL AFTER `case_study`;
+
+ALTER TABLE `data`
+CHANGE `year` `year` smallint unsigned NOT NULL AFTER `indicator`,
+CHANGE `year_end` `year_end` smallint unsigned NULL AFTER `year`;

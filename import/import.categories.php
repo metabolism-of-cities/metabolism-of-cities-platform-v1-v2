@@ -2,15 +2,27 @@
 require_once '../functions.php';
 $count = 0;
 
-$file = "categories";
+$file = "data.tsv";
 $data = file_get_contents($file);
 $explode = explode("\n", $data);
 foreach ($explode as $value) {
   $sub = explode("\t", $value);
-  $area = $sub[0];
-  $subarea = $sub[1];
-  $indicator = $sub[2];
+  $paper = $sub[1];
+  $doi = $sub[0];
+  $city = $sub[2];
+  $area = $sub[3];
+  $subarea = $sub[4];
+  $year = $sub[5];
+  $year_end = $sub[6];
+  $indicator = $sub[7];
+  $data_value = $sub[8];
+  $unit = $sub[9];
+  $type = $sub[10];
+  $notes = $sub[11];
+  $replace = array("\r" => "");
+  $notes = strtr($notes, $replace);
   $count++;
+
   if ($area == 'Material') {
     $area = 'Materials';
   }
@@ -24,6 +36,37 @@ foreach ($explode as $value) {
     $subarea = $convert[$subarea];
   }
   if ($count > 1 && $area) {
+
+    if (!$doi) {
+      $doi = "No DOI was set";
+    }
+    $paper_id = $paper_titles[$paper];
+    if (!$paper_id) {
+    $check = $db->record("SELECT * FROM papers WHERE title = '".mysql_clean($paper)."' OR doi = '" . mysql_clean($doi)."'");
+      if (!$check->id) {
+        die("No paper was found. Searched for doi = $doi and title = <strong>$title</strong>, but no matches were found");
+      } else {
+        $paper_titles[$paper] = $check->id;
+        $paper_id = $check->id;
+      }
+    }
+
+    $case_id = $case_studies_id[$paper_id][$city];
+    if (!$case_id) {
+      $check = $db->record("SELECT * FROM case_studies WHERE paper = $paper_id AND name = '" . mysql_clean($city)."'");
+      $case_id = $check->id;
+      
+      if (!$check->id) {
+        $post = array(
+          'name' => mysql_clean($city),
+          'paper' => $paper_id,
+        );
+        $db->insert("case_studies",$post);
+        $case_id = $db->lastInsertId();
+        $case_studies_id[$paper_id][$city] = $case_id;
+      }
+    }
+
     $check = $db->record("SELECT * FROM data_areas WHERE name = '".mysql_clean($area)."'");
     if ($check->id) {
       $area_id = $check->id;
@@ -43,6 +86,7 @@ foreach ($explode as $value) {
         'area' => $area_id,
       );
       $db->insert("data_subareas",$post);
+
       $subarea_id = $db->lastInsertId();
     }
     $check = $db->record("SELECT * FROM data_indicators WHERE name = '".mysql_clean($indicator)."' AND subarea = $subarea_id");
@@ -56,5 +100,16 @@ foreach ($explode as $value) {
       $db->insert("data_indicators",$post);
       $indicator_id = $db->lastInsertId();
     }
+    $post = array(
+      'case_study' => $case_id,
+      'indicator' => $indicator_id,
+      'year' => $year,
+      'year_end' => $year_end ?: NULL,
+      'unit' => $unit,
+      'notes' => mysql_clean($notes),
+      'value' => $data_value,
+      'type' => $type == "total" ? "total" : "per_capita",
+    );
+    $db->insert("data",$post);
   }
 }

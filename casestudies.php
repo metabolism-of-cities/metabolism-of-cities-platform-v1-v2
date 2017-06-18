@@ -11,11 +11,32 @@ if ($_GET['preview']) {
 }
 
 $sql = false;
-if ((int)$_GET['message'] > 0) {
-  $type = (int)$_GET['message'];
-  $sql = "WHERE EXISTS (SELECT * FROM tags_papers WHERE tags_papers.paper = papers.id AND tags_papers.tag = $type)";
+
+if ($_GET['message'] == 'saved') {
+  $print = "Information has been saved";
 }
 
+$options = array(
+  "overview" => "Case Study Overview",
+  "indicators" => "Indicators",
+  "filters" => "Filter Data",
+  "download" => "Download Data",
+  "map" => "Map",
+);
+
+if (!$_GET['message']) {
+  $page = "overview";
+}
+
+if ($options[$_GET['message']]) {
+  $page = $_GET['message'];
+}
+
+if ($_GET['deleted']) {
+  $print = "Case study was deleted";
+}
+
+if ($page == "overview") {
 $list = $db->query("SELECT papers.*, case_studies.* 
 FROM case_studies 
   JOIN papers
@@ -23,34 +44,23 @@ FROM case_studies
   $sql 
 ORDER BY papers.year, case_studies.name
 ");
-
-if ($_GET['message'] == 'saved') {
-  $print = "Information has been saved";
+} elseif ($page == "indicators") {
+  $list = $db->query("SELECT 
+  i.*, a.name AS area, s.name AS subarea,
+  (SELECT COUNT(*) FROM data WHERE indicator = i.id) AS total
+  FROM data_indicators i
+  JOIN data_subareas s ON i.subarea = s.id
+  JOIN data_areas a ON s.area = a.id
+  ORDER BY a.name, s.name, i.name
+  ");
 }
 
-$studies = array(
-  87 => "Ecological Footprint",
-  85 => "EW MFA",
-  54 => "LCA",
-  65 => "PIOT",
-  86 => "SFA",
-);
-
-$options = $db->query("SELECT a.*, t.name AS type_name, t.id AS type,
-  (SELECT COUNT(*) FROM analysis WHERE analysis.analysis_option = a.id) AS total
-FROM analysis_options_types t
-  LEFT JOIN analysis_options a ON a.type = t.id
-ORDER BY t.id, a.name");
-
-if ($_GET['deleted']) {
-  $print = "Case study was deleted";
-}
 
 $count = $db->record("SELECT COUNT(*) AS total FROM case_studies");
-$count_indicators = $db->record("SELECT COUNT(*) AS total FROM analysis");
-$count_studies = $db->query("SELECT DISTINCT case_study FROM analysis");
+$count_indicators = $db->record("SELECT COUNT(*) AS total FROM data_indicators");
+$total_count = $db->record("SELECT COUNT(*) AS total FROM data");
 $count_per_study = $db->query("SELECT COUNT(*) AS total, case_study 
-FROM analysis 
+FROM data 
 GROUP BY case_study
 ");
 
@@ -87,7 +97,7 @@ foreach ($count_per_study as $row) {
       <div class="caption">
         <hgroup>
         <h2><?php echo $count->total ?></h2>
-        <h3>Total Case Studies</h3>
+        <h3>Case Studies</h3>
         </hgroup>
       </div>
     </div>
@@ -96,8 +106,8 @@ foreach ($count_per_study as $row) {
     <div class="thumbnail alert alert-warning">
       <div class="caption">
       <hgroup>
-        <h2><?php echo count($count_studies) ?></h2>
-        <h3>Case Studies Processed</h3>
+        <h2><?php echo $count_indicators->total ?></h2>
+        <h3>Total Indicators</h3>
       </hgroup>
       </div>
     </div>
@@ -106,8 +116,8 @@ foreach ($count_per_study as $row) {
     <div class="thumbnail alert alert-success">
       <div class="caption">
       <hgroup>
-        <h2><?php echo $count_indicators->total ?></h2>
-        <h3>Total Indicators</h3>
+        <h2><?php echo number_format($total_count->total,0) ?></h2>
+        <h3>Data Points</h3>
       </hgroup>
       </div>
     </div>
@@ -117,24 +127,17 @@ foreach ($count_per_study as $row) {
   <?php if ($print) { echo "<div class=\"alert alert-success\">$print</div>"; } ?>
 
 
-    <h2>Initial list with relevant studies</h2>
-
-  <div class="alert alert-info">
-    <strong><?php echo count($list) ?></strong> studies found.
-  </div>
-
   <ul class="nav nav-tabs">
-    <li<?php if (!$type) { echo ' class="active"'; } ?>><a href="page/casestudies">All</a></li>
-    <?php foreach ($studies as $key => $value) { ?>
-      <li<?php if ($type == $key) { echo ' class="active"'; } ?>><a href="page/casestudies/<?php echo $key ?>"><?php echo $value ?></a></li>
+    <?php foreach ($options as $key => $value) { ?>
+      <li<?php if ($page == $key) { echo ' class="active"'; } ?>><a href="page/casestudies/<?php echo $key ?>"><?php echo $value ?></a></li>
     <?php } ?>
   </ul>
 
-  <?php if ($list) { ?>
+  <?php if ($page == "overview") { ?>
 
   <table class="table table-striped ellipsis">
     <tr>
-      <th class="large">Region</th>
+      <th class="large">City</th>
       <th class="small">Year</th>
       <th class="small">
       <span class="explanation" data-toggle="tooltip" data-placement="bottom"  title="This displays the total number of indicators that have been extracted from this study, so far">
@@ -142,7 +145,7 @@ foreach ($count_per_study as $row) {
         <i class="fa fa-question-circle"></i>
       </span>
       </th>
-      <th class="large">Paper</th>
+      <th class="large">Publication</th>
       <th class="large">Authors</th>
       <th class="small hide">Information</th>
     </tr>
@@ -150,7 +153,7 @@ foreach ($count_per_study as $row) {
     <tr>
       <td><a href="casestudy/<?php echo $row['id'] ?>"><?php echo $row['name'] ?></a></td>
       <td><?php echo $row['year'] ?></td>
-      <td><span class="badge badge-info"><?php echo (int)$study_count[$row['id']] ?></span></td>
+      <td><a class="badge badge-info" href="casestudy/<?php echo $row['id'] ?>"><?php echo (int)$study_count[$row['id']] ?></a></td>
       <td><a href="publication/<?php echo $row['paper'] ?>"><?php echo $row['title'] ?></a></td>
       <td><?php echo $row['author'] ?></td>
       <td class="hide">
@@ -164,67 +167,29 @@ foreach ($count_per_study as $row) {
 
   <?php } ?>
 
-  <?php if (defined("ADMIN")) { ?>
-  <h2 id="meta">Meta Information</h2>
+  <?php if ($page == "indicators") { ?>
 
-  <p><strong><?php echo $count_indicators->total ?></strong> records found in total</p>
-
-  <?php if ($_GET['added']) { ?>
-
-    <div class="alert alert-success">
-      Information was saved
-    </div>
-
+  <table class="table table-striped ellipsis">
+    <tr>
+      <th class="small">Area</th>
+      <th class="small">Sub-area</th>
+      <th class="large">Indicator</th>
+      <th class="small">
+      <span class="explanation" data-toggle="tooltip" data-placement="bottom"  title="This displays the total number of indicators that have been extracted from this study, so far">
+        Quantity
+        <i class="fa fa-question-circle"></i>
+      </span>
+      </th>
+    </tr>
+  <?php foreach ($list as $row) { ?>
+    <tr>
+      <td><a href="data/areas/<?php echo $row['id'] ?>"><?php echo $row['area'] ?></a></td>
+      <td><a href="data/subareas/<?php echo $row['id'] ?>"><?php echo $row['subarea'] ?></a></td>
+      <td><a href="data/indicators/<?php echo $row['id'] ?>"><?php echo $row['name'] ?></a></td>
+      <td><a class="badge badge-info" href="data/indicators/<?php echo $row['id'] ?>"><?php echo (int)$row['total'] ?></a></td>
+    </tr>
   <?php } ?>
-
-  <div class="optionlist">
-
-  <?php $type = false; foreach ($options as $row) { ?>
-
-    <?php if ($row['type_name'] != $type ) { ?>
-      <?php if ($type) { ?>
-        <p>
-          <a href="admin.indicators.php?id=<?php echo $prevtype ?: $row['type']; ?>" class="btn btn-warning">
-            <i class="fa fa-plus"></i>
-            Add Type
-          </a>
-        </p>
-      <?php } ?>
-
-      <h3><?php echo $row['type_name'] ?></h3>
-      <?php if ($type) { ?></ul>
-      <?php } ?>
-      <ul class="nav nav-list">
-    <?php } $type = $row['type_name']; ?>
-
-    <li>
-      <a href="regional/options/<?php echo $row['id'] ?>/<?php echo flatten($row['name']) ?>">
-        <?php echo $row['name'] ?>
-        <span class="badge pull-right"><?php echo $row['total'] ?></span>
-      </a>
-    </li>
-
-  <?php $prevtype = $row['type']; } ?>
-
-  </ul>
-
-  <p>
-    <a href="admin.indicators.php?id=<?php echo $prevtype ?>" class="btn btn-warning">
-      <i class="fa fa-plus"></i>
-      Add Type
-    </a>
-  </p>
-
-  </div>
-
-  <h3>Manage Groups</h3>
-
-  <p>
-    <a href="admin.indicator.php" class="btn btn-warning">
-      <i class="fa fa-plus"></i>
-        Add Group
-    </a>
-  </p>
+  </table>
 
   <?php } ?>
 

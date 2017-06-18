@@ -1,9 +1,10 @@
 <?php
+$show_breadcrumbs = true;
 $skip_login = true;
 require_once 'functions.php';
 require_once 'functions.omat.php';
 $section = 5;
-$page = 99;
+$page = 2;
 
 $id = (int)$_GET['id'];
 
@@ -13,34 +14,16 @@ FROM case_studies
   ON case_studies.paper = papers.id
   WHERE case_studies.id = $id");
 
-$indicators = $db->query("SELECT * 
-FROM analysis 
-  JOIN analysis_options o ON analysis.analysis_option = o.id
-WHERE analysis.case_study = $id 
-ORDER BY o.name, analysis.year");
+$this_page = $info->name;
 
-foreach ($indicators as $row) {
-  if ($row['year']) {
-    $show_table[$row['name']] = true;
-    $table[$row['name']][$row['year']] = $row['result'];
-    $table[$row['name']][$row['year']] = $row['result'];
-  } 
-  if ($row['notes']) {
-    $infolist[$row['name']][] = $row['notes'];
-  }
-  $previous = $row['name'];
-}
+$indicators = $db->query("SELECT data.*, s.name AS subarea, a.name AS area, i.name AS indicator
+FROM data 
+  JOIN data_indicators i ON data.indicator = i.id
+  JOIN data_subareas s ON i.subarea = s.id
+  JOIN data_areas a ON s.area = a.id
+WHERE data.case_study = $id 
+ORDER BY i.name, data.year");
 
-if (defined("ADMIN") || $_COOKIE['preview']) {
-  $indicator_list = $db->query("SELECT * FROM analysis_options_types ORDER BY name");
-  if ($_GET['delete']) {
-    if (!count($indicators)) {
-      $db->query("DELETE FROM case_studies WHERE id = $id");
-      header("Location: " . URL . "casestudies.php?deleted=true");
-      exit();
-    }
-  }
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -48,6 +31,7 @@ if (defined("ADMIN") || $_COOKIE['preview']) {
     <?php echo $header ?>
     <title><?php echo $info->name ?> | Material Flow Analysis Case Studies | <?php echo SITENAME ?></title>
     <style type="text/css">
+    .explanation{border-bottom:2px dotted #999}
     .table.ellipsis{border-top:0}
     .table > tbody > tr > th {border-top:0}
     </style>
@@ -62,7 +46,7 @@ if (defined("ADMIN") || $_COOKIE['preview']) {
   <?php if ($print) { echo "<div class=\"alert alert-success\">$print</div>"; } ?>
 
   <dl class="dl-horizontal">
-    <dt>Paper</dt>
+    <dt>Publication</dt>
     <dd><a href="publication/<?php echo $info->paper ?>"><?php echo $info->title ?></a></dd>
     
     <dt>Author(s)</dt>
@@ -71,78 +55,80 @@ if (defined("ADMIN") || $_COOKIE['preview']) {
     <dt>City/Region</dt>
     <dd><?php echo $info->name ?></dd>
 
+    <dt>Data Points</dt>
+    <dd><?php echo count($indicators) ?></dd>
+
   </dl>
 
-  <?php if (!$_COOKIE['preview']) { ?>
-  <div class="well">
-    <em>We soon plan to provide per-capita material flow data from this paper
-    here. Stay tuned!</em>
-  </div>
-  <?php } ?>
-
-  <?php if ($indicators && (defined("ADMIN") || $_COOKIE['preview'])) { ?>
+  <?php if ($indicators) { ?>
 
     <h2>Data</h2>
 
      <table class="table table-striped">
        <tr>
-         <th>Material</th>
+         <th>Area</th>
+         <th>Sub-area</th>
+         <th>Indicator</th>
          <th>Year</th>
          <th>Value</th>
+         <th>Unit</th>
          <th>Comments</th>
        </tr>
        <?php foreach ($indicators as $row) { ?>
        <?php
-         if ((int)$row['result'] == $row['result']) {
+         if ((int)$row['value'] == $row['value']) {
            $decimals = 0;
          } else {
            $decimals = 2;
          }
        ?>
        <tr>
-         <?php if ($row['name'] == $name) { ?>
+         <td><?php echo $row['area'] ?></td>
+         <td><?php echo $row['subarea'] ?></td>
+         <?php if ($row['indicator'] == $indicator && false) { ?>
            <td></td>
          <?php } else { ?>
-         <td><?php echo $row['name'] ?></td>
+         <td><?php echo $row['indicator'] ?></td>
          <?php } ?>
-         <?php $name = $row['name']; ?>
+         <?php $indicator = $row['indicator']; ?>
 
          <td><?php echo $row['year'] ?></td>
-         <td><?php echo number_format($row['result'],$decimals) ?> <?php echo $row['measure'] ?></td>
-         <td><?php echo $row['notes'] ?></td>
+         <td><?php echo number_format($row['value'],$decimals) ?> </td>
+         <td><?php echo $row['unit'] ?></td>
+         <td>
+          <?php if ($row['notes']) { ?>
+            <span class="explanation" data-toggle="tooltip" data-placement="bottom"  title="<?php echo $row['notes'] ?>">
+              <i class="fa fa-question-circle"></i>
+              Comments
+            </span>
+         <?php } ?>
+         </td>
        </tr>
      <?php } ?>
      </table>
 
   <?php } ?>
 
-  <?php if (defined("ADMIN")) { ?>
-  <?php if (!$indicators) { ?>
-      <a href="casestudy.php?id=<?php echo $id ?>&amp;delete=true" onclick="javascript:return confirm('Are you sure?')" class="btn btn-danger">Delete this as a regional case study</a>
-  <?php } ?>
-    <h2>Manage meta information</h2>
-    <ul class="nav">
-    <?php foreach ($indicator_list as $row) { ?>
-      <li><a href="analysis/<?php echo $id ?>/<?php echo $row['id'] ?>"><?php echo $row['name'] ?></a></li>
-    <?php } ?>
-    </ul>
-
-  <?php } else { ?>
-
     <div class="alert alert-warning">
-      You can help! We want to go through this study and extract the
-      per-capita material flow data from it. By entering the numbers for
-      each study, we can generate one large overview of the material flow data
-      found on an urban level for many different cities, materials and year. Over
-      time, this could provide very useful and comparative insights for
-      researchers. We are working on this right now (first half of 2016). Are you
+      You can help! 
+      We have embarked upon the time-consuming but very rewarding task of
+      extracting urban metabolism figures from publications, in order to enable
+      fellow researchers to more easily and quickly access these figures and 
+      save time in their work. 
+      Although we already have a lot of data, there is still lots more out there.
+      Are you
       willing to help? <a href="page/contact">Get in touch!</a>
     </div>
 
-  <?php } ?>
-
-
 <?php require_once 'include.footer.php'; ?>
+
+<script type="text/javascript">
+$(function(){
+    $('[data-toggle="tooltip"]').tooltip({
+      container: 'body'
+    });
+});
+</script>
 
   </body>
 </html>
