@@ -42,11 +42,12 @@ FROM case_studies
   JOIN papers
   ON case_studies.paper = papers.id
   $sql 
-ORDER BY papers.year, case_studies.name
+ORDER BY case_studies.name, papers.year
 ");
 } elseif ($page == "indicators") {
   $list = $db->query("SELECT 
   i.*, a.name AS area, s.name AS subarea,
+  s.id AS subarea_id,
   (SELECT COUNT(*) FROM data WHERE indicator = i.id) AS total
   FROM data_indicators i
   JOIN data_subareas s ON i.subarea = s.id
@@ -138,13 +139,13 @@ foreach ($count_per_study as $row) {
   <table class="table table-striped ellipsis">
     <tr>
       <th class="large">City</th>
-      <th class="small">Year</th>
       <th class="small">
       <span class="explanation" data-toggle="tooltip" data-placement="bottom"  title="This displays the total number of indicators that have been extracted from this study, so far">
         Quantity
         <i class="fa fa-question-circle"></i>
       </span>
       </th>
+      <th class="small">Published</th>
       <th class="large">Publication</th>
       <th class="large">Authors</th>
       <th class="small hide">Information</th>
@@ -152,8 +153,8 @@ foreach ($count_per_study as $row) {
   <?php foreach ($list as $row) { ?>
     <tr>
       <td><a href="casestudy/<?php echo $row['id'] ?>"><?php echo $row['name'] ?></a></td>
-      <td><?php echo $row['year'] ?></td>
       <td><a class="badge badge-info" href="casestudy/<?php echo $row['id'] ?>"><?php echo (int)$study_count[$row['id']] ?></a></td>
+      <td><?php echo $row['year'] ?></td>
       <td><a href="publication/<?php echo $row['paper'] ?>"><?php echo $row['title'] ?></a></td>
       <td><?php echo $row['author'] ?></td>
       <td class="hide">
@@ -184,7 +185,7 @@ foreach ($count_per_study as $row) {
   <?php foreach ($list as $row) { ?>
     <tr>
       <td><a href="data/areas/<?php echo $row['id'] ?>"><?php echo $row['area'] ?></a></td>
-      <td><a href="data/subareas/<?php echo $row['id'] ?>"><?php echo $row['subarea'] ?></a></td>
+      <td><a href="data/subareas/<?php echo $row['subarea_id'] ?>"><?php echo $row['subarea'] ?></a></td>
       <td><a href="data/indicators/<?php echo $row['id'] ?>"><?php echo $row['name'] ?></a></td>
       <td><a class="badge badge-info" href="data/indicators/<?php echo $row['id'] ?>"><?php echo (int)$row['total'] ?></a></td>
     </tr>
