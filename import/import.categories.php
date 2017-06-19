@@ -31,6 +31,9 @@ foreach ($explode as $value) {
   }
   $convert = array(
     'wastewaterter production' => 'Wastewater production',
+    'others' => 'other',
+    'toatl' => 'total',
+    'buliding materials' => 'building materials',
   );
   if ($convert[$subarea]) {
     $subarea = $convert[$subarea];

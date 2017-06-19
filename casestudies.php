@@ -1,13 +1,28 @@
 <?php
 $show_breadcrumbs = true;
+$skip_third_level = true; // Hide empty third level from breadcrumbs
 $skip_login = true;
 require_once 'functions.php';
 require_once 'functions.omat.php';
 $section = 5;
 $page = 2;
 
-if ($_GET['preview']) {
-  setcookie("preview", "true", time()+60*60*24*7, "/");
+if ($_POST) {
+  if ($_POST['search'] == "area" && $_POST['area']) {
+    $area = (int)$_POST['area'];
+    $subarea = (int)$_POST['subarea'];
+    if ($subarea) {
+      header("Location: " . URL . "data/subareas/$subarea");
+      exit();
+    } else {
+      header("Location: " . URL . "data/areas/$area");
+      exit();
+    }
+  } elseif ($_POST['search'] == "city" && $_POST['city']) {
+      $city = (int)$_POST['city'];
+      header("Location: " . URL . "casestudy/$city");
+      exit();
+  }
 }
 
 $sql = false;
@@ -17,16 +32,24 @@ if ($_GET['message'] == 'saved') {
 }
 
 $options = array(
-  "overview" => "Case Study Overview",
+  "overview" => "Data Overview",
   "indicators" => "Indicators",
   "filters" => "Filter Data",
   "download" => "Download Data",
-  "map" => "Map",
+  //"map" => "Map",
 );
 
 if (!$_GET['message']) {
   $page = "overview";
+  $_GET['message'] = 'overview';
 }
+
+if ($_GET['message'] == "downloadnow") {
+  $_GET['message'] = 'download';
+  $warning = "We are currently working on the DOWNLOAD functionality. Please check back within 1-2 days (Jun 19-20, 2017)";
+}
+
+$this_page = $options[$_GET['message']];
 
 if ($options[$_GET['message']]) {
   $page = $_GET['message'];
@@ -48,11 +71,25 @@ ORDER BY case_studies.name, papers.year
   $list = $db->query("SELECT 
   i.*, a.name AS area, s.name AS subarea,
   s.id AS subarea_id,
+  a.id AS area_id,
   (SELECT COUNT(*) FROM data WHERE indicator = i.id) AS total
   FROM data_indicators i
   JOIN data_subareas s ON i.subarea = s.id
   JOIN data_areas a ON s.area = a.id
   ORDER BY a.name, s.name, i.name
+  ");
+} elseif ($page == "filters") {
+  $subareas = $db->query("SELECT * FROM data_subareas ORDER BY area, name");
+  $areas = $db->query("SELECT * FROM data_areas ORDER BY name");
+  $papers = $db->query("SELECT DISTINCT papers.id, papers.title 
+  FROM case_studies 
+    JOIN papers
+    ON case_studies.paper = papers.id
+  ORDER BY case_studies.name, papers.year
+  ");
+  $cities = $db->query("SELECT DISTINCT case_studies.name, case_studies.id
+  FROM case_studies 
+  ORDER BY name
   ");
 }
 
@@ -184,13 +221,121 @@ foreach ($count_per_study as $row) {
     </tr>
   <?php foreach ($list as $row) { ?>
     <tr>
-      <td><a href="data/areas/<?php echo $row['id'] ?>"><?php echo $row['area'] ?></a></td>
+      <td><a href="data/areas/<?php echo $row['area_id'] ?>"><?php echo $row['area'] ?></a></td>
       <td><a href="data/subareas/<?php echo $row['subarea_id'] ?>"><?php echo $row['subarea'] ?></a></td>
       <td><a href="data/indicators/<?php echo $row['id'] ?>"><?php echo $row['name'] ?></a></td>
       <td><a class="badge badge-info" href="data/indicators/<?php echo $row['id'] ?>"><?php echo (int)$row['total'] ?></a></td>
     </tr>
   <?php } ?>
   </table>
+
+  <?php } elseif ($page == "filters") { ?>
+
+
+    <h2>Configure your filters below</h2>
+    <form method="post" class="form form-horizontal">
+    
+      <fieldset>
+        <legend>Filter by area</legend>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Area</label>
+          <div class="col-sm-10">
+            <select name="area" class="form-control">
+                <option value=""></option>
+                <?php foreach ($areas as $row) { ?>
+                <option value="<?php echo $row['id'] ?>"<?php if ($row['id'] == $info->area) { echo ' selected'; } ?>><?php echo $row['name'] ?></option>
+              <?php } ?>
+            </select>
+          </div>
+        </div>
+        
+        <div class="form-group" id="subareas">
+          <label class="col-sm-2 control-label">Sub-area</label>
+          <div class="col-sm-10">
+            <select name="subarea" class="form-control">
+                <option value="" class="all">All</option>
+                <?php foreach ($subareas as $row) { ?>
+                <option class="area-<?php echo $row['area'] ?>" value="<?php echo $row['id'] ?>"<?php if ($row['id'] == $info->area) { echo ' selected'; } ?>><?php echo $row['name'] ?></option>
+              <?php } ?>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary" name="search" value="area">Search</button>
+          </div>
+        </div>
+        
+      </fieldset>
+
+      <fieldset>
+        <legend>Filter by city</legend>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">City</label>
+          <div class="col-sm-10">
+            <select name="city" class="form-control">
+                <option value=""></option>
+                <?php foreach ($cities as $row) { ?>
+                <option value="<?php echo $row['id'] ?>"<?php if ($row['name'] == $info->city) { echo ' selected'; } ?>><?php echo $row['name'] ?></option>
+              <?php } ?>
+            </select>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary" name="search" value="city">Search</button>
+          </div>
+        </div>
+        
+      </fieldset>
+
+
+      <fieldset class="hide">
+        <legend>Filter by publication</legend>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Publication</label>
+          <div class="col-sm-10">
+            <select name="paper" class="form-control">
+                <option value=""></option>
+                <?php foreach ($papers as $row) { ?>
+                <option value="<?php echo $row['id'] ?>"<?php if ($row['title'] == $info->title) { echo ' selected'; } ?>><?php echo $row['title'] ?></option>
+              <?php } ?>
+            </select>
+          </div>
+        </div>
+               
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary" name="search" value="paper">Search</button>
+          </div>
+        </div>
+ 
+      </fieldset>
+
+    </form>
+
+  <?php } elseif ($page == "download") { ?>
+
+
+    <div style="padding:10px">
+    <h1>Data Download</h1>
+    <?php if ($warning) { echo "<div class=\"alert alert-warning\">$warning</div>"; } ?>
+    <p>
+      On this page you can download the data in our database. This data is available in CSV format and can 
+      be downloaded by the click of a button. If you use the data, make sure to reference the original publication
+      (listed in the data overview).
+    </p>
+
+    <p>
+      <a href="page/casestudies/downloadnow" class="btn btn-primary btn-lg"><i class="fa fa-download"></i> Download data</a>
+    </p>
+
+    </div>
 
   <?php } ?>
 
@@ -200,6 +345,16 @@ foreach ($count_per_study as $row) {
 $(function(){
     $('[data-toggle="tooltip"]').tooltip({
       container: 'body'
+    });
+
+    $("#subareas").hide();
+    $("select[name='area']").change(function(){
+      var id = $(this).val();
+      $("#subareas").show();
+      $("#subareas option").hide();
+      $("#subareas .all").show();
+      $("#subareas .area-"+id).show();
+      console.log("showing .area-"+id);
     });
 });
 </script>

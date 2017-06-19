@@ -139,7 +139,9 @@
         <?php } else { ?>
           <li><a href="<?php echo $menu[$section]['url'] ?>"><?php echo $menu[$section]['label'] ?></a></li>
         <?php if ($this_page) { ?>
+        <?php if (!$skip_third_level) { ?>
           <li><a href="<?php echo $menu[$section]['menu'][$page]['url'] ?>"><?php echo $menu[$section]['menu'][$page]['label'] ?></a></li>
+        <?php } ?>
           <?php if ($add_page_to_breadcrumbs) { ?>
             <?php echo $add_page_to_breadcrumbs ?>
           <?php } ?>

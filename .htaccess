@@ -231,6 +231,7 @@ AddDefaultCharset utf-8
     RewriteRule ^casestudy/(.+)/?$ casestudy.php?id=$1
     RewriteRule ^data/indicators/([0-9]+)/?$ casestudy.php?indicator=$1
     RewriteRule ^data/subareas/([0-9]+)/?$ casestudy.php?subarea=$1
+    RewriteRule ^data/areas/([0-9]+)/?$ casestudy.php?area=$1
     RewriteRule ^preview/casestudies$ casestudies.php?preview=true
     RewriteRule ^people/([0-9]+)-(.+)?$ profile.php?id=$1
     RewriteRule ^people/?$ people.php

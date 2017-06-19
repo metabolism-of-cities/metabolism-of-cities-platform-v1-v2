@@ -9,6 +9,7 @@ $page = 2;
 $id = (int)$_GET['id'];
 $indicator = (int)$_GET['indicator'];
 $subarea = (int)$_GET['subarea'];
+$area = (int)$_GET['area'];
 
 if ($id) {
   $info = $db->record("SELECT papers.*, case_studies.* 
@@ -28,7 +29,8 @@ if ($id) {
   WHERE data.case_study = $id 
   ORDER BY i.name, data.year");
 } elseif ($indicator) {
-  $info = $db->record("SELECT i.*, s.name AS subarea, a.name AS area, i.name AS indicator
+  $info = $db->record("SELECT i.*, s.name AS subarea, a.name AS area, i.name AS indicator,
+  a.id AS area_id, s.id AS subarea_id
   FROM data_indicators i
     JOIN data_subareas s ON i.subarea = s.id
     JOIN data_areas a ON s.area = a.id
@@ -37,7 +39,8 @@ if ($id) {
   $this_page = $info->name;
 
   $indicators = $db->query("SELECT data.*, s.name AS subarea, a.name AS area, i.name AS indicator,
-  c.name AS city, papers.title, c.paper
+  c.name AS city, papers.title, c.paper,
+  a.id AS area_id, s.id AS subarea_id
   FROM data 
     JOIN data_indicators i ON data.indicator = i.id
     JOIN data_subareas s ON i.subarea = s.id
@@ -46,11 +49,36 @@ if ($id) {
     JOIN papers ON c.paper = papers.id
   WHERE i.id = $indicator 
   ORDER BY i.name, c.name, data.year");
+
+  $add_page_to_breadcrumbs = '<li><a href="page/casestudies/indicators">Indicators</a></li>';
+  $add_page_to_breadcrumbs .= '<li><a href="data/areas/'.$info->area_id.'">'.$info->area.'</a></li>';
+  $add_page_to_breadcrumbs .= '<li><a href="data/subareas/'.$info->subarea_id.'">'.$info->subarea.'</a></li>';
 } elseif ($subarea) {
-  $info = $db->record("SELECT s.*, s.name AS subarea, a.name AS area
+  $info = $db->record("SELECT s.*, s.name AS subarea, a.name AS area,
+  a.id AS area_id, s.id AS subarea_id
   FROM data_subareas s
     JOIN data_areas a ON s.area = a.id
     WHERE s.id = $subarea");
+
+  $this_page = $info->name;
+
+  $indicators = $db->query("SELECT data.*, s.name AS subarea, a.name AS area, i.name AS indicator,
+  c.name AS city, papers.title, c.paper, i.id AS indicator_id,
+  a.id AS area_id, s.id AS subarea_id
+  FROM data 
+    JOIN data_indicators i ON data.indicator = i.id
+    JOIN data_subareas s ON i.subarea = s.id
+    JOIN data_areas a ON s.area = a.id
+    JOIN case_studies c ON data.case_study = c.id
+    JOIN papers ON c.paper = papers.id
+  WHERE s.id = $subarea 
+  ORDER BY i.name, c.name, data.year");
+  $add_page_to_breadcrumbs = '<li><a href="page/casestudies/indicators">Indicators</a></li>';
+  $add_page_to_breadcrumbs .= '<li><a href="data/areas/'.$info->area_id.'">'.$info->area.'</a></li>';
+} elseif ($area) {
+  $info = $db->record("SELECT *,a.name AS area
+  FROM data_areas a
+    WHERE a.id = $area");
 
   $this_page = $info->name;
 
@@ -62,8 +90,14 @@ if ($id) {
     JOIN data_areas a ON s.area = a.id
     JOIN case_studies c ON data.case_study = c.id
     JOIN papers ON c.paper = papers.id
-  WHERE s.id = $subarea 
+  WHERE a.id = $area 
   ORDER BY i.name, c.name, data.year");
+
+  $add_page_to_breadcrumbs = '<li><a href="page/casestudies/indicators">Indicators</a></li>';
+}
+
+if ($_POST) {
+  $warning = "We are currently working on the DOWNLOAD functionality. Please check back within 1-2 days (Jun 19-20, 2017)";
 }
 
 ?>
@@ -85,8 +119,14 @@ if ($id) {
 
   <h1>Data Overview</h1>
 
+  <?php if ($warning) { echo "<div class=\"alert alert-warning\">$warning</div>"; } ?>
+
   <?php if ($print) { echo "<div class=\"alert alert-success\">$print</div>"; } ?>
 
+  <form method="post">
+
+  <input type="hidden" name="download" value="1" />
+  
   <dl class="dl-horizontal">
 
     <?php if ($id) { ?>
@@ -99,18 +139,30 @@ if ($id) {
     <dt>City/Region</dt>
     <dd><?php echo $info->name ?></dd>
 
-    <?php } elseif ($indicator || $subarea) { ?>
+    <?php } elseif ($indicator || $subarea || $area) { ?>
 
       <dt>Area</dt>
-      <dd><?php echo $info->area ?></dd>
+      <?php if ($area) { ?>
+        <dd><?php echo $info->area ?></dd>
+      <?php } else { ?>
+        <dd><a href="data/areas/<?php echo $info->area_id ?>"><?php echo $info->area ?></a></dd>
+      <?php } ?>
 
-      <dt>Sub-area</dt>
-      <dd><?php echo $info->subarea ?></dd>
+      <?php if (!$area) { ?>
 
-      <?php if ($indicator) { ?>
-      
-      <dt>Indicator</dt>
-      <dd><?php echo $info->name ?></dd>
+        <dt>Sub-area</dt>
+        <?php if ($subarea) { ?>
+          <dd><?php echo $info->subarea ?></dd>
+        <?php } else { ?>
+          <dd><a href="data/subareas/<?php echo $info->subarea_id ?>"><?php echo $info->subarea ?></a></dd>
+        <?php } ?>
+
+        <?php if ($indicator) { ?>
+        
+        <dt>Indicator</dt>
+        <dd><?php echo $info->name ?></dd>
+
+        <?php } ?>
 
       <?php } ?>
 
@@ -118,6 +170,8 @@ if ($id) {
 
     <dt>Data Points</dt>
     <dd><?php echo count($indicators) ?></dd>
+
+    <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-download"></i> Download data</button>
 
   </dl>
 
@@ -127,10 +181,10 @@ if ($id) {
 
      <table class="table table-striped">
        <tr>
-         <?php if ($indicator || $subarea) { ?>
+         <?php if ($indicator || $subarea || $area) { ?>
           <th>City</th>
           <th>Publication</th>
-          <?php if ($subarea) { ?>
+          <?php if ($subarea || $area) { ?>
             <th>Indicator</th>
           <?php } ?>
          <?php } elseif ($id) { ?>
@@ -152,10 +206,10 @@ if ($id) {
          }
        ?>
        <tr>
-         <?php if ($indicator || $subarea) { ?>
+         <?php if ($indicator || $subarea || $area) { ?>
            <td><a href="casestudy/<?php echo $row['case_study'] ?>"><?php echo $row['city'] ?></a></td>
            <td><a href="publication/<?php echo $row['paper'] ?>"><?php echo $row['title'] ?></a></td>
-           <?php if ($subarea) { ?>
+           <?php if ($subarea || $area) { ?>
            <td><a href="data/indicators/<?php echo $row['indicator_id'] ?>"><?php echo $row['indicator'] ?></a></td>
            <?php } ?>
          <?php } elseif ($id) { ?>
@@ -185,6 +239,11 @@ if ($id) {
        </tr>
      <?php } ?>
      </table>
+
+    <p>
+    <button type="submit" class="btn btn-primary "><i class="fa fa-download"></i> Download data</button>
+    </p>
+    </form>
 
   <?php } ?>
 
