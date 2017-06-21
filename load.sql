@@ -1584,7 +1584,7 @@ CREATE TABLE `data_indicators` (
 
 ALTER TABLE `data_indicators`
 DROP FOREIGN KEY `data_indicators_ibfk_1`,
-ADD FOREIGN KEY (`type`) REFERENCES `data_subarea` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+ADD FOREIGN KEY (`type`) REFERENCES `data_subarea` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE `data_area`
 RENAME TO `data_areas`;
@@ -1594,7 +1594,7 @@ RENAME TO `data_subareas`;
 
 ALTER TABLE `data_subareas`
 DROP FOREIGN KEY `data_subareas_ibfk_1`,
-ADD FOREIGN KEY (`data_area`) REFERENCES `data_areas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+ADD FOREIGN KEY (`data_area`) REFERENCES `data_areas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE `old_data`
 DROP FOREIGN KEY `old_data_ibfk_1`;
