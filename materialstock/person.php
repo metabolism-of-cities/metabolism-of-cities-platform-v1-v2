@@ -65,17 +65,6 @@ $people = true;
                             </div>
                             <hr>
                             <div class="text-center">
-                                <div class="row">
-                                    <div class="col-md-3 col-md-offset-1">
-                                        <h5><?php echo getCount($info->scales) ?><br><small>Scales</small></h5>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <h5><?php echo getCount($info->areas) ?><br><small>Areas</small></h5>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <h5><?php echo getCount($info->work) ?><br><small>Types of work</small></h5>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>

@@ -39,7 +39,7 @@
                         <p>Institutions</p>
                     </a>
                 </li>
-                <li class="<?php echo $people ? "active" : ""; ?>">
+                <li class="<?php echo $people && !$institutions ? "active" : ""; ?>">
                     <a href="people.php">
                         <i class="ti-user"></i>
                         <p>People</p>
@@ -72,6 +72,13 @@
                         <span class="icon-bar bar3"></span>
                     </button>
                     <a class="navbar-brand" href="#"><?php echo $title ?></a>
+                    <?php if ($show_legend) { ?>
+                    <ul class="legend">
+                        <?php foreach ($scales as $key => $value) { if ($key != 99) { ?>
+                            <li class="scale-<?php echo $key ?>" style="background:<?php echo $scales_colors[$key] ?>"><?php echo $value ?></li>
+                        <?php } } ?>
+                    </ul>
+                    <?php } ?>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right hide">

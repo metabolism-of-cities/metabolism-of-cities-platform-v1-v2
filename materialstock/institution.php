@@ -17,6 +17,8 @@ foreach ($hits as $row) {
 }
 
 $title = $affiliation;
+$institutions = true;
+$show_legend = true;
 
 function getCount($string) {
   $explode = explode(",", $string);
@@ -40,10 +42,13 @@ function makelist($array, $values) {
     <?php require_once 'include.head.php'; ?>
 	<title><?php echo $title ?></title>
     <style type="text/css">
-    .largerfont{font-size:145%}
+    .largerfont{text-align:center}
     .author img{max-width:90%}
     .author p.center{text-align:center}
-.card-user .author {margin-top:10px}
+    .card-user .author {margin-top:10px}
+    .map img{max-height:300px;}
+    .map{text-align:center}
+    .card h5{padding-top:40px;font-size:120%;text-align:center}
     </style>
 
 </head>
@@ -53,6 +58,14 @@ function makelist($array, $values) {
 
         <div class="content">
             <div class="container-fluid">
+
+<div class="row">
+<div class="card map">
+<p>
+  <img src="assets/maps/<?php echo $id ?>.png" alt="" />
+</p>
+</div>
+</div>
 
 <div class="row">
                     <div class="col-lg-4 col-md-5">
@@ -71,6 +84,14 @@ function makelist($array, $values) {
                                     <?php echo $city ?><br />
                                     <?php echo $country ?>
                                 </p>
+
+                    <h5>Representatives</h5>
+
+                    <div class="largerfont">
+                    <?php foreach ($people as $key => $name) { ?>
+                        <p><a href="person.php?id=<?php echo $key ?>"><?php echo $name ?></a></p>
+                    <?php } ?>
+                    </div>
                             </div>
                         </div>
                     </div>
@@ -110,13 +131,6 @@ function makelist($array, $values) {
 
 
                 </div>
-                    <h4>Representatives</h4>
-
-                    <ul class="largerfont">
-                    <?php foreach ($people as $key => $name) { ?>
-                        <li><a href="person.php?id=<?php echo $key ?>"><?php echo $name ?></a></li>
-                    <?php } ?>
-                    </ul>
 
             </div>
         </div>

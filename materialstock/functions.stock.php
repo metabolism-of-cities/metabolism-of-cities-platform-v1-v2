@@ -9,7 +9,7 @@ $affiliations = array(
 7 => "Nagoya University",
 8 => "Newcastle University",
 9 => "NTNU",
-//10 => "Politecnico di Milano",
+10 => "Politecnico di Milano",
 11 => "Ritsumeikan University",
 12 => "The University of Melbourne",
 13 => "TU Wien",
@@ -58,6 +58,14 @@ $scales = array(
   4 => "Regional",
   5 => "Global",
   99 => "Other",
+);
+
+$scales_colors = array(
+ 1 => "#D39600",
+ 2 => "#737373",
+ 3 => "#BF5002",
+ 4 => "#49861C",
+ 5 => "#17479A",
 );
 
 $primary_data = array(

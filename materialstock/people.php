@@ -3,7 +3,7 @@ require_once '../functions.php';
 require_once 'functions.stock.php';
 $people = true;
 $title = "People";
-$list = $db->query("SELECT * FROM questionnaire WHERE id > 7 ORDER BY firstname");
+$list = $db->query("SELECT * FROM questionnaire WHERE id > 7 AND id NOT IN(33) ORDER BY firstname");
 ?>
 <!doctype html>
 <html lang="en">

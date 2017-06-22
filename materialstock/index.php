@@ -92,7 +92,7 @@ unset($work[99]);
                                         <div class="numbers">
                                             <p>People</p>
                                             <a href="people.php">
-                                            <?php echo $all->total ?>
+                                            <?php echo $all->total-1 ?>
                                             </a>
                                         </div>
                                     </div>
