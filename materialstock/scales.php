@@ -8,7 +8,7 @@ $list = $db->query("SELECT * FROM questionnaire WHERE id > 7");
 foreach ($list as $row) { 
   $get_af = array_flip($affiliations);
   $institution = $get_af[$row['affiliation']];
-  $value = $row['work'];
+  $value = $row['scales'];
   $explode = explode(",", $value);
   foreach ($explode as $key => $value) {
     if ($value) {
@@ -27,9 +27,9 @@ function makelist($array, $values) {
   return $string ? substr($string, 0, -6) : "";
 }
 
-$homepage = true;
-$title = "Overview";
-unset($work[99]);
+$scales_page = true;
+$title = "Scales";
+unset($scales[99]);
 ?>
 <!doctype html>
 <html lang="en">
@@ -55,61 +55,11 @@ unset($work[99]);
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="card">
-                            <div class="content">
-                                <div class="row">
-                                    <div class="col-xs-5">
-                                        <div class="icon-big icon-warning text-center">
-                                            <i class="fa fa-graduation-cap"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-7">
-                                        <div class="numbers">
-                                            <p>Institutions</p>
-                                            <a href="institutions.php">
-                                            <?php echo count($affiliations) ?>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="footer">
-                                    <hr />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="card">
-                            <div class="content">
-                                <div class="row">
-                                    <div class="col-xs-5">
-                                        <div class="icon-big icon-success text-center">
-                                            <i class="ti-user"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-7">
-                                        <div class="numbers">
-                                            <p>People</p>
-                                            <a href="people.php">
-                                            <?php echo $all->total ?>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="footer">
-                                    <hr />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
 
                     <div class="col-md-12">
                         <div class="card">
                             <div class="header">
-                                <h4 class="title">Work</h4>
+                                <h4 class="title">Scales</h4>
                                 <p class="category">Breakdown by type</p>
                             </div>
                             <div class="content">
@@ -118,7 +68,7 @@ unset($work[99]);
                                 <table class="table table-striped">
                                     <thead>
                                         <th>Institution</th>
-                                        <?php foreach ($work as $key => $value) { ?>
+                                        <?php foreach ($scales as $key => $value) { ?>
                                             <th>
                                                 <?php echo $value ?>
                                             </th>
@@ -133,7 +83,7 @@ unset($work[99]);
                                               </a>
                                             </td>
                                             
-                                            <?php foreach ($work as $key => $value) { ?>
+                                            <?php foreach ($scales as $key => $value) { ?>
                                                 <td>
                                                   <?php if ($active[$aff][$key]) { ?>
                                                     <i class="fa fa-check-circle"></i>

@@ -16,7 +16,7 @@
     <link href="assets/css/animate.min.css" rel="stylesheet"/>
 
     <!--  Paper Dashboard core CSS    -->
-    <link href="assets/css/paper-dashboard.css" rel="stylesheet"/>
+    <link href="assets/css/paper-dashboard.css?refresh" rel="stylesheet"/>
 
 
     <!--  CSS for Demo Purpose, don't include it in your project     -->
@@ -29,4 +29,7 @@
     <link href="assets/css/themify-icons.css" rel="stylesheet">
     <style type="text/css">
     .hide{display:none}
+.main-panel > .content{    min-height: calc(100% - 150px);}
+.sidebar .sidebar-wrapper,.sidebar, .off-canvas-sidebar{width:260px}
+.main-panel{width:calc(100% - 260px)}
     </style>

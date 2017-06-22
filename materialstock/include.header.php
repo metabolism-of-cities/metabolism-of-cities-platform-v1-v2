@@ -15,21 +15,47 @@
             </div>
 
             <ul class="nav">
-                <li class="<?php echo !$id ? "active" : ""; ?>">
+                <li class="<?php echo $homepage ? "active" : ""; ?>">
                     <a href="index.php">
                         <i class="ti-panel"></i>
-                        <p>Overview</p>
+                        <p>Work</p>
                     </a>
                 </li>
-                <?php foreach ($list as $row) { ?>
-                <li class="<?php echo $id == $row['id'] ? "active" : ""; ?>">
-                    <a href="person.php?id=<?php echo $row['id'] ?>">
+                <li class="<?php echo $areas ? "active" : ""; ?>">
+                    <a href="areas.php">
+                        <i class="ti-layout"></i>
+                        <p>Areas</p>
+                    </a>
+                </li>
+                <li class="<?php echo $scales_page ? "active" : ""; ?>">
+                    <a href="scales.php">
+                        <i class="ti-map"></i>
+                        <p>Scales</p>
+                    </a>
+                </li>
+                <li class="<?php echo $institutions ? "active" : ""; ?>">
+                    <a href="institutions.php">
+                        <i class="ti-view-list-alt"></i>
+                        <p>Institutions</p>
+                    </a>
+                </li>
+                <li class="<?php echo $people ? "active" : ""; ?>">
+                    <a href="people.php">
                         <i class="ti-user"></i>
+                        <p>People</p>
+                    </a>
+                </li>
+                <?php if (false) { ?>
+                <?php foreach ($affiliations as $key => $value) { ?>
+                <li class="<?php echo $id == $key && $affiliation ? "active" : ""; ?>">
+                    <a href="institution.php?id=<?php echo $key ?>">
                         <p>
-                            <?php echo $row['affiliation'] ?>
+                            <?php echo substr($value, 0, 40) ?>
+                            <?php if (strlen($value) > 40) { echo '...'; } ?>
                         </p>
                     </a>
                 </li>
+                <?php } ?>
                 <?php } ?>
             </ul>
     	</div>
