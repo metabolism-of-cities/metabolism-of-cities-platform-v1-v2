@@ -25,7 +25,9 @@
                 <li class="<?php echo $id == $row['id'] ? "active" : ""; ?>">
                     <a href="person.php?id=<?php echo $row['id'] ?>">
                         <i class="ti-user"></i>
-                        <p><?php echo $row['firstname'] ?> <?php echo $row['lastname'] ?></p>
+                        <p>
+                            <?php echo $row['affiliation'] ?>
+                        </p>
                     </a>
                 </li>
                 <?php } ?>

@@ -3,7 +3,7 @@ require_once '../functions.php';
 
 $id = (int)$_GET['id'];
 $info = $db->record("SELECT * FROM questionnaire WHERE id = $id");
-$list = $db->query("SELECT * FROM questionnaire WHERE id > 7 ORDER BY firstname");
+$list = $db->query("SELECT * FROM questionnaire WHERE id > 7 ORDER BY affiliation");
 
 $fields = array(
   1 => "Academia",
