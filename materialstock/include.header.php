@@ -15,6 +15,12 @@
             </div>
 
             <ul class="nav">
+                <li class="<?php echo $institutions ? "active" : ""; ?>">
+                    <a href="institutions.php">
+                        <i class="ti-view-list-alt"></i>
+                        <p>Institutions</p>
+                    </a>
+                </li>
                 <li class="<?php echo $homepage ? "active" : ""; ?>">
                     <a href="index.php">
                         <i class="ti-panel"></i>
@@ -31,12 +37,6 @@
                     <a href="scales.php">
                         <i class="ti-map"></i>
                         <p>Scales</p>
-                    </a>
-                </li>
-                <li class="<?php echo $institutions ? "active" : ""; ?>">
-                    <a href="institutions.php">
-                        <i class="ti-view-list-alt"></i>
-                        <p>Institutions</p>
                     </a>
                 </li>
                 <li class="<?php echo $people && !$institutions ? "active" : ""; ?>">
@@ -72,13 +72,6 @@
                         <span class="icon-bar bar3"></span>
                     </button>
                     <a class="navbar-brand" href="#"><?php echo $title ?></a>
-                    <?php if ($show_legend) { ?>
-                    <ul class="legend">
-                        <?php foreach ($scales as $key => $value) { if ($key != 99) { ?>
-                            <li class="scale-<?php echo $key ?>" style="background:<?php echo $scales_colors[$key] ?>"><?php echo $value ?></li>
-                        <?php } } ?>
-                    </ul>
-                    <?php } ?>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right hide">

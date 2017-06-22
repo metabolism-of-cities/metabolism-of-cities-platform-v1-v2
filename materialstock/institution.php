@@ -60,14 +60,6 @@ function makelist($array, $values) {
             <div class="container-fluid">
 
 <div class="row">
-<div class="card map">
-<p>
-  <img src="assets/maps/<?php echo $id ?>.png" alt="" />
-</p>
-</div>
-</div>
-
-<div class="row">
                     <div class="col-lg-4 col-md-5">
                         <div class="card card-user">
                             <div class="content">
@@ -131,6 +123,21 @@ function makelist($array, $values) {
 
 
                 </div>
+<div class="row">
+<div class="card map">
+<p>
+  <img src="assets/maps/<?php echo $id ?>.png" alt="" />
+</p>
+
+                    <ul class="legend">
+                        <?php foreach ($scales as $key => $value) { if ($key != 99) { ?>
+                            <li class="scale-<?php echo $key ?>" style="background:<?php echo $scales_colors[$key] ?>"><?php echo $value ?></li>
+                        <?php } } ?>
+                    </ul>
+
+</div>
+</div>
+
 
             </div>
         </div>
