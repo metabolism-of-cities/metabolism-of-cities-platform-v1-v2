@@ -30,8 +30,6 @@
     <style type="text/css">
     .hide{display:none}
 .main-panel > .content{    min-height: calc(100% - 150px);}
-.sidebar .sidebar-wrapper,.sidebar, .off-canvas-sidebar{width:260px}
-.main-panel{width:calc(100% - 260px)}
     ul.legend{list-style:none;position:absolute;right:10px;top:10px}
     ul.legend li{display:block;margin-bottom:4px;margin-right:19px;padding:6px;font-weight:bold;color:#fff}
     </style>
