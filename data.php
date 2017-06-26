@@ -32,6 +32,10 @@ $page = 1;
      municipalities, ... With this big masterlist it will therefore also become
      possible to identify indicators for resource use and pollution emission.
      </p>
+
+     <p>
+      <a href="page/casestudies" class="btn btn-primary">View Current Dataset</a>
+     </p>
      
      <p>
      Our final goal is to
@@ -65,10 +69,10 @@ $page = 1;
       <li>Any other relevant task you can think of that enhances our project</li>
     </ul>
 
-    <p>
-      Are you interested? 
-      <a href="page/contact">Get in touch!</a>
-    </p>
+     <p>
+      <a href="page/casestudies" class="btn btn-primary">View Current Dataset</a>
+      <a href="page/contact" class="btn btn-success">Get involved!</a>
+     </p>
 
 <?php require_once 'include.footer.php'; ?>
 
