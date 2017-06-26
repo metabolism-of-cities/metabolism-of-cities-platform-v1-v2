@@ -2,23 +2,27 @@
 require_once '../functions.php';
 $count = 0;
 
-$file = "data.tsv";
+$file = "yves";
 $data = file_get_contents($file);
 $explode = explode("\n", $data);
 foreach ($explode as $value) {
-  $sub = explode("\t", $value);
+  $sub = explode(";", $value);
   $paper = $sub[1];
   $doi = $sub[0];
-  $city = $sub[2];
-  $area = $sub[3];
-  $subarea = $sub[4];
-  $year = $sub[5];
-  $year_end = $sub[6];
-  $indicator = $sub[7];
-  $data_value = $sub[8];
-  $unit = $sub[9];
-  $type = $sub[10];
-  $notes = $sub[11];
+  $region = $sub[2];
+  // region = 2
+  $city = $sub[3];
+  $mtu = $sub[4];
+  $area = $sub[5];
+  $subarea = $sub[6];
+  $year = $sub[7];
+  $year_end = $sub[8];
+  $indicator = $sub[9];
+  $data_value = $sub[10];
+  $unit = $sub[11];
+  $type = $sub[12];
+  $notes = $sub[13];
+  $month = $sub[14];
   $replace = array("\r" => "");
   $notes = strtr($notes, $replace);
   $count++;
@@ -45,7 +49,7 @@ foreach ($explode as $value) {
     }
     $paper_id = $paper_titles[$paper];
     if (!$paper_id) {
-    $check = $db->record("SELECT * FROM papers WHERE title = '".mysql_clean($paper)."' OR doi = '" . mysql_clean($doi)."'");
+    $check = $db->record("SELECT * FROM papers WHERE title = '".mysql_clean($paper)."' OR doi = '" . mysql_clean($doi)."' OR id = 10");
       if (!$check->id) {
         die("No paper was found. Searched for doi = $doi and title = <strong>$title</strong>, but no matches were found");
       } else {
@@ -112,6 +116,8 @@ foreach ($explode as $value) {
       'notes' => mysql_clean($notes),
       'value' => $data_value,
       'type' => $type == "total" ? "total" : "per_capita",
+      'mtu' => $mtu,
+      'month' => $month ?: NULL,
     );
     $db->insert("data",$post);
   }

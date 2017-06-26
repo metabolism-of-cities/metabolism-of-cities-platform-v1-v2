@@ -1642,3 +1642,7 @@ CHANGE `result` `value` decimal(15,2) NOT NULL AFTER `case_study`;
 ALTER TABLE `data`
 CHANGE `year` `year` smallint unsigned NOT NULL AFTER `indicator`,
 CHANGE `year_end` `year_end` smallint unsigned NULL AFTER `year`;
+
+ALTER TABLE `data`
+ADD `month` smallint(5) unsigned NULL AFTER `year_end`,
+ADD `mtu` varchar(200) NULL AFTER `month`;
