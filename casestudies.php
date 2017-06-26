@@ -332,7 +332,7 @@ foreach ($count_per_study as $row) {
     </p>
 
     <p>
-      <a href="page/casestudies/downloadnow" class="btn btn-primary btn-lg"><i class="fa fa-download"></i> Download data</a>
+      <a href="data/download" class="btn btn-primary btn-lg"><i class="fa fa-download"></i> Download data</a>
     </p>
 
     </div>

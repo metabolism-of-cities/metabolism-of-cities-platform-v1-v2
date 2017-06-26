@@ -11,7 +11,19 @@ $indicator = (int)$_GET['indicator'];
 $subarea = (int)$_GET['subarea'];
 $area = (int)$_GET['area'];
 
-if ($id) {
+if ($_GET['download']) {
+  $indicators = $db->query("SELECT data.*, s.name AS subarea, a.name AS area, i.name AS indicator,
+  c.name AS city, papers.title, c.paper, i.id AS indicator_id,
+  a.id AS area_id, s.id AS subarea_id, papers.doi
+  FROM data 
+    JOIN data_indicators i ON data.indicator = i.id
+    JOIN data_subareas s ON i.subarea = s.id
+    JOIN data_areas a ON s.area = a.id
+    JOIN case_studies c ON data.case_study = c.id
+    JOIN papers ON c.paper = papers.id
+  ORDER BY i.name, c.name, data.year");
+  $_POST['download'] = true;
+} elseif ($id) {
   $info = $db->record("SELECT papers.*, case_studies.* 
   FROM case_studies 
     JOIN papers
