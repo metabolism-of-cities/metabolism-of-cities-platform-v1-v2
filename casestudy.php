@@ -183,11 +183,13 @@ if ($_POST) {
        <tr>
          <?php if ($indicator || $subarea || $area) { ?>
           <th>City</th>
+          <th>MTU</th>
           <th>Publication</th>
           <?php if ($subarea || $area) { ?>
             <th>Indicator</th>
           <?php } ?>
          <?php } elseif ($id) { ?>
+         <th>MTU</th>
          <th>Area</th>
          <th>Sub-area</th>
          <th>Indicator</th>
@@ -208,11 +210,13 @@ if ($_POST) {
        <tr>
          <?php if ($indicator || $subarea || $area) { ?>
            <td><a href="casestudy/<?php echo $row['case_study'] ?>"><?php echo $row['city'] ?></a></td>
+           <td><?php echo $row['mtu'] ?></td>
            <td><a href="publication/<?php echo $row['paper'] ?>"><?php echo $row['title'] ?></a></td>
            <?php if ($subarea || $area) { ?>
            <td><a href="data/indicators/<?php echo $row['indicator_id'] ?>"><?php echo $row['indicator'] ?></a></td>
            <?php } ?>
          <?php } elseif ($id) { ?>
+           <td><?php echo $row['mtu'] ?></td>
            <td><?php echo $row['area'] ?></td>
            <td><?php echo $row['subarea'] ?></td>
            <?php if ($row['indicator'] == $previous_indicator && false) { ?>
