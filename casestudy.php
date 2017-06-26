@@ -21,11 +21,14 @@ if ($id) {
   $this_page = $info->name;
 
   $indicators = $db->query("SELECT data.*, s.name AS subarea, a.name AS area, i.name AS indicator,
-  i.id AS indicator_id
+  i.id AS indicator_id,
+  papers.title, c.name AS city, papers.title, papers.doi
   FROM data 
     JOIN data_indicators i ON data.indicator = i.id
     JOIN data_subareas s ON i.subarea = s.id
     JOIN data_areas a ON s.area = a.id
+    JOIN case_studies c ON data.case_study = c.id
+    JOIN papers ON c.paper = papers.id
   WHERE data.case_study = $id 
   ORDER BY i.name, data.year");
 } elseif ($indicator) {
@@ -40,7 +43,7 @@ if ($id) {
 
   $indicators = $db->query("SELECT data.*, s.name AS subarea, a.name AS area, i.name AS indicator,
   c.name AS city, papers.title, c.paper,
-  a.id AS area_id, s.id AS subarea_id
+  a.id AS area_id, s.id AS subarea_id, papers.doi
   FROM data 
     JOIN data_indicators i ON data.indicator = i.id
     JOIN data_subareas s ON i.subarea = s.id
@@ -64,7 +67,7 @@ if ($id) {
 
   $indicators = $db->query("SELECT data.*, s.name AS subarea, a.name AS area, i.name AS indicator,
   c.name AS city, papers.title, c.paper, i.id AS indicator_id,
-  a.id AS area_id, s.id AS subarea_id
+  a.id AS area_id, s.id AS subarea_id, papers.doi
   FROM data 
     JOIN data_indicators i ON data.indicator = i.id
     JOIN data_subareas s ON i.subarea = s.id
@@ -83,7 +86,7 @@ if ($id) {
   $this_page = $info->name;
 
   $indicators = $db->query("SELECT data.*, s.name AS subarea, a.name AS area, i.name AS indicator,
-  c.name AS city, papers.title, c.paper, i.id AS indicator_id
+  c.name AS city, papers.title, c.paper, i.id AS indicator_id, papers.doi
   FROM data 
     JOIN data_indicators i ON data.indicator = i.id
     JOIN data_subareas s ON i.subarea = s.id
@@ -97,6 +100,7 @@ if ($id) {
 }
 
 if ($_POST) {
+  require_once 'data.export.php';
   $warning = "We are currently working on the DOWNLOAD functionality. Please check back within 1-2 days (Jun 19-20, 2017)";
 }
 
@@ -169,7 +173,7 @@ if ($_POST) {
     <?php } ?>
 
     <dt>Data Points</dt>
-    <dd><?php echo count($indicators) ?></dd>
+    <dd><?php echo number_format(count($indicators),0) ?></dd>
 
     <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-download"></i> Download data</button>
 
