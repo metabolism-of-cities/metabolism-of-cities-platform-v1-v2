@@ -142,7 +142,7 @@ if ($_POST['literature']) {
                                 </div>
                                 <?php } else { ?>
                                 <p>We have received your information. 
-                                  This is all we need for the special session. Thank you!
+                                  You will be added to the mailing list and listed on the site. We'll be in touch. Thank you!
                                 </p>
                                 </div>
                                 </div>
