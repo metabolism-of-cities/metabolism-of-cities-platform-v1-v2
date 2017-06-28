@@ -152,10 +152,16 @@ $scales = array(
                 <input type="text" class="form-control" name="lastname" >
             </div>
         </div>
-        <div class="col-sm-10 col-sm-offset-1 ">
+        <div class="col-sm-5 col-sm-offset-1 ">
             <div class="form-group">
                 <label>Affiliation</label>
                 <input type="text" class="form-control" name="affiliation">
+            </div>
+        </div>
+        <div class="col-sm-5 ">
+            <div class="form-group">
+                <label>E-mail</label>
+                <input type="text" class="form-control" name="email">
             </div>
         </div>
         <div class="col-sm-5 col-sm-offset-1">

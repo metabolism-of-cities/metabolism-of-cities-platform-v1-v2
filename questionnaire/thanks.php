@@ -46,6 +46,7 @@ if ($_POST['finish']) {
   'primary_data' => (int)$_POST['primary_data'],
   'data_type' => html($_POST['data_type']),
   'data_details' => html($_POST['data_details']),
+  'email' => html($_POST['email']),
   'software' => html($_POST['software']),
   'browser' => html($_SERVER["HTTP_USER_AGENT"]),
   'ip' => html($_SERVER["REMOTE_ADDR"]),

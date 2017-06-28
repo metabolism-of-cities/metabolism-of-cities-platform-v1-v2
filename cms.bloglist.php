@@ -26,6 +26,12 @@ $list = $db->query("SELECT * FROM blog ORDER BY date DESC");
     <title>Blog Posts | <?php echo SITENAME ?></title>
     <style type="text/css">
     .active-0{opacity:0.6;}
+  td {
+      max-width: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+  }
     </style>
   </head>
 
@@ -34,6 +40,8 @@ $list = $db->query("SELECT * FROM blog ORDER BY date DESC");
 <?php require_once 'include.header.php'; ?>
 
   <h1>Blog Posts</h1>
+
+  <p><a href="cms.blog.php">Add Blog</a></p>
 
   <?php if ($print) { echo "<div class=\"alert alert-success\">$print</div>"; } ?>
 

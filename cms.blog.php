@@ -7,6 +7,12 @@ $id = (int)$_GET['id'];
 $sub_page = $id ? 1 : 2;
 
 if ($_POST) {
+
+  $length = strlen($_POST['content']);
+  if ($length < 20) {
+    die("Seems like this post had no content. Not saving this, please go back and review.");
+  }
+
   $post = array(
     'title' => html($_POST['title']),
     'date' => mysql_clean(format_date("Y-m-d", $_POST['date'])),

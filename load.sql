@@ -1646,3 +1646,14 @@ CHANGE `year_end` `year_end` smallint unsigned NULL AFTER `year`;
 ALTER TABLE `data`
 ADD `month` smallint(5) unsigned NULL AFTER `year_end`,
 ADD `mtu` varchar(200) NULL AFTER `month`;
+
+ALTER TABLE `blog`
+ADD `type` enum('blog','news') NOT NULL DEFAULT 'blog';
+
+ALTER TABLE `blog`
+ADD INDEX `date` (`date`),
+ADD INDEX `active` (`active`),
+ADD INDEX `type` (`type`);
+
+ALTER TABLE `questionnaire`
+ADD `email` varchar(255) COLLATE 'utf8_unicode_ci' NULL AFTER `work_other`;
