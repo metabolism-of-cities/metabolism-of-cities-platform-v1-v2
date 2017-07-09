@@ -685,3 +685,9 @@ RewriteRule ^(.+)\.(\d+)\.(js|css|png|jpe?g|gif)$ $1.$3 [L]
         Allow from all
     </FilesMatch>
 </IfModule>
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# NOTE this account's php is controlled via FPM and the vhost, this is a place holder.
+# Do not edit. This next line is to support the cPanel php wrapper (php_cli).
+# AddType application/x-httpd-ea-php71 .php .phtml
+# php -- END cPanel-generated handler, do not edit
