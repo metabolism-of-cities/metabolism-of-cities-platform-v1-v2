@@ -887,7 +887,6 @@ $topic = ID == 2 ? "EPR" : "Urban Metabolism";
 $version = '1.5 beta';
 
 // Run to get the total lines for the newsletter: git ls-files *php | xargs wc -l
-
 if ((!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == "") && PRODUCTION && !$skip_ssl) {
   $redirect = "https://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
   header("Location: $redirect");
