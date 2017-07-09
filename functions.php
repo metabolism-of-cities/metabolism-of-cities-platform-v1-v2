@@ -1,4 +1,5 @@
 <?php
+
 if (!file_exists(__DIR__ . '/config.php')) {
   die("Config file not found! Read the readme file to create your configuration file first");
 }
