@@ -41,7 +41,7 @@ $header = '
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/font-awesome.4.2.0.css" rel="stylesheet" />
-    <link href="css/styles.'.$css.'.css" rel="stylesheet" />
+    <link href="css/styles.css?reload='.$css.'" rel="stylesheet" />
     <link href="css/custom-'.ID.'.css" rel="stylesheet" />
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -888,4 +888,9 @@ $version = '1.5 beta';
 
 // Run to get the total lines for the newsletter: git ls-files *php | xargs wc -l
 
+if ((!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == "") && PRODUCTION && !$skip_ssl) {
+  $redirect = "https://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+  header("Location: $redirect");
+  exit();
+}
 ?>
