@@ -675,10 +675,8 @@ FileETag None
 # To understand why this is important and a better idea than `*.css?v231`, read:
 # http://stevesouders.com/blog/2008/08/23/revving-filenames-dont-use-querystring
 
-<IfModule mod_rewrite.c>
-   RewriteCond %{REQUEST_FILENAME} !-f
-   RewriteRule ^(.+)\.(\d+)\.(js|css|png|jpe?g|gif)$ $1.$3 [L]
-</IfModule>
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.+)\.(\d+)\.(js|css|png|jpe?g|gif)$ $1.$3 [L]
 
 <IfModule mod_headers.c>
     <FilesMatch "\.(xlsx|XLSX)$">
