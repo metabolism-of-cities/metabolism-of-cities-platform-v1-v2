@@ -580,7 +580,12 @@ function nameScraper($string, $insert = true) {
       $explode_space = explode(" ", $name);
       $firstname = trim($explode_space[0]);
       $lastname = trim($explode_space[1]);
-      if ($explode_space[2]) {
+      if ($explode_space[3]) {
+        // If there are four names, we expect this to be firstname firstname lastname lastname
+        $firstname .= " " . trim($explode_space[2]);
+        $lastname .= " " . trim($explode_space[3]);
+      } elseif ($explode_space[2]) {
+        // If thre are three names we expect two last names
         $lastname .= " " . trim($explode_space[2]);
       }
     }
