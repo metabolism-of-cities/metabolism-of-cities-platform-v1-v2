@@ -572,7 +572,7 @@ function nameScraper($string, $insert = true) {
       $firstname = trim($comma_explode[1]);
       $lastname = trim($comma_explode[0]);
     } else {
-      // If this has no commas then we assume it is "Firstname Lastname" or
+      // If this has no commas then we assume it is "Firstname Lastname"
       // This is error prone as names could consist of several firstnames or lastnames
       // But this will give a good-enough first result, and manual checking is
       // required anyway. 
@@ -580,6 +580,9 @@ function nameScraper($string, $insert = true) {
       $explode_space = explode(" ", $name);
       $firstname = trim($explode_space[0]);
       $lastname = trim($explode_space[1]);
+      if ($explode_space[2]) {
+        $lastname .= " " . trim($explode_space[2]);
+      }
     }
     if ($lastname) {
       $set_lastname = addslashes($lastname);
