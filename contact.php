@@ -5,6 +5,11 @@ $section = 2;
 $page = 5;
 
 $title = "Contact Us";
+
+if ($_GET['join']) {
+  $title = "Join Metabolism of Cities";
+}
+
 $publication = (int)$_GET['publication'];
 if ($publication) {
   $info = $db->record("SELECT * FROM papers WHERE id = $publication AND status = 'active'");
@@ -74,6 +79,12 @@ This relates to the following publication:
           Fill out the form below to report incomplete or missing information for the following 
           publication: 
           <a href="publication/<?php echo $publication ?>"><?php echo $info->title ?></a>
+        <?php } elseif ($_GET['join']) { ?>
+          We are always looking for volunteers to join <a href="page/team">our team</a>. We welcome
+          students, academics, professionals and enthusiasts. We can use a helping hand with uploading
+          and classifying publications, extracting data, but also need help with design, programming, 
+          and social media outreach. So whatever your skillset and interests are, if you are keen to 
+          help please be in touch!
         <?php } else { ?>
           You can contact us at <a href="mailto:<?php echo EMAIL ?>"><?php echo EMAIL ?></a>, 
           or by filling out the form below.

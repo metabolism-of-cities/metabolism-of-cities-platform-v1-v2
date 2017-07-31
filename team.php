@@ -87,7 +87,7 @@ $page = 3;
           </li>
         </ul>
         <p class="jumpdown">
-          <a class="btn btn-lg btn-primary" href="page/contact" role="button">Join now &raquo;</a>
+          <a class="btn btn-lg btn-primary" href="join" role="button">Join now &raquo;</a>
         </p>
       </div>
 

@@ -82,17 +82,27 @@ if ($id) {
 
 <?php if ($home) { ?>
 
-  <div class="jumbotron">
+
+</div>
+<div class="bg-blue text-white py-4">
+            <div class="container">
+              <div class="row text-center text-lg-left">
+
     <h1>Publication Collections</h1>
     <p>
       This section provides an overview of the main classifications that have been used to group the different publications together.
     </p>
   </div>
 
+</div>
+</div>
+</div>
+<div class="container">
+
   <?php foreach ($list as $row) { $pubs = $publications[$row['id']]; ?>
   <h2 id="section<?php echo $row['id'] ?>"><a href="publications/collections/<?php echo $row['id'] ?>"><?php echo $row['name'] ?></a></h2>
 
-  <div class="alert alert-info">
+  <div class="alert alert-secondary">
     <strong><?php echo $row['total'] ?></strong> publications found.
     <a href="publications/collections/<?php echo $row['id'] ?>" class="btn btn-default right">View All</a>
   </div>
@@ -112,19 +122,21 @@ if ($id) {
 <?php } else { ?>
 
   <div class="row">
-    <div class="col-sm-3 col-md-2 sidebar">
-      <ul class="nav nav-sidebar">
+
+    <div class="col-md-3">
+      <ul class="nav nav-section-menu nav-sidebar">
         <?php foreach ($list as $row) { ?>
           <li>
-            <a href="publications/collections/<?php echo $id ?>#section<?php echo $row['id'] ?>"><?php echo $row['tag'] ?>
-              <span class="badge pull-right"><?php echo count($publications[$row['id']]) ?></span>
+            <a href="publications/collections/<?php echo $id ?>#section<?php echo $row['id'] ?>" class="nav-link">
+              <?php echo $row['tag'] ?>
+              <i class="fa fa-angle-right"></i>
             </a>
           </li>
         <?php } ?>
       </ul>
     </div>
 
-    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <div class="col-md-9 main">
 
       <h1><?php echo $info->name ?></h1>
 

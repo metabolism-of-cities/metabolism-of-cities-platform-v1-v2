@@ -1,5 +1,4 @@
 body {
-  padding-top: 70px;
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .resultbox {
@@ -17,9 +16,6 @@ body {
 html {
   position: relative;
   min-height: 100%;
-}
-body {
-  margin-bottom: 80px;
 }
 .footer {
   position: absolute;
@@ -442,4 +438,41 @@ table.ellipsis {
   .resp-sharing-button__link {
     display:block;
   }
+}
+h5.text-faded a{color:#f4f4f4;text-decoration:underline}
+.breadcrumb{margin-top:10px}
+
+@media (min-width: 768px) {
+  .dl-horizontal dt {
+    float: left;
+    width: 160px;
+    overflow: hidden;
+    clear: left;
+    text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .dl-horizontal dd {
+    margin-left: 180px;
+  }
+}
+footer address a{color:#fff}
+.header .header-brand-text h1{font-size:50px}
+.navbar-toggleable-md .navbar-main .navbar-nav>.nav-item>.nav-link, .navbar-toggleable-md .navbar-main .navbar-nav>.nav-link, .navbar-toggleable-md.navbar-main .navbar-nav>.nav-item>.nav-link, .navbar-toggleable-md.navbar-main .navbar-nav>.nav-link {
+  color:#fff;
+}
+.header .navbar {
+  position:fixed;
+  top:-12px;
+  z-index:999999;
+}
+.nav-sm .nav-link{display:none}
+body .header {padding-top:52px}
+body .header-upper {
+  width:100%;
+  position:fixed;
+  z-index:999999;
+}
+table.table-striped a {
+  color:#428bca;
 }

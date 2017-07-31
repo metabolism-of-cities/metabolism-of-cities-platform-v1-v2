@@ -50,10 +50,10 @@ $votin = false;
 <?php require_once 'include.header.php'; ?>
 
   <ol class="breadcrumb">
-    <li><a href="./">Home</a></li>
-    <li><a href="stakeholders">Stakeholders Initiative</a></li>
-    <li><a href="datavisualization">Data Visualizations</a></li>
-    <li class="active">Examples</li>
+    <li class="breadcrumb-item"><a href="./">Home</a></li>
+    <li class="breadcrumb-item"><a href="stakeholders">Stakeholders Initiative</a></li>
+    <li class="breadcrumb-item"><a href="datavisualization">Data Visualizations</a></li>
+    <li class="breadcrumb-item active">Examples</li>
   </ol>
 
     <h1>Data Visualization Examples</h1>

@@ -2,6 +2,7 @@
 require_once 'functions.php';
 $section = 7;
 $page = 2;
+$show_breadcrumbs = true;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,12 +14,6 @@ $page = 2;
   <body>
 
 <?php require_once 'include.header.php'; ?>
-
-  <ol class="breadcrumb">
-    <li><a href="./">Home</a></li>
-    <li><a href="stakeholders">Stakeholders Initiative</a></li>
-    <li class="active">Data Visualization</li>
-  </ol>
 
   <h1>
     Data Visualizations in Urban Metabolism Research</h1>

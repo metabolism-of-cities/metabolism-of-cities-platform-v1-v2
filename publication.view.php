@@ -95,6 +95,19 @@ if ($admin_mode) {
   ORDER BY tags.parent, tags.tag");
 }
 
+foreach ($tags as $row) {
+  if ($row['parentname'] == 'Publication Types') {
+    if (($admin_mode && $activetag[$row['id']]) || (!$admin_mode)) {
+      $type_title .= $row['tag'] . "<br />";
+    }
+  }
+}
+
+if ($type_title) {
+  $type_title = substr($type_title, 0, -6);
+}
+  
+
 if ($info->doi) {
   $type_of_link = strpos($info->doi, "http") > -1 && !strpos($info->doi, "dx.doi.org") ? "web" : "doi";
   if ($type_of_link == "doi") {
@@ -131,6 +144,11 @@ $dataviz = $db->query("SELECT * FROM datavisualizations WHERE paper = $id");
     <title><?php echo $info->title ?> <?php if (!$notfound) { ?>by <?php echo $info->author ?> (<?php echo $info->year ?>) <?php } ?> | <?php echo SITENAME ?></title>
 
     <style type="text/css">
+    div.clear{clear:both}
+    .bg-blue-dark a{color:#f4f4f4;text-decoration:underline}
+    .bg-blue-dark a:hover{text-decoration:none;color:#fff}
+    .bg-blue-dark{margin:20px 0}
+    p.intro.faded{font-size:140%;font-weight:bold;opacity:0.4;margin-bottom:0}
     .panel{display:inline-block}
     dt,dd{padding:5px 0}
     ul#tags, ul#tags ul{list-style:none;margin-left:0;padding-left:0}
@@ -142,6 +160,9 @@ $dataviz = $db->query("SELECT * FROM datavisualizations WHERE paper = $id");
     .status-deleted{opacity:0.5}
     <?php if (!$admin_mode) { ?>
       ul#tags li{display:inline-block;margin:0 5px 5px 0}
+    <?php } else { ?>
+      .meta-col{display:none}
+      .admin-box{padding:6px;margin:10px 0}
     <?php } ?>
     </style>
     <?php if ($admin_mode) { ?>
@@ -179,7 +200,7 @@ $dataviz = $db->query("SELECT * FROM datavisualizations WHERE paper = $id");
 <?php require_once 'include.header.php'; ?>
 
 <?php if ($admin_mode) { ?>
-<div class="well">
+<div class="bg-faded admin-box">
   <a class="btn btn-default" style="margin-right:30px" href="cms/index">
   <i class="fa fa-lock"></i> Admin Panel
   </a>
@@ -212,6 +233,9 @@ $dataviz = $db->query("SELECT * FROM datavisualizations WHERE paper = $id");
 
 <?php } else { ?>
 
+<?php if ($type_title) { ?>
+<p class="intro faded"><?php echo $type_title ?></p>
+<?php } ?>
 <h1><?php echo $info->title ?></h1>
 
   <?php if ($print) { echo "<div class=\"alert alert-success\">$print</div>"; } ?>
@@ -227,10 +251,20 @@ $dataviz = $db->query("SELECT * FROM datavisualizations WHERE paper = $id");
     </div>
   <?php } ?>
 
+</div>
+
+<div class="bg-blue-dark text-white py-4">
+            <div class="container">
+              <div class="row text-center text-lg-left">
+
+
+
 <dl class="dl dl-horizontal status-<?php echo $info->status ?>">
 
+  <?php if ($title_native) { ?>
   <dt>Title</dt>
-  <dd><?php echo $info->title_native ?: $info->title; ?></dd>
+  <dd><?php echo $info->title_native ?></dd>
+  <?php } ?>
 
   <dt>Author(s)</dt>
   <?php if ($authors) { ?>
@@ -265,20 +299,6 @@ $dataviz = $db->query("SELECT * FROM datavisualizations WHERE paper = $id");
     <dd><?php echo $info->doi ?></dd>
   <?php } ?>
 
-  <?php if ($info->open_access || $info->abstract_status == "author_approved" ||   $info->abstract_status == "journal_approved" || $info->abstract_status == "open_access" || $info->abstract_status == "toc_only" || $admin_mode || true) { ?>
-    <dt>Abstract</dt>
-    <dd><?php echo $info->abstract ?: '<em>Abstract unavailable</em>'; ?></dd>
-    <?php if ($info->abstract_native) { ?>
-      <dt>Original Abstract</dt>
-      <dd><?php echo $info->abstract ?></dd>
-    <?php } ?>
-  <?php } ?>
-
-  <?php if ($info->editor_comments) { ?>
-    <dt>Our comments</dt>
-    <dd><?php echo $info->editor_comments ?></dd>
-  <?php } ?>
-
   <?php if ($info->open_access) { ?>
     <dt>Access</dt>
     <dd><i class="fa fa-unlock"></i> Open Access</dd>
@@ -286,6 +306,29 @@ $dataviz = $db->query("SELECT * FROM datavisualizations WHERE paper = $id");
     <dt>Access</dt>
     <dd><i class="fa fa-lock"></i> Paid / private access</dd>
   <?php } ?>
+
+</dl>
+
+              </div>
+            </div>
+          </div>
+
+<div class="container">
+
+    <div class="text-justify">
+    <p><?php echo $info->abstract ?: '<em>Abstract unavailable</em>'; ?></p>
+    <?php if ($info->abstract_native) { ?>
+      <p><em>Original Abstract</em></p>
+      <p><?php echo $info->abstract ?></p>
+    <?php } ?>
+    </div>
+
+  <?php if ($info->editor_comments) { ?>
+    <dt>Our comments</dt>
+    <dd><?php echo $info->editor_comments ?></dd>
+  <?php } ?>
+
+  <a href="publication/<?php echo $id ?>/flag" class="btn btn-info pull-right"><i class="fa fa-flag"></i> Incorrect or incomplete information? <br />Click here to report this.</a>
 
   <?php if ($info->doi || $info->link) { ?>
     <dt>More Information</dt>
@@ -325,13 +368,14 @@ $dataviz = $db->query("SELECT * FROM datavisualizations WHERE paper = $id");
         </dd>
     <?php } ?>
   <?php } ?>
-    
 
-</dl>
+<div class="row clear">
+
+  <div class="col-md-<?php echo $admin_mode ? 12 : 6; ?>">
 
 <h2>Tags</h2>
 
-<?php if ($admin_mode || PRODUCTION) { ?>
+<?php if (true) { ?>
 
 <ul id="tags">
 <?php foreach ($tags as $row) { ?>
@@ -387,6 +431,27 @@ $dataviz = $db->query("SELECT * FROM datavisualizations WHERE paper = $id");
 </ul>
 <?php } ?>
 
+<p>
+  <a href="javascript:history.back()" class="btn btn-info"><i class="fa fa-arrow-left"></i> Back</a>
+</p>
+
+
+</div>
+
+<div class="col-md-6 meta-col">
+
+  <div class="alert alert-warning">
+    This website provides meta data on papers and other publications, with
+    links to the original source. These papers may be copyrighted or
+    otherwise protected by the publishing journal or author. Follow the link to
+    the original document and/or contact the publisher/author for more
+    information.
+  </div>
+
+</div>
+
+</div>
+
 <?php if ($admin_mode) { ?>
   <h3>Add New Tag</h3>
   <form method="post">
@@ -403,18 +468,6 @@ $dataviz = $db->query("SELECT * FROM datavisualizations WHERE paper = $id");
   </form>
 <?php } ?>
 
-<p>
-  <a href="javascript:history.back()" class="btn btn-info">Back</a>
-  <a href="publication/<?php echo $id ?>/flag" class="btn btn-warning pull-right"><i class="fa fa-flag"></i> Incorrect or incomplete information? Click here to report this.</a>
-</p>
-
-<div class="alert alert-warning">
-  This website provides meta data on papers and other publications, with links
-  to the original publications. These papers may be copyrighted or otherwise
-  protected by the publishing journal or author. Some journals provide open
-  access to their publications.  When possible we will try to include abstracts
-  and more details for open access publications. For more details, follow the
-  link to the original document and/or contact the publisher/author. 
 </div>
 
 <?php } ?>

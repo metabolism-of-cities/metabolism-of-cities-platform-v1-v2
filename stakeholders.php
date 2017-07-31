@@ -18,8 +18,8 @@ $page = 1;
 <?php require_once 'include.header.php'; ?>
 
   <ol class="breadcrumb">
-    <li><a href="./">Home</a></li>
-    <li class="active">Stakeholders Initiative</li>
+    <li class="breadcrumb-item"><a href="./">Home</a></li>
+    <li class="breadcrumb-item active">Stakeholders Initiative</li>
   </ol>
 
   <h1>Metabolism of Cities Stakeholder Initiative</h1>

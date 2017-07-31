@@ -10,49 +10,114 @@
 
 </script>
 <?php } ?>
-    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="./">
-            <?php if (ID == 1) { ?>
-              <img src="img/logo.svg" alt="" />
-            <?php } else { ?>
-              <img src="img/logo.2.svg" alt="" />
-            <?php } ?>
-            <?php echo SITENAME ?>
-          </a>
+
+
+      <!--Header upper region-->
+      <div class="header-upper">
+        <!--Show/hide trigger for #hidden-header -->
+        <div id="header-hidden-link">
+          <a href="#" title="Click me you'll get a surprise" class="show-hide" data-toggle="show-hide" data-target=".header-hidden"><i></i>Open</a>
         </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-          <?php foreach ($menu as $key => $value) { ?>
-            <?php if (!is_array($value['menu'])) { ?>
-              <li<?php if ($section == $key) { echo ' class="active"'; } ?>><a href="<?php echo $value['url'] ?>"><?php echo $value['label'] ?></a></li>
-            <?php } else { ?>
-            <li class="dropdown<?php if ($section == $key) { echo ' active'; } ?>">
-              <a href="<?php echo $value['url'] ?>" class="dropdown-toggle" data-toggle="dropdown">
-              <?php echo $value['label'] ?> <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-              <?php foreach ($value['menu'] as $subkey => $value) { ?>
-                <li<?php if ($page == $subkey && $section == $key) { echo ' class="active"'; } ?>><a href="<?php echo $value['url'] ?>"><?php echo $value['label'] ?></a></li>
-              <?php } ?>
-              </ul>
-            <?php } ?>
-          <?php } ?>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
+        <!-- all direct children of the .header-inner element will be vertically aligned with each other you can override all the behaviours using the flexbox utilities (flexbox.htm) All elements with .header-brand & .header-block-flex wrappers will automatically be aligned inline & vertically using flexbox, this can be overridden using the flexbox utilities (flexbox.htm) Use .header-block to stack elements within on small screen & "float" on larger screens use .flex-first or/and .flex-last classes to make an element show first or last within .header-inner or .headr-block elements -->
+        <div class="header-inner container">
+          <!--user menu-->
+          <div class="header-block-flex flex-first mr-auto">
+          <?php if (false) { ?>
+            <nav class="nav nav-sm header-block-flex">
+              <a class="nav-link hidden-md-up" href="login.htm"><i class="fa fa-user"></i></a>
             <?php if (!$_SESSION['user_id']) { ?>
-              <li><a href="page/login">Login</a></li>
-            <?php } else { ?>
-              <li><a href="login.php?logout">Logout</a></li>
-            <?php } ?>
-          </ul>
-        </div><!--/.nav-collapse -->
+              <a class="nav-link text-xs text-uppercase hidden-sm-down" href="page/login" >Log In</a> 
+              <?php } else { ?>
+              <a class="nav-link text-xs text-uppercase hidden-sm-down" href="login.php?logout" >Log Out</a> 
+              <?php } ?>
+              |
+              <a class="nav-link text-xs text-uppercase hidden-sm-down" href="page/contact" >Contact</a> 
+            </nav>
+          <?php } ?>
+            <!--language menu-->
+          </div>
+          <!--social media icons-->
+          <div class="nav nav-icons header-block flex-last">
+            <!--@todo: replace with company social media details-->
+            <a href="https://twitter.com/CityMetabolism" class="nav-link"> <i class="fa fa-twitter-square icon-1x"></i> <span class="sr-only">Twitter</span> </a>
+            <a href="https://github.com/paulhoekman/mfa-tools" class="nav-link"> <i class="fa fa-github icon-1x"></i> <span class="sr-only">Github</span> </a>
+            <a href="https://www.youtube.com/channel/UCwaliuWsJWhdhk-KUfQHlYA" class="nav-link"> <i class="fa fa-youtube-square icon-1x"></i> <span class="sr-only">YouTube</span> </a>
+          </div>
+        </div>
+      </div>
+      <div style="visibility: hidden; display: none;"></div><div data-toggle="sticky" class="sticky" style="top: 0px;">
+
+
+        <!--Header search region - hidden by default -->
+        <div class="header-search collapse" id="search">
+          <form class="search-form container">
+            <input type="text" name="search" class="form-control search" value="" placeholder="Search">
+            <button type="button" class="btn btn-link"><span class="sr-only">Search </span><i class="fa fa-search fa-flip-horizontal search-icon"></i></button>
+            <button type="button" class="btn btn-link close-btn" data-toggle="search-form-close"><span class="sr-only">Close </span><i class="fa fa-times search-icon"></i></button>
+          </form>
+        </div>
+        
+        <!--Header & Branding region-->
+        <div class="header">
+          <!-- all direct children of the .header-inner element will be vertically aligned with each other you can override all the behaviours using the flexbox utilities (flexbox.htm) All elements with .header-brand & .header-block-flex wrappers will automatically be aligned inline & vertically using flexbox, this can be overridden using the flexbox utilities (flexbox.htm) Use .header-block to stack elements within on small screen & "float" on larger screens use .flex-first or/and .flex-last classes to make an element show first or last within .header-inner or .headr-block elements -->
+          <div class="header-inner container">
+            <!--branding/logo -->
+            <div class="header-brand flex-first">
+              <a class="header-brand-text" href="./" title="Home">
+                <h1>
+                        <?php if (ID == 1) { ?>
+                          <img src="img/logo.dark.svg" alt="" style="width:70px" />
+                        <span style="color:#333">Metabolism</span> of 
+                        Cities
+                        <?php } else { ?>
+
+                        <?php } ?>
+                </h1>
+              </a>
+            </div>
+            <!-- other header content -->
+            <div class="header-block flex-last">
+              
+              <!--Search trigger -->
+              <a href="#search" class="btn btn-icon btn-link header-btn float-right flex-last" data-toggle="search-form" data-target=".header-search"><i class="fa fa-search fa-flip-horizontal search-icon"></i></a>
+              
+              <!-- mobile collapse menu button - data-toggle="collapse" = default BS menu - data-toggle="jpanel-menu" = jPanel Menu - data-toggle="overlay" = Overlay Menu -->
+              <a href="#top" class="btn btn-link btn-icon header-btn float-right hidden-lg-up" data-toggle="jpanel-menu" data-target=".navbar-main" data-direction="right"> <i class="fa fa-bars"></i> </a>
+            </div>
+            
+            <div class="navbar navbar-toggleable-md">
+              <!--everything within this div is collapsed on mobile-->
+              <div class="navbar-main collapse">
+                <!--main navigation-->
+<ul class="nav navbar-nav float-lg-right dropdown-effect-fade">
+                  <!-- Homepages -->
+                  <li class="nav-item">
+                    <a href="./" class="nav-link " > <i class="fa fa-home nav-link-icon"></i> <span class="hidden-xs-up">Home</span> </a>
+                  </li>
+
+
+                  <?php foreach ($menu as $key => $value) { ?>
+                    <?php if (!is_array($value['menu'])) { ?>
+                      <li<?php if ($section == $key) { echo ' class="active"'; } ?>><a href="<?php echo $value['url'] ?>"><?php echo $value['label'] ?></a></li>
+                    <?php } else { ?>
+                    <li class="nav-item dropdown<?php if ($section == $key) { echo ' active'; } ?>">
+                      <a href="<?php echo $value['url'] ?>" class="nav-link dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
+                      <?php echo $value['label'] ?> <b class="caret"></b></a>
+                      <div class="dropdown-menu">
+                      <?php foreach ($value['menu'] as $subkey => $value) { ?>
+                        <a href="<?php echo $value['url'] ?>" class="dropdown-item<?php if ($page == $subkey && $section == $key) { echo ' active'; } ?>"><?php echo $value['label'] ?></a>
+                      <?php } ?>
+                      </div>
+                    <?php } ?>
+                  <?php } ?>
+                
+                  <!-- Pages -->
+                </ul>
+              </div>
+              <!--/.navbar-collapse -->
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -133,21 +198,21 @@
 
     <?php if ($show_breadcrumbs || $this_page) { ?>
       <ol class="breadcrumb">
-        <li><a href="./">Home</a></li>
+        <li class="breadcrumb-item"><a href="./">Home</a></li>
         <?php if (!$page || $menu[$section]['menu'][$page]['label'] == "Introduction") { ?>
-          <li class="active"><?php echo $menu[$section]['label'] ?></li>
+          <li class="breadcrumb-item active"><?php echo $menu[$section]['label'] ?></li>
         <?php } else { ?>
-          <li><a href="<?php echo $menu[$section]['url'] ?>"><?php echo $menu[$section]['label'] ?></a></li>
+          <li class="breadcrumb-item"><a href="<?php echo $menu[$section]['url'] ?>"><?php echo $menu[$section]['label'] ?></a></li>
         <?php if ($this_page) { ?>
         <?php if (!$skip_third_level) { ?>
-          <li><a href="<?php echo $menu[$section]['menu'][$page]['url'] ?>"><?php echo $menu[$section]['menu'][$page]['label'] ?></a></li>
+          <li class="breadcrumb-item"><a href="<?php echo $menu[$section]['menu'][$page]['url'] ?>"><?php echo $menu[$section]['menu'][$page]['label'] ?></a></li>
         <?php } ?>
           <?php if ($add_page_to_breadcrumbs) { ?>
             <?php echo $add_page_to_breadcrumbs ?>
           <?php } ?>
-          <li class="active"><?php echo $this_page ?></li>
+          <li class="breadcrumb-item active"><?php echo $this_page ?></li>
         <?php } else { ?>
-          <li class="active"><?php echo $menu[$section]['menu'][$page]['label'] ?></li>
+          <li class="breadcrumb-item active"><?php echo $menu[$section]['menu'][$page]['label'] ?></li>
         <?php } } ?>
       </ol>
     <?php } ?>

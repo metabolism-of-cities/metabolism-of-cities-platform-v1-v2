@@ -111,12 +111,12 @@ those who help us test the software.
 <h2>Screenshots</h2>
 
 <ul class="nav nav-tabs" role="tablist">
-  <li class="active"><a href="#screenshot1" role="tab" data-toggle="tab">Dashboard</a></li>
-  <li><a href="#screenshot2" role="tab" data-toggle="tab">Data Groups</a></li>
-  <li><a href="#screenshot3" role="tab" data-toggle="tab">List of Materials</a></li>
-  <li><a href="#screenshot4" role="tab" data-toggle="tab">Specific Material</a></li>
-  <li><a href="#screenshot5" role="tab" data-toggle="tab">Add Data Point</a></li>
-  <li><a href="#screenshot6" role="tab" data-toggle="tab">Automatically generated indicators</a></li>
+  <li class="nav-item active"><a class="nav-link" href="#screenshot1" role="tab" data-toggle="tab">Dashboard</a></li>
+  <li class="nav-item"><a class="nav-link" href="#screenshot2" role="tab" data-toggle="tab">Data Groups</a></li>
+  <li class="nav-item"><a class="nav-link" href="#screenshot3" role="tab" data-toggle="tab">List of Materials</a></li>
+  <li class="nav-item"><a class="nav-link" href="#screenshot4" role="tab" data-toggle="tab">Specific Material</a></li>
+  <li class="nav-item"><a class="nav-link" href="#screenshot5" role="tab" data-toggle="tab">Add Data Point</a></li>
+  <li class="nav-item"><a class="nav-link" href="#screenshot6" role="tab" data-toggle="tab">Automatically generated indicators</a></li>
 </ul>
 
 <div class="tab-content">

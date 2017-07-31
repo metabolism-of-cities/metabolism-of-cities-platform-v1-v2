@@ -57,11 +57,12 @@ $remove_enter = array("\n" => "");
 <?php require_once 'include.header.php'; ?>
 
   <div class="row">
-    <div class="col-sm-3 col-md-2 sidebar">
-      <ul class="nav nav-sidebar">
+    <div class="col-3 ">
+      <ul class="nav nav-section-menu nav-sidebar">
         <?php foreach ($sections as $key => $value) { ?>
           <li<?php if ($id == $key) { ?> class="active"<?php } ?>>
-            <a href="omat/documentation/<?php echo $key ?>"><?php echo $value ?></span>
+            <a href="omat/documentation/<?php echo $key ?>" class="nav-link"><?php echo $value ?></span>
+              <i class="fa fa-angle-right"></i>
             </a>
           </li>
         <?php } ?>
@@ -69,7 +70,7 @@ $remove_enter = array("\n" => "");
       <img src="img/globe.arrow.png" alt="" />
     </div>
 
-    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <div class="col-9  main">
 
       <h1><i class="fa fa-book"></i> <?php echo $id ? $sections[$id] : 'Documentation OMAT'; ?></h1>
 

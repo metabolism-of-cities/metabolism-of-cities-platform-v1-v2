@@ -164,10 +164,9 @@ foreach ($count_per_study as $row) {
 
   <?php if ($print) { echo "<div class=\"alert alert-success\">$print</div>"; } ?>
 
-
   <ul class="nav nav-tabs">
     <?php foreach ($options as $key => $value) { ?>
-      <li<?php if ($page == $key) { echo ' class="active"'; } ?>><a href="page/casestudies/<?php echo $key ?>"><?php echo $value ?></a></li>
+      <li class="nav-item<?php if ($page == $key) { echo ' active'; } ?>"><a class="nav-link" href="page/casestudies/<?php echo $key ?>"><?php echo $value ?></a></li>
     <?php } ?>
   </ul>
 

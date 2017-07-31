@@ -36,13 +36,30 @@ $header = '
     <link rel="manifest" href="'.URL.'img/favicon/manifest.json" />
     <meta name="msapplication-TileColor" content="#ffffff" />
     <meta name="msapplication-TileImage" content="'.URL.'img/favicon/ms-icon-144x144.png" />
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" content="#ffffff" />';
 
-    <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet" />
+$header .= PRODUCTION ? 
+
+    '<!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+    ' :
+
+    '<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    
+    ';
+
+    $header .='
+    <link href="assets/css/theme-style.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/colour-orange.min.css" />
     <link href="css/font-awesome.4.2.0.css" rel="stylesheet" />
     <link href="css/styles.css?reload='.$css.'" rel="stylesheet" />
     <link href="css/custom-'.ID.'.css" rel="stylesheet" />
+
+
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,700,300" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Rambla" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Calligraffitti" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Roboto+Slab:400,700" rel="stylesheet" type="text/css">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -51,8 +68,16 @@ $header = '
     <![endif]-->';
 
 $header .= PRODUCTION ? 
-  '<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>' :
-  '<script src="js/jq.1.11.1.js"></script>';
+  '
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  ' :
+  '
+    <script type="text/javascript" src="assets/js/jquery-3.1.1.slim.min.js"></script>
+    <script type="text/javascript" src="assets/js/tether.min.js"></script>
+    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+  ';
 
 $header .= '<script src="js/bootstrap.min.js"></script>';
 
@@ -86,7 +111,7 @@ $menu = array(
     ),
   ),
   4 => array(
-    'label' => 'Publications &amp; Research', 
+    'label' => 'Research &amp; Publications', 
     'url' => 'publications',
     'menu' => array(
       1 => array('label' => 'Introduction', 'url' => 'publications'),

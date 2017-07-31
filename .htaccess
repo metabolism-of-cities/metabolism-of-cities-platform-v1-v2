@@ -229,6 +229,7 @@ AddDefaultCharset utf-8
     RewriteRule ^analysis/([0-9]+)/([0-9]+)/?$ analysis.case.php?id=$1&type=$2
     RewriteRule ^page/(.+)/(.+)?$ $1.php?message=$2
     RewriteRule ^page/(.+)/?$ $1.php
+    RewriteRule ^join$ contact.php?join=true
     RewriteRule ^casestudy/(.+)/?$ casestudy.php?id=$1
     RewriteRule ^data/indicators/([0-9]+)/?$ casestudy.php?indicator=$1
     RewriteRule ^data/subareas/([0-9]+)/?$ casestudy.php?subarea=$1

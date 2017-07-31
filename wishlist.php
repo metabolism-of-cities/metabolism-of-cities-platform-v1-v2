@@ -45,7 +45,13 @@ foreach ($list as $row) {
 
 <?php require_once 'include.header.php'; ?>
 
-  <div class="jumbotron">
+
+
+</div>
+<div class="bg-blue text-white py-4">
+            <div class="container">
+              <div class="row text-center text-lg-left">
+
     <h1>Wish List</h1>
     <p>
       This page describes features, content, and other things that we would like to add to this website.
@@ -54,10 +60,14 @@ foreach ($list as $row) {
       In either way, your support will be appreciated? Can you help?
     </p>
     <p>
-      <a class="btn btn-lg btn-primary" href="page/contact" role="button">Let us know &raquo;</a>
-      <a class="btn btn-lg btn-primary" href="https://github.com/paulhoekman/mfa-tools">View this project on github</a>
+      <a class="btn btn-lg btn-secondary" href="page/contact" role="button">Let us know &raquo;</a>
+      <a class="btn btn-lg btn-secondary" href="https://github.com/paulhoekman/mfa-tools">View this project on github</a>
     </p>
   </div>
+  </div>
+  </div>
+  
+  <div class="container">
 
   <?php foreach ($wishlist as $key => $value) { ?>
     <h2><?php echo $key ?></h2>
