@@ -77,6 +77,14 @@ $page = 3;
             Meirelles is interested in applying big data analysis and complex systems
             thinking to the urban metabolism. 
           </li>
+          <li>
+            <img src="img/team.yves.jpg" alt="" />
+            <strong>Yves Bettignies Cari</strong> is an engineer and PhD candidate at the Building,
+            Architecture and Town planning department of the Ecole Polytechnique de
+            Bruxelles in Belgium. Yves is interested in the prediction of urban flows and
+            in the modelling of their relations to urban systems via computer-assisted data
+            analysis.
+          </li>
         </ul>
         <p class="jumpdown">
           <a class="btn btn-lg btn-primary" href="page/contact" role="button">Join now &raquo;</a>
