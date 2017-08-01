@@ -59,13 +59,13 @@ $header .= PRODUCTION ?
     
     ';
 
+    $size_custom = filesize("css/custom-".ID.".css");
     $header .='
     <link href="assets/css/theme-style.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="assets/css/'.$css_files[ID].'" />
     <link href="css/font-awesome.4.2.0.css" rel="stylesheet" />
     <link href="css/styles.css?reload='.$css.'" rel="stylesheet" />
-    <link href="css/custom-'.ID.'.css" rel="stylesheet" />
-
+    <link href="css/custom-'.ID.'.css?s='.$size_custom.'" rel="stylesheet" />
 
     <link href="//fonts.googleapis.com/css?family=Open+Sans:400,700,300" rel="stylesheet" type="text/css">
     <link href="//fonts.googleapis.com/css?family=Rambla" rel="stylesheet" type="text/css">

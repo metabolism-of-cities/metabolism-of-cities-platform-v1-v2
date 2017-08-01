@@ -2,5 +2,25 @@
   background: #e67e22;
   border-bottom: 1px dotted #f4f4f4;
 }
-
-#EA9447
+body .header-upper {
+  background:#EA9447;
+}
+.header .header-brand-text h1 {
+  color:#CDD1D6;
+  position: relative;
+  top: 20px;
+  z-index: 500;
+  font-size:50px;
+}
+.header .header-brand-text h1 span {
+  color:#fff;
+}
+body .header {
+  padding:33px 0 40px 0;
+}
+.navbar-main {
+  z-index:1000; 
+}
+.header-block .btn-icon.btn {
+  color:#fff;
+}

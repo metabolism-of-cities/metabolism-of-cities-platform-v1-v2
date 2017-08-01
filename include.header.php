@@ -75,7 +75,7 @@
                 <h1>
                         <?php if (ID == 1) { ?>
                           <img src="img/logo.dark.svg" alt="" style="width:70px" />
-                        <span style="color:#333">Metabolism</span> of 
+                        <span>Metabolism</span> of 
                         Cities
                         <?php } else { ?>
                           <span>EPR</span> Reference Database
