@@ -1,3 +1,32 @@
-.navbar-default {
-  background-color: #277A8C;
+.fesbox {
+  padding-top:10px;
+  height:70px;
+  background:#fff;
+  z-index:99999999;
+}
+.fesbox img {
+  max-width:100%;
+}
+.header .navbar {
+  top:55px;
+  position:absolute;
+}
+body .header-upper {
+  position:absolute;
+}
+.header {
+  background:#34495e;
+}
+.header .header-brand-text h1 {
+  color:#CDD1D6;
+  position: relative;
+  top: 0px;
+  z-index: 9999999;
+  font-size:55px;
+}
+.header .header-brand-text h1 span {
+  color:#fff;
+}
+body .header {
+  padding:33px 0 50px 0;
 }

@@ -11,6 +11,14 @@
 </script>
 <?php } ?>
 
+<?php if (ID == 2) { ?>
+
+<div class="container fesbox">
+  <img src="img/fes.png" alt="" style="width:100%" />
+</div>
+
+<?php } ?>
+
 
       <!--Header upper region-->
       <div class="header-upper">
@@ -70,7 +78,7 @@
                         <span style="color:#333">Metabolism</span> of 
                         Cities
                         <?php } else { ?>
-
+                          <span>EPR</span> Reference Database
                         <?php } ?>
                 </h1>
               </a>

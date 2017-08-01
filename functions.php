@@ -15,6 +15,17 @@ if ($db) {
 
 $css = filesize(__DIR__."/css/styles.css");
 
+$css_files = array(
+  1 => 'colour-orange.min.css',
+  2 => 'colour-blue-dark.min.css',
+);
+
+$get_css = $_GET['css'] ?: $_COOKIE['css'];
+if ($_GET['css'] || $_COOKIE['css']) {
+  $css_files[ID] = 'colour-'.$get_css.'.min.css';
+}
+  
+
 $header = '
     <meta charset="utf-8" />
     <base href="' . URL . '" />
@@ -50,7 +61,7 @@ $header .= PRODUCTION ?
 
     $header .='
     <link href="assets/css/theme-style.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="assets/css/colour-orange.min.css" />
+    <link rel="stylesheet" href="assets/css/'.$css_files[ID].'" />
     <link href="css/font-awesome.4.2.0.css" rel="stylesheet" />
     <link href="css/styles.css?reload='.$css.'" rel="stylesheet" />
     <link href="css/custom-'.ID.'.css" rel="stylesheet" />

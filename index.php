@@ -1,11 +1,6 @@
 <?php
 require_once 'functions.php';
 
-if (ID == 2) {
-  header("Location: " . URL . "index.epr.php");
-  exit();
-}
-
 $section = 1;
 $page = 1;
 
@@ -77,6 +72,8 @@ $blog = $db->record("SELECT * FROM blog WHERE active = 1 AND date <= '$today' OR
 
 </div>
 
+    
+    <?php if (ID == 1) { ?>
     <div id="features" class="bg-white">
 
       <div class="container p-4 py-lg-6">
@@ -113,7 +110,10 @@ $blog = $db->record("SELECT * FROM blog WHERE active = 1 AND date <= '$today' OR
       </div>
     </div>
 
+    <?php } ?>
+
     <div id="features" class="bg-grey">
+    <?php if (ID == 1) { ?>
       <div class="bg-inverse text-white p-3 p-lg-4 text-center divider-arrow divider-arrow-t divider-inverse">
         <div class="container">
           <h2 class="text-center text-uppercase font-weight-bold my-0">
@@ -124,6 +124,7 @@ $blog = $db->record("SELECT * FROM blog WHERE active = 1 AND date <= '$today' OR
           </h5>
         </div>
       </div>
+    <?php } ?>
 
       <div class="bg-blue text-white p-3 p-lg-4 text-center divider-arrow divider-arrow-b divider-inverse">
         <div class="container">
