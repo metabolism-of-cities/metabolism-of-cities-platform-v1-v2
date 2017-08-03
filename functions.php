@@ -175,14 +175,30 @@ foreach ($tag_parents as $row) {
 }
 
 if (ID == 2) {
-  unset($menu[6]);
-  $menu[2]['label'] = "EPR Menu 1";
-  $menu[5]['label'] = "EPR Menu 3";
-  unset($menu[7]);
-  $menu[8]['label'] = "EPR Menu 4";
-  unset($menu[4]['menu'][1]);
-  unset($menu[4]['menu'][2]);
-  unset($menu[4]['menu'][3]);
+  $menu = array(
+  2 => array(
+    'label' => 'About', 
+    'url' => 'page/about', 
+    'menu' => array(
+      1 => array('label' => 'About Us', 'url' => 'page/about'),
+      3 => array('label' => 'What is EPR?', 'url' => 'page/team'),
+      5 => array('label' => 'Contact Us', 'url' => 'page/contact'),
+    ),
+  ),
+  4 => array(
+    'label' => 'Database', 
+    'url' => 'publications',
+    'menu' => array(
+      1 => array('label' => 'Introduction', 'url' => 'publications'),
+      4 => array('label' => 'Database', 'url' => 'publications/list'),
+      5 => array('label' => 'Collections', 'url' => 'publications/collections'),
+      6 => array('label' => 'Search', 'url' => 'publications/search'),
+      7 => array('label' => 'Add Your Reference', 'url' => 'publications/add'),
+      8 => array('label' => 'Authors', 'url' => 'people'),
+      9 => array('label' => 'Journals', 'url' => 'journals'),
+    ),
+  ),
+  );
 }
 
 $google_translate = LOCAL ? '' : '

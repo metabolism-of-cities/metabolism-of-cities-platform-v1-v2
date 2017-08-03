@@ -30,3 +30,11 @@ body .header-upper {
 body .header {
   padding:33px 0 50px 0;
 }
+.sponsorbox {
+  background:#fff;
+  display:inline-block;
+}
+.sponsorbox img {
+  margin:5px 20px;
+  padding:6px;
+}

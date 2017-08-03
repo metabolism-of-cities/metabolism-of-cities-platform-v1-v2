@@ -106,7 +106,10 @@ foreach ($tags as $row) {
 if ($type_title) {
   $type_title = substr($type_title, 0, -6);
 }
-  
+
+if (ID == 2) {
+  $type_title = "Journal Article";
+}
 
 if ($info->doi) {
   $type_of_link = strpos($info->doi, "http") > -1 && !strpos($info->doi, "dx.doi.org") ? "web" : "doi";

@@ -9,6 +9,7 @@
         <div class="container">
           <div class="row text-center text-lg-left">
             <div class="col-12 col-lg-7 py-2">
+              <?php if (ID == 1) { ?>
               <h2 class="text-uppercase font-weight-bold mt-0 mb-2">
                 <span class="text-shadow">Creative</span> <span class="text-primary-darkend">Commons</span>
               </h2>
@@ -18,9 +19,22 @@
                 Creative Commons Attribution 4.0 International license.
                 </a>
               </h5>
+              <?php } else { ?>
+              <h2 class="text-uppercase font-weight-bold mt-0 mb-2">
+                <span class="text-primary-darkend">What is</span>
+                <span class="text-shadow">EPR?</span>
+              </h2>
+              <h5 class="text-faded">
+                Extended Producers Responsibility
+              </h5>
+              <?php } ?>
             </div>
             <div class="col-12 col-lg-5 py-2 text-lg-right">
+              <?php if (ID == 1) { ?>
               <a href="join" class="btn btn-lg btn-primary btn-invert btn-rounded py-3 px-4">Join Our Team<i class="fa fa-arrow-right ml-2"></i></a>
+              <?php } else { ?>
+              <a href="#" class="btn btn-lg btn-primary btn-invert btn-rounded py-3 px-4">Read More<i class="fa fa-arrow-right ml-2"></i></a>
+              <?php } ?>
             </div>
           </div>
         </div>
@@ -28,6 +42,7 @@
     </div>
 
     <footer id="footer" class="p-0">
+    <?php if (ID == 1) { ?>
       <div class="container pt-6 pb-5">
         <div class="row">
           <div class="col-md-4">
@@ -54,6 +69,9 @@
               About Us
             </h4>
             <p>We are a community-led online hub around urban metabolism.</p>
+
+                <img src="img/sponsors/eur.png" alt="" />
+                <img src="img/sponsors/nestle.png" alt="" />
           </div>
           
           <div class="col-md-4">
@@ -73,6 +91,56 @@
             </form>
           </div>
         </div>
+        <?php } else { ?>
+      <div class="container pt-6 pb-5">
+        <div class="row">
+          <div class="col-md-4">
+            <!--@todo: replace with company contact details-->
+            <h4 class="text-uppercase text-white">
+              Contact Us
+            </h4>
+            <address>
+              <ul class="list-unstyled">
+                <li>
+                  <abbr title="Email"><i class="fa fa-envelope fa-fw"></i></abbr>
+                  info@epr-references.org
+                </li>
+                <li>
+                  <abbr title="Address"><i class="fa fa-home fa-fw"></i></abbr>
+                  <a href="page/contact">Contact form</a>
+                </li>
+              </ul>
+            </address>
+          </div>
+          
+          <div class="col-md-4">
+            <h4 class="text-uppercase text-white">
+              Sponsors
+            </h4>
+              <div class="sponsorbox">
+                <img src="img/sponsors/eur.png" alt="" />
+                <img src="img/sponsors/nestle.png" alt="" />
+              </div>
+          </div>
+          
+          <div class="col-md-4">
+            <h4 class="text-uppercase text-white">
+              Newsletter
+            </h4>
+            <p>Stay up to date with our latest news by signing up to our newsletter.</p>
+            <!--@todo: replace with mailchimp code-->
+            <form>
+              <div class="input-group">
+                <label class="sr-only" for="email-field">Email</label>
+                <input type="text" class="form-control" id="email-field" placeholder="Email">
+                <span class="input-group-btn">
+                  <button class="btn btn-primary" type="button">Go!</button>
+                </span>
+              </div>
+            </form>
+          </div>
+        </div>
+        <?php } ?>
         
       </div>
       <hr class="my-0 hr-blank op-2">
