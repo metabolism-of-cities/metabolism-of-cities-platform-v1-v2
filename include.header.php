@@ -23,9 +23,11 @@
       <!--Header upper region-->
       <div class="header-upper">
         <!--Show/hide trigger for #hidden-header -->
+        <?php if (false) { ?>
         <div id="header-hidden-link">
           <a href="#" title="Click me you'll get a surprise" class="show-hide" data-toggle="show-hide" data-target=".header-hidden"><i></i>Open</a>
         </div>
+        <?php } ?>
         <!-- all direct children of the .header-inner element will be vertically aligned with each other you can override all the behaviours using the flexbox utilities (flexbox.htm) All elements with .header-brand & .header-block-flex wrappers will automatically be aligned inline & vertically using flexbox, this can be overridden using the flexbox utilities (flexbox.htm) Use .header-block to stack elements within on small screen & "float" on larger screens use .flex-first or/and .flex-last classes to make an element show first or last within .header-inner or .headr-block elements -->
         <div class="header-inner container">
           <!--user menu-->
@@ -45,12 +47,14 @@
             <!--language menu-->
           </div>
           <!--social media icons-->
+        <?php if (ID == 1) { ?>
           <div class="nav nav-icons header-block flex-last">
             <!--@todo: replace with company social media details-->
             <a href="https://twitter.com/CityMetabolism" class="nav-link"> <i class="fa fa-twitter-square icon-1x"></i> <span class="sr-only">Twitter</span> </a>
             <a href="https://github.com/paulhoekman/mfa-tools" class="nav-link"> <i class="fa fa-github icon-1x"></i> <span class="sr-only">Github</span> </a>
             <a href="https://www.youtube.com/channel/UCwaliuWsJWhdhk-KUfQHlYA" class="nav-link"> <i class="fa fa-youtube-square icon-1x"></i> <span class="sr-only">YouTube</span> </a>
           </div>
+        <?php } ?>
         </div>
       </div>
       <div style="visibility: hidden; display: none;"></div><div data-toggle="sticky" class="sticky" style="top: 0px;">

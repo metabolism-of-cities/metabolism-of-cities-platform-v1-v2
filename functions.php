@@ -928,6 +928,10 @@ $update = $db->record("SELECT SQL_CACHE date_added FROM papers ORDER BY id DESC 
 
 $topic = ID == 2 ? "EPR" : "Urban Metabolism";
 
+if (ID == 2) {
+  $hide_share_buttons = true;
+}
+
 $version = '1.5 beta';
 
 // Run to get the total lines for the newsletter: git ls-files *php | xargs wc -l
