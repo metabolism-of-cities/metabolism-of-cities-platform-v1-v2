@@ -78,8 +78,8 @@ if (is_array($_GET['search'])) {
   $this_page = "Filter publications";
   foreach ($_GET['search'] as $key => $value) {
     $tag = (int)$value;
-    if ($tag == 214) {
-      $tag = 1046;
+    if ($tag == 213) {
+      $tag = 1045;
       $alias = true;
     }
     if ($tag) {
