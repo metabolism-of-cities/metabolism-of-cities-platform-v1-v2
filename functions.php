@@ -17,14 +17,18 @@ $css = filesize(__DIR__."/css/styles.css");
 
 $css_files = array(
   1 => 'colour-orange.min.css',
-  2 => 'colour-blue-dark.min.css',
+  2 => 'colour-slate.min.css',
 );
 
 $get_css = $_GET['css'] ?: $_COOKIE['css'];
 if ($_GET['css'] || $_COOKIE['css']) {
   $css_files[ID] = 'colour-'.$get_css.'.min.css';
+  $color = $get_css;
 }
   
+if ($_GET['css']) {
+  setcookie("css", $_GET['css'], time()+3600*24, "/");
+}
 
 $header = '
     <meta charset="utf-8" />
@@ -190,9 +194,9 @@ if (ID == 2) {
     'url' => 'publications',
     'menu' => array(
       1 => array('label' => 'Introduction', 'url' => 'publications'),
-      4 => array('label' => 'Browse', 'url' => 'publications/results'),
+      4 => array('label' => 'Search', 'url' => 'publications/results'),
       5 => array('label' => 'Collections', 'url' => 'publications/collections'),
-      6 => array('label' => 'Search', 'url' => 'publications/search'),
+      //6 => array('label' => 'Search', 'url' => 'publications/search'),
       8 => array('label' => 'Authors', 'url' => 'people'),
       9 => array('label' => 'Journals', 'url' => 'journals'),
     ),

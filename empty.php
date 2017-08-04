@@ -1,7 +1,7 @@
 <?php
 require_once 'functions.php';
 $section = 2;
-$page = 6;
+$page = 10;
 $show_breadcrumbs = true;
 ?>
 <!DOCTYPE html>

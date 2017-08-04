@@ -30,8 +30,8 @@ $page = 1;
 
       <?php 
         $list = array(
-          'Browse database' => array('file-text-o', 'publications/results'),
-          'Search' => array('search', 'publications/search'),
+          //'Search database' => array('file-text-o', 'publications/results'),
+          'Search' => array('search', 'publications/results'),
           'Collections' => array('th-list', 'publications/collections'),
           'Authors' => array('users', 'people'),
           'Journals' => array('columns', 'journals'),

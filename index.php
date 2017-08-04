@@ -133,7 +133,7 @@ $blog = $db->record("SELECT * FROM blog WHERE active = 1 AND date <= '$today' OR
       </div>
     <?php } ?>
 
-      <div class="bg-blue text-white p-3 p-lg-4 text-center divider-arrow divider-arrow-b divider-inverse">
+      <div class="bg-<?php echo $color == 'green' ? 'green' : 'blue' ?> text-white p-3 p-lg-4 text-center divider-arrow divider-arrow-b divider-inverse">
         <div class="container">
           <h2 class="text-center text-uppercase font-weight-bold my-0">
             <?php echo ID == 1 ? "Publications" : "Overview" ?>
@@ -162,9 +162,9 @@ $blog = $db->record("SELECT * FROM blog WHERE active = 1 AND date <= '$today' OR
           <div class="col-lg-3 py-2">
             <i class="fa fa-search icon-3x text-primary animated animated-done" data-animate="fadeIn" data-animate-delay="0.3" style="animation-delay: 0.3s;"></i> 
             <h4 class="mt-2">
-              <a href="publications/search">Search</a>
+              <a href="people">Authors</a>
             </h4>
-            <p>Are you looking for a specific topic? Use our search page to find what you are looking for!</p>
+            <p>View the list of authors and search through or browse their profiles.</p>
           </div>
           <div class="col-lg-3 py-2">
             <i class="fa fa-plus icon-3x text-primary animated animated-done" data-animate="fadeIn" data-animate-delay="0.4" style="animation-delay: 0.4s;"></i> 

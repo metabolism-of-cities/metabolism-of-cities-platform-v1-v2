@@ -70,7 +70,7 @@
         </div>
         
         <!--Header & Branding region-->
-        <div class="header">
+        <div class="header <?php echo $color ?>">
           <!-- all direct children of the .header-inner element will be vertically aligned with each other you can override all the behaviours using the flexbox utilities (flexbox.htm) All elements with .header-brand & .header-block-flex wrappers will automatically be aligned inline & vertically using flexbox, this can be overridden using the flexbox utilities (flexbox.htm) Use .header-block to stack elements within on small screen & "float" on larger screens use .flex-first or/and .flex-last classes to make an element show first or last within .header-inner or .headr-block elements -->
           <div class="header-inner container">
             <!--branding/logo -->
@@ -91,7 +91,7 @@
             <div class="header-block flex-last">
               
               <!--Search trigger -->
-              <a href="#search" class="btn btn-icon btn-link header-btn float-right flex-last" data-toggle="search-form" data-target=".header-search"><i class="fa fa-search fa-flip-horizontal search-icon"></i></a>
+              <a href="publications/results" class="btn btn-icon btn-link header-btn float-right flex-last" data-toggle="search-form" data-target=".header-search"><i class="fa fa-search fa-flip-horizontal search-icon"></i></a>
               
               <!-- mobile collapse menu button - data-toggle="collapse" = default BS menu - data-toggle="jpanel-menu" = jPanel Menu - data-toggle="overlay" = Overlay Menu -->
               <a href="#top" class="btn btn-link btn-icon header-btn float-right hidden-lg-up" data-toggle="jpanel-menu" data-target=".navbar-main" data-direction="right"> <i class="fa fa-bars"></i> </a>
@@ -137,7 +137,7 @@
       </div>
     </div>
 
-    <div class="container">
+    <div class="container page-<?php echo $page ?> section-<?php echo $section ?>">
 
     <?php if (!$hide_regular_translate) { ?>
       <div id="google_translate_element"></div>

@@ -69,17 +69,35 @@ if (is_array($_POST['tags'])) {
   }
 }
 
-if (is_array($_POST['search'])) {
+if ($_GET['tag']) {
+  $_GET['search'][] = $_GET['tag'];
+  unset($_GET['tag']);
+}
+
+if (is_array($_GET['search'])) {
   $this_page = "Filter publications";
-  foreach ($_POST['search'] as $key => $value) {
+  foreach ($_GET['search'] as $key => $value) {
     $tag = (int)$value;
-    $in_tags .= $tag.",";
-    $info = $db->record("SELECT * FROM tags WHERE id = $tag");
-    $filters .= $info->tag . " or ";
+    if ($tag) {
+      $in_tags .= $tag.",";
+      $info = $db->record("SELECT * FROM tags WHERE id = $tag");
+      $filters .= $info->tag . " or ";
+    } else {
+      $info = $db->record("SELECT * FROM tags WHERE tag = '".html($value)."'");
+    }
+    if ($info->id) {
+      $sql .= " AND EXISTS (SELECT * FROM tags_papers WHERE tags_papers.paper = papers.id AND tag IN ($info->id))";
+      $tags_selected[$info->id] = true;
+    } else {
+      // Freely typed, search through abstract and title
+      $sql .= " AND (abstract LIKE '%" . mysql_clean($value, "wildcard") . "%' OR title LIKE '%" . mysql_clean($value, "wildcard") . "%')";
+      $value = htmlentities($value);
+      $additional_keywords[$value] = $value;
+    }
   }
   $filters = substr($filters, 0, -4) . '<br />'; // Take out ' or '
   $in_tags = substr($in_tags, 0, -1); // Take out extra comma
-  $sql .= " AND EXISTS (SELECT * FROM tags_papers WHERE tags_papers.paper = papers.id AND tag IN ($in_tags))";
+  //$sql .= " AND EXISTS (SELECT * FROM tags_papers WHERE tags_papers.paper = papers.id AND tag IN ($in_tags))";
 }
 
 if ($_POST['update_tag'] && defined("ADMIN")) {
@@ -197,19 +215,21 @@ $gps_tagged = ID == 2 ? 2 : 4;
 
 <?php require_once 'include.header.php'; ?>
 
-<h1>Browse our database</h1>
+<h1>Search our database</h1>
 
 <?php if ($print) { echo "<div class=\"alert alert-success\">$print</div>"; } ?>
 
 <p>
-  Please enter keywords below to start your search. You will see a list of common keywords
-  appear as you start typing. If you like to search for other keywords, continue typing and 
-  separate each phrase by hitting ENTER.
+  Please enter search terms below to start your search. You will see a list of common terms
+  appear as you start typing. To confirm each search term, please hit ENTER to add it to 
+  the list. The system will only show records that contain <strong>all</strong> of the 
+  search terms that you enter. Remove search terms to increase the number of results.
+  When you see the results, use the filters on the left hand side to refine your results.
 </p>
 
 <div class="resultbox">
 
-  <form method="post" class="form form-horizontal">
+  <form method="get" class="form form-horizontal" action="publications/results">
 
     <h4>
       <i class="glyphicon glyphicon-filter"></i>
@@ -221,7 +241,12 @@ $gps_tagged = ID == 2 ? 2 : 4;
         <select name="search[]" class="form-control" id="searchbox" multiple>
           <option value=""></option>
           <?php foreach ($all_tags as $row) { ?>
-            <option value="<?php echo $row['id'] ?>"<?php if ($row['id'] == $info->name) { echo ' selected'; } ?>><?php echo $row['tag'] ?></option>
+            <option value="<?php echo $row['id'] ?>"<?php if ($tags_selected[$row['id']]) { echo ' selected'; } ?>><?php echo $row['tag'] ?></option>
+          <?php } ?>
+          <?php if (is_array($additional_keywords)) { ?>
+            <?php foreach ($additional_keywords as $key => $value) { ?>
+              <option value="<?php echo $key ?>" selected><?php echo $value ?></option>
+            <?php } ?>
           <?php } ?>
         </select>
       </div>
@@ -255,119 +280,134 @@ $gps_tagged = ID == 2 ? 2 : 4;
 
 <?php } ?>
 
+<?php if (!count($_GET) && !count($_POST) && !$_GET['all']) { $hide_results = true; } ?>
+
+<?php if (!count($list) && !$hide_results) { ?>
+  <div class="alert alert-warning">No records were found.</div>
+<?php } ?>
+
 <?php if (count($list)) { ?>
 
 <div class="row">
-<div class="col-3 ">
-  <ul class="nav nav-section-menu nav-sidebar">
-    <li class="nav-header first">Filter by Year</li>
-    <?php $i = 0; foreach ($years as $row) { ?>
-      <?php
-        $i++;
-        if ($i > 5) {
-          $class = "hide hide-year";
-        }
-      ?>
-      <li class="<?php echo $class ?>">
-        <a href="browse?year=<?php echo $row['year'] ?>" class="nav-link"><?php echo $row['year'] ?> 
-          <span class="badge badge-default"><?php echo $row['total'] ?></span>
-          <i class="fa fa-angle-right"></i>
-        </a>
-      </li>
-    <?php } ?>
-    <li>
-      <a href="#" class="show-all nav-link" data-type="year">Show all 
-        <i class="fa fa-angle-down"></i>
-      </a>
-    </li>
-    <li class="nav-header">Filter by Type</li>
-    <?php $i = 0; foreach ($types as $row) { ?>
-      <?php
-        $i++;
-        $class = "reg";
-        if ($i > 5) {
-          $class = "hide hide-type";
-        }
-      ?>
-      <li class="<?php echo $class ?>">
-        <a href="?type=<?php echo $row['type'] ?>" class="nav-link"><?php echo $type[$row['type']] ?> 
+
+  <?php if (!$hide_results) { ?>
+
+  <div class="col-3 ">
+    <ul class="nav nav-section-menu nav-sidebar">
+      <li class="nav-header first">Filter by Year</li>
+      <?php $i = 0; foreach ($years as $row) { ?>
+        <?php
+          $i++;
+          if ($i > 5) {
+            $class = "hide hide-year";
+          }
+        ?>
+        <li class="<?php echo $class ?>">
+          <a href="browse?year=<?php echo $row['year'] ?>" class="nav-link"><?php echo $row['year'] ?> 
             <span class="badge badge-default"><?php echo $row['total'] ?></span>
-          <i class="fa fa-angle-right"></i>
+            <i class="fa fa-angle-right"></i>
+          </a>
+        </li>
+      <?php } ?>
+      <li>
+        <a href="#" class="show-all nav-link" data-type="year">Show all 
+          <i class="fa fa-angle-down"></i>
         </a>
       </li>
-    <?php } ?>
-    <li>
-      <a href="#" class="show-all nav-link" data-type="type">Show all 
-        <i class="fa fa-angle-down"></i>
-      </a>
-    </li>
-    <li class="nav-header">Filter by Tag</li>
-    <?php $i = 0; foreach ($tags as $row) { ?>
-      <?php
-        $i++;
-        $class = "reg";
-        if ($i > 10) {
-          $class = "hide hide-tag";
-        }
-        if ($i < 30) {
-      ?>
-      <li class="<?php echo $class ?>">
-        <a href="?tag=<?php echo $row['tag'] ?>" class="nav-link"><?php echo $row['tag'] ?> 
-            <span class="badge badge-default"><?php echo $row['total'] ?></span>
-          <i class="fa fa-angle-right"></i>
+      <li class="nav-header">Filter by Type</li>
+      <?php $i = 0; foreach ($types as $row) { ?>
+        <?php
+          $i++;
+          $class = "reg";
+          if ($i > 5) {
+            $class = "hide hide-type";
+          }
+        ?>
+        <li class="<?php echo $class ?>">
+          <a href="?type=<?php echo $row['type'] ?>" class="nav-link"><?php echo $type[$row['type']] ?> 
+              <span class="badge badge-default"><?php echo $row['total'] ?></span>
+            <i class="fa fa-angle-right"></i>
+          </a>
+        </li>
+      <?php } ?>
+      <li>
+        <a href="#" class="show-all nav-link" data-type="type">Show all 
+          <i class="fa fa-angle-down"></i>
         </a>
       </li>
-    <?php } } ?>
-    <li>
-      <a href="#" class="show-all nav-link" data-type="tag">Show all 
-        <i class="fa fa-angle-down"></i>
-      </a>
-    </li>
-  </ul>
-</div>
+      <li class="nav-header">Filter by Tag</li>
+      <?php $i = 0; foreach ($tags as $row) { ?>
+        <?php
+          $i++;
+          $class = "reg";
+          if ($i > 10) {
+            $class = "hide hide-tag";
+          }
+          if ($i < 30) {
+        ?>
+        <li class="<?php echo $class ?>">
+          <a href="?tag=<?php echo $row['tag'] ?>" class="nav-link"><?php echo $row['tag'] ?> 
+              <span class="badge badge-default"><?php echo $row['total'] ?></span>
+            <i class="fa fa-angle-right"></i>
+          </a>
+        </li>
+      <?php } } ?>
+      <li>
+        <a href="#" class="show-all nav-link" data-type="tag">Show all 
+          <i class="fa fa-angle-down"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
 
-<div class="col-9  main">
+  <?php } ?>
 
-<div class="resultbox">
-  <i class="fa fa-info-circle"></i>
-  <strong><?php echo count($list) ?></strong>
-  <?php echo count($list) > 1 ? 'publications' : 'publication' ?> found.
-</div>
+  <div class="col-<?php echo $hide_results ? 12 : 9 ?> main">
 
-  <?php if (!count($_GET) && !count($_POST) && !$_GET['all']) { ?>
+    <?php if ($hide_results) { ?>
 
-    <div class="alert alert-info">
-      Enter a search phrase in the box above, or 
-      use the filters on the left to browse through our database. 
-      Alternatively, click the button below to view our entire list.
-    <br /><br />
-    <a href="publications/all" class="btn btn-primary"><i class="fa fa-list"></i> View All</a>
-    </div>
+      <div class="alert alert-default hide">
+        Enter a search phrase in the box above, or 
+        use the filters on the left to browse through our database. 
+        Alternatively, click the button below to view our entire list.
+      <br /><br />
+      <a href="publications/all" class="btn btn-primary"><i class="fa fa-list"></i> View All</a>
+      </div>
 
-  <?php } else { ?>
+      <div class="" style="height:200px;"></div>
 
-    <?php foreach ($list as $row) { ?>
+    <?php } else { ?>
 
-    <div class="recordbox">
-      <h3><a href="publication/<?php echo $row['id'] ?>"><?php echo $row['title'] ?></a></h3>
-      <div class="row">
-        <div class="col-2">
-          <span class="type">
-            <?php echo $type[$row['type']] ?>
-          </span>
-          <br />
-          <?php echo $row['year'] ?>
-        </div>
-        <div class="col-10">
-          <?php echo $row['author'] ?>
+  <div class="resultbox">
+    <i class="fa fa-info-circle"></i>
+    <strong><?php echo count($list) ?></strong>
+    <?php echo count($list) > 1 ? 'publications' : 'publication' ?> found.
+  </div>
+
+      <?php foreach ($list as $row) { ?>
+
+      <div class="recordbox">
+        <h3><a href="publication/<?php echo $row['id'] ?>"><?php echo $row['title'] ?></a></h3>
+        <div class="row">
+          <div class="col-2">
+            <span class="type">
+              <?php echo $type[$row['type']] ?>
+            </span>
+            <br />
+            <?php echo $row['year'] ?>
+          </div>
+          <div class="col-10">
+            <?php echo $row['author'] ?>
+          </div>
         </div>
       </div>
-    </div>
-    <?php } ?>
+      <?php } ?>
 
-<?php } ?>
+  <?php } ?>
 
-</div>
+  </div>
+
+
 </div>
 
 <?php } ?>

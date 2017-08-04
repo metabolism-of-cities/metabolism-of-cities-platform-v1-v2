@@ -227,21 +227,6 @@ $dataviz = $db->query("SELECT * FROM datavisualizations WHERE paper = $id");
 <p class="intro faded"><?php echo $info->type_name ?></p>
 <h1><?php echo $info->title ?></h1>
 
-  <?php if ($info->source && $info->name) { ?>
-  <p>
-    <a href="source/<?php echo $info->source ?>">
-    <?php echo $info->name ?></a><?php if ($info->volume) { ?>, Volume <?php echo $info->volume ?><?php } if ($info->issue) { ?>, Issue <?php echo $info->issue ?><?php } if ($info->pages) { ?>, Pages <?php echo $info->pages ?><?php } ?></p>
-  <?php } ?>
-
-
-  <div class="text-justified">
-    <p><?php echo $info->abstract ?: '<em>Abstract unavailable</em>'; ?></p>
-    <?php if ($info->abstract_native) { ?>
-      <p><em>Original Abstract</em></p>
-      <p><?php echo $info->abstract ?></p>
-    <?php } ?>
-  </div>
-
   <?php if ($print) { echo "<div class=\"alert alert-success\">$print</div>"; } ?>
   <?php if ($error) { echo "<div class=\"alert alert-danger\">$error</div>"; } ?>
 
@@ -256,11 +241,6 @@ $dataviz = $db->query("SELECT * FROM datavisualizations WHERE paper = $id");
   <?php } ?>
 
 
-</div>
-
-<div class="bg-blue text-white py-4">
-            <div class="container">
-              <div class="row text-center text-lg-left">
 <dl class="dl dl-horizontal status-<?php echo $info->status ?>">
 
   <?php if ($title_native) { ?>
@@ -286,6 +266,14 @@ $dataviz = $db->query("SELECT * FROM datavisualizations WHERE paper = $id");
   <dt>Year</dt>
   <dd><?php echo $info->year ?></dd>
 
+  <?php if ($info->source && $info->name) { ?>
+  <dt>Source</dt>
+  <dd>
+    <a href="source/<?php echo $info->source ?>">
+    <?php echo $info->name ?></a><?php if ($info->volume) { ?>, Volume <?php echo $info->volume ?><?php } if ($info->issue) { ?>, Issue <?php echo $info->issue ?><?php } if ($info->pages) { ?>, Pages <?php echo $info->pages ?><?php } ?></dd>
+
+  <?php } ?>
+
   <?php if ($info->doi && $type_of_link == "doi") { ?>
     <dt>DOI</dt>
     <dd><?php echo $info->doi ?></dd>
@@ -304,10 +292,22 @@ $dataviz = $db->query("SELECT * FROM datavisualizations WHERE paper = $id");
     <dd><i class="fa fa-lock"></i> Paid / private access</dd>
   <?php } ?>
 
+
+    <dt>Abstract</dt>
+    <dd>
+    <p><?php echo $info->abstract ?: '<em>Abstract unavailable</em>'; ?></p>
+    <?php if ($info->abstract_native) { ?>
+      <p><em>Original Abstract</em></p>
+      <p><?php echo $info->abstract ?></p>
+    <?php } ?>
+    </dd>
+
   <?php if ($info->editor_comments) { ?>
     <dt>Our comments</dt>
     <dd><?php echo $info->editor_comments ?></dd>
   <?php } ?>
+
+  <a href="publication/<?php echo $id ?>/flag" class="btn btn-blue pull-right"><i class="fa fa-flag"></i> Incorrect or incomplete information? <br />Click here to report this.</a>
 
   <?php if ($info->doi || $info->link) { ?>
     <dt>More Information</dt>
@@ -348,15 +348,11 @@ $dataviz = $db->query("SELECT * FROM datavisualizations WHERE paper = $id");
     <?php } ?>
   <?php } ?>
 
-  </div>
-  </div>
-  </div>
+<div class="row clear">
 
-<div class="bg-grey text-black py-4">
-            <div class="container">
-              <div class="row text-center text-lg-left">
+  <div class="col-md-<?php echo $admin_mode ? 12 : 6; ?>">
 
-                  <h2 style="width:100%">Tags</h2>
+<h2>Tags</h2>
 
 <?php if (true) { ?>
 
@@ -413,27 +409,28 @@ $dataviz = $db->query("SELECT * FROM datavisualizations WHERE paper = $id");
 <?php } ?>
 </ul>
 <?php } ?>
-</div>
-</div>
-</div>
-
-
-<div class="container" style="margin-top:20px">
-  <a href="publication/<?php echo $id ?>/flag" class="btn btn-blue pull-right"><i class="fa fa-flag"></i> Incorrect or incomplete information? <br />Click here to report this.</a>
 
 <p>
   <a href="javascript:history.back()" class="btn btn-info"><i class="fa fa-arrow-left"></i> Back</a>
 </p>
-    <p style="margin-top:70px;opacity:0.7;">
+
+
+</div>
+
+<div class="col-md-6 meta-col">
+
+  <div class="alert alert-warning">
     This website provides meta data on papers and other publications, with
     links to the original source. These papers may be copyrighted or
     otherwise protected by the publishing journal or author. Follow the link to
     the original document and/or contact the publisher/author for more
     information.
-  </p>
-
+  </div>
 
 </div>
+
+</div>
+
 <?php if ($admin_mode) { ?>
   <h3>Add New Tag</h3>
   <form method="post">

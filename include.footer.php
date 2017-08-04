@@ -73,9 +73,6 @@
               About Us
             </h4>
             <p>We are a community-led online hub around urban metabolism.</p>
-
-                <img src="img/sponsors/eur.png" alt="" />
-                <img src="img/sponsors/nestle.png" alt="" />
           </div>
           
           <div class="col-md-4">

@@ -10,6 +10,7 @@
 .header .navbar {
   top:55px;
   position:absolute;
+  left:10px;
 }
 body .header-upper {
   position:absolute;
@@ -37,4 +38,8 @@ body .header {
 .sponsorbox img {
   margin:5px 20px;
   padding:6px;
+}
+
+.container.page-10.section-2 {
+  min-height:700px;
 }
