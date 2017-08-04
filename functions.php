@@ -53,9 +53,14 @@ $header .= PRODUCTION ?
 
     '<!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
-    ' :
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:400,700,300" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Rambla" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Calligraffitti" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=roboto+slab:400,700" rel="stylesheet" type="text/css">
 
+    ' :
     '<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/googlefonts/rambla.css">
     
     ';
 
@@ -67,11 +72,6 @@ $header .= PRODUCTION ?
     <link href="css/styles.css?reload='.$css.'" rel="stylesheet" />
     <link href="css/custom-'.ID.'.css?s='.$size_custom.'" rel="stylesheet" />
 
-    <link href="//fonts.googleapis.com/css?family=Open+Sans:400,700,300" rel="stylesheet" type="text/css">
-    <link href="//fonts.googleapis.com/css?family=Rambla" rel="stylesheet" type="text/css">
-    <link href="//fonts.googleapis.com/css?family=Calligraffitti" rel="stylesheet" type="text/css">
-    <link href="//fonts.googleapis.com/css?family=Roboto+Slab:400,700" rel="stylesheet" type="text/css">
-
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -80,12 +80,12 @@ $header .= PRODUCTION ?
 
 $header .= PRODUCTION ? 
   '
-    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
   ' :
   '
-    <script type="text/javascript" src="assets/js/jquery-3.1.1.slim.min.js"></script>
+    <script type="text/javascript" src="assets/js/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="assets/js/tether.min.js"></script>
     <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
   ';
@@ -128,7 +128,7 @@ $menu = array(
       1 => array('label' => 'Introduction', 'url' => 'publications'),
       2 => array('label' => 'Current Research', 'url' => 'research/list'),
       3 => array('label' => 'Add Your Project', 'url' => 'research/add'),
-      4 => array('label' => 'Publications Database', 'url' => 'publications/list'),
+      4 => array('label' => 'Publications Database', 'url' => 'publications/results'),
       5 => array('label' => 'Publications Collections', 'url' => 'publications/collections'),
       6 => array('label' => 'Search', 'url' => 'publications/search'),
       7 => array('label' => 'Add Publication', 'url' => 'publications/add'),
@@ -180,8 +180,8 @@ if (ID == 2) {
     'label' => 'About', 
     'url' => 'page/about', 
     'menu' => array(
-      1 => array('label' => 'About Us', 'url' => 'page/about'),
-      3 => array('label' => 'What is EPR?', 'url' => 'page/team'),
+      1 => array('label' => 'About Us', 'url' => 'page/empty'),
+      3 => array('label' => 'What is EPR?', 'url' => 'page/empty'),
       5 => array('label' => 'Contact Us', 'url' => 'page/contact'),
     ),
   ),
@@ -190,14 +190,16 @@ if (ID == 2) {
     'url' => 'publications',
     'menu' => array(
       1 => array('label' => 'Introduction', 'url' => 'publications'),
-      4 => array('label' => 'Database', 'url' => 'publications/list'),
+      4 => array('label' => 'Browse', 'url' => 'publications/results'),
       5 => array('label' => 'Collections', 'url' => 'publications/collections'),
       6 => array('label' => 'Search', 'url' => 'publications/search'),
-      7 => array('label' => 'Add Your Reference', 'url' => 'publications/add'),
       8 => array('label' => 'Authors', 'url' => 'people'),
       9 => array('label' => 'Journals', 'url' => 'journals'),
     ),
   ),
+  5 => array('label' => 'Submit a Reference', 'url' => 'page/submit'),
+  6 => array('label' => 'EPR News', 'url' => 'page/empty'),
+  7 => array('label' => 'Acknowledgements', 'url' => 'page/empty'),
   );
 }
 

@@ -30,7 +30,7 @@ $page = 1;
 
       <?php 
         $list = array(
-          'Database' => array('file-text-o', 'publications/list'),
+          'Browse database' => array('file-text-o', 'publications/results'),
           'Search' => array('search', 'publications/search'),
           'Collections' => array('th-list', 'publications/collections'),
           'Authors' => array('users', 'people'),
@@ -53,6 +53,8 @@ $page = 1;
 
     </div>
   </div>
+
+  <?php if (ID == 1) { ?>
 
   <div class="jumbotron">
     
@@ -80,6 +82,8 @@ $page = 1;
 
     </div>
   </div>
+
+  <?php } ?>
 
 
 <?php require_once 'include.footer.php'; ?>

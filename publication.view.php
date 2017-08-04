@@ -12,9 +12,10 @@ if (!$_GET['hash'] && !defined("ADMIN")) {
   $sql = "AND papers.status = 'active'";
 }
 
-$info = $db->record("SELECT papers.*, sources.name
+$info = $db->record("SELECT papers.*, sources.name, paper_types.name AS type_name
 FROM papers 
   JOIN sources ON papers.source = sources.id
+  JOIN paper_types ON papers.type = paper_types.id
 WHERE papers.id = $id $sql");
 
 $this_page = "Publication #$id";
@@ -95,22 +96,6 @@ if ($admin_mode) {
   ORDER BY tags.parent, tags.tag");
 }
 
-foreach ($tags as $row) {
-  if ($row['parentname'] == 'Publication Types') {
-    if (($admin_mode && $activetag[$row['id']]) || (!$admin_mode)) {
-      $type_title .= $row['tag'] . "<br />";
-    }
-  }
-}
-
-if ($type_title) {
-  $type_title = substr($type_title, 0, -6);
-}
-
-if (ID == 2) {
-  $type_title = "Journal Article";
-}
-
 if ($info->doi) {
   $type_of_link = strpos($info->doi, "http") > -1 && !strpos($info->doi, "dx.doi.org") ? "web" : "doi";
   if ($type_of_link == "doi") {
@@ -167,6 +152,9 @@ $dataviz = $db->query("SELECT * FROM datavisualizations WHERE paper = $id");
       .meta-col{display:none}
       .admin-box{padding:6px;margin:10px 0}
     <?php } ?>
+
+    .bg-blue a{color:#fff;font-weight:bold;text-decoration:underline}
+    .bg-blue{margin-bottom:20px}
     </style>
     <?php if ($admin_mode) { ?>
     <script type="text/javascript">
@@ -236,9 +224,7 @@ $dataviz = $db->query("SELECT * FROM datavisualizations WHERE paper = $id");
 
 <?php } else { ?>
 
-<?php if ($type_title) { ?>
-<p class="intro faded"><?php echo $type_title ?></p>
-<?php } ?>
+<p class="intro faded"><?php echo $info->type_name ?></p>
 <h1><?php echo $info->title ?></h1>
 
   <?php if ($print) { echo "<div class=\"alert alert-success\">$print</div>"; } ?>
@@ -256,11 +242,9 @@ $dataviz = $db->query("SELECT * FROM datavisualizations WHERE paper = $id");
 
 </div>
 
-<div class="bg-blue-dark text-white py-4">
+<div class="bg-blue text-white py-4">
             <div class="container">
               <div class="row text-center text-lg-left">
-
-
 
 <dl class="dl dl-horizontal status-<?php echo $info->status ?>">
 
@@ -287,10 +271,13 @@ $dataviz = $db->query("SELECT * FROM datavisualizations WHERE paper = $id");
   <dt>Year</dt>
   <dd><?php echo $info->year ?></dd>
 
+  <?php if ($info->source && $info->name) { ?>
   <dt>Source</dt>
   <dd>
     <a href="source/<?php echo $info->source ?>">
     <?php echo $info->name ?></a><?php if ($info->volume) { ?>, Volume <?php echo $info->volume ?><?php } if ($info->issue) { ?>, Issue <?php echo $info->issue ?><?php } if ($info->pages) { ?>, Pages <?php echo $info->pages ?><?php } ?></dd>
+
+  <?php } ?>
 
   <?php if ($info->doi && $type_of_link == "doi") { ?>
     <dt>DOI</dt>

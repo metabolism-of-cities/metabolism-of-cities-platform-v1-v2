@@ -2,6 +2,7 @@
 require_once 'functions.php';
 $section = 2;
 $page = 6;
+$show_breadcrumbs = true;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,16 +15,11 @@ $page = 6;
 
 <?php require_once 'include.header.php'; ?>
 
-  <div class="jumbotron">
-    <h1>Navbar example</h1>
-    <p>This example is a quick exercise to illustrate how the default, static and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
-    <p>To see the difference between static and fixed top navbars, just scroll.</p>
-    <p>
-      <a class="btn btn-lg btn-primary" href="../../components/#navbar" role="button">View navbar docs &raquo;</a>
-    </p>
-  </div>
+  
+    <h1>Title</h1>
 
-  <h1>Title</h1>
+    <p>Content goes here</p>
+
 
 <?php require_once 'include.footer.php'; ?>
 

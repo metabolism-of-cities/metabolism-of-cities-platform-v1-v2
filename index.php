@@ -71,7 +71,6 @@ $blog = $db->record("SELECT * FROM blog WHERE active = 1 AND date <= '$today' OR
 
 
 </div>
-
     
     <?php if (ID == 1) { ?>
     <div id="features" class="bg-white">
@@ -81,30 +80,38 @@ $blog = $db->record("SELECT * FROM blog WHERE active = 1 AND date <= '$today' OR
           <div class="col-lg-3 py-2">
             <i class="fa fa-pencil icon-3x text-primary animated animated-done" data-animate="fadeIn" data-animate-delay="0.1" style="animation-delay: 0.1s;"></i> 
             <h4 class="mt-2">
+              <a href="research/list">
               Research
+              </a>
             </h4>
-            <p>Consectetuer neo oppeto persto. Abdo bene enim illum paulatim veniam.</p>
+            <p>A list of academic research projects that people in the community are currently undertaking.</p>
           </div>
           <div class="col-lg-3 py-2">
             <i class="fa fa-database icon-3x text-primary animated animated-done" data-animate="fadeIn" data-animate-delay="0.2" style="animation-delay: 0.2s;"></i> 
             <h4 class="mt-2">
+              <a href="data">
               Data
+              </a>
             </h4>
-            <p>Euismod exerci hos iriure nimis quae volutpat. Abigo esse facilisi neque oppeto.</p>
+            <p>We have developed a global urban metabolism dataset containing datapoints from all over the world.</p>
           </div>
           <div class="col-lg-3 py-2">
             <i class="fa fa-users icon-3x text-primary animated animated-done" data-animate="fadeIn" data-animate-delay="0.3" style="animation-delay: 0.3s;"></i> 
             <h4 class="mt-2">
-              Stakeholders
+              <a href="stakeholders">
+              Stakeholders Initiative
+              </a>
             </h4>
-            <p>Dignissim immitto refero rusticus. Damnum esse hos loquor refoveo secundum.</p>
+            <p>We set up events and activities around particular themes throughout the year. Check out our current and past initiatives.</p>
           </div>
           <div class="col-lg-3 py-2">
             <i class="fa fa-line-chart icon-3x text-primary animated animated-done" data-animate="fadeIn" data-animate-delay="0.4" style="animation-delay: 0.4s;"></i> 
             <h4 class="mt-2">
+              <a href="omat">
               OMAT
+              </a>
             </h4>
-            <p>Consectetuer dolore duis enim facilisis molior probo quidem saluto.</p>
+            <p>The Online Material Flow Analysis Tool allows is free, open-source online software to help you do an MFA!</p>
           </div>
         </div>
       </div>
@@ -129,7 +136,7 @@ $blog = $db->record("SELECT * FROM blog WHERE active = 1 AND date <= '$today' OR
       <div class="bg-blue text-white p-3 p-lg-4 text-center divider-arrow divider-arrow-b divider-inverse">
         <div class="container">
           <h2 class="text-center text-uppercase font-weight-bold my-0">
-            Publications
+            <?php echo ID == 1 ? "Publications" : "Overview" ?>
           </h2>
           <h5 class="text-center font-weight-light mt-2 mb-0 text-white op-5">
             We have indexed <strong><?php echo $papers->total ?></strong> publications and counting!
@@ -141,30 +148,32 @@ $blog = $db->record("SELECT * FROM blog WHERE active = 1 AND date <= '$today' OR
           <div class="col-lg-3 py-2">
             <i class="fa fa-list icon-3x text-primary animated animated-done" data-animate="fadeIn" data-animate-delay="0.1" style="animation-delay: 0.1s;"></i> 
             <h4 class="mt-2">
-              Database
+              <a href="publications/results">Database</a>
             </h4>
-            <p>Consectetuer neo oppeto persto. Abdo bene enim illum paulatim veniam.</p>
+            <p>View our database with <?php echo $papers->total ?> journal articles, books, reports, and other literature.</p>
           </div>
           <div class="col-lg-3 py-2">
             <i class="fa fa-book icon-3x text-primary animated animated-done" data-animate="fadeIn" data-animate-delay="0.2" style="animation-delay: 0.2s;"></i> 
             <h4 class="mt-2">
-              Collections
+              <a href="publications/collections">Collections</a>
             </h4>
-            <p>Euismod exerci hos iriure nimis quae volutpat. Abigo esse facilisi neque oppeto.</p>
+            <p>Our collections include groups of publications by theme and can be easily browsed and filtered.</p>
           </div>
           <div class="col-lg-3 py-2">
             <i class="fa fa-search icon-3x text-primary animated animated-done" data-animate="fadeIn" data-animate-delay="0.3" style="animation-delay: 0.3s;"></i> 
             <h4 class="mt-2">
-              Search
+              <a href="publications/search">Search</a>
             </h4>
-            <p>Dignissim immitto refero rusticus. Damnum esse hos loquor refoveo secundum.</p>
+            <p>Are you looking for a specific topic? Use our search page to find what you are looking for!</p>
           </div>
           <div class="col-lg-3 py-2">
             <i class="fa fa-plus icon-3x text-primary animated animated-done" data-animate="fadeIn" data-animate-delay="0.4" style="animation-delay: 0.4s;"></i> 
             <h4 class="mt-2">
+              <a href="page/submit">
               Add
+              </a>
             </h4>
-            <p>Consectetuer dolore duis enim facilisis molior probo quidem saluto.</p>
+            <p>Are we missing records from our database? Please submit any missing references here.</p>
           </div>
         </div>
       </div>

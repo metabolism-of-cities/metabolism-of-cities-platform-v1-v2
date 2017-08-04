@@ -210,10 +210,13 @@ AddDefaultCharset utf-8
 <IfModule mod_rewrite.c>
     Options +FollowSymlinks
     RewriteEngine On
+    RewriteRule ^browse$ publications.results.php [QSA]
+
     RewriteRule ^data/download?$ casestudy.php?download=true
     RewriteRule ^research/([0-9]+)/?$ research.php?id=$1
     RewriteRule ^research/(.+)/?$ research.$1.php
     RewriteRule ^publications/(.+)/([0-9]+)/?$ publications.$1.php?id=$2
+    RewriteRule ^publications/all?$ publications.results.php?all=true
     RewriteRule ^publications/(.+)/$ publications.$1.php
     RewriteRule ^publications/(.+)$ publications.$1.php
     RewriteRule ^tags/([0-9]+)/(.+)/?$ publications.results.php?tag=$1

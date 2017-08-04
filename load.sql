@@ -1657,3 +1657,49 @@ ADD INDEX `type` (`type`);
 
 ALTER TABLE `questionnaire`
 ADD `email` varchar(255) COLLATE 'utf8_unicode_ci' NULL AFTER `work_other`;
+
+
+CREATE TABLE `paper_types` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `name` varchar(120) NOT NULL
+) ENGINE='InnoDB' COLLATE 'utf8_unicode_ci';
+
+INSERT INTO paper_types (name) values ('Artwork');
+INSERT INTO paper_types (name) values ('Audio Recording');
+INSERT INTO paper_types (name) values ('Bill');
+INSERT INTO paper_types (name) values ('Blogpost');
+INSERT INTO paper_types (name) values ('Book');
+INSERT INTO paper_types (name) values ('Book Section');
+INSERT INTO paper_types (name) values ('Case');
+INSERT INTO paper_types (name) values ('Computer Program');
+INSERT INTO paper_types (name) values ('Conference Paper');
+INSERT INTO paper_types (name) values ('Dataset');
+INSERT INTO paper_types (name) values ('Document');
+INSERT INTO paper_types (name) values ('Film');
+INSERT INTO paper_types (name) values ('Forum Post');
+INSERT INTO paper_types (name) values ('Hearing');
+INSERT INTO paper_types (name) values ('Interview');
+INSERT INTO paper_types (name) values ('Journal Article');
+INSERT INTO paper_types (name) values ('Letter');
+INSERT INTO paper_types (name) values ('Magazine Article');
+INSERT INTO paper_types (name) values ('Manuscript');
+INSERT INTO paper_types (name) values ('Map');
+INSERT INTO paper_types (name) values ('Newspaper Article');
+INSERT INTO paper_types (name) values ('Note');
+INSERT INTO paper_types (name) values ('Patent');
+INSERT INTO paper_types (name) values ('Podcast');
+INSERT INTO paper_types (name) values ('Presentation');
+INSERT INTO paper_types (name) values ('Radio Broadcast');
+INSERT INTO paper_types (name) values ('Report');
+INSERT INTO paper_types (name) values ('Statute');
+INSERT INTO paper_types (name) values ('Thesis');
+INSERT INTO paper_types (name) values ('TV Broadcast');
+INSERT INTO paper_types (name) values ('Video Recording');
+INSERT INTO paper_types (name) values ('Webpage');
+
+
+ALTER TABLE `papers`
+ADD `type` int(10) unsigned NOT NULL DEFAULT '20',
+ADD FOREIGN KEY (`type`) REFERENCES `paper_types` (`id`);
+
+update papers set type = ROUND((RAND() * (30-1))+1);

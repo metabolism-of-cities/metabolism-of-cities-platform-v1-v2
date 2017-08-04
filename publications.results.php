@@ -45,6 +45,11 @@ if ($_POST['end']) {
   $filters = !$start ? "<strong>Year</strong>: during or before $end<br />" : '';
 }
 
+if ($_GET['year']) {
+  $year = (int)$_GET['year'];
+  $sql .= " AND papers.year = $year";
+}
+
 if (is_array($_POST['tags'])) {
   $this_page = "Filter publications";
   foreach ($_POST['tags'] as $key => $value) {
@@ -62,6 +67,19 @@ if (is_array($_POST['tags'])) {
     $in_tags = substr($in_tags, 0, -1); // Take out extra comma
     $sql .= " AND EXISTS (SELECT * FROM tags_papers WHERE tags_papers.paper = papers.id AND tag IN ($in_tags))";
   }
+}
+
+if (is_array($_POST['search'])) {
+  $this_page = "Filter publications";
+  foreach ($_POST['search'] as $key => $value) {
+    $tag = (int)$value;
+    $in_tags .= $tag.",";
+    $info = $db->record("SELECT * FROM tags WHERE id = $tag");
+    $filters .= $info->tag . " or ";
+  }
+  $filters = substr($filters, 0, -4) . '<br />'; // Take out ' or '
+  $in_tags = substr($in_tags, 0, -1); // Take out extra comma
+  $sql .= " AND EXISTS (SELECT * FROM tags_papers WHERE tags_papers.paper = papers.id AND tag IN ($in_tags))";
 }
 
 if ($_POST['update_tag'] && defined("ADMIN")) {
@@ -106,17 +124,59 @@ if ($_GET['tag']) {
   $filters = "<strong>Keyword</strong>: " . $info->keyword;
   $title = $info->keyword . " | ";
 } else {
-  $list = $db->query("SELECT * FROM papers WHERE status = 'active' $sql ORDER BY year DESC, title");
+  $list = $db->query("SELECT papers.* 
+  FROM papers 
+  WHERE status = 'active' $sql 
+  ORDER BY year DESC, title");
+}
+
+$years = $db->query("SELECT COUNT(*) AS total, year FROM papers WHERE status = 'active' $sql GROUP BY year ORDER BY year DESC");
+$types = $db->query("SELECT COUNT(*) AS total, type FROM papers WHERE status = 'active' $sql GROUP BY type ORDER BY total DESC, type");
+$tags = $db->query("SELECT COUNT(*) AS total, tags.id, tags.tag
+FROM tags_papers
+  JOIN tags ON tags_papers.tag = tags.id
+  JOIN papers ON tags_papers.paper = papers.id
+WHERE papers.status = 'active' $sql
+GROUP BY tags.id ORDER BY total DESC, tags.tag
+");
+
+$all_tags = $db->query("SELECT * FROM tags ORDER BY tag");
+
+// Temporary fix until we unify queries
+$get_types = $db->query("SELECT * FROM paper_types");
+foreach ($get_types as $row) {
+  $type[$row['id']] = $row['name'];
 }
 
 $gps_tagged = ID == 2 ? 2 : 4;
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <?php echo $header ?>
     <title><?php echo $title ?>Publications | <?php echo SITENAME ?></title>
+    <link rel="stylesheet" href="css/select2.min.css" />
     <style type="text/css">
+    .resultbox .row {
+      padding:10px;
+    }
+    .resultbox h4 {
+      padding:10px 10px 0 10px;
+    }
+    .nav-section-menu.nav a.show-all.nav-link {
+      background:#6b6b6b;
+      color:#f4f4f4;
+    }
+    .nav-section-menu.nav .nav-link {
+      font-size:14px;
+    }
+    .nav-section-menu.nav .nav-header {
+      padding-top:60px;
+    }
+    .nav-section-menu.nav .nav-header.first {
+      padding-top:0;
+    }
     .recordbox h3 {
       font-size:18px;
     }
@@ -127,6 +187,9 @@ $gps_tagged = ID == 2 ? 2 : 4;
     .recordbox .type {
       opacity:0.7;
     }
+    .hide {
+      display:none;
+    }
     </style>
   </head>
 
@@ -134,31 +197,53 @@ $gps_tagged = ID == 2 ? 2 : 4;
 
 <?php require_once 'include.header.php'; ?>
 
-<h1><?php echo ID == 2 ? "EPR" : "Urban Metabolism"; ?> Publications</h1>
+<h1>Browse our database</h1>
 
 <?php if ($print) { echo "<div class=\"alert alert-success\">$print</div>"; } ?>
 
 <p>
-Explanatory notes about how to use the database go here. 
+  Please enter keywords below to start your search. You will see a list of common keywords
+  appear as you start typing. If you like to search for other keywords, continue typing and 
+  separate each phrase by hitting ENTER.
 </p>
 
-<p>
-  Have you written or can you recommend a publication that should be added? <a href="publications/add">Add it here!</a>
-</p>
+<div class="resultbox">
 
-<?php if ($filters) { ?>
-  <div class="resultbox">
-  <h4>
-    <i class="glyphicon glyphicon-filter"></i>
-    Filter(s): 
-  </h4>
-  <p><?php echo $filters ?></p>
-  <p>
-    <a href="publications/search">New database search</a> |
-    <a href="publications/list">View all publications</a>
-  </p>
-  </div>
-<?php } elseif (ID == 1) { ?>
+  <form method="post" class="form form-horizontal">
+
+    <h4>
+      <i class="glyphicon glyphicon-filter"></i>
+      Search: 
+    </h4>
+
+    <div class="row">
+      <div class="col">
+        <select name="search[]" class="form-control" id="searchbox" multiple>
+          <option value=""></option>
+          <?php foreach ($all_tags as $row) { ?>
+            <option value="<?php echo $row['id'] ?>"<?php if ($row['id'] == $info->name) { echo ' selected'; } ?>><?php echo $row['tag'] ?></option>
+          <?php } ?>
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-3">
+        <button type="submit" class="btn btn-primary">Search</button>
+      </div>
+      <div class="col-9">
+        <p class="pull-right">
+          <a href="publications/results">Reset all filters</a> |
+          <a href="publications/all">View all publications</a>
+        </p>
+      </div>
+    </div>
+
+  </form>
+
+</div>
+
+<?php if (ID == 1) { ?>
 
   <div class="alert alert-info">
     <a href="publications.export.php" class="btn btn-default">
@@ -170,59 +255,116 @@ Explanatory notes about how to use the database go here.
 
 <?php } ?>
 
+<?php if (count($list)) { ?>
+
+<div class="row">
+<div class="col-3 ">
+  <ul class="nav nav-section-menu nav-sidebar">
+    <li class="nav-header first">Filter by Year</li>
+    <?php $i = 0; foreach ($years as $row) { ?>
+      <?php
+        $i++;
+        if ($i > 5) {
+          $class = "hide hide-year";
+        }
+      ?>
+      <li class="<?php echo $class ?>">
+        <a href="browse?year=<?php echo $row['year'] ?>" class="nav-link"><?php echo $row['year'] ?> 
+          <span class="badge badge-default"><?php echo $row['total'] ?></span>
+          <i class="fa fa-angle-right"></i>
+        </a>
+      </li>
+    <?php } ?>
+    <li>
+      <a href="#" class="show-all nav-link" data-type="year">Show all 
+        <i class="fa fa-angle-down"></i>
+      </a>
+    </li>
+    <li class="nav-header">Filter by Type</li>
+    <?php $i = 0; foreach ($types as $row) { ?>
+      <?php
+        $i++;
+        $class = "reg";
+        if ($i > 5) {
+          $class = "hide hide-type";
+        }
+      ?>
+      <li class="<?php echo $class ?>">
+        <a href="?type=<?php echo $row['type'] ?>" class="nav-link"><?php echo $type[$row['type']] ?> 
+            <span class="badge badge-default"><?php echo $row['total'] ?></span>
+          <i class="fa fa-angle-right"></i>
+        </a>
+      </li>
+    <?php } ?>
+    <li>
+      <a href="#" class="show-all nav-link" data-type="type">Show all 
+        <i class="fa fa-angle-down"></i>
+      </a>
+    </li>
+    <li class="nav-header">Filter by Tag</li>
+    <?php $i = 0; foreach ($tags as $row) { ?>
+      <?php
+        $i++;
+        $class = "reg";
+        if ($i > 10) {
+          $class = "hide hide-tag";
+        }
+        if ($i < 30) {
+      ?>
+      <li class="<?php echo $class ?>">
+        <a href="?tag=<?php echo $row['tag'] ?>" class="nav-link"><?php echo $row['tag'] ?> 
+            <span class="badge badge-default"><?php echo $row['total'] ?></span>
+          <i class="fa fa-angle-right"></i>
+        </a>
+      </li>
+    <?php } } ?>
+    <li>
+      <a href="#" class="show-all nav-link" data-type="tag">Show all 
+        <i class="fa fa-angle-down"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+<div class="col-9  main">
+
 <div class="resultbox">
   <i class="fa fa-info-circle"></i>
   <strong><?php echo count($list) ?></strong>
   <?php echo count($list) > 1 ? 'publications' : 'publication' ?> found.
 </div>
 
-<?php if (count($list)) { ?>
+  <?php if (!count($_GET) && !count($_POST) && !$_GET['all']) { ?>
 
-<div class="row">
-<div class="col-3 ">
-  <ul class="nav nav-section-menu nav-sidebar">
-              <li>
-        <a href="omat/documentation/1" class="nav-link">2020 (22)</span>
-          <i class="fa fa-angle-right"></i>
-        </a>
-      </li>
-              <li>
-        <a href="omat/documentation/2" class="nav-link">Basic MFA</span>
-          <i class="fa fa-angle-right"></i>
-        </a>
-      </li>
-              <li>
-        <a href="omat/documentation/3" class="nav-link">Advanced options</span>
-          <i class="fa fa-angle-right"></i>
-        </a>
-      </li>
-              <li>
-        <a href="omat/documentation/4" class="nav-link">Collecting data</span>
-          <i class="fa fa-angle-right"></i>
-        </a>
-      </li>
-          </ul>
-</div>
-
-<div class="col-9  main">
-
-<?php foreach ($list as $row) { ?>
-
-<div class="recordbox">
-  <h3><a href="publication/<?php echo $row['id'] ?>"><?php echo $row['title'] ?></a></h3>
-  <div class="row">
-    <div class="col-2">
-    <span class="type">
-      Journal Article
-      </span>
-      <br />
-      <?php echo $row['year'] ?>
+    <div class="alert alert-info">
+      Enter a search phrase in the box above, or 
+      use the filters on the left to browse through our database. 
+      Alternatively, click the button below to view our entire list.
+    <br /><br />
+    <a href="publications/all" class="btn btn-primary"><i class="fa fa-list"></i> View All</a>
     </div>
-    <div class="col-10">
-      <?php echo $row['author'] ?>
+
+  <?php } else { ?>
+
+    <?php foreach ($list as $row) { ?>
+
+    <div class="recordbox">
+      <h3><a href="publication/<?php echo $row['id'] ?>"><?php echo $row['title'] ?></a></h3>
+      <div class="row">
+        <div class="col-2">
+          <span class="type">
+            <?php echo $type[$row['type']] ?>
+          </span>
+          <br />
+          <?php echo $row['year'] ?>
+        </div>
+        <div class="col-10">
+          <?php echo $row['author'] ?>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
+    <?php } ?>
+
 <?php } ?>
 
 </div>
@@ -231,6 +373,20 @@ Explanatory notes about how to use the database go here.
 <?php } ?>
 
 <?php require_once 'include.footer.php'; ?>
-
+<script type="text/javascript" src="js/select2.min.js"></script>
+<script type="text/javascript">
+$(function(){
+  $(".show-all").click(function(e){
+    e.preventDefault();
+    var type = $(this).data("type");
+    $(".hide-"+type).show('fast');
+    $(this).hide();
+  });
+  $("#searchbox").select2({
+    tags: true,
+    tokenSeparators: [',']
+  })
+});
+</script>
   </body>
 </html>

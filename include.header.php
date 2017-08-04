@@ -110,7 +110,10 @@
 
                   <?php foreach ($menu as $key => $value) { ?>
                     <?php if (!is_array($value['menu'])) { ?>
-                      <li<?php if ($section == $key) { echo ' class="active"'; } ?>><a href="<?php echo $value['url'] ?>"><?php echo $value['label'] ?></a></li>
+                    <li class="nav-item <?php if ($section == $key) { echo ' active'; } ?>">
+                      <a href="<?php echo $value['url'] ?>" class="nav-link">
+                      <?php echo $value['label'] ?> </a>
+                    </li>
                     <?php } else { ?>
                     <li class="nav-item dropdown<?php if ($section == $key) { echo ' active'; } ?>">
                       <a href="<?php echo $value['url'] ?>" class="nav-link dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
@@ -120,6 +123,7 @@
                         <a href="<?php echo $value['url'] ?>" class="dropdown-item<?php if ($page == $subkey && $section == $key) { echo ' active'; } ?>"><?php echo $value['label'] ?></a>
                       <?php } ?>
                       </div>
+                    </li>
                     <?php } ?>
                   <?php } ?>
                 
