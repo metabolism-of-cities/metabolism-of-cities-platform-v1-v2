@@ -78,6 +78,10 @@ if (is_array($_GET['search'])) {
   $this_page = "Filter publications";
   foreach ($_GET['search'] as $key => $value) {
     $tag = (int)$value;
+    if ($tag == 214) {
+      $tag = 1046;
+      $alias = true;
+    }
     if ($tag) {
       $in_tags .= $tag.",";
       $info = $db->record("SELECT * FROM tags WHERE id = $tag");
@@ -236,6 +240,13 @@ $gps_tagged = ID == 2 ? 2 : 4;
       Search: 
     </h4>
 
+    <?php if ($alias) { ?>
+    <p>
+      Your search term <em>household waste</em>
+      is considered an alias for <em>end-of-life waste</em>
+    </p>
+    <?php } ?>
+
     <div class="row">
       <div class="col">
         <select name="search[]" class="form-control" id="searchbox" multiple>
@@ -248,6 +259,7 @@ $gps_tagged = ID == 2 ? 2 : 4;
               <option value="<?php echo $key ?>" selected><?php echo $value ?></option>
             <?php } ?>
           <?php } ?>
+            <option value="">Mouse (aliases: Rat, Field Mouse, Ferret)</option>
         </select>
       </div>
     </div>
