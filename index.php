@@ -62,6 +62,9 @@ $blog = $db->record("SELECT * FROM blog WHERE active = 1 AND date <= '$today' OR
     .bg-grey .mt-2 {
       color:#00adbb;
     }
+    .movedown {
+        margin-top:20px;
+    }
     </style>
   </head>
 
@@ -71,6 +74,20 @@ $blog = $db->record("SELECT * FROM blog WHERE active = 1 AND date <= '$today' OR
 
 
 </div>
+
+
+<?php if (ID == 2) { ?>
+<div class="container movedown">
+<h1>Welcome</h1>
+  <p>This is a database of references to research, debate, and policymaking publications related to <a href="http://dev.epr-database.yale.edu/what-epr">Extended Producer Responsibility (EPR)</a>, a policy strategy that assigns responsibility to producers for products when they become waste. </p>
+<h3><strong>Focus</strong></h3>
+<p>The primary focus of the database is on <a href="http://www.greynet.org/">grey literature</a> (i.e., reports self-published by governments, industry and NGOs). It also contains references to journal articles, books, conference presentations, statutes, court cases, annual reports, web sites and many other sources.  It is a bibliography and does not contain the documents themselves. The documents are not part of the database because Yale does not hold the copyright to those publications.</p>
+<h3><strong>Origins</strong></h3>
+<p>The database grew out of research on EPR at the <a href="http://cie.research.yale.edu/">Yale Center for Industrial Ecology</a>.  While attempts have been made to make it inclusive (with more than 750 references), it is not comprehensive especially with regard to statutes and annual reports.  Its contents are sometimes idiosyncratic, reflecting specific research projects conducted at the Center for Industrial Ecology.  A particular strength is that it includes references to documents stretching back to the early days of EPR in the 1990s. </p>
+<p>The database was created by <a href="http://environment.yale.edu/profile/lifset/">Reid Lifset</a>, Research Scientist and Resident Fellow in Industrial Ecology at the <a href="http://environment.yale.edu/">Yale School of Forestry &amp; Environmental Studies</a>.   Support for the development of the database was provided by the <a href="http://erp-recycling.org/">European Recycling Platform</a> and <a href="http://www.nestle-watersna.com/en/water-sustainability/extended-producer-responsibility">Nestle Waters North America</a>.</p>
+<p>To access the database click on the <a href="publications/results">Database Menu</a>.</p>
+</div>
+<?php } ?>
     
     <?php if (ID == 1) { ?>
     <div id="mainsection" class="bg-white">

@@ -154,15 +154,23 @@ if ($_GET['tag']) {
 
 $years = $db->query("SELECT COUNT(*) AS total, year FROM papers WHERE status = 'active' $sql GROUP BY year ORDER BY year DESC");
 $types = $db->query("SELECT COUNT(*) AS total, type FROM papers WHERE status = 'active' $sql GROUP BY type ORDER BY total DESC, type");
-$tags = $db->query("SELECT COUNT(*) AS total, tags.id, tags.tag
+$tags = $db->query("SELECT tags.id, tags.tag, tags_papers.paper
 FROM tags_papers
   JOIN tags ON tags_papers.tag = tags.id
   JOIN papers ON tags_papers.paper = papers.id
 WHERE papers.status = 'active' $sql
-GROUP BY tags.id ORDER BY total DESC, tags.tag
 ");
 
+foreach ($tags as $row) { 
+  $tag_hits[$row['id']]++;
+  $tag_names[$row['id']] = $row['tag'];
+  $tag_papers[$row['paper']][$row['id']] = true;
+}
+
 $all_tags = $db->query("SELECT * FROM tags ORDER BY tag");
+
+// Create a list of the most common tags
+arsort($tag_hits);
 
 // Temporary fix until we unify queries
 $get_types = $db->query("SELECT * FROM paper_types");
@@ -192,12 +200,6 @@ $gps_tagged = ID == 2 ? 2 : 4;
     }
     .nav-section-menu.nav .nav-link {
       font-size:14px;
-    }
-    .nav-section-menu.nav .nav-header {
-      padding-top:60px;
-    }
-    .nav-section-menu.nav .nav-header.first {
-      padding-top:0;
     }
     .recordbox h3 {
       font-size:18px;
@@ -300,55 +302,82 @@ $gps_tagged = ID == 2 ? 2 : 4;
 
 <?php if (count($list)) { ?>
 
-<div class="row">
+<div class="row filters">
+
+<script type="text/javascript">
+$(function(){
+  
+$(".filters .filter").click(function(e){
+  e.preventDefault();
+  var type = $(this).data("type");
+  var id = $(this).data("id");
+  var hide = ".recordbox:not(."+type+"-"+id+")";
+  var show = ".recordbox."+type+"-"+id;
+  $(show).show('fast');
+  $(hide).hide('fast');
+  $(this).closest("ul").find("li a").removeClass('active');
+  $(this).addClass("active");
+});
+});
+</script>
 
   <?php if (!$hide_results) { ?>
 
   <div class="col-3 ">
     <ul class="nav nav-section-menu nav-sidebar">
-      <li class="nav-header first">Filter by Year</li>
-      <?php $i = 0; foreach ($years as $row) { ?>
+      <li class="nav-header">Filter by Year</li>
+      <?php $hidden_items = false; $i = 0; foreach ($years as $row) { ?>
         <?php
           $i++;
           if ($i > 5) {
             $class = "hide hide-year";
+            $hidden_items = true;
           }
         ?>
         <li class="<?php echo $class ?>">
-          <a href="browse?year=<?php echo $row['year'] ?>" class="nav-link"><?php echo $row['year'] ?> 
+          <a href="#" class="nav-link filter" data-id="<?php echo $row['year'] ?>" data-type="year"><?php echo $row['year'] ?> 
             <span class="badge badge-default"><?php echo $row['total'] ?></span>
             <i class="fa fa-angle-right"></i>
           </a>
         </li>
       <?php } ?>
+      <?php if ($hidden_items) { ?>
       <li>
         <a href="#" class="show-all nav-link" data-type="year">Show all 
           <i class="fa fa-angle-down"></i>
         </a>
       </li>
+      <?php } ?>
+    </ul>
+    <ul class="nav nav-section-menu nav-sidebar">
       <li class="nav-header">Filter by Type</li>
-      <?php $i = 0; foreach ($types as $row) { ?>
+      <?php $hidden_items = false; $i = 0; foreach ($types as $row) { ?>
         <?php
           $i++;
           $class = "reg";
           if ($i > 5) {
             $class = "hide hide-type";
+            $hidden_items = true;
           }
         ?>
         <li class="<?php echo $class ?>">
-          <a href="?type=<?php echo $row['type'] ?>" class="nav-link"><?php echo $type[$row['type']] ?> 
+          <a href="#" class="nav-link filter" data-id="<?php echo $row['type'] ?>" data-type="type"><?php echo $type[$row['type']] ?> 
               <span class="badge badge-default"><?php echo $row['total'] ?></span>
             <i class="fa fa-angle-right"></i>
           </a>
         </li>
       <?php } ?>
+      <?php if ($hidden_items) { ?>
       <li>
         <a href="#" class="show-all nav-link" data-type="type">Show all 
           <i class="fa fa-angle-down"></i>
         </a>
       </li>
+      <?php } ?>
+    </ul>
+    <ul class="nav nav-section-menu nav-sidebar">
       <li class="nav-header">Filter by Tag</li>
-      <?php $i = 0; foreach ($tags as $row) { ?>
+      <?php $hidden_items = true; $i = 0; foreach ($tag_hits as $row['tag'] => $row['total']) { ?>
         <?php
           $i++;
           $class = "reg";
@@ -358,23 +387,25 @@ $gps_tagged = ID == 2 ? 2 : 4;
           if ($i < 30) {
         ?>
         <li class="<?php echo $class ?>">
-          <a href="?tag=<?php echo $row['tag'] ?>" class="nav-link"><?php echo $row['tag'] ?> 
+          <a href="#" class="nav-link filter" data-id="<?php echo $row['tag'] ?>" data-type="tag"><?php echo $tag_names[$row['tag']] ?> 
               <span class="badge badge-default"><?php echo $row['total'] ?></span>
             <i class="fa fa-angle-right"></i>
           </a>
         </li>
       <?php } } ?>
+      <?php if ($hidden_items) { ?>
       <li>
         <a href="#" class="show-all nav-link" data-type="tag">Show all 
           <i class="fa fa-angle-down"></i>
         </a>
       </li>
+      <?php } ?>
     </ul>
   </div>
 
   <?php } ?>
 
-  <div class="col-<?php echo $hide_results ? 12 : 9 ?> main">
+  <div class="col-<?php echo $hide_results ? 12 : 9 ?> main records">
 
     <?php if ($hide_results) { ?>
 
@@ -398,7 +429,7 @@ $gps_tagged = ID == 2 ? 2 : 4;
 
       <?php foreach ($list as $row) { ?>
 
-      <div class="recordbox">
+      <div class="recordbox year-<?php echo $row['year'] ?> type-<?php echo $row['type'] ?> <?php foreach ($tag_papers[$row['id']] as $key => $value) { echo "tag-$key "; } ?>">
         <h3><a href="publication/<?php echo $row['id'] ?>"><?php echo $row['title'] ?></a></h3>
         <div class="row">
           <div class="col-2">
