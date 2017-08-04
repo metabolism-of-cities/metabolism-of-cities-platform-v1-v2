@@ -73,7 +73,7 @@ $blog = $db->record("SELECT * FROM blog WHERE active = 1 AND date <= '$today' OR
 </div>
     
     <?php if (ID == 1) { ?>
-    <div id="features" class="bg-white">
+    <div id="mainsection" class="bg-white">
 
       <div class="container p-4 py-lg-6">
         <div class="row text-center">
@@ -119,7 +119,7 @@ $blog = $db->record("SELECT * FROM blog WHERE active = 1 AND date <= '$today' OR
 
     <?php } ?>
 
-    <div id="features" class="bg-grey">
+    <div id="publications" class="bg-grey">
     <?php if (ID == 1) { ?>
       <div class="bg-inverse text-white p-3 p-lg-4 text-center divider-arrow divider-arrow-t divider-inverse">
         <div class="container">
