@@ -39,6 +39,8 @@ if ((defined("ADMIN") && !$_GET['test_mode']) || ($gethash == $_GET['hash'])) {
   WHERE papers.id = $id AND papers.status = 'active'");
 }
 
+$admin_mode = false;
+
 if ($admin_mode && $_GET['tweet']) {
   require_once 'apis/functions.twitter.php';
   $print = tweet("New publication added: " . $info->title, URL . "publication/$id");
