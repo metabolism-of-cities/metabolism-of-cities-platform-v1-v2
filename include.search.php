@@ -61,7 +61,7 @@
 
 </div>
 
-<?php if (ID == 1) { ?>
+<?php if (ID == 1 && $results_page) { ?>
 
   <div class="alert alert-info">
     <a href="publications.export.php" class="btn btn-default">
