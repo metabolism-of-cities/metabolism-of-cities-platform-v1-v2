@@ -7,7 +7,7 @@ $page = 1;
 
 $id = (int)$_GET['id'];
 if ($id) {
-  $info = $db->record("SELECT * FROM blog WHERE id = $id AND active = 1");
+  $info = $db->record("SELECT * FROM content WHERE id = $id AND active = 1 AND type = 'blog'");
 
   $this_page = $info->title;
 
@@ -15,29 +15,29 @@ if ($id) {
     kill("Blog post not found", false);
   }
 } else {
-  $info = $db->record("SELECT * FROM blog WHERE active = 1 ORDER BY id DESC LIMIT 1");
+  $info = $db->record("SELECT * FROM content WHERE active = 1 AND type = 'blog' ORDER BY id DESC LIMIT 1");
   $id = $info->id;
   $blog_home = true;
 }
 
 if ($id) {
 
-  $authors = $db->query("SELECT blog_authors.* 
-  FROM blog_authors_pivot JOIN blog_authors ON blog_authors_pivot.author = blog_authors.id
-  WHERE blog_authors_pivot.blog = $id 
-  ORDER BY blog_authors.name");
+  $authors = $db->query("SELECT content_authors.* 
+  FROM content_authors_pivot JOIN content_authors ON content_authors_pivot.author_id = content_authors.id
+  WHERE content_authors_pivot.content_id = $id 
+  ORDER BY content_authors.name");
 
   $papers = $db->query("SELECT papers.*
-  FROM blog_links 
-  JOIN papers ON blog_links.paper = papers.id
-  WHERE blog_links.blog = $id ORDER BY papers.title");
+  FROM content_links 
+  JOIN papers ON content_links.paper = papers.id
+  WHERE content_links.content = $id ORDER BY papers.title");
 
 }
 
 $today = date("Y-m-d");
 $recent = $db->query("SELECT id, title, date 
-FROM blog
-WHERE date <= '$today' AND active = 1 ORDER BY date DESC LIMIT 5");
+FROM content
+WHERE date <= '$today' AND active = 1 AND type = 'blog' ORDER BY date DESC LIMIT 5");
 ?>
 <!DOCTYPE html>
 <html lang="en">

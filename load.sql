@@ -1703,3 +1703,33 @@ ADD `type` int(10) unsigned NOT NULL DEFAULT '20',
 ADD FOREIGN KEY (`type`) REFERENCES `paper_types` (`id`);
 
 update papers set type = ROUND((RAND() * (30-1))+1);
+
+ALTER TABLE `blog`
+CHANGE `type` `type` enum('blog','news','page') COLLATE 'utf8_unicode_ci' NOT NULL DEFAULT 'blog' AFTER `active`;
+
+ALTER TABLE `blog`
+ADD `slug` varchar(100) COLLATE 'utf8_unicode_ci' NULL;
+
+ALTER TABLE `blog`
+ADD INDEX `slug` (`slug`);
+
+ALTER TABLE `blog`
+RENAME TO `content`;
+
+ALTER TABLE `blog_authors`
+RENAME TO `content_authors`;
+
+ALTER TABLE `blog_authors_pivot`
+RENAME TO `content_authors_pivot`;
+
+ALTER TABLE `blog_links`
+RENAME TO `content_links`;
+
+ALTER TABLE `content_links`
+CHANGE `blog` `content_id` int unsigned NOT NULL AFTER `id`;
+
+ALTER TABLE `content_authors_pivot`
+CHANGE `blog` `content_id` int unsigned NOT NULL AFTER `id`;
+
+ALTER TABLE `content_authors_pivot`
+CHANGE `author` `author_id` int(10) unsigned NOT NULL AFTER `content_id`;
