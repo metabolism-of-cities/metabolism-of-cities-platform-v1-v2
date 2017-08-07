@@ -14,7 +14,7 @@ $hide_regular_translate = true;
 
 $today = date("Y-m-d");
 
-$blog = $db->record("SELECT * FROM blog WHERE active = 1 AND date <= '$today' ORDER BY date DESC LIMIT 1");
+$blog = $db->record("SELECT * FROM content WHERE active = 1 AND type = 'blog' AND date <= '$today' ORDER BY date DESC LIMIT 1");
 
 ?>
 <!DOCTYPE html>
