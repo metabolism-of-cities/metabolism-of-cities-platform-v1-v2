@@ -62,10 +62,14 @@ $list = $db->query("SELECT * FROM content WHERE type = '$type' ORDER BY date DES
     </tr>
     <?php foreach ($list as $row) { ?>
     <tr class="active-<?php echo $row['active'] ?>">
-      <td><a href="blog/<?php echo $row['id'] ?>-<?php echo flatten($row['title']) ?>"><?php echo $row['title'] ?></a></td>
+      <td><a href="cms.blog.php?id=<?php echo $row['id'] ?>"><?php echo $row['title'] ?></a></td>
       <td><?php echo format_date("M d, Y", $row['date']) ?></td>
       <td><a href="cms.blog.php?id=<?php echo $row['id'] ?>" class="btn btn-info">Edit</a>
+      <?php if ($row['type'] == 'blog') { ?>
       <a href="blog/<?php echo $row['id'] ?>-<?php echo flatten($row['title']) ?>" class="btn btn-success">View post</a>
+      <?php } else { ?>
+      <a href="content/<?php echo $row['id'] ?>-<?php echo flatten($row['title']) ?>" class="btn btn-success">View post</a>
+      <?php } ?>
       <?php if ($row['active']) { ?>
       <a href="cms.bloglist.php?delete=<?php echo $row['id'] ?>&amp;type=<?php echo $type ?>" class="btn btn-danger">Deactivate</a>
       <?php } else { ?>

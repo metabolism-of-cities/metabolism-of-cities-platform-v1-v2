@@ -22,7 +22,7 @@ if ($_POST) {
 
   $post = array(
     'title' => html($_POST['title']),
-    'date' => mysql_clean(format_date("Y-m-d", $_POST['date'])),
+    'date' => $_POST['date'] ? mysql_clean(format_date("Y-m-d", $_POST['date'])) : mysql_clean(date('Y-m-d')),
     'content' => $_POST['content'],
     'active' => (int)$_POST['active'],
   );
@@ -30,6 +30,7 @@ if ($_POST) {
     $db->update("content",$post,"id = $id");
   } else {
     $post['type'] = mysql_clean($type);
+    $post['slug'] = mysql_clean(flatten($_POST['title']));
     $db->insert("content",$post);
     $last = $db->record("SELECT id FROM content ORDER BY id DESC LIMIT 1");
     $id = $last->id;
@@ -54,7 +55,7 @@ if ($_POST) {
       $db->insert("content_authors_pivot",$post);
     }
   }
-  header("Location: " . URL . "cms.bloglist.php?type=".$type);
+  header("Location: " . URL . "cms.bloglist.php?type=".$_POST['type']);
   exit();
 }
 
@@ -151,6 +152,7 @@ $sub_page = $options[$type];
                 <label>
                     <input type="checkbox" name="active" value="1" <?php echo $info->active ? 'checked' : ''; ?> /> 
                         Published
+                    <input type="hidden" name="type" value="<?php echo $type ?>" />
                 </label>
           </div>
         </div>

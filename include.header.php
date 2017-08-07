@@ -137,7 +137,7 @@
       </div>
     </div>
 
-    <div class="container page-<?php echo $page ?> section-<?php echo $section ?>">
+    <div class="container page-<?php echo $page ?> section-<?php echo $section ?> maincontainer">
 
     <?php if (!$hide_regular_translate) { ?>
       <div id="google_translate_element"></div>
@@ -216,7 +216,7 @@
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="./">Home</a></li>
         <?php if (!$page || $menu[$section]['menu'][$page]['label'] == "Introduction") { ?>
-          <li class="breadcrumb-item active"><?php echo $menu[$section]['label'] ?></li>
+          <li class="breadcrumb-item active"><?php echo $menu[$section]['label'] ?: $this_page ?></li>
         <?php } else { ?>
           <li class="breadcrumb-item"><a href="<?php echo $menu[$section]['url'] ?>"><?php echo $menu[$section]['label'] ?></a></li>
         <?php if ($this_page) { ?>

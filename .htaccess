@@ -308,6 +308,8 @@ AddDefaultCharset utf-8
     RewriteRule ^cms/(.+)/?$ cms.$1.php
     RewriteRule ^blog/([0-9]+)-(.+)/?$ blog.php?id=$1
     RewriteRule ^blog?$ blog.php
+    RewriteRule ^content/([0-9]+)-(.+)/?$ content.php?id=$1
+    RewriteRule ^content/(.+)?$ content.php?slug=$1
 
     RewriteRule ^access/([0-9]+)/(.+)$ access.php?id=$1&hash=$2
     RewriteRule ^access-data/([0-9]+)/(.+)$ access.php?id=$1&hash=$2&page=data

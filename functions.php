@@ -203,7 +203,7 @@ if (ID == 2) {
   ),
   5 => array('label' => 'Submit a Reference', 'url' => 'page/submit'),
   6 => array('label' => 'EPR News', 'url' => 'page/empty'),
-  7 => array('label' => 'Acknowledgements', 'url' => 'page/empty'),
+  7 => array('label' => 'Acknowledgements', 'url' => 'content/acknowledgements'),
   );
 }
 
