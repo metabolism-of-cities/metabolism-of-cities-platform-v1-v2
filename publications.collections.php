@@ -38,6 +38,7 @@ if ($id) {
     WHERE tags.parent = {$row['id']} ORDER BY tags.tag");
   }
 }
+$all_tags = $db->query("SELECT * FROM tags ORDER BY tag");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -64,6 +65,7 @@ if ($id) {
     </script>
     <?php } ?>
     <link rel="stylesheet" href="css/sidebar.css" />
+    <link rel="stylesheet" href="css/select2.min.css" />
     <style type="text/css">
       h2 {
         margin-top:0;
@@ -72,6 +74,12 @@ if ($id) {
       .alert .right {
         float:right;
         margin-top:-7px;
+      }
+      .resultbox .row {
+        padding:10px;
+      }
+      .resultbox h4 {
+        padding:10px 10px 0 10px;
       }
     </style>
   </head>
@@ -82,6 +90,7 @@ if ($id) {
 
 <?php if ($home) { ?>
 
+<?php require_once 'include.search.php'; ?>
 
 </div>
 <div class="bg-blue text-white py-4">
