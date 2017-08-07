@@ -14,9 +14,9 @@ if ($_POST) {
     'email' => html($_POST['email']),
   );
   if ($id) {
-    $db->update("blog_authors",$post,"id = $id");
+    $db->update("content_authors",$post,"id = $id");
   } else {
-    $db->insert("blog_authors",$post);
+    $db->insert("content_authors",$post);
     $id = $db->insert_id;
   }
   header("Location: " . URL . "cms/blogauthorlist");
@@ -24,7 +24,7 @@ if ($_POST) {
 }
 
 if ($id) {
-  $info = $db->record("SELECT * FROM blog_authors WHERE id = $id");
+  $info = $db->record("SELECT * FROM content_authors WHERE id = $id");
 }
 ?>
 <!DOCTYPE html>

@@ -4,7 +4,14 @@ require_once 'functions.php';
 require_once 'functions.omat.php';
 
 $id = (int)$_GET['id'];
-$sub_page = $id ? 1 : 2;
+
+$options = array('blog' => 1, 'news' => 17, 'page' => 20);
+$type = 'blog';
+if ($_GET['type'] == 'news') {
+  $type = 'news';
+} elseif ($_GET['type'] == 'page') {
+  $type = 'page';
+}
 
 if ($_POST) {
 
@@ -20,57 +27,65 @@ if ($_POST) {
     'active' => (int)$_POST['active'],
   );
   if ($id) {
-    $db->update("blog",$post,"id = $id");
+    $db->update("content",$post,"id = $id");
   } else {
-    $db->insert("blog",$post);
-    $last = $db->record("SELECT id FROM blog ORDER BY id DESC LIMIT 1");
+    $post['type'] = mysql_clean($type);
+    $db->insert("content",$post);
+    $last = $db->record("SELECT id FROM content ORDER BY id DESC LIMIT 1");
     $id = $last->id;
   }
-  $db->query("DELETE FROM blog_links WHERE blog = $id");
+  $db->query("DELETE FROM content_links WHERE content_id = $id");
   if (is_array($_POST['publications'])) {
     foreach ($_POST['publications'] as $key => $value) {
       $post = array(
-        'blog' => $id,
+        'content_id' => $id,
         'paper' => (int)$value,
       );
-      $db->insert("blog_links",$post);
+      $db->insert("content_links",$post);
     }
   }
-  $db->query("DELETE FROM blog_authors_pivot WHERE blog = $id");
+  $db->query("DELETE FROM content_authors_pivot WHERE content_id = $id");
   if (is_array($_POST['authors'])) {
     foreach ($_POST['authors'] as $key => $value) {
       $post = array(
-        'blog' => $id,
-        'author' => (int)$value,
+        'content_id' => $id,
+        'author_id' => (int)$value,
       );
-      $db->insert("blog_authors_pivot",$post);
+      $db->insert("content_authors_pivot",$post);
     }
   }
-  header("Location: " . URL . "cms/bloglist");
+  header("Location: " . URL . "cms.bloglist.php?type=".$type);
   exit();
 }
 
-$authors = $db->query("SELECT id, name FROM blog_authors ORDER BY name");
+$authors = $db->query("SELECT id, name FROM content_authors ORDER BY name");
 $papers = $db->query("SELECT id, title FROM papers WHERE status = 'active' ORDER BY title");
-$info = $db->record("SELECT * FROM blog WHERE id = $id");
-$links = $db->query("SELECT * FROM blog_links WHERE blog = $id");
+$info = $db->record("SELECT * FROM content WHERE id = $id");
+$links = $db->query("SELECT * FROM content_links WHERE content_id = $id");
 foreach ($links as $row) {
   $linked[$row['paper']] = true;
 }
-$links_authors = $db->query("SELECT * FROM blog_authors_pivot WHERE blog = $id");
+$links_authors = $db->query("SELECT * FROM content_authors_pivot WHERE content_id = $id");
 foreach ($links_authors as $row) {
   $linked_authors[$row['author']] = true;
 }
+
+if ($info->id) {
+  $type = $info->type;
+}
+$sub_page = $options[$type];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <?php echo $header ?>
-    <title>Blog Post | <?php echo SITENAME ?></title>
+    <title><?php echo ucfirst($type) ?> | <?php echo SITENAME ?></title>
     <link rel="stylesheet" href="css/select2.min.css" />
     <link href="css/summernote.css" rel="stylesheet">
     <style type="text/css">
     .navbar-fixed-top{z-index:1}
+    .hidden{display:none}
     </style>
   </head>
 
@@ -78,7 +93,7 @@ foreach ($links_authors as $row) {
 
 <?php require_once 'include.header.php'; ?>
 
-  <h1>Blog Post</h1>
+  <h1><?php echo ucfirst($type) ?></h1>
 
   <form method="post" class="form form-horizontal">
   
@@ -89,23 +104,27 @@ foreach ($links_authors as $row) {
       </div>
     </div>
 
-    <div class="form-group">
-      <label class="col-sm-2 control-label">Date</label>
-      <div class="col-sm-10">
-        <input class="form-control" type="date" name="date" value="<?php echo $info->date ?>" />
+    <?php if ($type != 'page') { ?>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Date</label>
+        <div class="col-sm-10">
+          <input class="form-control" type="date" name="date" value="<?php echo $info->date ?>" />
+        </div>
       </div>
-    </div>
+    <?php } ?>
 
-    <div class="form-group">
-      <label class="col-sm-2 control-label">Author(s)</label>
-      <div class="col-sm-10">
-        <select name="authors[]" class="form-control select2" multiple>
-          <?php foreach ($authors as $row) { ?>
-            <option value="<?php echo $row['id'] ?>"<?php if ($linked_authors[$row['id']]) { echo ' selected'; } ?>><?php echo $row['name'] ?></option>
-          <?php } ?>
-        </select>
+    <?php if ($type != 'page') { ?>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Author(s)</label>
+        <div class="col-sm-10">
+          <select name="authors[]" class="form-control select2" multiple>
+            <?php foreach ($authors as $row) { ?>
+              <option value="<?php echo $row['id'] ?>"<?php if ($linked_authors[$row['id']]) { echo ' selected'; } ?>><?php echo $row['name'] ?></option>
+            <?php } ?>
+          </select>
+        </div>
       </div>
-    </div>
+    <?php } ?>
 
     <p><strong>Content:</strong></p>
 
@@ -113,16 +132,18 @@ foreach ($links_authors as $row) {
 
     <div id="summernote"><?php echo $info->content ?></div>
 
-    <div class="form-group">
-      <label class="col-sm-2 control-label">Publications</label>
-      <div class="col-sm-10">
-        <select name="publications[]" class="form-control select2" multiple>
-          <?php foreach ($papers as $row) { ?>
-            <option value="<?php echo $row['id'] ?>"<?php if ($linked[$row['id']]) { echo ' selected'; } ?>><?php echo substr($row['title'], 0, 100) ?></option>
-          <?php } ?>
-        </select>
+    <?php if ($type != "page") { ?>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Publications</label>
+        <div class="col-sm-10">
+          <select name="publications[]" class="form-control select2" multiple>
+            <?php foreach ($papers as $row) { ?>
+              <option value="<?php echo $row['id'] ?>"<?php if ($linked[$row['id']]) { echo ' selected'; } ?>><?php echo substr($row['title'], 0, 100) ?></option>
+            <?php } ?>
+          </select>
+        </div>
       </div>
-    </div>
+    <?php } ?>
 
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">

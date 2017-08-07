@@ -1,11 +1,11 @@
   <div class="row">
 
-    <div class="col-sm-3 col-md-2 sidebar">
-      <ul class="nav nav-sidebar">
+    <div class="col-3">
+      <ul class="nav nav-section-menu nav-sidebar">
         <?php foreach ($cms_menu as $key => $value) { ?> 
-          <li<?php if ($key == $sub_page) { echo ' class="active"'; } ?>><a href="<?php echo $value['url'] ?>"><i class="fa fa-<?php echo $value['icon'] ?>"></i> <?php echo $value['label'] ?></a></li>
+          <li<?php if ($key == $sub_page) { echo ' class="active"'; } ?>><a href="<?php echo $value['url'] ?>" class="nav-link"><i class="fa fa-<?php echo $value['icon'] ?>"></i> <?php echo $value['label'] ?></a></li>
         <?php } ?>
       </ul>
     </div>
 
-    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <div class="col-9">

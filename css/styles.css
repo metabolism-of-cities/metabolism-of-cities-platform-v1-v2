@@ -434,6 +434,7 @@ body .header-upper {
   position:fixed;
   z-index:999999;
 }
-table.table-striped a {
+table.table-striped a:not(.btn) {
   color:#428bca;
 }
+.hidden{display:none}

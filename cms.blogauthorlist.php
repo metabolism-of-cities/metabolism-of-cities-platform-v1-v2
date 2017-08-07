@@ -6,15 +6,15 @@ $sub_page = 3;
 
 if ($_GET['delete']) {
   $delete = (int)$_GET['delete'];
-  $check = $db->record("SELECT id FROM blog WHERE author = $delete");
+  $check = $db->record("SELECT id FROM content_authors_pivot WHERE author_id = $delete");
   if ($check->id) {
-    die("Sorry, you can not delete an author with published blog posts");
+    die("Sorry, you can not delete an author with published posts");
   }
-  $db->query("DELETE FROM blog_authors WHERE id = $delete LIMIT 1");
+  $db->query("DELETE FROM content_authors WHERE id = $delete LIMIT 1");
   $print = "Author deleted";
 }
 
-$authors = $db->query("SELECT * FROM blog_authors ORDER BY name");
+$authors = $db->query("SELECT * FROM content_authors ORDER BY name");
 ?>
 <!DOCTYPE html>
 <html lang="en">

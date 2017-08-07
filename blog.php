@@ -30,7 +30,7 @@ if ($id) {
   $papers = $db->query("SELECT papers.*
   FROM content_links 
   JOIN papers ON content_links.paper = papers.id
-  WHERE content_links.content = $id ORDER BY papers.title");
+  WHERE content_links.content_id = $id ORDER BY papers.title");
 
 }
 
