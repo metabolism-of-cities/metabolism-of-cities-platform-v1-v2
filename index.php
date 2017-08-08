@@ -132,6 +132,7 @@ if (ID == 2) {
 
     <?php } ?>
 
+    <?php if (!$_GET['hide_boxes']) { ?>
     <div id="publications" class="bg-grey">
     <?php if (ID == 1) { ?>
       <div class="bg-inverse text-white p-3 p-lg-4 text-center divider-arrow divider-arrow-t divider-inverse">
@@ -156,6 +157,7 @@ if (ID == 2) {
           </h5>
         </div>
       </div>
+    <?php } ?>
       <div class="container p-4 py-lg-6">
         <div class="row text-center">
           <div class="col-lg-3 py-2">

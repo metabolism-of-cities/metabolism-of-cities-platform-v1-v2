@@ -50,7 +50,7 @@
       <div class="col-9">
         <p class="pull-right">
             <?php if ($results_page) { ?>
-          <a href="publications/results">Reset all filters</a> |
+          <a href="publications/collections">Reset all filters</a> |
             <?php } ?>
           <a href="publications/all">View all publications</a>
         </p>
