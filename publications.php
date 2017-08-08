@@ -37,6 +37,11 @@ $page = 1;
           'Journals' => array('columns', 'journals'),
           'Add Publication' => array('plus-circle', 'publications/add'),
         );
+        if (ID == 2) {
+          unset($list['Authors']);
+          unset($list['Journals']);
+          $list['Add Publication'][1] = 'page/submit';
+        }
         $count = 0;
         foreach ($list as $key => $value) { $count++;
       ?>
