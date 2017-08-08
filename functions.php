@@ -94,8 +94,6 @@ $header .= PRODUCTION ?
     <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
   ';
 
-$header .= '<script src="js/bootstrap.min.js"></script>';
-
 if ($add_to_header) {
   $header .= $add_to_header;
 }
@@ -191,15 +189,7 @@ if (ID == 2) {
   ),
   4 => array(
     'label' => 'Database', 
-    'url' => 'publications',
-    'menu' => array(
-      1 => array('label' => 'Introduction', 'url' => 'publications'),
-      4 => array('label' => 'Search', 'url' => 'publications/results'),
-      5 => array('label' => 'Collections', 'url' => 'publications/collections'),
-      //6 => array('label' => 'Search', 'url' => 'publications/search'),
-      //8 => array('label' => 'Authors', 'url' => 'people'),
-      //9 => array('label' => 'Journals', 'url' => 'journals'),
-    ),
+    'url' => 'publications/collections',
   ),
   5 => array('label' => 'Submit a Reference', 'url' => 'page/submit'),
   6 => array('label' => 'EPR News', 'url' => 'news'),

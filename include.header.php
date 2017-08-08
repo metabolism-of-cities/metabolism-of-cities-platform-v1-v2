@@ -15,7 +15,7 @@
 
 <div class="fesbox-container">
   <div class="container fesbox">
-    <img src="img/fes.png?refresh" alt="" style="width:100%" />
+    <img src="img/fes.png?smaller" alt="" style="max-width:100%" />
   </div>
 </div>
 
@@ -59,7 +59,7 @@
         <?php } ?>
         </div>
       </div>
-      <div style="visibility: hidden; display: none;"></div><div data-toggle="sticky" class="sticky" style="top: 0px;">
+      <div style="visibility: hidden; display: none;"></div><div>
 
 
         <!--Header search region - hidden by default -->
@@ -138,6 +138,8 @@
         </div>
       </div>
     </div>
+
+    <div class="container markline"></div>
 
     <div class="container page-<?php echo $page ?> section-<?php echo $section ?> maincontainer">
 

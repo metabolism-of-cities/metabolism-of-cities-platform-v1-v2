@@ -18,17 +18,18 @@ body .header-upper {
   position:absolute;
 }
 .header {
-  background:rgba(0, 53, 107, 0.89);
+  background:#fff;
+  border:0;
 }
 .header .header-brand-text h1 {
-  color:#CDD1D6;
+  color:#333;
   position: relative;
   top: 0px;
   z-index: 9999999;
   font-size:55px;
 }
 .header .header-brand-text h1 span {
-  color:#fff;
+  color:#000;
 }
 body .header {
   padding:33px 0 50px 0;
@@ -60,4 +61,13 @@ body .header {
 .header-btn {
   color: #f4f4f4;
   opacity: 0.5;
+}
+.navbar-toggleable-md .navbar-main .navbar-nav>.nav-item>.nav-link, .navbar-toggleable-md .navbar-main .navbar-nav>.nav-link, .navbar-toggleable-md.navbar-main .navbar-nav>.nav-item>.nav-link, .navbar-toggleable-md.navbar-main .navbar-nav>.nav-link {
+  color:#333;
+  font-size:15px;
+}
+.markline {
+  border-top:2px solid #333;
+  position:relative;
+  top:-45px;
 }

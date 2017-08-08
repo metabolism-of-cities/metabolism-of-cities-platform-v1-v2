@@ -3,8 +3,7 @@ $show_breadcrumbs = true;
 require_once 'functions.php';
 $id = (int)$_GET['id'];
 $section = 4;
-$page = $id;
-$page = 5;
+$page = ID == 2 ? null : 5;
 
 if ($id) {
 

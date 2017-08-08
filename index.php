@@ -68,7 +68,16 @@ if (ID == 2) {
     .movedown {
         margin-top:20px;
     }
+    .owl-dots-center {
+      margin-top:30px;
+    }
+    .owl-dots-center img {
+      padding:4px;
+      border:1px solid #ccc;
+    }
     </style>
+
+    <script src="assets/js/script.min.js"></script>
   </head>
 
   <body>
@@ -81,8 +90,33 @@ if (ID == 2) {
 
 <?php if (ID == 2) { ?>
 <div class="container movedown">
-  <?php echo $info->content ?>
+  <div class="row">
+    <div class="col-7">
+      <?php echo $info->content ?>
+    </div>
+  <div class="col-5">
+    <div class="owl-dots-center owl-nav-over owl-nav-over-lg owl-nav-over-hover" data-toggle="owl-carousel" 
+      data-owl-carousel-settings='{"items":1, "center":true, "autoplay":true, "loop":true, "dots":true, "nav":true, "animateOut":"fadeOutDown"}'>
+        
+        <div class="item">
+          <img src="img/slider/2/1.jpg" alt="" class="img-fluid" />
+        </div>
+        <div class="item">
+          <img src="img/slider/2/2.jpg" alt="" class="img-fluid" />
+        </div>
+        <div class="item">
+          <img src="img/slider/2/3.jpg" alt="" class="img-fluid" />
+        </div>
+        <div class="item">
+          <img src="img/slider/2/4.jpg" alt="" class="img-fluid" />
+        </div>
+
+      </div>
+    </div>
+  </div>
 </div>
+
+            
 <?php } ?>
     
     <?php if (ID == 1) { ?>

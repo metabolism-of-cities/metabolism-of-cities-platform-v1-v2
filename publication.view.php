@@ -55,7 +55,7 @@ if ($admin_mode) {
     $tag = html($_POST['tag']);
     $check = $db->query("SELECT * FROM tags WHERE tag = '$tag'");
     if (count($check)) {
-      $error = "Tag already exists! Please make sure the name is unique.";
+      $error = "Keyword already exists! Please make sure the name is unique.";
     } else {
       $post = array(
         'tag' => html($_POST['tag']),
@@ -67,7 +67,7 @@ if ($admin_mode) {
       $print = "New tag has been created";
       if ($_POST['parent'] == 4) {
         $print .= "<br /><strong>NOTE! </strong> New cities will only appear on the map if you enter the GPS coordinates.
-        Please go to the <a href='tags/$new_tag_id/newtag'>Tag detail page</a> to set the coordinates.";
+        Please go to the <a href='tags/$new_tag_id/newtag'>Keyword detail page</a> to set the coordinates.";
       }
     }
   }
@@ -360,7 +360,7 @@ Publication type:
             <div class="container">
               <div class="row text-center text-lg-left">
 
-                  <h2 style="width:100%">Tags</h2>
+                  <h2 style="width:100%">Keywords</h2>
 
 <?php if (true) { ?>
 
@@ -448,7 +448,7 @@ Publication type:
 
 </div>
 <?php if ($admin_mode) { ?>
-  <h3>Add New Tag</h3>
+  <h3>Add New Keyword</h3>
   <form method="post">
     <p>
       <select name="parent" required>
@@ -458,7 +458,7 @@ Publication type:
       <?php } ?>
       </select>
       <input type="text" name="tag" required />
-      <button type="submit" class="btn btn-primary">Add Tag</button>
+      <button type="submit" class="btn btn-primary">Add Keyword</button>
     </p>
   </form>
 <?php } ?>
