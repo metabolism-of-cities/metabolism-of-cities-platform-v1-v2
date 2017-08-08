@@ -2,7 +2,7 @@
 $cron = true;
 $skip_ssl = true;
 require_once __DIR__.'/functions.php';
-$url = "http://onlinelibrary.wiley.com/rss/journal/10.1111/(ISSN)1530-9290";
+$url = "https://news.yale.edu/topics/world-environment/rss";
 $xml = file_get_contents($url);
 $xml = new SimpleXMLElement($xml);
 
