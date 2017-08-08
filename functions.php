@@ -184,8 +184,8 @@ if (ID == 2) {
     'label' => 'About', 
     'url' => 'page/about', 
     'menu' => array(
-      1 => array('label' => 'About Us', 'url' => 'page/empty'),
-      3 => array('label' => 'What is EPR?', 'url' => 'page/empty'),
+      1 => array('label' => 'About Us', 'url' => 'content/about-us'),
+      3 => array('label' => 'What is EPR?', 'url' => 'content/what-is-epr'),
       5 => array('label' => 'Contact Us', 'url' => 'page/contact'),
     ),
   ),

@@ -37,7 +37,7 @@
               <?php if (ID == 1) { ?>
               <a href="join" class="btn btn-lg btn-primary btn-invert btn-rounded py-3 px-4">Join Our Team<i class="fa fa-arrow-right ml-2"></i></a>
               <?php } else { ?>
-              <a href="page/empty" class="btn btn-lg btn-primary btn-invert btn-rounded py-3 px-4">Read More<i class="fa fa-arrow-right ml-2"></i></a>
+              <a href="content/what-is-epr" class="btn btn-lg btn-primary btn-invert btn-rounded py-3 px-4">Read More<i class="fa fa-arrow-right ml-2"></i></a>
               <?php } ?>
             </div>
           </div>
