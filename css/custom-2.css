@@ -1,7 +1,9 @@
+.fesbox-container {
+  background:#00356b;
+}
 .fesbox {
   padding-top:10px;
   height:70px;
-  background:#fff;
   z-index:99999999;
 }
 .fesbox img {
@@ -16,7 +18,7 @@ body .header-upper {
   position:absolute;
 }
 .header {
-  background:#34495e;
+  background:rgba(0, 53, 107, 0.89);
 }
 .header .header-brand-text h1 {
   color:#CDD1D6;
@@ -34,6 +36,7 @@ body .header {
 .sponsorbox {
   background:#fff;
   display:inline-block;
+  text-align:center;
 }
 .sponsorbox img {
   margin:5px 20px;
@@ -42,4 +45,19 @@ body .header {
 
 .container.page-10.section-2 {
   min-height:700px;
+}
+.header-upper {
+  height:1px;
+  padding:0;
+}
+#content-below .bg-primary {
+  background:rgba(0, 53, 107, 0.89) !important;
+}
+#content-below .text-primary-darkend {
+    color: #f4f4f4 !important;
+    opacity: 0.5;
+}
+.header-btn {
+  color: #f4f4f4;
+  opacity: 0.5;
 }

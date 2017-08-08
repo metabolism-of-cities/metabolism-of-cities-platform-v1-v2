@@ -114,32 +114,18 @@
             </address>
           </div>
           
-          <div class="col-md-4">
+          <div class="col-md-8">
             <h4 class="text-uppercase text-white">
               Sponsors
             </h4>
               <div class="sponsorbox">
                 <img src="img/sponsors/eur.png" alt="" />
                 <img src="img/sponsors/nestle.png" alt="" />
+                <img src="img/sponsors/wm.png" alt="" />
+                <img src="img/sponsors/tetra.png" alt="" />
               </div>
           </div>
           
-          <div class="col-md-4">
-            <h4 class="text-uppercase text-white">
-              Newsletter
-            </h4>
-            <p>Stay up to date with our latest news by signing up to our newsletter.</p>
-            <!--@todo: replace with mailchimp code-->
-            <form>
-              <div class="input-group">
-                <label class="sr-only" for="email-field">Email</label>
-                <input type="text" class="form-control" id="email-field" placeholder="Email">
-                <span class="input-group-btn">
-                  <button class="btn btn-primary" type="button">Go!</button>
-                </span>
-              </div>
-            </form>
-          </div>
         </div>
         <?php } ?>
         

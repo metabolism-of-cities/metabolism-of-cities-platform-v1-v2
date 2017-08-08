@@ -94,32 +94,32 @@ This relates to the following publication:
         
         <form method="post" class="form form-horizontal">
 
-          <div class="form-group">
-            <label class="col-sm-2 control-label">Your Name</label>
-            <div class="col-sm-10">
-              <input class="form-control" type="text" name="name" />
-            </div>
-          </div>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Your Name</label>
+        <div class="col-sm-10">
+        <input class="form-control" type="text" name="name" required />
+        </div>
+      </div>
 
-          <div class="form-group">
-            <label class="col-sm-2 control-label">E-mail</label>
-            <div class="col-sm-10">
-              <input class="form-control" type="email" name="email" />
-            </div>
-          </div>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">E-mail</label>
+        <div class="col-sm-10">
+        <input class="form-control" type="text" name="email" required />
+        </div>
+      </div>
 
-          <div class="form-group">
-            <label class="col-sm-2 control-label">Comments</label>
-            <div class="col-sm-10">
-              <textarea class="form-control" name="message"></textarea>
-            </div>
-          </div>
+      <div class="form-group row file">
+        <label class="col-sm-2 col-form-label">Message</label>
+        <div class="col-sm-10">
+        <textarea class="form-control" name="message" ></textarea>
+        </div>
+      </div>
 
-          <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-              <button type="submit" class="btn btn-primary">Send Message</button>
-            </div>
-          </div>
+    <div class="form-group row">
+      <div class="offset-sm-2 col-sm-10">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
 
         </form>
 

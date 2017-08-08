@@ -226,7 +226,9 @@ $dataviz = $db->query("SELECT * FROM datavisualizations WHERE paper = $id");
 
 <?php } else { ?>
 
-<p class="intro faded"><?php echo $info->type_name ?></p>
+<p class="intro faded">
+Publication type:
+<?php echo $info->type_name ?></p>
 <h1><?php echo $info->title ?></h1>
 
   <?php if ($info->source && $info->name) { ?>
@@ -306,13 +308,13 @@ $dataviz = $db->query("SELECT * FROM datavisualizations WHERE paper = $id");
     <dd><i class="fa fa-lock"></i> Paid / private access</dd>
   <?php } ?>
 
-  <?php if ($info->editor_comments) { ?>
+  <?php if ($info->editor_comments && ID == 1) { ?>
     <dt>Our comments</dt>
     <dd><?php echo $info->editor_comments ?></dd>
   <?php } ?>
 
   <?php if ($info->doi || $info->link) { ?>
-    <dt>More Information</dt>
+    <dt>URL</dt>
     <dd>
       <?php if (!$info->link) { ?>
         <?php if ($type_of_link == "doi") { ?>
@@ -427,11 +429,20 @@ $dataviz = $db->query("SELECT * FROM datavisualizations WHERE paper = $id");
   <a href="javascript:history.back()" class="btn btn-info"><i class="fa fa-arrow-left"></i> Back</a>
 </p>
     <p style="margin-top:70px;opacity:0.7;">
+    <?php if (ID == 1) { ?>
     This website provides meta data on papers and other publications, with
     links to the original source. These papers may be copyrighted or
     otherwise protected by the publishing journal or author. Follow the link to
     the original document and/or contact the publisher/author for more
     information.
+    <?php } else { ?>
+    This website provides reference information on reports, articles, and other
+    publications related to EPR.  Where possible, links to the original source are
+    provided. Copies of the actual publications are not maintained in the reference
+    database because the publications may be copyrighted or otherwise protected by
+    the publishing source or author. Follow the link to the original document
+    and/or contact the publisher/author for more information. 
+    <?php } ?>
   </p>
 
 

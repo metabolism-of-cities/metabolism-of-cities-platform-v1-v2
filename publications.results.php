@@ -170,7 +170,9 @@ foreach ($tags as $row) {
 $all_tags = $db->query("SELECT * FROM tags ORDER BY tag");
 
 // Create a list of the most common tags
-arsort($tag_hits);
+if (count($tag_hits)) {
+  arsort($tag_hits);
+}
 
 // Temporary fix until we unify queries
 $get_types = $db->query("SELECT * FROM paper_types");

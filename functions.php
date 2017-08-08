@@ -197,12 +197,12 @@ if (ID == 2) {
       4 => array('label' => 'Search', 'url' => 'publications/results'),
       5 => array('label' => 'Collections', 'url' => 'publications/collections'),
       //6 => array('label' => 'Search', 'url' => 'publications/search'),
-      8 => array('label' => 'Authors', 'url' => 'people'),
-      9 => array('label' => 'Journals', 'url' => 'journals'),
+      //8 => array('label' => 'Authors', 'url' => 'people'),
+      //9 => array('label' => 'Journals', 'url' => 'journals'),
     ),
   ),
   5 => array('label' => 'Submit a Reference', 'url' => 'page/submit'),
-  6 => array('label' => 'EPR News', 'url' => 'page/empty'),
+  6 => array('label' => 'EPR News', 'url' => 'news'),
   7 => array('label' => 'Acknowledgements', 'url' => 'content/acknowledgements'),
   );
 }

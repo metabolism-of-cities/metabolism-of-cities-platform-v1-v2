@@ -1733,3 +1733,6 @@ CHANGE `blog` `content_id` int unsigned NOT NULL AFTER `id`;
 
 ALTER TABLE `content_authors_pivot`
 CHANGE `author` `author_id` int(10) unsigned NOT NULL AFTER `content_id`;
+
+ALTER TABLE `content`
+ADD `external_link` varchar(255) COLLATE 'utf8_unicode_ci' NULL;

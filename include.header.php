@@ -13,8 +13,10 @@
 
 <?php if (ID == 2) { ?>
 
-<div class="container fesbox">
-  <img src="img/fes.png" alt="" style="width:100%" />
+<div class="fesbox-container">
+  <div class="container fesbox">
+    <img src="img/fes.png?refresh" alt="" style="width:100%" />
+  </div>
 </div>
 
 <?php } ?>

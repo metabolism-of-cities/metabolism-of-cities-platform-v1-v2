@@ -10,7 +10,7 @@ $show_breadcrumbs = true;
     <title>Submit a Reference | <?php echo SITENAME ?></title>
     <style type="text/css">
     .option-message{display:none}
-    label{font-weight:bold;margin-top:30px}
+    label{font-weight:bold;}
     textarea.form-control{height:200px}
     </style>
   </head>
@@ -32,32 +32,42 @@ $show_breadcrumbs = true;
 
     <?php } else { ?>
 
-    <form method="post" class="form form-horizontal">
+    <div class="container">
+    <form method="post" >
     
-      <div class="form-group">
-        <label>Your Name</label>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Your Name</label>
+        <div class="col-sm-10">
         <input class="form-control" type="text" name="name" required />
+        </div>
       </div>
 
-      <div class="form-group">
-        <label>E-mail</label>
-          <input class="form-control" type="email" name="email" required />
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">E-mail</label>
+        <div class="col-sm-10">
+        <input class="form-control" type="text" name="email" required />
+        </div>
       </div>
 
-      <div class="form-group">
-        <label>URL of Reference</label>
-        <input class="form-control" type="url" name="url" />
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">URL of Reference</label>
+        <div class="col-sm-10">
         <p>If the reference is available online, copy and paste the URL here. This link will be made available to our visitors</p>
+        <input class="form-control" type="url" name="url" />
+        </div>
       </div>
 
-      <div class="form-group">
-        <label>How do you want to send us the reference?</label>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Format</label>
+        <div class="col-sm-10">
+          <p>How do you want to send us the reference?</p>
           <select name="how" class="form-control">
             <option value="upload">Upload now</option>
             <option value="email">By e-mail</option>
             <option value="mail">By postal mail</option>
             <option value="other">Other</option>
           </select>
+        </div>
       </div>
 
       <div class="alert alert-info option-message option-email">
@@ -74,21 +84,32 @@ $show_breadcrumbs = true;
         Please indicate in the message field how you would like to send the document
       </div>
 
-      <div class="form-group file">
-        <label>File</label>
+
+      <div class="form-group row file">
+        <label class="col-sm-2 col-form-label">URL of Reference</label>
+        <div class="col-sm-10">
         <input class="form-control" type="file" name="file" />
+        </div>
       </div>
 
-      <div class="form-group">
-        <label>Message</label>
+
+      <div class="form-group row file">
+        <label class="col-sm-2 col-form-label">Message</label>
+        <div class="col-sm-10">
         <textarea class="form-control" name="message" placeholder="You can include additional details in your message but this is not required"></textarea>
+        </div>
       </div>
 
-      <div class="form-group">
-          <button type="submit" class="btn btn-primary">Submit</button>
+
+
+    <div class="form-group row">
+      <div class="offset-sm-2 col-sm-10">
+        <button type="submit" class="btn btn-primary">Submit</button>
       </div>
+    </div>
 
     </form>
+    </div>
 
     <?php } ?>
 

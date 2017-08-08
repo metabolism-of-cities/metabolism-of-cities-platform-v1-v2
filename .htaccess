@@ -310,6 +310,9 @@ AddDefaultCharset utf-8
     RewriteRule ^blog?$ blog.php
     RewriteRule ^content/([0-9]+)-(.+)/?$ content.php?id=$1
     RewriteRule ^content/(.+)?$ content.php?slug=$1
+    RewriteRule ^news/([0-9]+)/([0-9]+)/?$ news.php?year=$1&month=$2
+    RewriteRule ^news/([0-9]+)?$ news.php?year=$1
+    RewriteRule ^news$ news.php
 
     RewriteRule ^access/([0-9]+)/(.+)$ access.php?id=$1&hash=$2
     RewriteRule ^access-data/([0-9]+)/(.+)$ access.php?id=$1&hash=$2&page=data
