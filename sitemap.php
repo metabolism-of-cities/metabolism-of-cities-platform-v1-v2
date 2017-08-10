@@ -20,10 +20,10 @@ $show_breadcrumbs = true;
 
 <?php require_once 'include.header.php'; ?>
 
-  
     <h1>Sitemap</h1>
 
     <div class="row">
+
     <?php $i = -1; foreach ($menu as $key => $value) { $i++; ?>
 
     <?php if ($i == 3) { ?>
