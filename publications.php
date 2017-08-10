@@ -42,6 +42,9 @@ $page = 1;
           unset($list['Journals']);
           $list['Add Publication'][1] = 'page/submit';
         }
+        else {
+          unset($list['Search']);
+        }
         $count = 0;
         foreach ($list as $key => $value) { $count++;
       ?>

@@ -93,7 +93,7 @@
             <div class="header-block flex-last">
               
               <!--Search trigger -->
-              <a href="publications/results" class="btn btn-icon btn-link header-btn float-right flex-last" data-toggle="search-form" data-target=".header-search"><i class="fa fa-search fa-flip-horizontal search-icon"></i></a>
+              <a href="publications/collections" class="btn btn-icon btn-link header-btn float-right flex-last"><i class="fa fa-search fa-flip-horizontal search-icon"></i></a>
               
               <!-- mobile collapse menu button - data-toggle="collapse" = default BS menu - data-toggle="jpanel-menu" = jPanel Menu - data-toggle="overlay" = Overlay Menu -->
               <a href="#top" class="btn btn-link btn-icon header-btn float-right hidden-lg-up" data-toggle="jpanel-menu" data-target=".navbar-main" data-direction="right"> <i class="fa fa-bars"></i> </a>
@@ -156,7 +156,7 @@
       $share_url = urlencode($share_url);
     ?>
 
-    <?php if (!$hide_share_buttons) { ?>
+    <?php if (!$hide_share_buttons && false) { ?>
 
     <div id="sharingbuttons">
     <!-- Sharingbutton Facebook -->

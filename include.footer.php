@@ -5,21 +5,22 @@
 
     <div id="content-below">
       <!-- Awesome features call to action -->
-      <div class="bg-primary text-white py-4">
+      <div class="bg-primary text-white <?php echo ID == 2 ? "py-4" : "" ?>">
         <div class="container">
-          <div class="row text-center text-lg-left">
-            <div class="col-12 col-lg-10 py-2">
+          <div class="row <?php echo ID == 1 ? "text-left" : "text-center text-lg-left"; ?>">
               <?php if (ID == 1) { ?>
-              <h2 class="text-uppercase font-weight-bold mt-0 mb-2">
-                <span class="text-shadow">Creative</span> <span class="text-primary-darkend">Commons</span>
-              </h2>
-              <h5 class="text-faded">
-                Unless stated otherwise, all content is licensed under a 
+            <div class="col-12">
+              <p class="text-faded">
+                <a href="join" class="btn btn-primary btn-invert btn-rounded pull-right">Join Our Team<i class="fa fa-arrow-right ml-2"></i></a>
+                <img src="img/cc.png" alt="" />
+                <img src="img/cc_at.png" alt="" />
                 <a href="https://creativecommons.org/licenses/by/4.0/">
                 Creative Commons Attribution 4.0 International license.
                 </a>
-              </h5>
+              </p>
+            </div>
               <?php } else { ?>
+            <div class="col-12 col-lg-10 py-2">
               <h2 class="text-uppercase font-weight-bold mt-0 mb-2">
                 <span class="text-primary-darkend">What is</span>
                 <span class="text-shadow">EPR?</span>
@@ -31,15 +32,14 @@
                 the management of end-of-life (EoL) waste, especially the
                 recycling of their products.
               </h5>
+          </div>
               <?php } ?>
-            </div>
+          <?php if (ID == 1) { ?>
+          <?php } else { ?>
             <div class="col-12 col-lg-2 py-2 text-lg-right">
-              <?php if (ID == 1) { ?>
-              <a href="join" class="btn btn-lg btn-primary btn-invert btn-rounded py-3 px-4">Join Our Team<i class="fa fa-arrow-right ml-2"></i></a>
-              <?php } else { ?>
               <a href="content/what-is-epr" class="btn btn-lg btn-primary btn-invert btn-rounded py-3 px-4">Read More<i class="fa fa-arrow-right ml-2"></i></a>
-              <?php } ?>
             </div>
+          <?php } ?>
           </div>
         </div>
       </div>
@@ -61,8 +61,12 @@
                   info@metabolismofcities.org
                 </li>
                 <li>
-                  <abbr title="Address"><i class="fa fa-home fa-fw"></i></abbr>
+                  <abbr title="Contact form"><i class="fa fa-home fa-fw"></i></abbr>
                   <a href="page/contact">Contact form</a>
+                </li>
+                <li>
+                  <abbr title="Sitemap"><i class="fa fa-sitemap fa-fw"></i></abbr>
+                  <a href="page/sitemap">Sitemap</a>
                 </li>
               </ul>
             </address>

@@ -30,3 +30,7 @@ h4.mt-2 a{
 #publications h4.mt-2 a {
   color:#00ADBB;
 }
+#content-below img{width:22px}
+#content-below a{color:#fff}
+#content-below p{margin:15px 0}
+#content-below a.pull-right{position:relative;top:-4px}
