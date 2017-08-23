@@ -20,12 +20,32 @@ $papers = $db->record("SELECT SQL_CACHE COUNT(*) AS total FROM papers WHERE stat
 
   <h1>Metabolism of Cities</h1>
 
+<p>
+Metabolism of Cities was originally set up (then called MFA-tools.net) to share information and results from a research project on the City of Cape Town. 
+</p>
+<p>
+The team slowly expanded working on adding more publications on our publication database and creating our global urban metabolism database. The first face-to-face meeting happened in Surrey during the ISIE 2015 conference. Already there was some interest from the research community to the open access approach we had implemented.
+</p>
+<p>
+Short after, the team grew even further. The online platform was now called Metabolism of Cities to better reflect our core interest but also as a reference to the pioneering article of Abel Wolman that in some way helped to shape the urban metabolism field.
+</p>
+<p>
+Thanks to the Stakeholders Initiative we initiated, we had a great response from young students and established professionals alike and received continuous contributions from other people in the community. 
+</p>
+<p>
+Eventually, Metabolism of Cities members started carrying out research that fueled the community platform. As such, Metabolism of Cities became a digital research lab with members in a 5 universities and countries. 
+</p>
+<p>
+In mid-2017 we became a member of the GI-REC (Global Initiative for Resource Efficient Cities).
+</p>
+
+</div>
+
+<h2>Website Content</h2>
   <p>
     The Metabolism of Cities website collects information useful to researchers involved in Urban Metabolism (UM) research.
     There are four primary sections:
   </p>
-
-</div>
 
 <div class="list-group">
   <a href="research/list" class="list-group-item">
