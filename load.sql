@@ -1736,3 +1736,6 @@ CHANGE `author` `author_id` int(10) unsigned NOT NULL AFTER `content_id`;
 
 ALTER TABLE `content`
 ADD `external_link` varchar(255) COLLATE 'utf8_unicode_ci' NULL;
+
+DELETE FROM `tags`
+WHERE `parent` = '1' AND ((`id` = '94') OR (`id` = '105') OR (`id` = '106') OR (`id` = '131') OR (`id` = '176') OR (`id` = '181') OR (`id` = '183'));

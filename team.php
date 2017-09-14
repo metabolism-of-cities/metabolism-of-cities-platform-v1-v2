@@ -106,6 +106,20 @@ $page = 3;
              <a href="https://www.researchgate.net/profile/Rupert_Myers"><img src="img/researchgate.png" alt="" /></a>
              </div>
           </li>
+          <li>
+            <img class="team" src="img/team.carolin.jpg" alt="" />
+              <strong>Carolin Bellstedt</strong> is a Researcher of Resource Flows in the Built Environment,
+              at TU Delft in the Netherlands. She holds a B.Sc. In Environmental and Resource
+              Management and a M.Sc. In Industrial Ecology. Carolin is interested in studying
+              the integration of urban metabolism, systems thinking and circular economy
+              towards a regenerative future. She is currently researching and developing an
+              activity-based spatial MFA for the EU Horizon 2020 REPAiR project.
+             <div class="links">
+             <a href="https://www.linkedin.com/in/carolinbellstedt"><i class="fa fa-linkedin-square"></i></a>
+             <a href="https://twitter.com/CaroliBellstedt"><i class="fa fa-twitter-square"></i></a>
+             <a href="https://www.researchgate.net/profile/Carolin_Bellstedt"><img src="img/researchgate.png" alt="" /></a>
+             </div>
+          </li>
         </ul>
         <p class="jumpdown">
           <a class="btn btn-lg btn-primary" href="join" role="button">Join now &raquo;</a>

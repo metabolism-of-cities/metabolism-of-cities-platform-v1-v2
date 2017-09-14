@@ -34,6 +34,7 @@ if ($_POST) {
     'author' => html($_POST['author']),
     'volume' => (int)$_POST['volume'],
     'issue' => (int)$_POST['issue'],
+    'type' => (int)$_POST['type'],
     'pages' => html($_POST['pages']),
     'length' => html($_POST['length']),
     'year' => (int)$_POST['year'],
@@ -63,6 +64,7 @@ if ($_GET['profile']) {
   $sub_page = 2;
 }
 
+$types = $db->query("SELECT * FROM paper_types ORDER BY name");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -172,6 +174,17 @@ if ($_GET['profile']) {
     <label class="col-sm-2 control-label">Author(s)</label>
     <div class="col-sm-10">
       <input class="form-control" type="text" name="author" value="<?php echo $info->author ?>" required />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Type</label>
+    <div class="col-sm-10">
+      <select name="type" class="form-control">
+        <?php foreach ($types as $row) { ?>
+        <option value="<?php echo $row['id'] ?>"<?php if ($row['id'] == $info->type || $row['id'] == 16 && !$id) { echo ' selected'; } ?>><?php echo $row['name'] ?></option>
+        <?php } ?>
+      </select>
     </div>
   </div>
 

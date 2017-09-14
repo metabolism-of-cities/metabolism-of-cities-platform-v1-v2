@@ -15,21 +15,6 @@ if ($db) {
 
 $css = filesize(__DIR__."/css/styles.css");
 
-$css_files = array(
-  1 => 'colour-orange.min.css',
-  2 => 'colour-slate.min.css',
-);
-
-$get_css = $_GET['css'] ?: $_COOKIE['css'];
-if ($_GET['css'] || $_COOKIE['css']) {
-  $css_files[ID] = 'colour-'.$get_css.'.min.css';
-  $color = $get_css;
-}
-  
-if ($_GET['css']) {
-  setcookie("css", $_GET['css'], time()+3600*24, "/");
-}
-
 $header = '
     <meta charset="utf-8" />
     <base href="' . URL . '" />
@@ -51,30 +36,13 @@ $header = '
     <link rel="manifest" href="'.URL.'img/favicon/manifest.json" />
     <meta name="msapplication-TileColor" content="#ffffff" />
     <meta name="msapplication-TileImage" content="'.URL.'img/favicon/ms-icon-144x144.png" />
-    <meta name="theme-color" content="#ffffff" />';
+    <meta name="theme-color" content="#ffffff" />
 
-$header .= PRODUCTION ? 
-
-    '<!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
-    <link href="//fonts.googleapis.com/css?family=Open+Sans:400,700,300" rel="stylesheet" type="text/css">
-    <link href="//fonts.googleapis.com/css?family=Rambla" rel="stylesheet" type="text/css">
-    <link href="//fonts.googleapis.com/css?family=Calligraffitti" rel="stylesheet" type="text/css">
-    <link href="//fonts.googleapis.com/css?family=roboto+slab:400,700" rel="stylesheet" type="text/css">
-
-    ' :
-    '<link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/googlefonts/rambla.css">
-    
-    ';
-
-    $size_custom = filesize("css/custom-".ID.".css");
-    $header .='
-    <link href="assets/css/theme-style.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="assets/css/'.$css_files[ID].'" />
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/font-awesome.4.2.0.css" rel="stylesheet" />
     <link href="css/styles.css?reload='.$css.'" rel="stylesheet" />
-    <link href="css/custom-'.ID.'.css?s='.$size_custom.'" rel="stylesheet" />
+    <link href="css/custom-'.ID.'.css" rel="stylesheet" />
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -83,16 +51,10 @@ $header .= PRODUCTION ?
     <![endif]-->';
 
 $header .= PRODUCTION ? 
-  '
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-  ' :
-  '
-    <script type="text/javascript" src="assets/js/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="assets/js/tether.min.js"></script>
-    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
-  ';
+  '<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>' :
+  '<script src="js/jq.1.11.1.js"></script>';
+
+$header .= '<script src="js/bootstrap.min.js"></script>';
 
 if ($add_to_header) {
   $header .= $add_to_header;
@@ -124,14 +86,13 @@ $menu = array(
     ),
   ),
   4 => array(
-    'label' => 'Research &amp; Publications', 
+    'label' => 'Publications &amp; Research', 
     'url' => 'publications',
     'menu' => array(
       1 => array('label' => 'Introduction', 'url' => 'publications'),
       2 => array('label' => 'Current Research', 'url' => 'research/list'),
       3 => array('label' => 'Add Your Project', 'url' => 'research/add'),
-      //4 => array('label' => 'Publications Database', 'url' => 'publications/results'),
-      5 => array('label' => 'Browse Database', 'url' => 'publications/collections'),
+      5 => array('label' => 'Publications', 'url' => 'publications/collections'),
       6 => array('label' => 'Search', 'url' => 'publications/search'),
       7 => array('label' => 'Add Publication', 'url' => 'publications/add'),
       8 => array('label' => 'Authors', 'url' => 'people'),
@@ -167,7 +128,6 @@ $menu = array(
       1 => array('label' => 'Blog', 'url' => 'blog'),
       2 => array('label' => 'Newsletter', 'url' => 'page/mailinglist'),
       3 => array('label' => 'Videos', 'url' => 'videos'),
-      5 => array('label' => 'Sitemap', 'url' => 'page/sitemap'),
       //3 => array('label' => 'Links', 'url' => 'page/links'),
       //4 => array('label' => 'Social Media', 'url' => 'page/socialmedia'),
     ),
@@ -178,24 +138,14 @@ foreach ($tag_parents as $row) {
 }
 
 if (ID == 2) {
-  $menu = array(
-  2 => array(
-    'label' => 'About', 
-    'url' => 'page/about', 
-    'menu' => array(
-      1 => array('label' => 'About Us', 'url' => 'content/about-us'),
-      3 => array('label' => 'What is EPR?', 'url' => 'content/what-is-epr'),
-      5 => array('label' => 'Contact Us', 'url' => 'page/contact'),
-    ),
-  ),
-  4 => array(
-    'label' => 'Database', 
-    'url' => 'publications/collections',
-  ),
-  5 => array('label' => 'Submit a Reference', 'url' => 'page/submit'),
-  6 => array('label' => 'EPR News', 'url' => 'news'),
-  7 => array('label' => 'Acknowledgements', 'url' => 'content/acknowledgements'),
-  );
+  unset($menu[6]);
+  $menu[2]['label'] = "EPR Menu 1";
+  $menu[5]['label'] = "EPR Menu 3";
+  unset($menu[7]);
+  $menu[8]['label'] = "EPR Menu 4";
+  unset($menu[4]['menu'][1]);
+  unset($menu[4]['menu'][2]);
+  unset($menu[4]['menu'][3]);
 }
 
 $google_translate = LOCAL ? '' : '
@@ -940,10 +890,6 @@ $languages = array('English', 'Chinese', 'Spanish', 'French', 'German', 'Other')
 $update = $db->record("SELECT SQL_CACHE date_added FROM papers ORDER BY id DESC LIMIT 1");
 
 $topic = ID == 2 ? "EPR" : "Urban Metabolism";
-
-if (ID == 2) {
-  $hide_share_buttons = true;
-}
 
 $version = '1.5 beta';
 

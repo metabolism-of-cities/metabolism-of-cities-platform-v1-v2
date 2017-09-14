@@ -12,7 +12,7 @@ if (!$_GET['hash'] && !defined("ADMIN")) {
   $sql = "AND papers.status = 'active'";
 }
 
-$info = $db->record("SELECT papers.*, sources.name, paper_types.name AS type_name
+$info = $db->record("SELECT papers.*, sources.name, paper_types.name AS type
 FROM papers 
   JOIN sources ON papers.source = sources.id
   JOIN paper_types ON papers.type = paper_types.id
@@ -39,8 +39,6 @@ if ((defined("ADMIN") && !$_GET['test_mode']) || ($gethash == $_GET['hash'])) {
   WHERE papers.id = $id AND papers.status = 'active'");
 }
 
-$admin_mode = false;
-
 if ($admin_mode && $_GET['tweet']) {
   require_once 'apis/functions.twitter.php';
   $print = tweet("New publication added: " . $info->title, URL . "publication/$id");
@@ -55,7 +53,7 @@ if ($admin_mode) {
     $tag = html($_POST['tag']);
     $check = $db->query("SELECT * FROM tags WHERE tag = '$tag'");
     if (count($check)) {
-      $error = "Keyword already exists! Please make sure the name is unique.";
+      $error = "Tag already exists! Please make sure the name is unique.";
     } else {
       $post = array(
         'tag' => html($_POST['tag']),
@@ -67,7 +65,7 @@ if ($admin_mode) {
       $print = "New tag has been created";
       if ($_POST['parent'] == 4) {
         $print .= "<br /><strong>NOTE! </strong> New cities will only appear on the map if you enter the GPS coordinates.
-        Please go to the <a href='tags/$new_tag_id/newtag'>Keyword detail page</a> to set the coordinates.";
+        Please go to the <a href='tags/$new_tag_id/newtag'>Tag detail page</a> to set the coordinates.";
       }
     }
   }
@@ -134,11 +132,6 @@ $dataviz = $db->query("SELECT * FROM datavisualizations WHERE paper = $id");
     <title><?php echo $info->title ?> <?php if (!$notfound) { ?>by <?php echo $info->author ?> (<?php echo $info->year ?>) <?php } ?> | <?php echo SITENAME ?></title>
 
     <style type="text/css">
-    div.clear{clear:both}
-    .bg-blue-dark a{color:#f4f4f4;text-decoration:underline}
-    .bg-blue-dark a:hover{text-decoration:none;color:#fff}
-    .bg-blue-dark{margin:20px 0}
-    p.intro.faded{font-size:140%;font-weight:bold;opacity:0.4;margin-bottom:0}
     .panel{display:inline-block}
     dt,dd{padding:5px 0}
     ul#tags, ul#tags ul{list-style:none;margin-left:0;padding-left:0}
@@ -150,13 +143,7 @@ $dataviz = $db->query("SELECT * FROM datavisualizations WHERE paper = $id");
     .status-deleted{opacity:0.5}
     <?php if (!$admin_mode) { ?>
       ul#tags li{display:inline-block;margin:0 5px 5px 0}
-    <?php } else { ?>
-      .meta-col{display:none}
-      .admin-box{padding:6px;margin:10px 0}
     <?php } ?>
-
-    .bg-blue a{color:#fff;font-weight:bold;text-decoration:underline}
-    .bg-blue{margin-bottom:20px}
     </style>
     <?php if ($admin_mode) { ?>
     <script type="text/javascript">
@@ -193,7 +180,7 @@ $dataviz = $db->query("SELECT * FROM datavisualizations WHERE paper = $id");
 <?php require_once 'include.header.php'; ?>
 
 <?php if ($admin_mode) { ?>
-<div class="bg-faded admin-box">
+<div class="well">
   <a class="btn btn-default" style="margin-right:30px" href="cms/index">
   <i class="fa fa-lock"></i> Admin Panel
   </a>
@@ -226,25 +213,7 @@ $dataviz = $db->query("SELECT * FROM datavisualizations WHERE paper = $id");
 
 <?php } else { ?>
 
-<p class="intro faded">
-Publication type:
-<?php echo $info->type_name ?></p>
 <h1><?php echo $info->title ?></h1>
-
-  <?php if ($info->source && $info->name) { ?>
-  <p>
-    <a href="source/<?php echo $info->source ?>">
-    <?php echo $info->name ?></a><?php if ($info->volume) { ?>, Volume <?php echo $info->volume ?><?php } if ($info->issue) { ?>, Issue <?php echo $info->issue ?><?php } if ($info->pages) { ?>, Pages <?php echo $info->pages ?><?php } ?></p>
-  <?php } ?>
-
-
-  <div class="text-justified">
-    <p><?php echo $info->abstract ?: '<em>Abstract unavailable</em>'; ?></p>
-    <?php if ($info->abstract_native) { ?>
-      <p><em>Original Abstract</em></p>
-      <p><?php echo $info->abstract ?></p>
-    <?php } ?>
-  </div>
 
   <?php if ($print) { echo "<div class=\"alert alert-success\">$print</div>"; } ?>
   <?php if ($error) { echo "<div class=\"alert alert-danger\">$error</div>"; } ?>
@@ -259,18 +228,10 @@ Publication type:
     </div>
   <?php } ?>
 
-
-</div>
-
-<div class="bg-blue text-white py-4">
-            <div class="container">
-              <div class="row text-center text-lg-left">
 <dl class="dl dl-horizontal status-<?php echo $info->status ?>">
 
-  <?php if ($title_native) { ?>
   <dt>Title</dt>
-  <dd><?php echo $info->title_native ?></dd>
-  <?php } ?>
+  <dd><?php echo $info->title_native ?: $info->title; ?></dd>
 
   <dt>Author(s)</dt>
   <?php if ($authors) { ?>
@@ -290,6 +251,13 @@ Publication type:
   <dt>Year</dt>
   <dd><?php echo $info->year ?></dd>
 
+  <dt>Type</dt>
+  <dd><?php echo $info->type ?></dd>
+  <dt>Source</dt>
+  <dd>
+    <a href="source/<?php echo $info->source ?>">
+    <?php echo $info->name ?></a><?php if ($info->volume) { ?>, Volume <?php echo $info->volume ?><?php } if ($info->issue) { ?>, Issue <?php echo $info->issue ?><?php } if ($info->pages) { ?>, Pages <?php echo $info->pages ?><?php } ?></dd>
+
   <?php if ($info->doi && $type_of_link == "doi") { ?>
     <dt>DOI</dt>
     <dd><?php echo $info->doi ?></dd>
@@ -300,6 +268,20 @@ Publication type:
     <dd><?php echo $info->doi ?></dd>
   <?php } ?>
 
+  <?php if ($info->open_access || $info->abstract_status == "author_approved" ||   $info->abstract_status == "journal_approved" || $info->abstract_status == "open_access" || $info->abstract_status == "toc_only" || $admin_mode || true) { ?>
+    <dt>Abstract</dt>
+    <dd><?php echo $info->abstract ?: '<em>Abstract unavailable</em>'; ?></dd>
+    <?php if ($info->abstract_native) { ?>
+      <dt>Original Abstract</dt>
+      <dd><?php echo $info->abstract ?></dd>
+    <?php } ?>
+  <?php } ?>
+
+  <?php if ($info->editor_comments) { ?>
+    <dt>Our comments</dt>
+    <dd><?php echo $info->editor_comments ?></dd>
+  <?php } ?>
+
   <?php if ($info->open_access) { ?>
     <dt>Access</dt>
     <dd><i class="fa fa-unlock"></i> Open Access</dd>
@@ -308,13 +290,8 @@ Publication type:
     <dd><i class="fa fa-lock"></i> Paid / private access</dd>
   <?php } ?>
 
-  <?php if ($info->editor_comments && ID == 1) { ?>
-    <dt>Our comments</dt>
-    <dd><?php echo $info->editor_comments ?></dd>
-  <?php } ?>
-
   <?php if ($info->doi || $info->link) { ?>
-    <dt>URL</dt>
+    <dt>More Information</dt>
     <dd>
       <?php if (!$info->link) { ?>
         <?php if ($type_of_link == "doi") { ?>
@@ -351,18 +328,13 @@ Publication type:
         </dd>
     <?php } ?>
   <?php } ?>
+    
 
-  </div>
-  </div>
-  </div>
+</dl>
 
-<div class="bg-grey text-black py-4">
-            <div class="container">
-              <div class="row text-center text-lg-left">
+<h2>Tags</h2>
 
-                  <h2 style="width:100%">Keywords</h2>
-
-<?php if (true) { ?>
+<?php if ($admin_mode || PRODUCTION) { ?>
 
 <ul id="tags">
 <?php foreach ($tags as $row) { ?>
@@ -417,38 +389,9 @@ Publication type:
 <?php } ?>
 </ul>
 <?php } ?>
-</div>
-</div>
-</div>
 
-
-<div class="container" style="margin-top:20px">
-  <a href="publication/<?php echo $id ?>/flag" class="btn btn-blue pull-right"><i class="fa fa-flag"></i> Incorrect or incomplete information? <br />Click here to report this.</a>
-
-<p>
-  <a href="javascript:history.back()" class="btn btn-info"><i class="fa fa-arrow-left"></i> Back</a>
-</p>
-    <p style="margin-top:70px;opacity:0.7;">
-    <?php if (ID == 1) { ?>
-    This website provides meta data on papers and other publications, with
-    links to the original source. These papers may be copyrighted or
-    otherwise protected by the publishing journal or author. Follow the link to
-    the original document and/or contact the publisher/author for more
-    information.
-    <?php } else { ?>
-    This website provides reference information on reports, articles, and other
-    publications related to EPR.  Where possible, links to the original source are
-    provided. Copies of the actual publications are not maintained in the reference
-    database because the publications may be copyrighted or otherwise protected by
-    the publishing source or author. Follow the link to the original document
-    and/or contact the publisher/author for more information. 
-    <?php } ?>
-  </p>
-
-
-</div>
 <?php if ($admin_mode) { ?>
-  <h3>Add New Keyword</h3>
+  <h3>Add New Tag</h3>
   <form method="post">
     <p>
       <select name="parent" required>
@@ -458,11 +401,23 @@ Publication type:
       <?php } ?>
       </select>
       <input type="text" name="tag" required />
-      <button type="submit" class="btn btn-primary">Add Keyword</button>
+      <button type="submit" class="btn btn-primary">Add Tag</button>
     </p>
   </form>
 <?php } ?>
 
+<p>
+  <a href="javascript:history.back()" class="btn btn-info">Back</a>
+  <a href="publication/<?php echo $id ?>/flag" class="btn btn-warning pull-right"><i class="fa fa-flag"></i> Incorrect or incomplete information? Click here to report this.</a>
+</p>
+
+<div class="alert alert-warning">
+  This website provides meta data on papers and other publications, with links
+  to the original publications. These papers may be copyrighted or otherwise
+  protected by the publishing journal or author. Some journals provide open
+  access to their publications.  When possible we will try to include abstracts
+  and more details for open access publications. For more details, follow the
+  link to the original document and/or contact the publisher/author. 
 </div>
 
 <?php } ?>

@@ -217,6 +217,10 @@ $results_page = true;
     .hide {
       display:none;
     }
+    .nav-header {
+      font-weight:bold;
+      margin-top:20px;
+    }
     </style>
   </head>
 
@@ -255,7 +259,7 @@ $(".filters .filter").click(function(e){
 
   <?php if (!$hide_results) { ?>
 
-  <div class="col-3 ">
+  <div class="col-md-3 ">
     <ul class="nav nav-section-menu nav-sidebar">
       <li class="nav-header">Filter by Year</li>
       <?php $hidden_items = false; $i = 0; foreach ($years as $row) { ?>
@@ -268,8 +272,7 @@ $(".filters .filter").click(function(e){
         ?>
         <li class="<?php echo $class ?>">
           <a href="#" class="nav-link filter" data-id="<?php echo $row['year'] ?>" data-type="year"><?php echo $row['year'] ?> 
-            <span class="badge badge-default"><?php echo $row['total'] ?></span>
-            <i class="fa fa-angle-right"></i>
+            <span class="pull-right badge badge-default"><?php echo $row['total'] ?></span>
           </a>
         </li>
       <?php } ?>
@@ -294,8 +297,7 @@ $(".filters .filter").click(function(e){
         ?>
         <li class="<?php echo $class ?>">
           <a href="#" class="nav-link filter" data-id="<?php echo $row['type'] ?>" data-type="type"><?php echo $type[$row['type']] ?> 
-              <span class="badge badge-default"><?php echo $row['total'] ?></span>
-            <i class="fa fa-angle-right"></i>
+              <span class="badge badge-default pull-right"><?php echo $row['total'] ?></span>
           </a>
         </li>
       <?php } ?>
@@ -320,8 +322,7 @@ $(".filters .filter").click(function(e){
         ?>
         <li class="<?php echo $class ?>">
           <a href="#" class="nav-link filter" data-id="<?php echo $row['tag'] ?>" data-type="tag"><?php echo $tag_names[$row['tag']] ?> 
-              <span class="badge badge-default"><?php echo $row['total'] ?></span>
-            <i class="fa fa-angle-right"></i>
+              <span class="badge badge-default pull-right"><?php echo $row['total'] ?></span>
           </a>
         </li>
       <?php } } ?>
@@ -337,7 +338,7 @@ $(".filters .filter").click(function(e){
 
   <?php } ?>
 
-  <div class="col-<?php echo $hide_results ? 12 : 9 ?> main records">
+  <div class="col-md-<?php echo $hide_results ? 12 : 9 ?> main records">
 
     <?php if ($hide_results) { ?>
 
@@ -364,14 +365,14 @@ $(".filters .filter").click(function(e){
       <div class="recordbox year-<?php echo $row['year'] ?> type-<?php echo $row['type'] ?> <?php foreach ($tag_papers[$row['id']] as $key => $value) { echo "tag-$key "; } ?>">
         <h3><a href="publication/<?php echo $row['id'] ?>"><?php echo $row['title'] ?></a></h3>
         <div class="row">
-          <div class="col-2">
+          <div class="col-md-2">
             <span class="type">
               <?php echo $type[$row['type']] ?>
             </span>
             <br />
             <?php echo $row['year'] ?>
           </div>
-          <div class="col-10">
+          <div class="col-md-10">
             <?php echo $row['author'] ?>
           </div>
         </div>
