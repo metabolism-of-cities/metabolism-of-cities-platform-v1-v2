@@ -7,7 +7,6 @@ config.php
 config.online.php
 eurostat.php
 sankey/*
-temp.php
 *capetown*
 sample*
 vendor/*
