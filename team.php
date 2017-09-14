@@ -98,20 +98,15 @@ $page = 3;
           </li>
           <li>
             <img class="team" src="img/team.rupert.jpg" alt="" />
-             <strong>Dr. Rupert J. Myers</strong> is a Postdoctoral Associate at the Center for Industrial
-             Ecology in the Yale School of Forestry &mp; Environmental Studies. He has a Ph.D.
-             in Materials Science &mp; Engineering from the University of Sheffield, is a
-             chemical engineer by training, and has several years of research and
-             consulting experience across industry, academia, and government.  His research
-             is focused towards understanding the sustainability, chemistry, durability and
-             performance of industrial materials, in particular cement-related materials
-             and metals. Dr. Myers has a keen interest in developing more sustainable
-             materials science and technology. He is currently researching the life cycles
-             and criticality of metals and metalloids, which includes creating tools to
-             more effectively analyze and store quantitative materials flow analysis
-             information.
+              <strong>Dr. Rupert J. Myers</strong> is a Lecturer in Chemical Engineering: Industrial Ecology
+              in the School of Engineering at the University of Edinburgh. He has a Ph.D. in
+              Materials Science &amp; Engineering from the University of Sheffield, is a chemical
+              engineer by training, and has several years of research and consulting
+              experience across industry, leading academic institutions such as UC Berkeley
+              and Yale University, and government.
              <div class="links">
-             <a href="https://environment.yale.edu/profile/rupert-myers/"><i class="fa fa-link"></i></a>
+             <a href="http://eng.ed.ac.uk/about/people/dr-rupert-myers"><i class="fa fa-link"></i></a>
+             <a href="https://scholar.google.co.uk/citations?user=sxRtz2UAAAAJ&hl=en"><i class="fa fa-google"></i></a>
              <a href="https://www.linkedin.com/in/myersrupert/"><i class="fa fa-linkedin-square"></i></a>
              <a href="https://www.researchgate.net/profile/Rupert_Myers"><img src="img/researchgate.png" alt="" /></a>
              </div>
