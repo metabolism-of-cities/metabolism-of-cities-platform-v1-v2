@@ -41,13 +41,18 @@ $page = 3;
           <li>
             <img class="team" src="img/team.aris.jpg" alt="" />
             <strong>Aristide Athanassiadis</strong> - 
-            Joint-PhD student at the Université Libre
-            de Bruxelles (Brussels, Belgium) and University of Melbourne,
-            Australia. Through different research projects in Brussels and
-            Melbourne, he has been interested in identifying the
-            context-specific factors that influence urban metabolisms using a
-            temporal and spatial perspective. 
-            <a href="https://www.linkedin.com/in/arisatha"><i class="fa fa-linkedin-square"></i></a>
+            Aristide is a postdoctoral researcher and a lecturer at Université Libre de
+            Bruxelles working on urban metabolism and circular economy. He works for/with
+            local and regional administration to understand and measure their flows in
+            order to develop strategies to mitigate them. Aris also enjoys making awareness
+            projects on urban metabolism especially with children and young people.
+             <div class="links">
+             <a href="http://batir.ulb.ac.be/index.php/people/249 "><i class="fa fa-link"></i></a>
+             <a href="https://scholar.google.com/citations?user=V3isvYQAAAAJ&hl=en&oi=ao"><i class="fa fa-google"></i></a>
+             <a href="https://www.linkedin.com/in/arisatha"><i class="fa fa-linkedin-square"></i></a>
+             <a href="https://twitter.com/arisatha "><i class="fa fa-twitter-square"></i></a>
+             <a href="https://www.researchgate.net/profile/Aristide_Athanassiadis"><img src="img/researchgate.png" alt="" /></a>
+             </div>
           </li>
           <li>
             <img class="team" src="img/team.gabriela.jpg" alt="" />
@@ -59,7 +64,12 @@ $page = 3;
             material flow analysis of the Metropolitan City of Milan thus
             identifying urban typologies and socioeconomic indicators in
             the Italian urban context while promoting urban metabolism
-            public policy. <a href="https://it.linkedin.com/in/gabriela-fernandez-56873843"><i class="fa fa-linkedin-square"></i></a>
+            public policy. 
+             <div class="links">
+             <a href="https://it.linkedin.com/in/gabriela-fernandez-56873843"><i class="fa fa-linkedin-square"></i></a>
+             <a href="https://twitter.com/GabrielaFerdez"><i class="fa fa-twitter-square"></i></a>
+             <a href="https://www.researchgate.net/profile/Gabriela_Fernandez8"><img src="img/researchgate.png" alt="" /></a>
+             </div>
           </li>
           <li>
             <img class="team" src="img/team.rachel.jpg" alt="" />
