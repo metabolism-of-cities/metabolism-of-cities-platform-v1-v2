@@ -21,7 +21,7 @@ if ($_POST) {
     'contact' => $_POST['contact'] ? (int)$_POST['contact'] : NULL,
     'user' => $user_id,
   );
-  if ($update) {
+  if ($update && false) {
     $db->update("mfa_materials_notes",$post,"id = $update");
   } else {
     $db->insert("mfa_materials_notes",$post);

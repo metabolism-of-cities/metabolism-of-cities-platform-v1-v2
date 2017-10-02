@@ -74,9 +74,6 @@ if ($_GET['message'] == 'deleted') {
       <td><?php echo $row['section'] ?></td>
       <td><a href="omat/datagroup/<?php echo $row['id'] ?>"><?php echo $row['name'] ?></a></td>
       <td class="align-right">
-        <a href="" class="btn btn-warning" title="Comments and associated resources">
-          <i class="fa fa-comments"></i> 
-        </a>
         <a title="Edit" href="omat/datagroup-entry/<?php echo $row['id'] ?>" class="btn btn-primary"><i class="fa fa-edit"></i></a>
         <a title="Remove" href="omat.manage.php?id=<?php echo $id ?>&amp;delete=<?php echo $row['id'] ?>" class="btn btn-danger" onclick="javascript:return confirm('Are you sure? ALL subgroups and any possible data will be deleted!')"><i class="fa fa-trash"></i></a>
       </td>
