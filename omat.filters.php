@@ -90,7 +90,7 @@ if ($_GET['deleted']) {
 }
 
 $status_options = $db->query("SELECT * FROM mfa_status_options ORDER BY id");
-$flags = $db->query("SELECT * FROM mfa_special_flags ORDER BY name");
+$flags = $db->query("SELECT * FROM mfa_special_flags WHERE dataset IS NULL OR dataset = $id ORDER BY name");
 
 if ($page == "contacts") {
   // Contacs can only be related to an organization, but sources can be related to either an organization or a person.
