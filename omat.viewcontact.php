@@ -268,7 +268,8 @@ $file_children = $db->query("SELECT * FROM mfa_sources WHERE belongs_to = $id AN
     <?php echo $row['name'] ?></a>
   <?php } ?>
 
-  <a href="omat/<?php echo $project ?>/contact/<?php echo $info->id ?>" class="btn btn-primary right">Edit</a>
+  <a href="omat/<?php echo $project ?>/contact/<?php echo $info->id ?>" class="btn btn-primary right"><i class="fa fa-pencil"></i> Edit</a>
+  <a href="omat/<?php echo $project ?>/source/0/<?php echo $info->id ?>" class="btn btn-success right"><i class="fa fa-file"></i> Add source</a>
 
   <ol class="breadcrumb">
     <li><a href="omat/<?php echo $project ?>/dashboard">Dashboard</a></li>

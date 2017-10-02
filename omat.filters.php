@@ -170,6 +170,12 @@ if ($page == "contacts") {
 
   <div class="message btn"></div>
 
+  <?php if ($page == "contacts") { ?>
+    <a href="omat/<?php echo $project ?>/contact/0" class="btn btn-success pull-right"><i class="fa fa-user"></i> Add contact</a>
+  <?php } else { ?>
+  <a href="omat/<?php echo $project ?>/source/0" class="btn btn-success pull-right"><i class="fa fa-file"></i> Add source</a>
+  <?php } ?>
+
   <h1><?php echo $page_title ?></h1>
 
   <ol class="breadcrumb">
@@ -348,8 +354,18 @@ if ($page == "contacts") {
 
   <?php } ?>
 
-  <a href="omat/<?php echo $project ?>/<?php echo $page ?>/random-contact" class="btn btn-success"><i class="fa fa-random"></i> Open random pending contact</a>
+  
+  <p class="hide"><a href="omat/<?php echo $project ?>/<?php echo $page ?>/random-contact" class="btn btn-success"><i class="fa fa-random"></i> Open random pending contact</a>
   <a href="omat.filters.php?project=<?php echo $id ?>&amp;status=<?php echo $status ?>&amp;flag=<?php echo $flag ?>&amp;organization=<?php echo $organization ?>&amp;edit=1&amp;page=<?php echo $page ?>" class="btn btn-success"><i class="fa fa-edit"></i> Mass edit <?php echo $page ?></a>
+  </p>
+
+  <p style="margin-top:22px">
+  <?php if ($page == "contacts") { ?>
+    <a href="omat/<?php echo $project ?>/contact/0" class="btn btn-success pull-right"><i class="fa fa-user"></i> Add contact</a>
+  <?php } else { ?>
+  <a href="omat/<?php echo $project ?>/source/0" class="btn btn-success pull-right"><i class="fa fa-file"></i> Add source</a>
+  <?php } ?>
+  </p>
 
 <?php require_once 'include.footer.php'; ?>
 

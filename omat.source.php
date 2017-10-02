@@ -37,6 +37,9 @@ if ($_POST) {
 }
 
 $organizations = $db->query("SELECT id,name FROM mfa_contacts WHERE dataset = $project ORDER BY name");
+
+$belongs_to = $info->belongs_to ?: $_GET[0];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -91,7 +94,7 @@ $organizations = $db->query("SELECT id,name FROM mfa_contacts WHERE dataset = $p
           <select name="belongs_to" class="form-control">
               <option value=""></option>
             <?php foreach ($organizations as $row) { ?>
-              <option value="<?php echo $row['id'] ?>"<?php if ($row['id'] == $info->belongs_to) { echo ' selected'; } ?>><?php echo $row['name'] ?></option>
+              <option value="<?php echo $row['id'] ?>"<?php if ($row['id'] == $belongs_to) { echo ' selected'; } ?>><?php echo $row['name'] ?></option>
             <?php } ?>
           </select>
         </div>
