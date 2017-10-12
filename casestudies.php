@@ -110,9 +110,11 @@ foreach ($count_per_study as $row) {
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <link rel="stylesheet" href="<?php echo URL ?>css/sorter.bootstrap.css" />
     <?php echo $header ?>
     <title>Material Flow Analysis Case Studies | <?php echo SITENAME ?></title>
     <style type="text/css">
+    .thumbnail .caption{background:none}
     .table.ellipsis{border-top:0}
     .table > tbody > tr > th {border-top:0}
     .optionlist{max-width:500px}
@@ -173,19 +175,21 @@ foreach ($count_per_study as $row) {
   <?php if ($page == "overview") { ?>
 
   <table class="table table-striped ellipsis">
+    <thead>
     <tr>
       <th class="large">City</th>
       <th class="small">
       <span class="explanation" data-toggle="tooltip" data-placement="bottom"  title="This displays the total number of indicators that have been extracted from this study, so far">
-        Quantity
+        Qty
         <i class="fa fa-question-circle"></i>
       </span>
       </th>
-      <th class="small">Published</th>
+      <th class="small">Year</th>
       <th class="large">Publication</th>
       <th class="large">Authors</th>
-      <th class="small hide">Information</th>
     </tr>
+    </thead>
+    <tbody>
   <?php foreach ($list as $row) { ?>
     <tr>
       <td><a href="casestudy/<?php echo $row['id'] ?>"><?php echo $row['name'] ?></a></td>
@@ -193,13 +197,9 @@ foreach ($count_per_study as $row) {
       <td><?php echo $row['year'] ?></td>
       <td><a href="publication/<?php echo $row['paper'] ?>"><?php echo $row['title'] ?></a></td>
       <td><?php echo $row['author'] ?></td>
-      <td class="hide">
-        <a href="analysis/<?php echo $row['id'] ?>/2"><i class="fa fa-comments-o"></i></a>
-        <a href="analysis/<?php echo $row['id'] ?>/1"><i class="fa fa-bar-chart-o"></i></a>
-        <a href="analysis/<?php echo $row['id'] ?>/3"><i class="fa fa-user"></i></a>
-      </td>
     </tr>
   <?php } ?>
+  </tbody>
   </table>
 
   <?php } ?>
@@ -207,6 +207,7 @@ foreach ($count_per_study as $row) {
   <?php if ($page == "indicators") { ?>
 
   <table class="table table-striped ellipsis">
+    <thead>
     <tr>
       <th class="small">Area</th>
       <th class="small">Sub-area</th>
@@ -218,6 +219,8 @@ foreach ($count_per_study as $row) {
       </span>
       </th>
     </tr>
+    </thead>
+    <tbody>
   <?php foreach ($list as $row) { ?>
     <tr>
       <td><a href="data/areas/<?php echo $row['area_id'] ?>"><?php echo $row['area'] ?></a></td>
@@ -226,6 +229,7 @@ foreach ($count_per_study as $row) {
       <td><a class="badge badge-info" href="data/indicators/<?php echo $row['id'] ?>"><?php echo (int)$row['total'] ?></a></td>
     </tr>
   <?php } ?>
+  </tbody>
   </table>
 
   <?php } elseif ($page == "filters") { ?>
@@ -339,6 +343,8 @@ foreach ($count_per_study as $row) {
   <?php } ?>
 
 <?php require_once 'include.footer.php'; ?>
+<script type="text/javascript" src="js/tablesorter.js"></script>
+<script type="text/javascript" src="js/tablesorter.widgets.js"></script>
 
 <script type="text/javascript">
 $(function(){
@@ -355,6 +361,64 @@ $(function(){
       $("#subareas .area-"+id).show();
       console.log("showing .area-"+id);
     });
+	// NOTE: $.tablesorter.theme.bootstrap is ALREADY INCLUDED in the jquery.tablesorter.widgets.js
+	// file; it is included here to show how you can modify the default classes
+	$.tablesorter.themes.bootstrap = {
+		// these classes are added to the table. To see other table classes available,
+		// look here: http://getbootstrap.com/css/#tables
+		table        : 'table table-bordered table-striped',
+		caption      : 'caption',
+		// header class names
+		header       : 'bootstrap-header', // give the header a gradient background (theme.bootstrap_2.css)
+		sortNone     : '',
+		sortAsc      : '',
+		sortDesc     : '',
+		active       : '', // applied when column is sorted
+		hover        : '', // custom css required - a defined bootstrap style may not override other classes
+		// icon class names
+		icons        : '', // add "icon-white" to make them white; this icon class is added to the <i> in the header
+		iconSortNone : 'bootstrap-icon-unsorted', // class name added to icon when column is not sorted
+		iconSortAsc  : 'glyphicon glyphicon-chevron-up', // class name added to icon when column has ascending sort
+		iconSortDesc : 'glyphicon glyphicon-chevron-down', // class name added to icon when column has descending sort
+		filterRow    : '', // filter row class; use widgetOptions.filter_cssFilter for the input/select element
+		footerRow    : '',
+		footerCells  : '',
+		even         : '', // even row zebra striping
+		odd          : ''  // odd row zebra striping
+	};
+
+	// call the tablesorter plugin and apply the uitheme widget
+	$("table").tablesorter({
+		// this will apply the bootstrap theme if "uitheme" widget is included
+		// the widgetOptions.uitheme is no longer required to be set
+		theme : "bootstrap",
+
+		widthFixed: true,
+
+		headerTemplate : '{content} {icon}', // new in v2.7. Needed to add the bootstrap icon!
+
+		// widget code contained in the jquery.tablesorter.widgets.js file
+		// use the zebra stripe widget if you plan on hiding any rows (filter widget)
+		widgets : [ "uitheme", "filter", "zebra" ],
+
+		widgetOptions : {
+			// using the default zebra striping class name, so it actually isn't included in the theme variable above
+			// this is ONLY needed for bootstrap theming if you are using the filter widget, because rows are hidden
+			zebra : ["even", "odd"],
+
+			// reset filters button
+			filter_reset : ".reset",
+
+			// extra css class name (string or array) added to the filter element (input or select)
+			filter_cssFilter: "form-control",
+
+			// set the uitheme widget to use the bootstrap theme class names
+			// this is no longer required, if theme is set
+			// ,uitheme : "bootstrap"
+
+		}
+	})
+
 });
 </script>
 
