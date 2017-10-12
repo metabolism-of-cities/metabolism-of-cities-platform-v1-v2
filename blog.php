@@ -37,7 +37,7 @@ if ($id) {
 $today = date("Y-m-d");
 $recent = $db->query("SELECT id, title, date 
 FROM content
-WHERE date <= '$today' AND active = 1 AND type = 'blog' ORDER BY date DESC LIMIT 5");
+WHERE date <= '$today' AND active = 1 AND type = 'blog' ORDER BY date DESC LIMIT 10");
 ?>
 <!DOCTYPE html>
 <html lang="en">
