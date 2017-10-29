@@ -3,6 +3,11 @@ require_once 'functions.php';
 $section = 6;
 $show_breadcrumbs = true;
 
+if (ID == 1) {
+  $section = 8;
+  $page = 5;
+}
+
 if ($_GET['year']) {
   $year = (int)$_GET['year'];
   $sql .= " AND YEAR(date) = $year";
@@ -22,6 +27,33 @@ ORDER BY date DESC
   <head>
     <?php echo $header ?>
     <title>News | <?php echo SITENAME ?></title>
+    <style type="text/css">
+    .date-m{padding:10px}
+    .date-d{
+    position:relative;
+    top:25px;
+    padding: 10px;
+    background: #f4f4f4;
+    border: 1px solid #ccc;
+    clear: both;
+    font-weight: bold;
+    font-size: 20px;
+    }
+    .blog-post {
+      margin-top:20px;
+      padding-top:20px;
+      border-top:1px dotted #ccc;
+    }
+    .blog-post .date-md {
+      padding-top:10px;
+    }
+    @media (max-width: 1024px) {
+      .blog-post .date-md {
+        display:none;
+      }
+    }
+
+    </style>
   </head>
 
   <body>
@@ -33,11 +65,19 @@ ORDER BY date DESC
         <h2 class="title-divider">
           <span>News</span>
         </h2>
+        <?php if (ID == 2) { ?>
         <p>This page contents news feeds from organization across the political spectrum active in EPR</p>
+        <?php } else { ?>
+        <p>Please find the latest Metabolism of Cities news in this section.</p>
+        <?php } ?>
         <div class="row">
           <!--Blog Roll Content-->
           <div class="col-md-9 blog-roll blog-list">
           <?php foreach ($list as $row) { ?>
+          <?php if (ID == 1) { 
+            $row['external_link'] = 'news/'.$row['id'].'-'.$row['slug'];  
+          }
+          ?>
             <div class="row blog-post">
               <div class="col-md-1 date-md">
                 <!-- Date desktop -->
@@ -54,10 +94,10 @@ ORDER BY date DESC
                 <div class="row">
 
                   <div class="col-md-12">
-                    <p><?php echo $row['content'] ?></p>
+                    <p><?php echo smartcut(strip_tags($row['content']), 200) ?></p>
                     <ul class="list-inline links">
                       <li class="list-inline-item">
-                        <a href="<?php echo $row['external_link'] ?>" class="btn btn-secondary btn-sm"><i class="fa fa-arrow-circle-right"></i> Read more</a>
+                        <a href="<?php echo $row['external_link'] ?>" class="btn btn-secondary btn-sm btn-info"><i class="fa fa-arrow-circle-right"></i> Read more</a>
                       </li>
                     </ul>
                   </div>
@@ -67,65 +107,7 @@ ORDER BY date DESC
           <?php } ?>
           </div>
           <!--Sidebar-->
-          <div class="col-md-3 sidebar-right">
-            
-            <!-- @Element: Search form -->
-            <div class="mb-4 hidden">
-              <form role="form">
-                <div class="input-group">
-                  <label class="sr-only" for="search-field">Search</label>
-                  <input type="search" class="form-control" id="search-field" placeholder="Search">
-                  <span class="input-group-btn">
-                    <button class="btn btn-secondary" type="button">Go!</button>
-                  </span>
-                </div>
-              </form>
-            </div>
-            
-            <!-- @Element: Archive -->
-            <div class="mb-4">
-              <h4 class="title-divider">
-                <span>Archive</span>
-              </h4>
-              <ul class="list-unstyled list-lg tags">
-                <?php foreach ($months as $row) { ?>
-                  <li><i class="fa fa-angle-right fa-fw"></i> <a href="news/<?php echo $row['year'] ?>/<?php echo $row['month'] ?>">
-                  <?php echo format_date("M Y", $row['year']."-".$row['month']."-01") ?></a>
-                  (<?php echo $row['total'] ?>)
-                  </li>
-                <?php } ?>
-              </ul>
-            </div>
-            
-            <?php if (ID == 1) { ?>
-            <!-- @Element: Subscrive button -->
-            <div class="mb-4">
-              <a href="#" class="btn btn-warning"><i class="fa fa-rss"></i> Subscribe via RSS feed</a>
-            </div>
-            
-            <!-- Follow Widget -->
-            <div class="mb-4">
-              <h4 class="title-divider">
-                <span>Follow Us On</span>
-              </h4>
-              <!--@todo: replace with real social media links -->
-              <ul class="list-unstyled social-media-branding">
-                <li>
-                  <a href="#" class="social-link branding-twitter"><i class="fa fa-twitter-square fa-fw"></i> Twitter</a>
-                </li>
-                <li>
-                  <a href="#" class="social-link branding-facebook"><i class="fa fa-facebook-square fa-fw"></i> Facebook</a>
-                </li>
-                <li>
-                  <a href="#" class="social-link branding-linkedin"><i class="fa fa-linkedin-square fa-fw"></i> LinkedIn</a>
-                </li>
-                <li>
-                  <a href="#" class="social-link branding-google-plus"><i class="fa fa-google-plus-square fa-fw"></i> Google+</a>
-                </li>
-              </ul>
-            </div>
-            <?php } ?>
-          </div>
+        <?php require_once 'include.news-aside.php'; ?>
         </div>
       </div>
       <!--.container-->

@@ -19,7 +19,8 @@ $hide_regular_translate = true;
 
 $today = date("Y-m-d");
 
-$blog = $db->record("SELECT * FROM content WHERE active = 1 AND date <= '$today' AND type = 'blog' ORDER BY date DESC LIMIT 1");
+//$blog = $db->record("SELECT * FROM content WHERE active = 1 AND date <= '$today' AND type = 'blog' ORDER BY date DESC LIMIT 1");
+$news = $db->query("SELECT * FROM content WHERE active = 1 AND date <= '$today' AND type = 'news' ORDER BY date DESC LIMIT 4");
 
 ?>
 <!DOCTYPE html>
@@ -81,68 +82,23 @@ $blog = $db->record("SELECT * FROM content WHERE active = 1 AND date <= '$today'
 
       <div class="row">
       
+        <?php foreach ($news as $row) { ?>
         <div class="col-md-6">
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title">Latest Blog Post <span class="pull-right"><?php echo format_date("M d, Y", $blog->date) ?></span></h3>
+              <h3 class="panel-title"><em>News</em> <span class="pull-right"><?php echo format_date("M d, Y", $row['date']) ?></span></h3>
             </div>
             <div class="panel-body">
-                    <h4><a href="blog/<?php echo $blog->id ?>-<?php echo flatten($blog->title) ?>"><?php echo $blog->title ?></a></h4>
-                    <?php echo smartcut(strip_tags($blog->content), 200) ?>
-                    <p><a href="blog/<?php echo $blog->id ?>-<?php echo flatten($blog->title) ?>" class="btn btn-primary">Read more</a></p>
+                    <h4><a href="news/<?php echo $row['id'] ?>-<?php echo $row['slug']?>"><?php echo $row['title'] ?></a></h4>
+                    <p><?php echo smartcut(strip_tags($row['content']), 200) ?></p>
+                    <p><a href="news/<?php echo $row['id'] ?>-<?php echo $row['slug']?>" class="btn btn-primary">Read more</a></p>
             </div>
           </div>
         </div>
-
-        <div class="col-md-6">
-       
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">Data Visualization Voting <span class="pull-right">Jan 01-20, 2017</span></h3>
-            </div>
-            <div class="panel-body">
-              <h4><a href="datavisualizations/36-electricity-consumption-in-hong-kong-in-2010">See the winner!</a></h4>
-              <p>
-              We have a winner! We held a voting contest which ended on Jan 20, 2017. And we have a winner! 
-              Click here to view the <a href="datavisualizations/36-electricity-consumption-in-hong-kong-in-2010">winning
-              data visualization</a>. A more detailed report will following in the coming week.
-               </p>
-               <p> <a class="btn btn-primary" href="datavisualization/examples">
-                  View all data visualizations
-                </a>
-              </p>
-            </div>
-          </div>
-
-        </div>
-
+        <?php } ?>
 
       </div>
 
-<div class="alert alert-warning">
-<span class="pull-right">Dec 5, 2016</span>
-<h2>Metabolism of Cities co-organises three masterclasses on urban metabolism</h2>
-
-<p>
-
-As part of our <a href="stakeholders">Stakeholders Initiative</a>, we are proud to announce that Metabolism of Cities will be co-organising (with OVAM, .Fabric, Vlaamse Milieumaatschappij (VMM/MIRA), and Team Vlaams Bouwmeester) three masterclasses on urban metabolism. The masterclasses are entitled Designing With Flows: Towards an Urban-Metabolic Agenda for a Circular Future and will take place in Brussels on the 08/12/2016, 12/01/2017, 02/02/2017. 
-</p>
-
-
-<p style="font-weight:700;margin:10px 0"><span class="badge badge-info">Update</span> The masterclasses have finished and videos are now available!</p>
-
-<p><a href="stakeholders/masterclasses" class="btn btn-primary">Urban metabolism masterclasses &raquo;</a></p>
-
-</div>
-
-
-      <h2>Just Launched: Global Urban Metabolism Database - January-March 2017</h2>
-
-      <p>We have launched our second <a href="stakeholders">Stakeholders Initiative</a>! From January until 
-      March 2017 we will focus on the development of a global urban metabolism database, and we have many exciting things planned. 
-      And we need YOUR involvement. Check out the new section and start contributing now! 
-      </p>
-      <p><a href="stakeholders/data" class="btn btn-primary">Global Urban Metabolism Database Project</a></p>
       <h2>About</h2>
 
       <p>

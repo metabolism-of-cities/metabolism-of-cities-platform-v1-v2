@@ -12,7 +12,17 @@ if (!$info->id) {
   kill("Page not found");
 }
 
+$type = $info->type;
 $this_page = $info->title;
+
+if ($type == 'news') {
+  $section = 8;
+  $page = 5;
+  $months = $db->query("SELECT COUNT(*) AS total, MONTH(date) AS month, YEAR(date) AS year FROM content WHERE type = 'news' AND active = 1 
+  GROUP BY MONTH(date), YEAR(date)
+  ORDER BY date DESC
+  ");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,9 +41,20 @@ $this_page = $info->title;
 <?php require_once 'include.header.php'; ?>
 
   
-    <h1><?php echo $info->title ?></h1>
+    <?php if ($type == 'news') { ?>
+        <div class="row">
+          <div class="col-md-9">
+            <h1><?php echo $info->title ?></h1>
+            <?php echo $info->content ?>
+          </div>
+          
+          <?php require_once 'include.news-aside.php'; ?>
 
-    <?php echo $info->content ?>
+        </div>
+    <?php } else { ?>
+      <h1><?php echo $info->title ?></h1>
+      <?php echo $info->content ?>
+    <?php } ?>
 
 
 <?php require_once 'include.footer.php'; ?>
