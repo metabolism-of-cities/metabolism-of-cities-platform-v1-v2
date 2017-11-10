@@ -1739,3 +1739,30 @@ ADD `external_link` varchar(255) COLLATE 'utf8_unicode_ci' NULL;
 
 DELETE FROM `tags`
 WHERE `parent` = '1' AND ((`id` = '94') OR (`id` = '105') OR (`id` = '106') OR (`id` = '131') OR (`id` = '176') OR (`id` = '181') OR (`id` = '183'));
+
+
+CREATE TABLE `mooc` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `name` varchar(255) NOT NULL,
+  `description` text NOT NULL
+) ENGINE='InnoDB' COLLATE 'utf8_unicode_ci';
+
+CREATE TABLE `mooc_modules` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `title` varchar(255) NOT NULL,
+  `instructions` text NOT NULL
+) ENGINE='InnoDB' COLLATE 'utf8_unicode_ci';
+
+CREATE TABLE `mooc_media` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `module` int(10) unsigned NOT NULL,
+  `url` varchar(255) NOT NULL,
+  `description` text NULL,
+  FOREIGN KEY (`module`) REFERENCES `mooc_modules` (`id`)
+) ENGINE='InnoDB' COLLATE 'utf8_unicode_ci';
+
+ALTER TABLE `mooc_media`
+ADD `position` tinyint unsigned NOT NULL;
+
+ALTER TABLE `mooc_media`
+ADD `title` varchar(255) NOT NULL AFTER `id`;
