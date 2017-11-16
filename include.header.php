@@ -131,6 +131,8 @@
 
     <?php if ($cms_sidebar) { require_once 'include.cmsheader.php'; } ?>
 
+    <?php if ($mooc_sidebar) { require_once 'include.moocheader.php'; } ?>
+
     <?php if ($show_breadcrumbs || $this_page) { ?>
       <ol class="breadcrumb">
         <li><a href="./">Home</a></li>

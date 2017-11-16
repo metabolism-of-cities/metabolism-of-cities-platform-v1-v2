@@ -322,6 +322,9 @@ AddDefaultCharset utf-8
     RewriteRule ^profile/([0-9]+)/(.+)/?$ profile.$2.php?id=$1
     RewriteRule ^css/styles.([0-9]+).css$ css/styles.css?id=$1
 
+    RewriteRule ^mooc/?$ mooc.php?id=1
+    RewriteRule ^mooc/mooc?$ mooc.php?id=1
+    RewriteRule ^mooc/([0-9]+)?$ mooc.php?id=1&module=$1
 </IfModule>
 
 # ------------------------------------------------------------------------------
