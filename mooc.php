@@ -57,7 +57,6 @@ $remove_enter = array("\n" => "");
           </li>
         <?php } ?>
       </ul>
-      <img src="img/globe.arrow.png" alt="" />
     </div>
 
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">

@@ -1766,3 +1766,9 @@ ADD `position` tinyint unsigned NOT NULL;
 
 ALTER TABLE `mooc_media`
 ADD `title` varchar(255) NOT NULL AFTER `id`;
+
+ALTER TABLE `mooc_media`
+ADD `duration` varchar(255) NULL;
+
+ALTER TABLE `mooc_media`
+ADD `url_download` varchar(255) COLLATE 'utf8_unicode_ci' NULL;

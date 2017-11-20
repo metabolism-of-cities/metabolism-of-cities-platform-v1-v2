@@ -14,6 +14,8 @@ if ($_POST) {
     'position' => (int)$_POST['position'],
     'url' => html($_POST['url']),
     'module' => (int)$_POST['module'],
+    'url_download' => html($_POST['url_download']),
+    'duration' => html($_POST['duration']),
   );
   if ($id) {
     $db->update("mooc_media",$post,"id = $id");
@@ -66,6 +68,20 @@ $module_info = $db->record("SELECT * FROM mooc_modules WHERE id = $module");
       <label class="col-sm-2 control-label">URL</label>
       <div class="col-sm-10">
         <input class="form-control" type="text" name="url" value="<?php echo $info->url ?>" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Download URL</label>
+      <div class="col-sm-10">
+        <input class="form-control" type="url" name="url_download" value="<?php echo $info->url_download ?>" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Duration</label>
+      <div class="col-sm-10">
+        <input class="form-control" type="text" name="duration" value="<?php echo $info->duration ?>" />
       </div>
     </div>
 
