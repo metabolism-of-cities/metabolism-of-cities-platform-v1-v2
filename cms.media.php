@@ -24,6 +24,12 @@ if ($_POST) {
   header("Location: ".URL."cms.moocmedia.php?id=".$_POST['module']);
   exit();
 }
+$mooc = 1;
+$mooc_info = $db->record("SELECT * FROM mooc WHERE id = $mooc");
+
+$module = $info->module ?: (int)$_GET['module'];
+$module_info = $db->record("SELECT * FROM mooc_modules WHERE id = $module");
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,6 +43,15 @@ if ($_POST) {
 <?php require_once 'include.header.php'; ?>
 
   <h1><?php echo $info->title ?: 'Add Media Object' ?></h1>
+
+  <ol class="breadcrumb">
+    <li class="active"><a href="cms.moocs.php">MOOCs</a></li>
+    <li><a href="cms.modules.php?id=<?php echo $mooc_info->id ?>"><?php echo $mooc_info->name ?></a></li>
+    <li><a href="cms.module.php?id=<?php echo $module_info->id ?>"><?php echo $module_info->title ?></a></li>
+    <li><a href="cms.moocmedia.php?id=<?php echo $module_info->id ?>">Media</a></li>
+    <li><?php echo $info->title ?: "Add media" ?></li>
+  </ol>
+
 
   <form method="post" class="form form-horizontal">
   

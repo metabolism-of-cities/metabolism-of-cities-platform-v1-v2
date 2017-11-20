@@ -19,6 +19,11 @@ $list = $db->query("SELECT * FROM mooc ORDER BY name");
 
   <h1>MOOCs</h1>
 
+
+  <ol class="breadcrumb">
+    <li>MOOCs</li>
+  </ol>
+
   <p><a href="cms.mooc.php" class="btn btn-info">Add MOOC</a></p>
 
   <table class="table table-striped">

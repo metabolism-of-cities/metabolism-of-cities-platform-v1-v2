@@ -4,7 +4,9 @@ require_once 'functions.php';
 require_once 'functions.omat.php';
 $sub_page = 21;
 
+$id = 1;
 $list = $db->query("SELECT * FROM mooc_modules ORDER BY title");
+$info = $db->record("SELECT * FROM mooc WHERE id = $id");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,6 +20,11 @@ $list = $db->query("SELECT * FROM mooc_modules ORDER BY title");
 <?php require_once 'include.header.php'; ?>
 
   <h1>MOOC Modules</h1>
+
+  <ol class="breadcrumb">
+    <li class="active"><a href="cms.moocs.php">MOOCs</a></li>
+    <li><?php echo $info->name ?></li>
+  </ol>
 
   <p><a href="cms.module.php" class="btn btn-info">Add Module</a></p>
 

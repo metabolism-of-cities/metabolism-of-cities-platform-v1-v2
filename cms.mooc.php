@@ -35,6 +35,15 @@ if ($_POST) {
 
   <h1><?php echo $info->name ?: 'Add MOOC' ?></h1>
 
+  <ol class="breadcrumb">
+    <li class="active"><a href="cms.moocs.php">MOOCs</a></li>
+    <?php if ($id) { ?>
+      <li>Edit MOOC</li>
+      <?php } else { ?>
+      <li>Add MOOC</li>
+    <?php } ?>
+  </ol>
+
   <form method="post" class="form form-horizontal">
   
     <div class="form-group">

@@ -4,6 +4,9 @@ require_once 'functions.php';
 require_once 'functions.omat.php';
 $sub_page = 21;
 
+$mooc = 1;
+$mooc_info = $db->record("SELECT * FROM mooc WHERE id = $mooc");
+
 $id = (int)$_GET['id'];
 $info = $db->record("SELECT * FROM mooc_modules WHERE id = $id");
 
@@ -34,6 +37,12 @@ if ($_POST) {
 <?php require_once 'include.header.php'; ?>
 
   <h1><?php echo $info->title ?: 'Add Module' ?></h1>
+
+  <ol class="breadcrumb">
+    <li class="active"><a href="cms.moocs.php">MOOCs</a></li>
+    <li><a href="cms.modules.php?id=<?php echo $mooc_info->name ?>"><?php echo $mooc_info->name ?></a></li>
+    <li><?php echo $info->title ?></li>
+  </ol>
 
   <form method="post" class="form form-horizontal">
   

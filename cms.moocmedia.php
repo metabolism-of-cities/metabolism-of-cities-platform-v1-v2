@@ -8,6 +8,8 @@ $id = (int)$_GET['id'];
 $list = $db->query("SELECT * FROM mooc_media WHERE module = $id ORDER BY position");
 
 $info = $db->record("SELECT * FROM mooc_modules WHERE id = $id");
+$mooc = 1;
+$mooc_info = $db->record("SELECT * FROM mooc WHERE id = $mooc");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,7 +24,12 @@ $info = $db->record("SELECT * FROM mooc_modules WHERE id = $id");
 
   <h1>MOOC Media</h1>
 
-  <p>Module: <strong><a href="cms.module.php?id=<?php echo $id ?>"><?php echo $info->title ?></a></strong></p>
+  <ol class="breadcrumb">
+    <li class="active"><a href="cms.moocs.php">MOOCs</a></li>
+    <li><a href="cms.modules.php?id=<?php echo $mooc_info->id ?>"><?php echo $mooc_info->name ?></a></li>
+    <li><a href="cms.module.php?id=<?php echo $info->id ?>"><?php echo $info->title ?></a></li>
+    <li>Media</li>
+  </ol>
 
   <p><a href="cms.media.php?module=<?php echo $id ?>" class="btn btn-info">Add Media Object</a></p>
 
