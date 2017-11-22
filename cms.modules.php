@@ -38,6 +38,7 @@ $info = $db->record("SELECT * FROM mooc WHERE id = $id");
       <td><a href="cms.module.php?id=<?php echo $row['id'] ?>"><?php echo $row['title'] ?></a></td>
       <td>
         <a href="cms.moocmedia.php?id=<?php echo $row['id'] ?>">Manage media</a> |
+        <a href="cms.moocquestions.php?id=<?php echo $row['id'] ?>">Questions</a> |
         <a href="cms.module.php?id=<?php echo $row['id'] ?>">Edit</a>
       </td>
     </tr>

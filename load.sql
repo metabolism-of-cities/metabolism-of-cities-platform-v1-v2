@@ -1772,3 +1772,36 @@ ADD `duration` varchar(255) NULL;
 
 ALTER TABLE `mooc_media`
 ADD `url_download` varchar(255) COLLATE 'utf8_unicode_ci' NULL;
+
+CREATE TABLE `mooc_questions` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `question` varchar(255) NOT NULL,
+  `module` int(10) unsigned NOT NULL,
+  FOREIGN KEY (`module`) REFERENCES `mooc_modules` (`id`)
+) ENGINE='InnoDB' COLLATE 'utf8_unicode_ci';
+
+CREATE TABLE `mooc_answers` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `answer` varchar(255) NOT NULL,
+  `question` int(10) unsigned NOT NULL,
+  FOREIGN KEY (`question`) REFERENCES `mooc_questions` (`id`)
+) ENGINE='InnoDB' COLLATE 'utf8_unicode_ci';
+
+ALTER TABLE `mooc_questions`
+CHANGE `question` `question` text COLLATE 'utf8_unicode_ci' NOT NULL AFTER `id`,
+ADD `right_answer` int(10) unsigned NOT NULL,
+ADD FOREIGN KEY (`right_answer`) REFERENCES `mooc_answers` (`id`);
+ 
+ALTER TABLE `mooc_questions`
+DROP FOREIGN KEY `mooc_questions_ibfk_1`,
+ADD FOREIGN KEY (`module`) REFERENCES `mooc_modules` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE `mooc_questions`
+DROP FOREIGN KEY `mooc_questions_ibfk_2`,
+ADD FOREIGN KEY (`right_answer`) REFERENCES `mooc_answers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+
+ALTER TABLE `mooc_answers`
+DROP FOREIGN KEY `mooc_answers_ibfk_1`,
+ADD FOREIGN KEY (`question`) REFERENCES `mooc_questions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
