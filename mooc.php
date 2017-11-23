@@ -40,6 +40,8 @@ $remove_enter = array("\n" => "");
     #documentation img{background:#ccc;padding:4px;border:3px solid #999}
     h2{font-size:24px;color:#333}
     .limitwidth{width:95%}
+  .tab-pane{display:none}
+  .tab-pane.active{display:block}
     </style>
   </head>
 
@@ -69,15 +71,24 @@ $remove_enter = array("\n" => "");
         <?php
          $site = "youtube";
         ?>
-          <?php foreach ($media as $row) { ?>
-            <h3><?php echo $row['title'] ?></h3>
-            <?php echo $row['description'] ?>
-            <?php if ($site == "youtube") { ?>
-              <iframe width="100%" height="480" src="https://www.youtube.com/embed/<?php echo $row['url'] ?>" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-            <?php } else { ?>
-              <iframe src="https://player.vimeo.com/video/<?php echo $row['url'] ?>" width="100%" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-            <?php } ?>
+          <ul class="nav nav-tabs">
+          <?php $count = 0; foreach ($media as $row) { $count++; ?>
+            <li role="presentation" class="<?php echo $count == 1 ? "active" : "reg"; ?>" data-id="<?php echo $count ?>"><a href="#" >Video <?php echo $count ?></a></li>
           <?php } ?>
+          </ul>
+          <div class="tab-content">
+          <?php $count = 1; foreach ($media as $row) { ?>
+            <div class="tab-pane<?php if ($count == 1) { echo ' active'; } ?>" id="tab-<?php echo $count++; ?>">
+                <h3><?php echo $row['title'] ?></h3>
+                <?php echo $row['description'] ?>
+                <?php if ($site == "youtube") { ?>
+                  <iframe width="100%" height="480" src="https://www.youtube.com/embed/<?php echo $row['url'] ?>" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                <?php } else { ?>
+                  <iframe src="https://player.vimeo.com/video/<?php echo $row['url'] ?>" width="100%" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                <?php } ?>
+            </div>
+          <?php } ?>
+          </div>
         <?php } ?>
 
       <?php } else { ?>
@@ -89,8 +100,20 @@ $remove_enter = array("\n" => "");
 
   </div>
 
-
 <?php require_once 'include.footer.php'; ?>
+
+<script type="text/javascript">
+$(function(){
+  $(".nav-tabs li").click(function(e){
+    e.preventDefault();
+    var id = $(this).data("id");
+    $(".nav-tabs li").removeClass("active");
+    $(this).addClass("active");
+    $(".tab-pane").hide();
+    $("#tab-"+id).show();
+  });
+});
+</script>
 
   </body>
 </html> 
