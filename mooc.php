@@ -73,7 +73,7 @@ $remove_enter = array("\n" => "");
         ?>
           <ul class="nav nav-tabs">
           <?php $count = 0; foreach ($media as $row) { $count++; ?>
-            <li role="presentation" class="<?php echo $count == 1 ? "active" : "reg"; ?>" data-id="<?php echo $count ?>"><a href="#" >Video <?php echo $count ?></a></li>
+            <li role="presentation" id="item-<?php echo $count ?>" class="<?php echo $count == 1 ? "active" : "reg"; ?>" data-id="<?php echo $count ?>"><a href="#" >Video <?php echo $count ?></a></li>
           <?php } ?>
           </ul>
           <div class="tab-content">
@@ -86,6 +86,10 @@ $remove_enter = array("\n" => "");
                 <?php } else { ?>
                   <iframe src="https://player.vimeo.com/video/<?php echo $row['url'] ?>" width="100%" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
                 <?php } ?>
+                <?php if (($count-1) != count($media)) { ?>
+                  <p class="pull-right"><a data-id="<?php echo $count ?>" href="#" class="nextvideo btn btn-primary">Next <i class="fa fa-arrow-right"></i></a></p>
+                <?php } ?>
+                  
             </div>
           <?php } ?>
           </div>
@@ -104,6 +108,14 @@ $remove_enter = array("\n" => "");
 
 <script type="text/javascript">
 $(function(){
+  $(".nextvideo").click(function(e) {
+    e.preventDefault();
+    var id = $(this).data("id");
+    $("#item-"+id).click();
+  });
+  $(".nav-tabs li a").click(function(e){
+    e.preventDefault();
+  });
   $(".nav-tabs li").click(function(e){
     e.preventDefault();
     var id = $(this).data("id");
