@@ -325,6 +325,7 @@ AddDefaultCharset utf-8
     RewriteRule ^mooc/?$ mooc.php?id=1
     RewriteRule ^mooc/mooc?$ mooc.php?id=1
     RewriteRule ^mooc/([0-9]+)?$ mooc.php?id=1&module=$1
+    RewriteRule ^mooc/download/([0-9]+)?$ mooc.download.php?id=$1
 </IfModule>
 
 # ------------------------------------------------------------------------------

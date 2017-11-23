@@ -1805,3 +1805,8 @@ ALTER TABLE `mooc_answers`
 DROP FOREIGN KEY `mooc_answers_ibfk_1`,
 ADD FOREIGN KEY (`question`) REFERENCES `mooc_questions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
+ALTER TABLE `mooc_media`
+ADD `type` enum('youtube','vimeo','external_file','uploaded_file') COLLATE 'utf8_unicode_ci' NULL DEFAULT 'youtube';
+
+ALTER TABLE `mooc_media`
+ADD `file_extension` varchar(6) COLLATE 'utf8_unicode_ci' NULL;

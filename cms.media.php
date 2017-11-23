@@ -16,12 +16,23 @@ if ($_POST) {
     'module' => (int)$_POST['module'],
     'url_download' => html($_POST['url_download']),
     'duration' => html($_POST['duration']),
+    'type' => html($_POST['type']),
   );
+  if ($_FILES['file']['name']) {
+    $source = $_FILES['file']['name'];
+    $extension = strtolower(substr($source, strrpos($source, '.') + 1));
+    $post['file_extension'] = mysql_clean($extension);
+  }
   if ($id) {
     $db->update("mooc_media",$post,"id = $id");
   } else {
     $db->insert("mooc_media",$post);
-    $id = $db->insert_id;
+    $last = $db->record("SELECT id FROM mooc_media ORDER BY id DESC LIMIT 1");
+    $id = $last->id;
+  }
+  if ($_FILES['file']['name']) {
+    $file = "files/mooc-$id.$extension";
+    move_uploaded_file($_FILES['file']['tmp_name'],$file);
   }
   header("Location: ".URL."cms.moocmedia.php?id=".$_POST['module']);
   exit();
@@ -32,12 +43,35 @@ $mooc_info = $db->record("SELECT * FROM mooc WHERE id = $mooc");
 $module = $info->module ?: (int)$_GET['module'];
 $module_info = $db->record("SELECT * FROM mooc_modules WHERE id = $module");
 
+$types = array(
+  'youtube' => 'Youtube',
+  'vimeo' => 'Vimeo',
+  'external_file' => 'External file (please provide URL)',
+  'uploaded_file' => 'Uploaded file (please upload the file)',
+);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <?php echo $header ?>
     <title><?php echo $info->title ?: 'Add Media Object' ?> | <?php echo SITENAME ?></title>
+    <style type="text/css">
+    .file{display:none}
+    </style>
+    <script type="text/javascript">
+    $(function(){
+      $("select[name='type']").change(function(){
+        var type = $(this).val();
+        if (type == "uploaded_file") {
+          $(".file").show('fast');
+        } else {
+          $(".file").hide('fast');
+        }
+      });
+      $("select[name='type']").change();
+    });
+    </script>
   </head>
 
   <body class="notranslate">
@@ -55,12 +89,23 @@ $module_info = $db->record("SELECT * FROM mooc_modules WHERE id = $module");
   </ol>
 
 
-  <form method="post" class="form form-horizontal">
+  <form method="post" class="form form-horizontal" enctype="multipart/form-data">
   
     <div class="form-group">
       <label class="col-sm-2 control-label">Title</label>
       <div class="col-sm-10">
         <input class="form-control" type="text" name="title" value="<?php echo $info->title ?>" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Type</label>
+      <div class="col-sm-10">
+        <select name="type" class="form-control">
+          <?php foreach ($types as $key => $value) { ?>
+            <option value="<?php echo $key ?>"<?php if ($key == $info->type) { echo ' selected'; } ?>><?php echo $value ?></option>
+          <?php } ?>
+        </select>
       </div>
     </div>
 
@@ -92,6 +137,13 @@ $module_info = $db->record("SELECT * FROM mooc_modules WHERE id = $module");
       </div>
     </div>
 
+    <div class="form-group file">
+      <label class="col-sm-2 control-label">File</label>
+      <div class="col-sm-10">
+        <input class="form-control" type="file" name="file" />
+      </div>
+    </div>
+
     <p><strong>Description:</strong></p>
 
     <textarea name="content" class="hidden"><?php echo $info->description ?></textarea>
@@ -106,6 +158,19 @@ $module_info = $db->record("SELECT * FROM mooc_modules WHERE id = $module");
     </div>
 
   </form>
+
+  <div class="well">
+    
+    <h3>Instructions</h3>
+
+    <p>For videos, please only put the boldface text in the URL field. Like so:</p>
+
+    <ul>
+       <li>https://www.youtube.com/watch?v=<strong>15B8qN9dre4</strong></li>
+       <li>https://vimeo.com/<strong>20563513</strong></li>  
+    </ul>
+
+  </div>
 
 <?php require_once 'include.footer.php'; ?>
 <?php require_once 'include.editor.php'; ?>

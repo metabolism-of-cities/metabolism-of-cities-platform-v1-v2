@@ -68,12 +68,21 @@ $remove_enter = array("\n" => "");
         <?php echo $module_info->instructions ?>
 
         <?php if (count($media)) { ?>
-        <?php
-         $site = "youtube";
-        ?>
           <ul class="nav nav-tabs">
-          <?php $count = 0; foreach ($media as $row) { $count++; ?>
-            <li role="presentation" id="item-<?php echo $count ?>" class="<?php echo $count == 1 ? "active" : "reg"; ?>" data-id="<?php echo $count ?>"><a href="#" >Video <?php echo $count ?></a></li>
+          <?php 
+          $count_type['video'] = 1;
+          $count_type['file'] = 1;
+          $count = 0; foreach ($media as $row) { $count++; 
+          if ($row['type'] == 'youtube' || $row['type'] == 'vimeo') {
+            $print_number = $count_type['video']++;
+            $label = "Video ";
+          } else {
+            $print_number = $count_type['file']++;
+            $label = "File ";
+          }
+          $print = $label . $print_number;
+          ?>
+            <li role="presentation" id="item-<?php echo $count ?>" class="<?php echo $count == 1 ? "active" : "reg"; ?>" data-id="<?php echo $count ?>"><a href="#" ><?php echo $print ?></a></li>
           <?php } ?>
           </ul>
           <div class="tab-content">
@@ -81,10 +90,18 @@ $remove_enter = array("\n" => "");
             <div class="tab-pane<?php if ($count == 1) { echo ' active'; } ?>" id="tab-<?php echo $count++; ?>">
                 <h3><?php echo $row['title'] ?></h3>
                 <?php echo $row['description'] ?>
-                <?php if ($site == "youtube") { ?>
+                <?php if ($row['type'] == "youtube") { ?>
                   <iframe width="100%" height="480" src="https://www.youtube.com/embed/<?php echo $row['url'] ?>" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-                <?php } else { ?>
+                <?php } elseif ($row['type'] == "vimeo") { ?>
                   <iframe src="https://player.vimeo.com/video/<?php echo $row['url'] ?>" width="100%" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                <?php } elseif ($row['type'] == "external_file") { ?>
+                  <p><a href="<?php echo $row['url_download'] ?>" target="_blank" class="btn btn-primary btn-lg btn-large">
+                  <i class="fa fa-download"></i> Download file
+                  </a></p>
+                <?php } elseif ($row['type'] == "uploaded_file") { ?>
+                  <p><a href="mooc/download/<?php echo $row['id'] ?>" class="btn btn-primary btn-lg btn-large">
+                  <i class="fa fa-download"></i> Download file
+                  </a></p>
                 <?php } ?>
                 <?php if (($count-1) != count($media)) { ?>
                   <p class="pull-right"><a data-id="<?php echo $count ?>" href="#" class="nextvideo btn btn-primary">Next <i class="fa fa-arrow-right"></i></a></p>
