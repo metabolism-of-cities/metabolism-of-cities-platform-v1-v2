@@ -8,7 +8,7 @@ if (!$file->id) {
   die("File not found");
 }
 
-$path = UPLOAD_PATH . "mooc-{$file->id}.{$file->file_extension}";
+$path = "media/files/mooc-{$file->id}.{$file->file_extension}";
 header('Content-Type: ' . $file->type . '; charset=UTF-8');
 header('Content-Disposition: attachment; filename="'.$file->title.'.'.$file->file_extension.'"');
 header('Expires: 0');

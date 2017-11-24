@@ -31,7 +31,7 @@ if ($_POST) {
     $id = $last->id;
   }
   if ($_FILES['file']['name']) {
-    $file = "files/mooc-$id.$extension";
+    $file = "media/files/mooc-$id.$extension";
     move_uploaded_file($_FILES['file']['tmp_name'],$file);
   }
   header("Location: ".URL."cms.moocmedia.php?id=".$_POST['module']);
