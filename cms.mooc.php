@@ -55,9 +55,7 @@ if ($_POST) {
 
     <p><strong>Description:</strong></p>
 
-    <textarea name="content" class="hidden"><?php echo $info->description ?></textarea>
-
-    <div id="summernote"><?php echo $info->description ?></div>
+    <textarea name="content" id="content"><?php echo $info->description ?></textarea>
 
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">

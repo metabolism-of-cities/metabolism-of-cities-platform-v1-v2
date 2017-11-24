@@ -30,6 +30,9 @@ if ($_POST) {
   <head>
     <?php echo $header ?>
     <title><?php echo $info->title ?: 'Add Module' ?> | <?php echo SITENAME ?></title>
+    <style type="text/css">
+    .align-right{text-align:right}
+    </style>
   </head>
 
   <body class="notranslate">
@@ -44,6 +47,10 @@ if ($_POST) {
     <li><?php echo $info->title ?></li>
   </ol>
 
+  <?php if ($info->id) { ?>
+  <p class="align-right"><a class="btn btn-primary" href="mooc/<?php echo $info->id ?>">View this module online</a></p>
+  <?php } ?>
+
   <form method="post" class="form form-horizontal">
   
     <div class="form-group">
@@ -55,9 +62,7 @@ if ($_POST) {
 
     <p><strong>Description:</strong></p>
 
-    <textarea name="content" class="hidden"><?php echo $info->instructions ?></textarea>
-
-    <div id="summernote"><?php echo $info->instructions ?></div>
+    <textarea name="content" id="content"><?php echo $info->instructions ?></textarea>
 
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
@@ -69,6 +74,14 @@ if ($_POST) {
 
 <?php require_once 'include.footer.php'; ?>
 <?php require_once 'include.editor.php'; ?>
+
+<script type="text/javascript">
+$(function(){
+  $("#content").change(function(){
+    console.log ("Content changed");
+  });
+});
+</script>
 
   </body>
 </html>

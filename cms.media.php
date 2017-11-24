@@ -48,6 +48,7 @@ $types = array(
   'vimeo' => 'Vimeo',
   'external_file' => 'External file (please provide URL)',
   'uploaded_file' => 'Uploaded file (please upload the file)',
+  'text' => 'Text only',
 );
 
 ?>
@@ -66,6 +67,11 @@ $types = array(
         if (type == "uploaded_file") {
           $(".file").show('fast');
         } else {
+            if (type == "text") {
+              $(".texthide").hide('fast');
+            } else {
+              $(".texthide").show('fast');
+            }
           $(".file").hide('fast');
         }
       });
@@ -109,21 +115,21 @@ $types = array(
       </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group texthide">
       <label class="col-sm-2 control-label">URL</label>
       <div class="col-sm-10">
         <input class="form-control" type="text" name="url" value="<?php echo $info->url ?>" />
       </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group texthide">
       <label class="col-sm-2 control-label">Download URL</label>
       <div class="col-sm-10">
         <input class="form-control" type="url" name="url_download" value="<?php echo $info->url_download ?>" />
       </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group texthide">
       <label class="col-sm-2 control-label">Duration</label>
       <div class="col-sm-10">
         <input class="form-control" type="text" name="duration" value="<?php echo $info->duration ?>" />
@@ -146,9 +152,8 @@ $types = array(
 
     <p><strong>Description:</strong></p>
 
-    <textarea name="content" class="hidden"><?php echo $info->description ?></textarea>
+    <textarea id="content" name="content"><?php echo $info->description ?></textarea>
 
-    <div id="summernote"><?php echo $info->description ?></div>
     <input type="hidden" name="module" value="<?php echo $_GET['module'] ?: $info->module ?>" />
 
     <div class="form-group">

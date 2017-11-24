@@ -36,7 +36,8 @@ $list = $db->query("SELECT * FROM mooc ORDER BY name");
       <td><a href="cms.mooc.php?id=<?php echo $row['id'] ?>"><?php echo $row['name'] ?></a></td>
       <td>
         <a href="cms.modules.php?id=<?php echo $row['id'] ?>">Manage modules</a> |
-        <a href="cms.mooc.php?id=<?php echo $row['id'] ?>">Edit</a>
+        <a href="cms.mooc.php?id=<?php echo $row['id'] ?>">Edit</a> | 
+        <a href="mooc">View</a>
       </td>
     </tr>
   <?php } ?>

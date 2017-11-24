@@ -1,5 +1,7 @@
 <?php
+$skip_login = true;
 require_once 'functions.php';
+require_once 'functions.omat.php';
 
 $id = (int)$_GET['id'];
 $id = 1;
@@ -10,10 +12,17 @@ if ($_GET['module']) {
   $module = (int)$_GET['module'];
   $module_info = $db->record("SELECT * FROM mooc_modules WHERE id = $module");
   $media = $db->query("SELECT * FROM mooc_media WHERE module = $module ORDER BY position");
+} elseif ($_GET['overview']) {
+  $overview = true;
+  $modules = $db->query("SELECT * FROM mooc_modules WHERE mooc = 1 ORDER BY title");
+  $media_list = $db->query("SELECT * FROM mooc_media ORDER BY position");
+  foreach ($media_list as $row) { 
+    $media[$row['module']][$row['id']] = $row;
+  }
 }
-
 $sections = array(
   'mooc' => "Homepage",
+  'overview' => "Overview",
 );
 
 foreach ($list as $row) { 
@@ -22,6 +31,13 @@ foreach ($list as $row) {
 
 foreach ($sections as $key => $value) {
   $content[$key] = @file_get_contents("documentation.$key.php");
+}
+
+if ($user_id) {
+  $done_list = $db->query("SELECT * FROM mooc_progress WHERE user = $user_id");
+  foreach ($done_list as $row) {
+    $done[$row['media']] = true;
+  }
 }
 
 $remove_enter = array("\n" => "");
@@ -40,8 +56,9 @@ $remove_enter = array("\n" => "");
     #documentation img{background:#ccc;padding:4px;border:3px solid #999}
     h2{font-size:24px;color:#333}
     .limitwidth{width:95%}
-  .tab-pane{display:none}
-  .tab-pane.active{display:block}
+    .tab-pane{display:none}
+    .tab-pane.active{display:block}
+    .green{color:green}
     </style>
   </head>
 
@@ -53,7 +70,7 @@ $remove_enter = array("\n" => "");
     <div class="col-sm-3 col-md-2 sidebar">
       <ul class="nav nav-sidebar">
         <?php foreach ($sections as $key => $value) { ?>
-          <li<?php if ($module == $key || $key == 'mooc' && !$module) { ?> class="active"<?php } ?>>
+          <li<?php if ($module == $key || $key == 'mooc' && !$module && !$overview || $key == 'overview' && $overview) { ?> class="active"<?php } ?>>
             <a href="mooc/<?php echo $key ?>"><?php echo $value ?>
             </a>
           </li>
@@ -63,8 +80,33 @@ $remove_enter = array("\n" => "");
 
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
-      <?php if ($module) { ?>
-        <h1><?php echo $module_info->title ?></h1>
+      <?php if ($overview) { ?>
+        <h1>Overview</h1>
+        <table class="table table-striped">
+          <tr>
+            <th>Title</th>
+            <th>Duration (approx.)</th>
+            <th>Status</th>
+          </tr>
+          <?php foreach ($modules as $row) { ?>
+          <tr>
+            <td colspan="3"><em><?php echo $row['title'] ?></em></td>
+          </tr>
+          <?php if (is_array($media[$row['id']])) { foreach ($media[$row['id']] as $row) { ?>
+            <tr>
+              <td><a href="mooc/<?php echo $row['module'] ?>"><?php echo $row['title'] ?></a></td>
+              <td><?php echo $row['duration'] ?></td>
+              <td><?php echo $done[$row['id']] ? "<strong class='green'>Completed</strong>" : "Pending" ?></td>
+            </tr>
+          <?php } } ?>
+        <?php } ?>
+        </table>
+      <?php } elseif ($module) { ?>
+        <h1><?php echo $module_info->title ?>
+        <?php if (defined("ADMIN")) { ?>
+          <a href="cms.module.php?id=<?php echo $id ?>" class="pull-right"><i class="fa fa-pencil"></i> </a> 
+        <?php } ?>
+        </h1>
         <?php echo $module_info->instructions ?>
 
         <?php if (count($media)) { ?>
@@ -72,10 +114,14 @@ $remove_enter = array("\n" => "");
           <?php 
           $count_type['video'] = 1;
           $count_type['file'] = 1;
+          $count_type['text'] = 1;
           $count = 0; foreach ($media as $row) { $count++; 
           if ($row['type'] == 'youtube' || $row['type'] == 'vimeo') {
             $print_number = $count_type['video']++;
             $label = "Video ";
+          } elseif ($row['type'] == 'text') {
+            $print_number = $count_type['text']++;
+            $label = "Text Box ";
           } else {
             $print_number = $count_type['file']++;
             $label = "File ";
@@ -103,6 +149,13 @@ $remove_enter = array("\n" => "");
                   <i class="fa fa-download"></i> Download file
                   </a></p>
                 <?php } ?>
+                <?php if ($user_id && !$done[$row['id']]) { ?>
+                <p class=""><a data-id="<?php echo $count ?>" data-media="<?php echo $row['id'] ?>" href="#" class="nextvideo completed btn btn-warning">
+                <i class="fa fa-check"></i> 
+                I have <?php echo $row['type'] == 'youtube' ? 'watched' : 'read' ?> this content</a></p>
+                <?php } elseif ($done[$row['id']]) { ?>
+                  <p><em>You have marked this as completed. Well done!</em></p>
+                <?php } ?>
                 <?php if (($count-1) != count($media)) { ?>
                   <p class="pull-right"><a data-id="<?php echo $count ?>" href="#" class="nextvideo btn btn-primary">Next <i class="fa fa-arrow-right"></i></a></p>
                 <?php } ?>
@@ -125,6 +178,28 @@ $remove_enter = array("\n" => "");
 
 <script type="text/javascript">
 $(function(){
+  $(".completed").click(function(e) {
+    e.preventDefault();
+    var button = $(this);
+    $.post("ajax.media.php",{
+      media: $(this).data("media"),
+      dataType: "json"
+    }, function(data) {
+      if (data.response == "OK") {
+        $(button).removeClass("btn-warning");
+        $(button).addClass("btn-success");
+      } else {
+        $(button).removeClass("btn-warning");
+        $(button).addClass("btn-danger");
+        $(button).val("There was an error");
+      }
+    },'json')
+    .error(function(){
+        $(button).removeClass("btn-warning");
+        $(button).addClass("btn-danger");
+        $(button).val("There was an error sending data to the server");
+    });
+  });
   $(".nextvideo").click(function(e) {
     e.preventDefault();
     var id = $(this).data("id");

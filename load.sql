@@ -1810,3 +1810,28 @@ ADD `type` enum('youtube','vimeo','external_file','uploaded_file') COLLATE 'utf8
 
 ALTER TABLE `mooc_media`
 ADD `file_extension` varchar(6) COLLATE 'utf8_unicode_ci' NULL;
+
+ALTER TABLE `mooc_media`
+CHANGE `type` `type` enum('youtube','vimeo','external_file','uploaded_file','text') COLLATE 'utf8_unicode_ci' NULL DEFAULT 'youtube' AFTER `url_download`;
+
+ALTER TABLE `mooc_modules`
+ADD `mooc` int(10) unsigned NOT NULL DEFAULT '1',
+ADD FOREIGN KEY (`mooc`) REFERENCES `mooc` (`id`) ON DELETE CASCADE;
+
+CREATE TABLE `mooc_progress` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `media` int(10) unsigned NOT NULL,
+  `user` int(11) NOT NULL,
+  `date` timestamp NOT NULL,
+  FOREIGN KEY (`media`) REFERENCES `mooc_media` (`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`user`) REFERENCES `users` (`user_id`) ON DELETE CASCADE
+) ENGINE='InnoDB' COLLATE 'utf8_unicode_ci';
+
+ALTER TABLE `users`
+ADD `country` varchar(255) COLLATE 'utf8_unicode_ci'  NULL,
+ADD `city` varchar(255) COLLATE 'utf8_unicode_ci'  NULL AFTER `country`,
+ADD `affiliation` varchar(255) COLLATE 'utf8_unicode_ci'  NULL AFTER `city`,
+ADD `job` varchar(255) COLLATE 'utf8_unicode_ci'  NULL AFTER `affiliation`;
+
+ALTER TABLE `users`
+ADD `name` varchar(255) COLLATE 'utf8_unicode_ci' NULL;

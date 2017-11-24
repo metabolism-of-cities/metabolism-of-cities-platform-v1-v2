@@ -37,8 +37,9 @@ class Registration
     private function registerNewUser()
     {
         if (empty($_POST['user_name'])) {
-            $this->errors[] = "Empty Username";
-        } elseif (empty($_POST['user_password_new']) || empty($_POST['user_password_repeat'])) {
+          $_POST['user_name'] = $_POST['user_email'];
+        } 
+        if (empty($_POST['user_password_new']) || empty($_POST['user_password_repeat'])) {
             $this->errors[] = "Empty Password";
         } elseif ($_POST['user_password_new'] !== $_POST['user_password_repeat']) {
             $this->errors[] = "Password and password repeat are not the same";
@@ -46,8 +47,6 @@ class Registration
             $this->errors[] = "Password has a minimum length of 6 characters";
         } elseif (strlen($_POST['user_name']) > 64 || strlen($_POST['user_name']) < 2) {
             $this->errors[] = "Username cannot be shorter than 2 or longer than 64 characters";
-        } elseif (!preg_match('/^[a-z\d]{2,64}$/i', $_POST['user_name'])) {
-            $this->errors[] = "Username does not fit the name scheme: only a-Z and numbers are allowed, 2 to 64 characters";
         } elseif (empty($_POST['user_email'])) {
             $this->errors[] = "Email cannot be empty";
         } elseif (strlen($_POST['user_email']) > 64) {
@@ -57,7 +56,6 @@ class Registration
         } elseif (!empty($_POST['user_name'])
             && strlen($_POST['user_name']) <= 64
             && strlen($_POST['user_name']) >= 2
-            && preg_match('/^[a-z\d]{2,64}$/i', $_POST['user_name'])
             && !empty($_POST['user_email'])
             && strlen($_POST['user_email']) <= 64
             && filter_var($_POST['user_email'], FILTER_VALIDATE_EMAIL)
@@ -78,7 +76,12 @@ class Registration
 
                 // escaping, additionally removing everything that could be (html/javascript-) code
                 $user_name = $this->db_connection->real_escape_string(strip_tags($_POST['user_name'], ENT_QUOTES));
+                $name = $this->db_connection->real_escape_string(strip_tags($_POST['name'], ENT_QUOTES));
                 $user_email = $this->db_connection->real_escape_string(strip_tags($_POST['user_email'], ENT_QUOTES));
+                $city = $this->db_connection->real_escape_string(strip_tags($_POST['city'], ENT_QUOTES));
+                $country = $this->db_connection->real_escape_string(strip_tags($_POST['country'], ENT_QUOTES));
+                $job = $this->db_connection->real_escape_string(strip_tags($_POST['job'], ENT_QUOTES));
+                $affiliation = $this->db_connection->real_escape_string(strip_tags($_POST['affiliation'], ENT_QUOTES));
 
                 $user_password = $_POST['user_password_new'];
 
@@ -95,8 +98,8 @@ class Registration
                     $this->errors[] = "Sorry, that username / email address is already taken.";
                 } else {
                     // write new user's data into database
-                    $sql = "INSERT INTO users (user_name, user_password_hash, user_email)
-                            VALUES('" . $user_name . "', '" . $user_password_hash . "', '" . $user_email . "');";
+                    $sql = "INSERT INTO users (user_name, user_password_hash, user_email, city, country, job, affiliation, name)
+                            VALUES('" . $user_name . "', '" . $user_password_hash . "', '" . $user_email . "', '" . $city . "', '" . $country . "', '" . $job . "', '" . $affiliation . "', '" . $name . "');";
                     $query_new_user_insert = $this->db_connection->query($sql);
 
                     // if user has been added successfully
