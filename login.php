@@ -4,6 +4,11 @@ $skip_login = true;
 require_once 'functions.omat.php';
 
 if ($login->isUserLoggedIn() == true) {
+  $check = $db->record("SELECT * FROM users WHERE user_id = $user_id");
+  if ($check->mooc) {
+    header("Location: ".URL."mooc");
+    exit();
+  }
   if (defined("ADMIN")) {
     header("Location: ".URL."cms/index");
     exit();

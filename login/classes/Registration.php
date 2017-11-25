@@ -38,7 +38,8 @@ class Registration
     {
         if (empty($_POST['user_name'])) {
           $_POST['user_name'] = $_POST['user_email'];
-        } 
+        }
+        $mooc = (int)$_POST['mooc'];
         if (empty($_POST['user_password_new']) || empty($_POST['user_password_repeat'])) {
             $this->errors[] = "Empty Password";
         } elseif ($_POST['user_password_new'] !== $_POST['user_password_repeat']) {
@@ -98,8 +99,8 @@ class Registration
                     $this->errors[] = "Sorry, that username / email address is already taken.";
                 } else {
                     // write new user's data into database
-                    $sql = "INSERT INTO users (user_name, user_password_hash, user_email, city, country, job, affiliation, name)
-                            VALUES('" . $user_name . "', '" . $user_password_hash . "', '" . $user_email . "', '" . $city . "', '" . $country . "', '" . $job . "', '" . $affiliation . "', '" . $name . "');";
+                    $sql = "INSERT INTO users (user_name, user_password_hash, user_email, city, country, job, affiliation, name, mooc)
+                            VALUES('" . $user_name . "', '" . $user_password_hash . "', '" . $user_email . "', '" . $city . "', '" . $country . "', '" . $job . "', '" . $affiliation . "', '" . $name . "', $mooc);";
                     $query_new_user_insert = $this->db_connection->query($sql);
 
                     // if user has been added successfully

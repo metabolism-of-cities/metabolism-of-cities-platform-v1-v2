@@ -29,10 +29,6 @@ foreach ($list as $row) {
   $sections[$row['id']] = $row['title'];
 }
 
-foreach ($sections as $key => $value) {
-  $content[$key] = @file_get_contents("documentation.$key.php");
-}
-
 if ($user_id) {
   $done_list = $db->query("SELECT * FROM mooc_progress WHERE user = $user_id");
   foreach ($done_list as $row) {
@@ -59,6 +55,7 @@ $remove_enter = array("\n" => "");
     .tab-pane{display:none}
     .tab-pane.active{display:block}
     .green{color:green}
+    .fadeout{opacity:0.4;color:#000;cursor:not-allowed}
     </style>
   </head>
 
@@ -71,8 +68,12 @@ $remove_enter = array("\n" => "");
       <ul class="nav nav-sidebar">
         <?php foreach ($sections as $key => $value) { ?>
           <li<?php if ($module == $key || $key == 'mooc' && !$module && !$overview || $key == 'overview' && $overview) { ?> class="active"<?php } ?>>
-            <a href="mooc/<?php echo $key ?>"><?php echo $value ?>
+            <?php if (!$user_id && $key != 8 && $key != "mooc") { ?>
+            <a href="javascript:void()" class="fadeout"><?php echo $value ?></a>
+            <?php } else { ?>
+            <a href="mooc/<?php echo $key ?>" class="item-<?php echo $key ?>"><?php echo $value ?>
             </a>
+            <?php } ?>
           </li>
         <?php } ?>
       </ul>
@@ -168,6 +169,12 @@ $remove_enter = array("\n" => "");
       <?php } else { ?>
         <h1><?php echo $info->name ?></h1>
         <?php echo $info->description ?>
+
+        <div class="jumbotron">
+          <h1>Sign up now</h1>
+          <p>Our MOOC is free, and you can start learning about urban metabolism <em>right now!</em></p>
+          <p><a href="mooc.register.php" class="btn btn-lg btn-primary">Register now</a></p>
+        </div>
       <?php } ?>
 
     </div>

@@ -9,7 +9,7 @@ $page = 2;
 // load the registration class
 require_once("login/classes/Registration.php");
 
-if ($login->isUserLoggedIn() == true) {
+if ($login->isUserLoggedIn() == true || $registration->message) {
   header("Location: " . URL . "mooc");
   exit();
 }
@@ -111,6 +111,7 @@ if (isset($registration)) {
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
       <button type="submit" class="btn btn-primary" name="register" value="Register">Register</button>
+      <input type="hidden" name="mooc" value="1" />
     </div>
   </div>
 

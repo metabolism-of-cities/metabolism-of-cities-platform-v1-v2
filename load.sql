@@ -1835,3 +1835,6 @@ ADD `job` varchar(255) COLLATE 'utf8_unicode_ci'  NULL AFTER `affiliation`;
 
 ALTER TABLE `users`
 ADD `name` varchar(255) COLLATE 'utf8_unicode_ci' NULL;
+
+ALTER TABLE `users`
+ADD `mooc` tinyint(1) unsigned NULL DEFAULT '0';
