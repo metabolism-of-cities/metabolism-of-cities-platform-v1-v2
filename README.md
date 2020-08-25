@@ -1,3 +1,7 @@
+# Repository: archived
+
+The website within this repository was active from 2014-2018, representing the first version of our website (MFA Tools), followed by the second version named Metabolism of Cities. Under this name the website continues, and a new repository supersedes this one. 
+
 # How to run this site on your own server
 
 ## Requirements
